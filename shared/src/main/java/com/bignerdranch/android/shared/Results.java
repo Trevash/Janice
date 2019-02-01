@@ -5,13 +5,25 @@ package com.bignerdranch.android.shared;
  */
 
 public class Results {
-    public boolean success = false;
-    public Object data = null;
-    public String errorInfo = null;
+    private boolean success = false;
+    private Object data = null;
+    private String errorInfo = null;
 
     public Results(boolean newSuccess, Object newData, String newErrorInfo){
         success = newSuccess;
         data = newData;
         errorInfo = newErrorInfo;
+    }
+
+    public boolean isSuccess() {
+        return success;
+    }
+
+    public Object getData() {
+        return data;
+    }
+
+    public String getErrorInfo() {
+        return errorInfo;
     }
 }

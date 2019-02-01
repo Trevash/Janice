@@ -1,6 +1,6 @@
 package com.janus.Communication;
 
-import classes.Command;
+import com.bignerdranch.android.shared.Command;
 import com.bignerdranch.android.shared.Serializer;
 
 /**
