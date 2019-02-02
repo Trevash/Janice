@@ -1,19 +1,18 @@
 package server.handlers;
 
-import server.models.*;
+import com.bignerdranch.android.shared.models.*;
+import com.bignerdranch.android.shared.randomIDGenerator;
 
 public class loginHandler {
     public String login(String username, String password) throws Exception {
-        if(!serverModel.getInstance().usernameExists(username)){
-            return "Username does not exist!";
-        }
-
         userModel curUser = serverModel.getInstance().getUser(username);
 
-        if(curUser.getPassword().getValue() != password){
-            return "Password incorrect!";
+        if (!curUser.getPassword().getValue().equals(password)) {
+            throw new Exception("Password incorrect!");
         }
 
-        return "Login Successful!";
+        authTokenModel auth = new authTokenModel(randomIDGenerator.getInstance().getRandomString(16));
+
+        return auth.getValue();
     }
 }

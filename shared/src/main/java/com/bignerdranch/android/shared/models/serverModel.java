@@ -1,4 +1,4 @@
-package server.models;
+package com.bignerdranch.android.shared.models;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -19,9 +19,9 @@ public class serverModel {
         this.users.add(newUser);
     }
 
-    public boolean usernameExists(String test){
+    public boolean userExists(String test){
         for (userModel user : this.users) {
-            if(test == user.getUserName().getValue()){
+            if(test.equals(user.getUserName().getValue())){
                 return true;
             }
         }
@@ -48,7 +48,7 @@ public class serverModel {
 
     public boolean userIDExists(String test) {
         for (userModel user : this.users) {
-            if(test == user.getUserID().getValue()){
+            if(test.equals(user.getUserID().getValue())){
                 return true;
             }
         }
@@ -58,7 +58,7 @@ public class serverModel {
     public boolean playerIDExists(String test) {
         for (userModel user : this.users) {
             for (playerIDModel playerID : user.getPlayerIDs()) {
-                if (test == playerID.getValue()) {
+                if (test.equals(playerID.getValue())) {
                     return true;
                 }
             }
@@ -66,12 +66,12 @@ public class serverModel {
         return false;
     }
 
-    public userModel getUser(String username) {
+    public userModel getUser(String username) throws Exception{
         for(userModel user : this.users) {
-            if(user.getUserName().getValue() == username) {
+            if(user.getUserName().getValue().equals(username)) {
                 return user;
             }
         }
-        return null;
+        throw new Exception("User not found!");
     }
 }

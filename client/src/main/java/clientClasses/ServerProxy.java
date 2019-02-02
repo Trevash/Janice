@@ -1,7 +1,7 @@
 package clientClasses;
 
-import classes.Command;
-import classes.Serializer;
+import com.bignerdranch.android.shared.Command;
+import com.bignerdranch.android.shared.Serializer;
 
 public class ServerProxy {
     private static ServerProxy scp;

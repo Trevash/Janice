@@ -1,11 +1,11 @@
-package server.models;
+package com.bignerdranch.android.shared.models;
 
-public class userIDModel {
+public class authTokenModel {
     String value = null;
 
-    public userIDModel(String newValue) throws Exception {
+    public authTokenModel(String newValue) throws Exception {
         if(serverModel.getInstance().userIDExists(newValue)){
-            throw new Exception("UserID exists!");
+            throw new Exception("AuthToken exists!");
         }
 
         value = newValue;

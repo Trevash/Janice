@@ -1,11 +1,11 @@
-package server.handlers;
+package com.bignerdranch.android.shared;
 
 import java.security.SecureRandom;
 
-class randomIDGenerator {
+public class randomIDGenerator {
     private static randomIDGenerator rig = null;
 
-    static randomIDGenerator getInstance() {
+    public static randomIDGenerator getInstance() {
         if (rig == null){
             rig = new randomIDGenerator();
         }

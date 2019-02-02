@@ -1,4 +1,4 @@
-package server.models;
+package com.bignerdranch.android.shared.models;
 
 public class playerIDModel {
     String value = null;

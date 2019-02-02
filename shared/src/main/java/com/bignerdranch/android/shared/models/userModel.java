@@ -1,4 +1,4 @@
-package server.models;
+package com.bignerdranch.android.shared.models;
 
 import java.util.ArrayList;
 import java.util.List;

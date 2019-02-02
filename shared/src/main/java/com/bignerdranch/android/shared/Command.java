@@ -1,5 +1,6 @@
 package com.bignerdranch.android.shared;
 
+import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.List;
@@ -32,9 +33,13 @@ public class Command {
 
             return new Results(true, returned, "");
         }
+        catch (InvocationTargetException i){
+            i.printStackTrace();
+            return new Results(false, "", i.getTargetException().getMessage());
+        }
         catch (Exception e) {
             e.printStackTrace();
-            return new Results(true, e.getMessage(), e.getMessage());
+            return new Results(false, "", e.getMessage());
         }
     }
 }

@@ -1,8 +1,8 @@
 package server.handlers;
 
-import classes.Command;
-import classes.Results;
-import classes.Serializer;
+import com.bignerdranch.android.shared.Command;
+import com.bignerdranch.android.shared.Results;
+import com.bignerdranch.android.shared.Serializer;
 
 public class commandHandler extends handlerBase {
     @Override
@@ -10,7 +10,6 @@ public class commandHandler extends handlerBase {
         Command command = Serializer.getInstance().deserializeObject(s);
         Results results = command.execute();
         String ss = Serializer.getInstance().serializeResults(results);
-        System.out.println(ss);
 
         if(results.success){ return (String) results.data; }
         else{ return results.errorInfo; }

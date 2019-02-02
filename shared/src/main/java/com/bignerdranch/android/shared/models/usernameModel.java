@@ -1,10 +1,10 @@
-package server.models;
+package com.bignerdranch.android.shared.models;
 
 public class usernameModel {
     private String value = null;
 
     public usernameModel(String newValue) throws Exception {
-        if(serverModel.getInstance().usernameExists(newValue)){
+        if(serverModel.getInstance().userExists(newValue)){
             throw new Exception("The username is already taken!");
         }
         else if(newValue == null || newValue.length() == 0) {
