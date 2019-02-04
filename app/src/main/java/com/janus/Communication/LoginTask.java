@@ -26,11 +26,13 @@ public class LoginTask extends AsyncTask<LoginRequest, Void, Results> {
     protected Results doInBackground(LoginRequest... r){
         ServerProxy proxy = ServerProxy.getInstance();
         try {
+            Results res;
             if(requestType.equals("Login")) {
-                Results res = proxy.Login(r[0].getUsername(), r[0].getPassword());
+                res = proxy.Login(r[0].getUsername(), r[0].getPassword());
             } else {
-                Results res = proxy.Register(r[0].getUsername(), r[0].getPassword());
+                res = proxy.Register(r[0].getUsername(), r[0].getPassword());
             }
+
             return res;
         } catch(Exception e){
             e.printStackTrace();
@@ -41,7 +43,7 @@ public class LoginTask extends AsyncTask<LoginRequest, Void, Results> {
 
     @Override
     protected void onPostExecute(Results r) {
-        if(r.isSuccess() == true) {
+        if(r.isSuccess()) {
             caller.onLoginComplete(r);
         } else {
             caller.onError(r.getErrorInfo());
