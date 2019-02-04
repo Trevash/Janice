@@ -3,6 +3,7 @@ apply plugin: 'java'
 dependencies {
     compile project(path: ':shared')
     implementation project(':shared')
+    compile project(path: ':Java-WebSocket-master')
 }
 
 sourceCompatibility = "1.7"

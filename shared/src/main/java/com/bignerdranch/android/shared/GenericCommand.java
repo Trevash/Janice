@@ -1,54 +1,54 @@
 package com.bignerdranch.android.shared;
-import java.util.*;
 import java.lang.reflect.*;
 import java.io.IOException;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
 
-public class GenericCommand implements java.io.Serializable {
+public class GenericCommand {
     private String _className;
     private String _methodName;
-    private Class<?>[] _paramTypes;
+    private String[] _paramTypes;
     private Object[] _paramValues;
-    
-    
-     public GenericCommand(String className, String methodName,
-                          Class<?>[] paramTypes, Object[] paramValues) {
+
+
+    public GenericCommand(String className, String methodName,
+                          String[] paramTypes, Object[] paramValues) {
         _className = className;
         _methodName = methodName;
-        _paramTypes = paramTypes;
         _paramValues = paramValues;
+        _paramTypes = paramTypes;
     }
+
     public String getMethod(){
         return _methodName;
     }
     public Object[] getParamValues(){
         return _paramValues;
     }
-    private void readObject(ObjectInputStream input) 
-                            throws IOException, ClassNotFoundException {
-        input.defaultReadObject();
+
+
+    private Class<?>[] getClasses() throws ClassNotFoundException {
+        try {
+            Class<?>[] paramTypes = new Class<?>[_paramTypes.length];
+            for (int i = 0; i<paramTypes.length; i++) {
+                paramTypes[i] = Class.forName(_paramTypes[i]);
+            }
+            return paramTypes;
+        } catch(ClassNotFoundException e) {
+            e.printStackTrace();
+            return null;
+        }
     }
-    private void readObject(ObjectOutputStream output) 
-                            throws IOException, ClassNotFoundException {
-        output.defaultWriteObject();
-    }
-    
-    
-    
-    
-    
+
     public Object execute() {
 
         try {
             Class<?> receiver = Class.forName(_className);
-            Method method = receiver.getMethod(_methodName, _paramTypes);
-            Object o = method.invoke(null, _paramValues);
-            return o;
+            Class<?>[] paramTypes = getClasses();
+            Method method = receiver.getMethod(_methodName, paramTypes);
+            return method.invoke(receiver.newInstance(), _paramValues);
         }
         catch (Exception e) {
             e.printStackTrace();
-            return "null";
+            return null;
         }
-    } 
+    }
 }

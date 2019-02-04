@@ -10,13 +10,13 @@ public class Serializer {
         }
         return sr;
     }
-    Gson parser = new Gson();
+    private Gson parser = new Gson();
 
     public String serializeObject(Object obj){
         return parser.toJson(obj);
     }
 
-    public Command deserializeObject(String str){ return parser.fromJson(str, Command.class); }
+    public GenericCommand deserializeObject(String str){ return parser.fromJson(str, GenericCommand.class); }
 
     public String serializeResults(Results r){
         return parser.toJson(r);

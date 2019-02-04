@@ -1,5 +1,7 @@
 package com.janus.Communication;
 
+import org.java_websocket.client.WebSocketClient;
+
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -50,11 +52,11 @@ public class ClientCommunicator {
         }
     }
 
-    public String serverHost = "localhost";
-    public String serverPort = "8080";
+    private String serverHost = "localhost";
+    private String serverPort = "8080";
 
     // The Register method calls the server's /user/register handler
-    public String sendResponse(String context, String data) throws Exception {
+    String sendResponse(String context, String data) throws Exception {
 
         String registerUrl = "http://" + serverHost + ":" + serverPort + "/" + context;
 
@@ -69,8 +71,7 @@ public class ClientCommunicator {
             // request is complete
             reqBody.close();
 
-            String respData = getResponse(http);
-            return respData;
+            return getResponse(http);
         }
         catch (IOException e) {
             // An exception was thrown, so display the exception's stack trace
@@ -119,9 +120,8 @@ public class ClientCommunicator {
             // Get the input stream containing the HTTP response body
             InputStream respBody = http.getInputStream();
             // Extract JSON data from the HTTP response body
-            String respData = readString(respBody);
 
-            return respData;
+            return readString(respBody);
         } else {
             // The HTTP response status code indicates an error
             // occurred, so print out the message from the HTTP response
