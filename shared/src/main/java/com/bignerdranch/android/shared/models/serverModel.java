@@ -15,6 +15,8 @@ public class serverModel {
 
     private List<userModel> users = new ArrayList<userModel>();
 
+    private List<authTokenModel> authTokens = new ArrayList<authTokenModel>();
+
     public void addUser(userModel newUser){
         this.users.add(newUser);
     }
@@ -73,5 +75,13 @@ public class serverModel {
             }
         }
         throw new Exception("User not found!");
+    }
+
+    public boolean authTokenExists(String newValue) {
+        for (authTokenModel auth : this.authTokens) {
+            if(auth.getValue().equals(newValue))
+                return true;
+        }
+        return false;
     }
 }

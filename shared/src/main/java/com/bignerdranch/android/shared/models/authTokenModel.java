@@ -4,7 +4,7 @@ public class authTokenModel {
     String value = null;
 
     public authTokenModel(String newValue) throws Exception {
-        if(serverModel.getInstance().userIDExists(newValue)){
+        if(serverModel.getInstance().authTokenExists(newValue)){
             throw new Exception("AuthToken exists!");
         }
 
