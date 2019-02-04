@@ -8,6 +8,7 @@ import org.java_websocket.handshake.ClientHandshake;
 import org.java_websocket.server.WebSocketServer;
 import com.google.gson.Gson;
 import generalCommand.GeneralCommand;
+import stringProcessor.StringProcessor;
 
 public class SimpleServer extends WebSocketServer {
 
@@ -30,9 +31,12 @@ public class SimpleServer extends WebSocketServer {
 	@Override
 	public void onMessage(WebSocket conn, String message) {
 		System.out.println("received message from "	+ conn.getRemoteSocketAddress() + ": " + message);
-		//Gson gson = new Gson();
-		//GeneralCommand gc = gson.fromJson(message, GeneralCommand.class);
-		broadcast(message);
+		Gson gson = new Gson();
+		GeneralCommand gc = gson.fromJson(message, GeneralCommand.class);
+		//broadcast(message);
+		Object o = gc.execute();
+
+		broadcast((String)o);
 		
 	}
 

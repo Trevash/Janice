@@ -21,7 +21,7 @@ public class EmptyClient extends WebSocketClient {
 
 	@Override
 	public void onOpen(ServerHandshake handshakedata) {
-		send("onOpen condition from EmptyClient works");
+		//send("onOpen condition from EmptyClient works");
 		System.out.println("new connection opened");
 		
 	}

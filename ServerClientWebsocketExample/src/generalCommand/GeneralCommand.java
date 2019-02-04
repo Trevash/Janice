@@ -2,46 +2,50 @@ package generalCommand;
 import java.lang.reflect.*;
 import java.io.IOException;
 
-import wsClient.EmptyClient;
-
-
 public class GeneralCommand {
-    private String className;
-    private String methodName;
-    private String[] paramTypes;
-    private Object[] paramValues;
+    private String _className;
+    private String _methodName;
+    private String[] _paramTypes;
+    private Object[] _paramValues;
     
     
      public GeneralCommand(String className, String methodName,
                           String[] paramTypes, Object[] paramValues) {
-        this.className = className;
-        this.methodName = methodName;
-        this.paramTypes = paramTypes;
-        this.paramValues = paramValues;
+        _className = className;
+        _methodName = methodName;
+        _paramValues = paramValues;
+        _paramTypes = paramTypes;
     }
     
-    public GeneralCommand() {//Constructor that takes in JSON formatted string?
-    	
-    }
     public String getMethod(){
-        return this.methodName;
+        return _methodName;
     }
-    public Object getParamValues(){
-        return this.paramValues;
+    public Object[] getParamValues(){
+        return _paramValues;
     }
 
     
-    
-    
-    
+    private Class<?>[] getClasses() throws ClassNotFoundException {
+    	try {
+    	Class<?>[] paramTypes = new Class<?>[_paramTypes.length];
+    	for (int i = 0; i<paramTypes.length; i++) {
+    		paramTypes[i] = Class.forName(_paramTypes[i]);
+    	}
+    	return paramTypes;
+    	} catch(ClassNotFoundException e) {
+    		e.printStackTrace();
+    		return null;
+    	}
+    }
     
     public Object execute() {
 
         try {
-            //Class<?> receiver = Class.forName(_className);            
-            //Method method = receiver.getMethod(_methodName, paramTypes);
-            //Object o = method.invoke(null, _paramValues);
-            return null;
+            Class<?> receiver = Class.forName(_className); 
+        	Class<?>[] paramTypes = getClasses();
+            Method method = receiver.getMethod(_methodName, paramTypes);
+            Object o = method.invoke(receiver.newInstance(), _paramValues);
+            return o;
         }
         catch (Exception e) {
             e.printStackTrace();
