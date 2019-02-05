@@ -1,5 +1,7 @@
 package com.janus.Communication;
 
+import com.bignerdranch.android.shared.Serializer;
+
 import org.java_websocket.client.WebSocketClient;
 
 import java.io.IOException;
@@ -25,27 +27,28 @@ public class ClientCommunicator {
 
     public static void main(String args[]){
         try {
+            ServerProxy server = ServerProxy.getInstance();
+            server.connectBlocking();
             System.out.println("REGISTER FAIL");
-            System.out.println(ServerProxy.getInstance().Register("illegal Username", "somePassword"));
-            System.out.println(ServerProxy.getInstance().Register("legalUsername", "illegal Password"));
-
+            server.Register("illegal Username", "somePassword");
+            server.Register("legalUsername", "illegal Password");
             System.out.println("");
             System.out.println("LOGIN FAIL");
-            System.out.println(ServerProxy.getInstance().Login("illegal Username", "somePassword"));
-            System.out.println(ServerProxy.getInstance().Login("legalUsername", "illegal Password"));
+            server.Login("illegal Username", "somePassword");
+            server.Login("legalUsername", "illegal Password");
 
             System.out.println("");
             System.out.println("SUCCESSFUL REGISTER");
-            System.out.println(ServerProxy.getInstance().Register("legalUsername", "legalPassword"));
+            server.Register("legalUsername", "legalPassword");
 
-            System.out.println("");
+//            System.out.println("");
             System.out.println("ANOTHER FAILED LOGIN");
-            System.out.println(ServerProxy.getInstance().Register("legal Username", "legalPassword"));
-            System.out.println(ServerProxy.getInstance().Register("legalUsername", "legal Password"));
+            server.Login("legal Username", "legalPassword");
+            server.Login("legalUsername", "legal Password");
 
             System.out.println("");
             System.out.println("SUCCESSFUL LOGIN");
-            System.out.println(ServerProxy.getInstance().Login("legalUsername", "legalPassword"));
+            server.Login("legalUsername", "legalPassword");
 
         } catch (Exception e) {
             e.printStackTrace();

@@ -16,11 +16,7 @@ public class Serializer {
         return parser.toJson(obj);
     }
 
-    public GenericCommand deserializeObject(String str){ return parser.fromJson(str, GenericCommand.class); }
-
-    public String serializeResults(Results r){
-        return parser.toJson(r);
-    }
+    public GenericCommand deserializeCommand(String str){ return parser.fromJson(str, GenericCommand.class); }
 
     public Results deserializeResults(String str){
         return parser.fromJson(str, Results.class);

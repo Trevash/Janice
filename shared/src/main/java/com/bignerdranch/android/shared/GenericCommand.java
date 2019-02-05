@@ -1,6 +1,5 @@
 package com.bignerdranch.android.shared;
 import java.lang.reflect.*;
-import java.io.IOException;
 
 public class GenericCommand {
     private String _className;
@@ -38,17 +37,20 @@ public class GenericCommand {
         }
     }
 
-    public Object execute() {
+    public Results execute() {
 
         try {
             Class<?> receiver = Class.forName(_className);
             Class<?>[] paramTypes = getClasses();
             Method method = receiver.getMethod(_methodName, paramTypes);
-            return method.invoke(receiver.newInstance(), _paramValues);
+            return (Results) method.invoke(receiver.newInstance(), _paramValues);
+        }
+        catch (InvocationTargetException i) {
+            return new Results(false, "", i.getTargetException().getMessage());
         }
         catch (Exception e) {
             e.printStackTrace();
-            return null;
+            return new Results(false, "", e.getMessage());
         }
     }
 }
