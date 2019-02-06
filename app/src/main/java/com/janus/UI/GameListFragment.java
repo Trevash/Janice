@@ -30,8 +30,6 @@ public class GameListFragment extends Fragment implements GameListFragmentPresen
     private Button mJoinGame;
     private Button mCreateGame;
 
-    private OnFragmentInteractionListener mListener;
-
     public GameListFragment() {}
 
     @Override
@@ -102,29 +100,6 @@ public class GameListFragment extends Fragment implements GameListFragmentPresen
     @Override
     public void displaySuccess() {
         Toast.makeText(getActivity(), R.string.sign_in_welcome, Toast.LENGTH_LONG).show();
-    }
-
-    @Override
-    public void onAttach(Context context) {
-        super.onAttach(context);
-        if (context instanceof OnFragmentInteractionListener) {
-            mListener = (OnFragmentInteractionListener) context;
-        } else {
-            throw new RuntimeException(context.toString()
-                    + " must implement OnFragmentInteractionListener");
-        }
-    }
-
-    @Override
-    public void onDetach() {
-        super.onDetach();
-        mListener = null;
-    }
-
-
-    public interface OnFragmentInteractionListener {
-        // TODO: Update argument type and name
-        void onFragmentInteraction(Uri uri);
     }
 
     public class GameListAdapter extends RecyclerView.Adapter<GameListAdapter.GameViewHolder> {

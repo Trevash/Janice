@@ -8,9 +8,11 @@ import android.support.v4.app.Fragment;
 
 import com.janus.R;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements LoginFragment.Context {
     private FragmentManager fm = getSupportFragmentManager();
-    private LoginFragment lFragment;
+    private LoginFragment loginFragment;
+    private GameListFragment gameListFragment;
+    //private LobbyFragment lobbyFragment
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -22,9 +24,9 @@ public class MainActivity extends AppCompatActivity {
         Fragment fragment = fm.findFragmentById(R.id.fragment_container);
 
         if(fragment == null) {
-            lFragment = new LoginFragment();
+            loginFragment = new LoginFragment();
             fm.beginTransaction()
-                    .add(R.id.fragment_container, lFragment)
+                    .add(R.id.fragment_container, loginFragment)
                     .commit();
         }
     }
@@ -39,4 +41,11 @@ public class MainActivity extends AppCompatActivity {
     /*protected void onSyncComplete(){
         mFragment.onSyncComplete();
     }*/
+
+    public void onSignIn() {
+        gameListFragment = new GameListFragment();
+        fm.beginTransaction()
+                .replace(R.id.fragment_container, gameListFragment)
+                .commit();
+    }
 }

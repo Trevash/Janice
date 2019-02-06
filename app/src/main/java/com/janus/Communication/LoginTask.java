@@ -28,8 +28,10 @@ public class LoginTask extends AsyncTask<LoginRequest, Void, Results> {
         try {
             Results res;
             if(requestType.equals("Login")) {
+                proxy.connectBlocking();
                 res = proxy.Login(r[0].getUsername(), r[0].getPassword());
             } else {
+                proxy.connectBlocking();
                 res = proxy.Register(r[0].getUsername(), r[0].getPassword());
             }
 

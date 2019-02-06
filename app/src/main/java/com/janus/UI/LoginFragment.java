@@ -16,7 +16,12 @@ import com.janus.Presenter.LoginFragmentPresenter;
 import com.janus.R;
 
 public class LoginFragment extends Fragment implements LoginFragmentPresenter.View {
-    private MainActivity mMainActivity;
+
+    public interface Context {
+        void onSignIn();
+    }
+
+    private Context mContext;
 
     private LoginFragmentPresenter presenter;
 
@@ -35,8 +40,6 @@ public class LoginFragment extends Fragment implements LoginFragmentPresenter.Vi
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_login, container, false);
-
-        mMainActivity = (MainActivity) getActivity();
 
         presenter = new LoginFragmentPresenter(this);
 
@@ -119,5 +122,7 @@ public class LoginFragment extends Fragment implements LoginFragmentPresenter.Vi
     @Override
     public void displaySuccess() {
         Toast.makeText(getActivity(), R.string.sign_in_welcome, Toast.LENGTH_LONG).show();
+        mContext = (Context) getActivity();
+        mContext.onSignIn();
     }
 }

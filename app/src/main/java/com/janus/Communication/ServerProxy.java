@@ -51,7 +51,10 @@ public class ServerProxy extends WebSocketClient {
         GenericCommand commandObj = new GenericCommand("server.handlers.registerHandler", "register",paramTypes, paramValues);
         String commandObjStr = Serializer.getInstance().serializeObject(commandObj);
         send(commandObjStr);
-        return null;
+        while (messageResult == null) {
+            Thread.sleep(100);
+        }
+        return messageResult;
     }
 
     @Override
@@ -68,6 +71,7 @@ public class ServerProxy extends WebSocketClient {
         }
         else
             System.out.println("Recieved Error: " + result.getErrorInfo());
+            messageResult = result;
     }
 
     @Override
