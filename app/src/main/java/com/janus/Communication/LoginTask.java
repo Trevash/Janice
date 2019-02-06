@@ -28,16 +28,16 @@ public class LoginTask extends AsyncTask<LoginRequest, Void, Results> {
         try {
             Results res;
             if(requestType.equals("Login")) {
-                proxy.Login(r[0].getUsername(), r[0].getPassword());
+                res = proxy.Login(r[0].getUsername(), r[0].getPassword());
             } else {
-                proxy.Register(r[0].getUsername(), r[0].getPassword());
+                res = proxy.Register(r[0].getUsername(), r[0].getPassword());
             }
 
-            return null;
+            return res;
         } catch(Exception e){
             e.printStackTrace();
             System.out.print(e.getMessage());
-            return null;
+            return new Results(false, "", e.getMessage());
         }
     }
 

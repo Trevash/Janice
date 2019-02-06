@@ -113,7 +113,7 @@ public class LoginFragment extends Fragment implements LoginFragmentPresenter.Vi
 
     @Override
     public void displayError(String message) {
-        Toast.makeText(getActivity(), message, Toast.LENGTH_LONG).show();
+        Toast.makeText(getActivity(), "Failed connecting " + message, Toast.LENGTH_LONG).show();
     }
 
     @Override

@@ -12,6 +12,8 @@ import java.net.URISyntaxException;
 public class ServerProxy extends WebSocketClient {
     private static ServerProxy scp;
 
+    private Results messageResult;
+
     private ServerProxy(URI serverUri) {
         super(serverUri);
     }
@@ -37,7 +39,10 @@ public class ServerProxy extends WebSocketClient {
         GenericCommand commandObj = new GenericCommand("server.handlers.loginHandler", "login",paramTypes, paramValues);
         String commandObjStr = Serializer.getInstance().serializeObject(commandObj);
         send(commandObjStr);
-        return null;
+        while (messageResult == null) {
+            Thread.sleep(100);
+        }
+        return messageResult;
     }
 
     public Results Register(String username, String password) throws Exception {
@@ -57,8 +62,10 @@ public class ServerProxy extends WebSocketClient {
     @Override
     public void onMessage(String message) {
         Results result = Serializer.getInstance().deserializeResults(message);
-        if(result.isSuccess())
+        if (result.isSuccess()) {
             System.out.println("Recieved Message: " + result.getData());
+            messageResult = result;
+        }
         else
             System.out.println("Recieved Error: " + result.getErrorInfo());
     }
