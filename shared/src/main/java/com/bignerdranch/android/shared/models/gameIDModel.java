@@ -2,12 +2,12 @@ package com.bignerdranch.android.shared.models;
 
 import com.bignerdranch.android.shared.randomIDGenerator;
 
-public class authTokenModel {
+public class gameIDModel {
     private String value;
 
-    public authTokenModel() {
+    gameIDModel() {
         String newValue = randomIDGenerator.getInstance().getRandomString(16);
-        while(serverModel.getInstance().authTokenExists(newValue)){
+        while(serverModel.getInstance().gameIDExists(newValue)){
             newValue = randomIDGenerator.getInstance().getRandomString(16);
         }
         value = newValue;

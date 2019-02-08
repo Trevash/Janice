@@ -13,9 +13,11 @@ public class serverModel {
         return sm;
     }
 
-    private List<userModel> users = new ArrayList<userModel>();
+    private List<userModel> users = new ArrayList<>();
 
-    private List<authTokenModel> authTokens = new ArrayList<authTokenModel>();
+    private List<authTokenModel> authTokens = new ArrayList<>();
+
+    private List<gameModel> games = new ArrayList<>();
 
     public void addUser(userModel newUser){
         this.users.add(newUser);
@@ -81,6 +83,15 @@ public class serverModel {
         for (authTokenModel auth : this.authTokens) {
             if(auth.getValue().equals(newValue))
                 return true;
+        }
+        return false;
+    }
+
+    public boolean gameIDExists(String newValue) {
+        for(gameModel game : this.games){
+            if(game.getGameID().equals(newValue)){
+                return true;
+            }
         }
         return false;
     }

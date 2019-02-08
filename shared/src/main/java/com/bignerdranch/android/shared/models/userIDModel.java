@@ -1,13 +1,15 @@
 package com.bignerdranch.android.shared.models;
 
+import com.bignerdranch.android.shared.randomIDGenerator;
+
 public class userIDModel {
-    String value = null;
+    private String value;
 
-    public userIDModel(String newValue) throws Exception {
-        if(serverModel.getInstance().userIDExists(newValue)){
-            throw new Exception("UserID exists!");
+    public userIDModel() {
+        String newValue = randomIDGenerator.getInstance().getRandomString(16);
+        while(serverModel.getInstance().userIDExists(newValue)){
+            newValue = randomIDGenerator.getInstance().getRandomString(16);
         }
-
         value = newValue;
     }
 
