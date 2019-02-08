@@ -95,4 +95,12 @@ public class serverModel {
         }
         return false;
     }
+
+    public List<gameModel> getGames() {
+        return games;
+    }
+
+    public void addGame(gameModel newGame) {
+        games.add(newGame);
+    }
 }
