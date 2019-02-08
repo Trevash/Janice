@@ -1,5 +1,7 @@
 package com.janus.Presenter;
 
+import com.bignerdranch.android.shared.models.gameModel;
+
 public class GameListFragmentPresenter {
 
     public interface View {
@@ -9,14 +11,17 @@ public class GameListFragmentPresenter {
     }
 
     private View view;
-    private Integer gameSelected;
+    private gameModel gameSelected;
 
     public GameListFragmentPresenter(View v) {
         this.view = v;
     }
 
-    public void joinGameClicked(Integer gameSelected) {
+    public void selectGame(gameModel gameSelected) {
         this.gameSelected = gameSelected;
+    }
+
+    public void joinGameClicked() {
 
     }
 

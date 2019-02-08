@@ -16,19 +16,23 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.bignerdranch.android.shared.models.gameModel;
+import com.bignerdranch.android.shared.models.userModel;
 import com.janus.Presenter.GameListFragmentPresenter;
 import com.janus.R;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class GameListFragment extends Fragment implements GameListFragmentPresenter.View {
 
     private GameListFragmentPresenter presenter;
 
-    private EditText mNumPlayers;
+    private TextView mNumPlayers;
     private RecyclerView mGameList;
     private Button mJoinGame;
     private Button mCreateGame;
+    private List<gameModel> games;
 
     public GameListFragment() {}
 
@@ -43,26 +47,14 @@ public class GameListFragment extends Fragment implements GameListFragmentPresen
         View v = inflater.inflate(R.layout.fragment_game_list, container, false);
 
         presenter = new GameListFragmentPresenter(this);
+        //games = userModel.getInstance().getGames();
 
-        mNumPlayers = (EditText) v.findViewById(R.id.num_players_edit_text);
-        mNumPlayers.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-            }
-
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-            }
-
-            @Override
-            public void afterTextChanged(Editable s) {
-            }
-        });
+        mNumPlayers = (TextView) v.findViewById(R.id.num_players_text_view);
 
         mGameList = (RecyclerView) v.findViewById(R.id.game_list_recycler_view);
         mGameList.setLayoutManager(new LinearLayoutManager(getActivity()));
 
-        GameListAdapter adapter = new GameListAdapter(new ArrayList<String>());
+        GameListAdapter adapter = new GameListAdapter(games);
         mGameList.setAdapter(adapter);
 
         mJoinGame = (Button) v.findViewById(R.id.join_game_button);
@@ -70,7 +62,7 @@ public class GameListFragment extends Fragment implements GameListFragmentPresen
 
             @Override
             public void onClick(View v) {
-                presenter.joinGameClicked(1);
+                presenter.joinGameClicked();
             }
         });
 
@@ -104,19 +96,18 @@ public class GameListFragment extends Fragment implements GameListFragmentPresen
 
     public class GameListAdapter extends RecyclerView.Adapter<GameListAdapter.GameViewHolder> {
 
-        ArrayList<String> games;
+        List<gameModel> games;
 
         private class GameViewHolder extends RecyclerView.ViewHolder {
 
-            private TextView mGameName;
-            private TextView mPlayerNum;
+            private gameModel game;
 
             public GameViewHolder(View v) {
                 super(v);
             }
         }
 
-        public GameListAdapter(ArrayList<String> games) {
+        public GameListAdapter(List<gameModel> games) {
             this.games = games;
         }
 
