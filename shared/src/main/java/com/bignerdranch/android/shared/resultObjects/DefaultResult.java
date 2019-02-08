@@ -19,6 +19,7 @@ public class DefaultResult {
         return success;
     }
 
+    //Object should be the result object specific to the type
     public Object getData() {
         return data;
     }
