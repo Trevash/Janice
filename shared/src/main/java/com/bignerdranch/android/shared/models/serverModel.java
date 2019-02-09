@@ -100,6 +100,15 @@ public class serverModel {
         return games;
     }
 
+    public gameModel getGameByID(gameIDModel id) {
+        for(gameModel game: this.games){
+            if(id.getValue().equals(game.getGameID())){
+                return game;
+            }
+        }
+        return null;
+    }
+
     public void addGame(gameModel newGame) {
         games.add(newGame);
     }

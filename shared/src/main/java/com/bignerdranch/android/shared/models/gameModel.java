@@ -5,7 +5,7 @@ import java.util.List;
 
 public class gameModel {
     private gameIDModel gameID;
-    private List<playerIDModel> players = new ArrayList<>();
+    private List<playerModel> players = new ArrayList<>();
 
     gameModel(){
         gameID = new gameIDModel();
@@ -15,14 +15,18 @@ public class gameModel {
         return gameID.getValue();
     }
 
-    public void addPlayer(playerIDModel newPlayer){
+    public List<playerModel> getPlayers() {
+        return players;
+    }
+
+    public void addPlayer(playerModel newPlayer){
         //TODO: Resolve if this should be playerModels or playerIDModels
         players.add(newPlayer);
     }
 
     public void removePlayer(String oldPlayer){
-        for (playerIDModel curPlayer : this.players) {
-            if(curPlayer.getValue().equals(oldPlayer)){
+        for (playerModel curPlayer : this.players) {
+            if(curPlayer.getId().getValue().equals(oldPlayer)){
                 this.players.remove(curPlayer);
             }
         }

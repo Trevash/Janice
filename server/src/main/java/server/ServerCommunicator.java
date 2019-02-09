@@ -26,7 +26,7 @@ public class ServerCommunicator extends WebSocketServer {
     }
 
     public static void main(String[] args) {
-        String host = "localhost";
+        String host = "10.24.217.239";
         int port = 8087;
 
         WebSocketServer server = new ServerCommunicator(new InetSocketAddress(host, port));

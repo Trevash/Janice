@@ -10,17 +10,14 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
 
+import com.bignerdranch.android.shared.models.gameIDModel;
+import com.bignerdranch.android.shared.models.gameModel;
+import com.bignerdranch.android.shared.models.playerModel;
+
+import com.bignerdranch.android.shared.models.serverModel;
 import com.janus.Presenter.LobbyFragmentPresenter;
 import com.janus.R;
 
-/**
- * A simple {@link Fragment} subclass.
- * Activities that contain this fragment must implement the
- * {@link LobbyFragment.OnFragmentInteractionListener} interface
- * to handle interaction events.
- * Use the {@link LobbyFragment#newInstance} factory method to
- * create an instance of this fragment.
- */
 public class LobbyFragment extends Fragment implements LobbyFragmentPresenter.View{
     private LobbyFragmentPresenter presenter;
 
@@ -30,6 +27,7 @@ public class LobbyFragment extends Fragment implements LobbyFragmentPresenter.Vi
     private RecyclerView mPlayerRecyclerView;
     private TextView mNumberOfPlayers;
     private PlayerAdapter mPlayerAdapter;
+    private gameIDModel mGameID;
 
     private OnFragmentInteractionListener mListener;
 
@@ -88,9 +86,13 @@ public class LobbyFragment extends Fragment implements LobbyFragmentPresenter.Vi
         private TextView mPersonNameView;
         private TextView mReadyStatusView;
 
-        public void bind(/*Player p*/){
-            //mPersonNameView.setText(/*p.getName()*/);
-            //mReadyStatusView.setText(/*p.getStatus()*/);
+        public void bind(playerModel p){
+            mPersonNameView.setText(p.getUserName().getValue());
+            if(p.isReady()){
+                mReadyStatusView.setText("Ready");
+            } else {
+                mReadyStatusView.setText("Not Ready");
+            }
         }
 
         public PlayerHolder(LayoutInflater inflater, ViewGroup parent){
@@ -102,9 +104,9 @@ public class LobbyFragment extends Fragment implements LobbyFragmentPresenter.Vi
 
     private class PlayerAdapter extends RecyclerView.Adapter<PlayerHolder> {
 
-        private Player[] mPlayers;
+        private playerModel[] mPlayers;
 
-        public PlayerAdapter(Player[] players){
+        public PlayerAdapter(playerModel[] players){
             mPlayers = players;
         }
 
@@ -117,7 +119,7 @@ public class LobbyFragment extends Fragment implements LobbyFragmentPresenter.Vi
 
         @Override
         public void onBindViewHolder(PlayerHolder holder, int position) {
-            Player p = mPlayers[position];
+            playerModel p = mPlayers[position];
             holder.bind(p);
         }
 
@@ -128,7 +130,8 @@ public class LobbyFragment extends Fragment implements LobbyFragmentPresenter.Vi
     }
 
     private void updateUI() {
-        mPlayerAdapter = new PlayerAdapter(/*Put in list of players here*/);
+        gameModel g = serverModel.getInstance().getGameByID(mGameID);
+        mPlayerAdapter = new PlayerAdapter((playerModel[]) g.getPlayers().toArray());
         mPlayerRecyclerView.setAdapter(mPlayerAdapter);
     }
 

@@ -7,6 +7,10 @@
     tools:context=".UI.LobbyFragment"
     android:padding="10dp">
 
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
     <android.support.v7.widget.RecyclerView
         xmlns:android="http://schemas.android.com/apk/res/android"
         android:id="@+id/playerRecyclerView"

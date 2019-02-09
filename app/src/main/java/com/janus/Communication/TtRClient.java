@@ -21,7 +21,7 @@ public class TtRClient extends WebSocketClient{
     	if (client == null){
             //TODO: Generalize from localhost
             try {
-                client = new TtRClient(new URI("ws://localhost:8087"));
+                client = new TtRClient(new URI("ws://10.24.217.239:8087"));
             } catch (URISyntaxException e) {
                 System.out.println(e.getMessage());
                 e.printStackTrace();
