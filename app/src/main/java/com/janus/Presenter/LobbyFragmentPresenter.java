@@ -1,6 +1,7 @@
 package com.janus.Presenter;
 
 public class LobbyFragmentPresenter {
+
     public interface View {
         void updateButtons(boolean isActive);
         void displayError(String message);
@@ -8,12 +9,23 @@ public class LobbyFragmentPresenter {
     }
 
     private LobbyFragmentPresenter.View view;
+    //private Player[] players;
 
     public LobbyFragmentPresenter(View v) {
         this.view = v;
     }
 
     public void startGameClicked() {
-        //Check to make sure everybody is ready
+
+    }
+
+    /*public void updatePlayerList(Player[] p) {
+        this.players = p;
+        checkButtons();
+    }*/
+
+    private void checkButtons() {
+        //Check to make sure everybody is ready and that there are at least 2 players
+        view.updateButtons(true);
     }
 }

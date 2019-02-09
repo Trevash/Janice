@@ -39,9 +39,7 @@ public class LobbyFragment extends Fragment implements LobbyFragmentPresenter.Vi
 
     @Override
     public void updateButtons(boolean isActive) {
-        mStartGameButton.setEnabled(true);
-
-        //if less than 2 players or not everybody has checked ready, button is disabled
+        mStartGameButton.setEnabled(isActive);
     }
 
     @Override
@@ -78,7 +76,7 @@ public class LobbyFragment extends Fragment implements LobbyFragmentPresenter.Vi
     }
 
     private void startGameButtonClicked() {
-        //Call method in LobbyPresenter
+        presenter.startGameClicked();
         //Create and send start game request
         //Start the game
     }
