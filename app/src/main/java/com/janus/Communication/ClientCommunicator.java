@@ -28,7 +28,7 @@ public class ClientCommunicator {
     public static void main(String args[]){
         try {
             ServerProxy server = ServerProxy.getInstance();
-            server.connectBlocking();
+            server.connectClient();
             System.out.println("REGISTER FAIL");
             server.Register("illegal Username", "somePassword");
             server.Register("legalUsername", "illegal Password");

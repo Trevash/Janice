@@ -1,7 +1,7 @@
 package com.janus.Communication;
 
 import com.bignerdranch.android.shared.GenericCommand;
-import com.bignerdranch.android.shared.Results;
+import com.bignerdranch.android.shared.resultobjects.Results;
 import com.bignerdranch.android.shared.Serializer;
 import org.java_websocket.client.WebSocketClient;
 import org.java_websocket.handshake.ServerHandshake;
@@ -16,7 +16,7 @@ public class ServerProxy {
     private Results messageResult;
 
     private ServerProxy() {
-        client.getInstance();
+        client = TtRClient.getInstance();
     }
 
     static ServerProxy getInstance() {
@@ -45,6 +45,7 @@ public class ServerProxy {
         String commandObjStr = Serializer.getInstance().serializeObject(commandObj);
         client.send(commandObjStr);
         while (messageResult == null) {
+            messageResult = client.getResults();
             Thread.sleep(100);
         }
         return messageResult;
@@ -57,6 +58,7 @@ public class ServerProxy {
         String commandObjStr = Serializer.getInstance().serializeObject(commandObj);
         client.send(commandObjStr);
         while (messageResult == null) {
+            messageResult = client.getResults();
             Thread.sleep(100);
         }
         return messageResult;

@@ -1,7 +1,7 @@
 package server.handlers;
 
 import com.bignerdranch.android.shared.GenericCommand;
-import com.bignerdranch.android.shared.Results;
+import com.bignerdranch.android.shared.resultobjects.Results;
 import com.bignerdranch.android.shared.Serializer;
 
 public class commandHandler extends handlerBase {
@@ -12,6 +12,6 @@ public class commandHandler extends handlerBase {
         String ss = Serializer.getInstance().serializeObject(results);
 
         if(results.isSuccess()){ return (String) results.getData(); }
-        else{ return results.getErrorInfo(); }
+        else{ return (String) results.getData(); }
     }
 }

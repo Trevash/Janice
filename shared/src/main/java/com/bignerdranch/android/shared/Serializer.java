@@ -2,6 +2,8 @@ package com.bignerdranch.android.shared;
 
 import com.google.gson.Gson;
 
+import com.bignerdranch.android.shared.resultobjects.Results;
+
 public class Serializer {
     private static Serializer sr = new Serializer();
     public static Serializer getInstance() {

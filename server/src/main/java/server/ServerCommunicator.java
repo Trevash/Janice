@@ -1,7 +1,7 @@
 package server;
 
 import com.bignerdranch.android.shared.GenericCommand;
-import com.bignerdranch.android.shared.Results;
+import com.bignerdranch.android.shared.resultobjects.Results;
 import com.bignerdranch.android.shared.Serializer;
 import com.bignerdranch.android.shared.models.*;
 import com.sun.net.httpserver.HttpServer;

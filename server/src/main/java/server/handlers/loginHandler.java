@@ -1,6 +1,7 @@
 package server.handlers;
 
-import com.bignerdranch.android.shared.Results;
+import com.bignerdranch.android.shared.resultobjects.LoginData;
+import com.bignerdranch.android.shared.resultobjects.Results;
 import com.bignerdranch.android.shared.models.*;
 
 public class loginHandler {
@@ -13,6 +14,7 @@ public class loginHandler {
 
         authTokenModel auth = new authTokenModel();
 
-        return new Results("login", true, auth.getValue(), "");
+        LoginData data = new LoginData(serverModel.getInstance().getGames(), auth);
+        return new Results("Login", true, data);
     }
 }

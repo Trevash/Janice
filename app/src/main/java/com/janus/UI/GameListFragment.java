@@ -32,7 +32,7 @@ public class GameListFragment extends Fragment implements GameListFragmentPresen
     private RecyclerView mGameList;
     private Button mJoinGame;
     private Button mCreateGame;
-    private List<gameModel> games;
+    private List<gameModel> games = new ArrayList<>();
 
     public GameListFragment() {}
 

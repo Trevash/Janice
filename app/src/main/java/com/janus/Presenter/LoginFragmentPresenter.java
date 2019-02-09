@@ -4,7 +4,8 @@ import android.content.res.Resources;
 import android.util.Log;
 import android.view.View;
 
-import com.bignerdranch.android.shared.Results;
+import com.bignerdranch.android.shared.resultobjects.LoginData;
+import com.bignerdranch.android.shared.resultobjects.Results;
 import com.bignerdranch.android.shared.models.userModel;
 import com.janus.Communication.LoginTask;
 import com.janus.LoginRequest;
@@ -70,7 +71,8 @@ public class LoginFragmentPresenter implements LoginTask.Caller{
 
     @Override
     public void onLoginComplete(Results r) {
-        //user.setGames(r.getGames());
+        LoginData data = (LoginData) r.getData();
+        //user.setGames(data.getGames());
         view.displaySuccess();
     }
 }

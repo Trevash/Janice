@@ -2,7 +2,7 @@ package com.janus.Communication;
 
 import android.os.AsyncTask;
 
-import com.bignerdranch.android.shared.Results;
+import com.bignerdranch.android.shared.resultobjects.Results;
 
 import com.janus.LoginRequest;
 
@@ -39,7 +39,7 @@ public class LoginTask extends AsyncTask<LoginRequest, Void, Results> {
         } catch(Exception e){
             e.printStackTrace();
             System.out.print(e.getMessage());
-            return new Results(false, "", e.getMessage());
+            return new Results("Login", false, e.getMessage());
         }
     }
 
@@ -48,7 +48,7 @@ public class LoginTask extends AsyncTask<LoginRequest, Void, Results> {
         if(r.isSuccess()) {
             caller.onLoginComplete(r);
         } else {
-            caller.onError(r.getErrorInfo());
+            caller.onError((String) r.getData());
         }
     }
 }

@@ -1,6 +1,6 @@
 package server.handlers;
 
-import com.bignerdranch.android.shared.Results;
+import com.bignerdranch.android.shared.resultobjects.Results;
 import com.bignerdranch.android.shared.models.*;
 
 public class registerHandler {
@@ -11,6 +11,6 @@ public class registerHandler {
 
         authTokenModel auth = new authTokenModel();
 
-        return new Results("register", true, auth.getValue(), "");
+        return new Results("Register", true, auth.getValue());
     }
 }
