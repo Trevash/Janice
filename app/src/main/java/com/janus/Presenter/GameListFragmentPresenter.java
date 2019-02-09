@@ -26,6 +26,8 @@ public class GameListFragmentPresenter {
     }
 
     public void createGameClicked() {
-
+        view.updateButtons(false);
+        CreateGameTask createGameTask = new CreateGameTask(this);
+        createGameTask.execute();
     }
 }

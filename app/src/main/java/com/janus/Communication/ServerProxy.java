@@ -63,4 +63,15 @@ public class ServerProxy {
         }
         return messageResult;
     }
+
+    public Results CreateGame() throws Exception {
+        GenericCommand commandObj = new GenericCommand("server.handlers.createGameHandler", "createGame");
+        String commandObjStr = Serializer.getInstance().serializeObject(commandObj);
+        client.send(commandObjStr);
+        while (messageResult == null) {
+            messageResult = client.getResults();
+            Thread.sleep(100);
+        }
+        return messageResult;
+    }
 }
