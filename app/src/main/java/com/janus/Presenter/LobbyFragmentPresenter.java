@@ -16,7 +16,7 @@ public class LobbyFragmentPresenter {
     }
 
     public void startGameClicked() {
-
+        //Call startGame on serverproxy
     }
 
     /*public void updatePlayerList(Player[] p) {

@@ -63,6 +63,9 @@ public class LobbyFragment extends Fragment implements LobbyFragmentPresenter.Vi
         mMainActivity = (MainActivity) getActivity();
 
         mStartGameButton = (Button) v.findViewById(R.id.startGameButton);
+        //If you are host, set the text to "Start Game"
+        //Else set to "Ready"
+        //mStartGameButton.setText("hello");
         mStartGameButton.setEnabled(false);
         mStartGameButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -74,9 +77,12 @@ public class LobbyFragment extends Fragment implements LobbyFragmentPresenter.Vi
     }
 
     private void startGameButtonClicked() {
+        //if host
         presenter.startGameClicked();
         //Create and send start game request
         //Start the game
+
+        //if not host, change player ready state and send to the server
     }
 
     private class PlayerHolder extends RecyclerView.ViewHolder{
