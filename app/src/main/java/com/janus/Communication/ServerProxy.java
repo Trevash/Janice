@@ -2,6 +2,7 @@ package com.janus.Communication;
 
 import com.bignerdranch.android.shared.GenericCommand;
 import com.bignerdranch.android.shared.models.authTokenModel;
+import com.bignerdranch.android.shared.requestObjects.JoinGameRequest;
 import com.bignerdranch.android.shared.resultobjects.Results;
 import com.bignerdranch.android.shared.Serializer;
 import org.java_websocket.client.WebSocketClient;
@@ -30,13 +31,12 @@ public class ServerProxy {
     
     private String className = "server.handlers";
 
-    public void connectClient() {
-    	try {
-			client.connectBlocking();
-		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+    public void connectClient() throws InterruptedException {
+        client.connectBlocking();
+    }
+
+    public void disconnectClient() throws InterruptedException {
+        client.closeBlocking();
     }
     
     public Results Login(String username, String password) throws Exception {
@@ -68,9 +68,22 @@ public class ServerProxy {
     public Results CreateGame(authTokenModel authToken) throws Exception {
         Object[] paramValues = {authToken};
         String[] paramTypes = {"java.com.bignerdranch.android.models.authTokenModel"};
-        GenericCommand commandObj = new GenericCommand("server.handlers.createGameHandler", "createGame",paramTypes, paramValues);
+        GenericCommand commandObj = new GenericCommand("server.handlers.createGameHandler", "createGame", paramTypes, paramValues);
         String commandObjStr = Serializer.getInstance().serializeObject(commandObj);
         client.send(commandObjStr);
+        while (messageResult == null) {
+            messageResult = client.getResults();
+            Thread.sleep(100);
+        }
+        return messageResult;
+    }
+
+    public Results JoinGame(JoinGameRequest request) throws Exception {
+        JoinGameRequest[] paramValues = {request};
+        String[] paramTypes = {"com.bignerdranch.android.shared.requestObjects.JoinGameRequest"};
+        GenericCommand command = new GenericCommand("server.handlers.JoinGameHandler", "joinGame", paramTypes, paramValues);
+        String commandString = Serializer.getInstance().serializeObject(command);
+        client.send(commandString);
         while (messageResult == null) {
             messageResult = client.getResults();
             Thread.sleep(100);

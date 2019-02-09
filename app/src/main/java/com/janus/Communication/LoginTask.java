@@ -35,6 +35,10 @@ public class LoginTask extends AsyncTask<LoginRequest, Void, Results> {
                 res = proxy.Register(r[0].getUsername(), r[0].getPassword());
             }
 
+            if (!res.isSuccess()) {
+                proxy.disconnectClient();
+            }
+
             return res;
         } catch(Exception e){
             e.printStackTrace();
