@@ -1,14 +1,14 @@
-package com.bignerdranch.android.shared.resultObjects;
+package com.bignerdranch.android.shared.resultobjects;
 
 import java.util.List;
 
 import com.bignerdranch.android.shared.models.*;
 
-public class LoginResult {
+public class LoginData {
     private List<gameModel> games;
     private authTokenModel authToken;
 
-    public LoginResult(List<gameModel> games, authTokenModel authToken) {
+    public LoginData(List<gameModel> games, authTokenModel authToken) {
         this.games = games;
         this.authToken = authToken;
     }

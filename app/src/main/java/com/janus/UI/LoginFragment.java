@@ -92,22 +92,6 @@ public class LoginFragment extends Fragment implements LoginFragmentPresenter.Vi
         return v;
     }
 
-    /*
-    @Override
-    public void onLoginComplete(LoginResult r) {
-
-        String personID = r.getPersonID();
-        mModel.setUserPersonID(personID);
-
-        String authToken = r.getAuthToken();
-        DataSyncTask task = new DataSyncTask(this, mServerHostString, mServerPortString);
-        task.execute(authToken);
-
-        mMainActivity.onLogIn();
-    }
-    */
-
-
     @Override
     public void updateButtons(boolean isActive){
         mLoginButton.setEnabled(isActive);

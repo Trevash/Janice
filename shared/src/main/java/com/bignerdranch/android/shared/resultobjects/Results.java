@@ -1,11 +1,11 @@
-package com.bignerdranch.android.shared.resultObjects;
+package com.bignerdranch.android.shared.resultobjects;
 
-public class DefaultResult {
+public class Results {
     private String type;
     private boolean success;
     private Object data;
 
-    public DefaultResult(String type, boolean success, Object data) {
+    public Results(String type, boolean success, Object data) {
         this.type = type;
         this.success = success;
         this.data = data;
@@ -19,7 +19,7 @@ public class DefaultResult {
         return success;
     }
 
-    //Object should be the result object specific to the type
+    //Object should be the data object specific to the type
     public Object getData() {
         return data;
     }
