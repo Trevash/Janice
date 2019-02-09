@@ -1,12 +1,12 @@
 package com.bignerdranch.android.shared.models;
 
 public class playerModel {
-    private usernameModel userName = null;
-    private playerIDModel id = null;
+    private usernameModel userName;
+    private playerIDModel id;
 
-    public playerModel(usernameModel userName, playerIDModel id, boolean isReady, boolean isHost) {
+    public playerModel(usernameModel userName, boolean isReady, boolean isHost) {
         this.userName = userName;
-        this.id = id;
+        this.id = new playerIDModel();
         this.isReady = isReady;
         this.isHost = isHost;
     }
@@ -15,8 +15,8 @@ public class playerModel {
         return isHost;
     }
 
-    private boolean isReady = false;
-    private boolean isHost = false;
+    private boolean isReady;
+    private boolean isHost;
 
     public playerIDModel getId() {
         return id;
@@ -29,5 +29,7 @@ public class playerModel {
     public boolean isReady() {
         return isReady;
     }
+
+    public void setIsReady(boolean ready) {isReady = ready;}
 }
 

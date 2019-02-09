@@ -48,15 +48,16 @@ public class ServerCommunicator extends WebSocketServer {
         GenericCommand command = Serializer.getInstance().deserializeCommand(message);
         Results result = command.execute();
         switch(result.getType()){
-        	case "login": System.out.println("login"); 
-        	case "register": System.out.println("register");  
-        	case "create": System.out.println("create");  
-        	case "join": System.out.println("join");  
-        	case "start": System.out.println("start");  
-        	case "ERROR": System.out.println("ERROR");
+        	case "Login": System.out.println("Login");
+        	case "Register": System.out.println("Register");
+        	case "Create": System.out.println("Create");
+        	case "Join": System.out.println("Join");
+        	case "Start": System.out.println("Start");
+        	case "ERROR": System.out.println(result.getData());
+            default : System.out.println("Invalid type passed to onMessage from Result!");
         }
         String resultGson = Serializer.getInstance().serializeObject(result);
-        List<WebSocket> temp = new ArrayList<WebSocket>();
+        List<WebSocket> temp = new ArrayList<>();
         temp.add(conn);
         broadcast(resultGson, temp);
     }

@@ -9,10 +9,11 @@ public class userModel {
     Each private variable is a difference collumn
      */
 
-    private usernameModel userName = null;
-    private passwordModel password = null;
-    private userIDModel userID = null;
-    private List<playerIDModel> playerIDs = new ArrayList<playerIDModel>();
+    private usernameModel userName;
+    private passwordModel password;
+    private userIDModel userID;
+    private List<playerIDModel> playerIDs = new ArrayList<>();
+    private authTokenModel authToken;
 
     public userModel(usernameModel newUserName,
                      passwordModel newPassword,
@@ -58,4 +59,11 @@ public class userModel {
         this.playerIDs.remove(test);
     }
 
+    public authTokenModel getAuthToken() {
+        return authToken;
+    }
+
+    public void setAuthToken(authTokenModel authToken) {
+        this.authToken = authToken;
+    }
 }

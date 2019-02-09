@@ -1,5 +1,8 @@
 package com.bignerdranch.android.shared.models;
 
+import com.bignerdranch.android.shared.requestObjects.JoinGameRequest;
+import com.bignerdranch.android.shared.requestObjects.StartGameRequest;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -14,8 +17,6 @@ public class serverModel {
     }
 
     private List<userModel> users = new ArrayList<>();
-
-    private List<authTokenModel> authTokens = new ArrayList<>();
 
     private List<gameModel> games = new ArrayList<>();
 
@@ -79,9 +80,9 @@ public class serverModel {
         throw new Exception("User not found!");
     }
 
-    public boolean authTokenExists(String newValue) {
-        for (authTokenModel auth : this.authTokens) {
-            if(auth.getValue().equals(newValue))
+    public boolean authTokenExists(authTokenModel auth) {
+        for (userModel curUser : this.users) {
+            if(curUser.getAuthToken().getValue().equals(auth.getValue()))
                 return true;
         }
         return false;
@@ -111,5 +112,35 @@ public class serverModel {
 
     public void addGame(gameModel newGame) {
         games.add(newGame);
+    }
+
+    public Object joinGame(JoinGameRequest request) throws Exception {
+        for (gameModel curGame : this.games) {
+            if(curGame.getGameID().equals(request.getModel().getGameID())) {
+                curGame.addPlayer(this.makeNewPlayer(this.getUserByAuth(request.getAuth())));
+            }
+        }
+        throw new Exception("Join game failed, game not found");
+    }
+
+    private playerModel makeNewPlayer(userModel userByAuth) {
+        return new playerModel(userByAuth.getUserName(), false, false);
+    }
+
+    private userModel getUserByAuth(authTokenModel auth) throws Exception {
+        for (userModel curUser : this.users) {
+            if(curUser.getAuthToken().getValue().equals(auth.getValue()))
+                return curUser;
+        }
+        throw new Exception("User not found by auth token to find game!");
+    }
+
+    public Object startGame(StartGameRequest request) throws Exception {
+        for (gameModel curGame : this.games) {
+            if(curGame.getGameID().equals(request.getModel().getGameID())) {
+                curGame.startGame();
+            }
+        }
+        throw new Exception("Game not found to start!");
     }
 }
