@@ -1,5 +1,7 @@
 package com.janus.Presenter;
 
+import com.bignerdranch.android.shared.resultobjects.Results;
+
 public class LobbyFragmentPresenter {
 
     public interface View {
@@ -27,5 +29,11 @@ public class LobbyFragmentPresenter {
     private void checkButtons() {
         //Check to make sure everybody is ready and that there are at least 2 players
         view.updateButtons(true);
+    }
+
+    @Override
+    public void onCreateGameComplete(Results r) {
+        //user.setGames(data.getGames());
+        view.displaySuccess();
     }
 }

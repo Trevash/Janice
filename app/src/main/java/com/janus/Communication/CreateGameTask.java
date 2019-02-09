@@ -5,7 +5,7 @@ import android.os.AsyncTask;
 import com.bignerdranch.android.shared.resultobjects.Results;
 import com.janus.LoginRequest;
 
-public class CreateGameTask extends AsyncTask<Void, Void, Results> {
+public class CreateGameTask extends AsyncTask<Authtoken, Void, Results> {
     public interface Caller {
         void onError(String s);
         void onCreateComplete(Results r);
@@ -23,7 +23,7 @@ public class CreateGameTask extends AsyncTask<Void, Void, Results> {
         try {
             Results res;
             proxy.connectClient();
-            res = proxy.CreateGame();
+            res = proxy.CreateGame(/*ClientModel.getUserAuthToken*/);
             return res;
         } catch(Exception e){
             e.printStackTrace();

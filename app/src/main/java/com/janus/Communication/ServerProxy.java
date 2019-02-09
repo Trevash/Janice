@@ -1,6 +1,7 @@
 package com.janus.Communication;
 
 import com.bignerdranch.android.shared.GenericCommand;
+import com.bignerdranch.android.shared.models.authTokenModel;
 import com.bignerdranch.android.shared.resultobjects.Results;
 import com.bignerdranch.android.shared.Serializer;
 import org.java_websocket.client.WebSocketClient;
@@ -64,8 +65,10 @@ public class ServerProxy {
         return messageResult;
     }
 
-    public Results CreateGame() throws Exception {
-        GenericCommand commandObj = new GenericCommand("server.handlers.createGameHandler", "createGame");
+    public Results CreateGame(authTokenModel authToken) throws Exception {
+        Object[] paramValues = {authToken};
+        String[] paramTypes = {"java.com.bignerdranch.android.models.authTokenModel"};
+        GenericCommand commandObj = new GenericCommand("server.handlers.createGameHandler", "createGame",paramTypes, paramValues);
         String commandObjStr = Serializer.getInstance().serializeObject(commandObj);
         client.send(commandObjStr);
         while (messageResult == null) {
