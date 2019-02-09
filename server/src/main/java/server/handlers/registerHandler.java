@@ -11,6 +11,6 @@ public class registerHandler {
 
         authTokenModel auth = new authTokenModel();
 
-        return new Results(true, auth.getValue(), "");
+        return new Results("register", true, auth.getValue(), "");
     }
 }

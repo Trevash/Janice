@@ -13,6 +13,6 @@ public class loginHandler {
 
         authTokenModel auth = new authTokenModel();
 
-        return new Results(true, auth.getValue(), "");
+        return new Results("login", true, auth.getValue(), "");
     }
 }
