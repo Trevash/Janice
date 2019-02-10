@@ -6,13 +6,14 @@ import java.net.URISyntaxException;
 import org.java_websocket.client.WebSocketClient;
 import org.java_websocket.handshake.ServerHandshake;
 
+import com.bignerdranch.android.shared.resultobjects.LoginData;
 import com.bignerdranch.android.shared.resultobjects.Results;
 import com.bignerdranch.android.shared.Serializer;
 
 public class TtRClient extends WebSocketClient{
     private static TtRClient client;
     private static Results messageResult;
-    
+
     private TtRClient(URI serverUri) {
         super(serverUri);
     }
@@ -39,6 +40,18 @@ public class TtRClient extends WebSocketClient{
         Results result = Serializer.getInstance().deserializeResults(message);
         if (result.isSuccess()) {
             System.out.println("Received Message: " + result.getData());
+            switch (result.getType()) {
+                case "Login": {
+                    LoginData data = Serializer.getInstance().deserializeLoginData(result.getData().toString());
+                    result.setData(data);
+                    break;
+                }
+                case "Register": {
+                    LoginData data = Serializer.getInstance().deserializeLoginData(result.getData().toString());
+                    result.setData(data);
+                    break;
+                }
+            }
             messageResult = result;
         }
         else {

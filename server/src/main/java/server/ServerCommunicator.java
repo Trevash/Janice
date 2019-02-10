@@ -48,12 +48,12 @@ public class ServerCommunicator extends WebSocketServer {
         GenericCommand command = Serializer.getInstance().deserializeCommand(message);
         Results result = command.execute();
         switch(result.getType()){
-        	case "login": System.out.println("login"); 
-        	case "register": System.out.println("register");  
-        	case "create": System.out.println("create");  
-        	case "join": System.out.println("join");  
-        	case "start": System.out.println("start");  
-        	case "ERROR": System.out.println("ERROR");
+        	case "Login": System.out.println("login"); break;
+        	case "Register": System.out.println("register"); break;
+        	case "Create": System.out.println("create"); break;
+        	case "Join": System.out.println("join"); break;
+        	case "Start": System.out.println("start"); break;
+        	case "ERROR": System.out.println("ERROR"); break;
         }
         String resultGson = Serializer.getInstance().serializeObject(result);
         List<WebSocket> temp = new ArrayList<WebSocket>();
