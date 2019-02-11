@@ -15,19 +15,18 @@ import java.net.URI;
 import java.net.URISyntaxException;
 
 public class ServerProxy {
+
+    public interface CurrentState {
+
+    }
+
 	private static ServerProxy scp;
     private static TtRClient client;
 
     private Results messageResult;
+    private CurrentState state;
 
-    private ServerProxy() {
-        try {
-			client = new TtRClient(new URI("ws://10.24.217.239:8087"));
-		} catch (URISyntaxException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-    }
+    private ServerProxy() {}
 
     static ServerProxy getInstance() {
         if (scp == null){
@@ -36,18 +35,17 @@ public class ServerProxy {
         return scp;
     }
 
-    
     private String className = "server.handlers";
 
-    public void connectClient() {
-    	try {
-			client.connectBlocking();
-		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+    public void connectClient() throws InterruptedException, URISyntaxException {
+        client = new TtRClient(new URI("ws://10.24.218.199:8087"));
+        client.connectBlocking();
     }
-    
+
+    public void disconnectClient() throws InterruptedException, URISyntaxException {
+        client.closeBlocking();
+    }
+
     public Results Login(String username, String password) throws Exception {
         String[] paramValues = {username, password};
         String[] paramTypes = {"java.lang.String", "java.lang.String"};
