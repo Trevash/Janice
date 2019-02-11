@@ -4,6 +4,7 @@ import android.content.res.Resources;
 import android.util.Log;
 import android.view.View;
 
+import com.bignerdranch.android.shared.Serializer;
 import com.bignerdranch.android.shared.resultobjects.LoginData;
 import com.bignerdranch.android.shared.resultobjects.Results;
 import com.bignerdranch.android.shared.models.userModel;
@@ -72,7 +73,8 @@ public class LoginFragmentPresenter implements LoginTask.Caller{
 
     @Override
     public void onLoginComplete(Results r) {
-        LoginData data = (LoginData) r.getData();
+        LoginData data = Serializer.getInstance().deserializeLoginData(r.getData().toString());
+        //LoginData data = (LoginData) r.getData();
         model.setServerGameList(data.getGames());
         model.setAuth(data.getAuthToken());
         view.displaySuccess();
