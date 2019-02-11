@@ -15,7 +15,7 @@ public class TtRClient extends WebSocketClient{
     public TtRClient(URI serverUri) {
         super(serverUri);
     }
-    
+
     @Override
     public void onOpen(ServerHandshake handshakedata) {
         System.out.println("Connection Open!");

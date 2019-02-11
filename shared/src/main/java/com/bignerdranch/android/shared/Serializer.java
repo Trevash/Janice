@@ -1,5 +1,6 @@
 package com.bignerdranch.android.shared;
 
+import com.bignerdranch.android.shared.requestObjects.CreateGameRequest;
 import com.bignerdranch.android.shared.resultobjects.LoginData;
 import com.google.gson.Gson;
 
@@ -27,5 +28,9 @@ public class Serializer {
 
     public LoginData deserializeLoginData(String str) {
         return parser.fromJson(str, LoginData.class);
+    }
+
+    public CreateGameRequest deserializeCreateCommand(String str) {
+        return parser.fromJson(str, CreateGameRequest.class);
     }
 }

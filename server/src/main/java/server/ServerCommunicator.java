@@ -1,6 +1,7 @@
 package server;
 
 import com.bignerdranch.android.shared.GenericCommand;
+import com.bignerdranch.android.shared.requestObjects.CreateGameRequest;
 import com.bignerdranch.android.shared.resultobjects.Results;
 import com.bignerdranch.android.shared.Serializer;
 import com.bignerdranch.android.shared.models.*;
@@ -26,7 +27,7 @@ public class ServerCommunicator extends WebSocketServer {
     }
 
     public static void main(String[] args) {
-        String host = "10.24.217.239";
+        String host = "10.34.245.190";
         int port = 8087;
 
         WebSocketServer server = new ServerCommunicator(new InetSocketAddress(host, port));
@@ -46,13 +47,17 @@ public class ServerCommunicator extends WebSocketServer {
     @Override
     public void onMessage(WebSocket conn, String message) {
         GenericCommand command = Serializer.getInstance().deserializeCommand(message);
+        if (command.getMethod().equals("createGame")) {
+            CreateGameRequest[] request = {Serializer.getInstance().deserializeCreateCommand(command.getParamValues()[0].toString())};
+            command.setParamValues(request);
+        }
         Results result = command.execute();
         String resultGson = Serializer.getInstance().serializeObject(result);
         
         switch(result.getType()){
-        	case "Login": broadcastOne(resultGson, conn);
-        	case "Register": broadcastOne(resultGson, conn);
-        	case "Create": broadcast(resultGson);
+        	case "Login": broadcastOne(resultGson, conn); break;
+        	case "Register": broadcastOne(resultGson, conn); break;
+        	case "Create": broadcast(resultGson); break;
         	case "Join": broadcast(resultGson);
         	case "Start": broadcast(resultGson);
             default : System.out.println("Invalid type passed to onMessage from Result!");

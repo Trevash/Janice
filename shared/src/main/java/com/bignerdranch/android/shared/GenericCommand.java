@@ -24,6 +24,9 @@ public class GenericCommand {
     public Object[] getParamValues(){
         return _paramValues;
     }
+    public void setParamValues(Object[] paramValues) {
+        this._paramValues = paramValues;
+    }
 
 
     private Class<?>[] getClasses() throws ClassNotFoundException {
@@ -48,6 +51,7 @@ public class GenericCommand {
             return (Results) method.invoke(receiver.newInstance(), _paramValues);
         }
         catch (InvocationTargetException i) {
+            i.printStackTrace();
             return new Results("ERROR", false, i.getTargetException().getMessage());
         }
         catch (Exception e) {

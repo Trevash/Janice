@@ -116,7 +116,9 @@ public class GameListFragment extends Fragment implements GameListFragmentPresen
 
         private class GameViewHolder extends RecyclerView.ViewHolder {
 
-            public gameModel game;
+            public gameModel mGame;
+            public TextView mGameName;
+            public TextView mPlayerNumber;
             public RelativeLayout layout;
 
             public GameViewHolder(RelativeLayout r) {
@@ -125,9 +127,12 @@ public class GameListFragment extends Fragment implements GameListFragmentPresen
                 layout.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        presenter.selectGame(game);
+                        presenter.selectGame(mGame);
                     }
                 });
+
+                mGameName = (TextView) r.findViewById(R.id.game_name_text_view);
+                mPlayerNumber = (TextView) r.findViewById(R.id.player_number_text_view);
             }
         }
 
@@ -145,6 +150,10 @@ public class GameListFragment extends Fragment implements GameListFragmentPresen
         @Override
         public void onBindViewHolder(GameViewHolder holder, int position) {
             gameModel game = games.get(position);
+
+            holder.mGameName.setText(game.getGameName());
+            holder.mPlayerNumber.setText(game.numPlayers() + "/5");
+            holder.mGame = game;
 
         }
 

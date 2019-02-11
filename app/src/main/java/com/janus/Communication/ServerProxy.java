@@ -38,7 +38,7 @@ public class ServerProxy {
     private String className = "server.handlers";
 
     public void connectClient() throws InterruptedException, URISyntaxException {
-        client = new TtRClient(new URI("ws://10.24.218.199:8087"));
+        client = new TtRClient(new URI("ws://10.34.245.190:8087"));
         client.connectBlocking();
     }
 
@@ -74,7 +74,7 @@ public class ServerProxy {
 
     public Results CreateGame(authTokenModel auth) throws Exception {
         Object[] paramValues = {new CreateGameRequest(auth)};
-        String[] paramTypes = {"shared.requestObjects.CreateGameRequest"};
+        String[] paramTypes = {"com.bignerdranch.android.shared.requestObjects.CreateGameRequest"};
         GenericCommand commandObj = new GenericCommand("server.handlers.commandHandler", "createGame", paramTypes, paramValues);
         String commandObjStr = Serializer.getInstance().serializeObject(commandObj);
         client.send(commandObjStr);
