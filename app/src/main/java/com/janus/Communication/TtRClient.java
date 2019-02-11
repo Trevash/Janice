@@ -1,7 +1,6 @@
 package com.janus.Communication;
 
 import java.net.URI;
-import java.net.URISyntaxException;
 
 import org.java_websocket.client.WebSocketClient;
 import org.java_websocket.handshake.ServerHandshake;
@@ -11,25 +10,12 @@ import com.bignerdranch.android.shared.resultobjects.Results;
 import com.bignerdranch.android.shared.Serializer;
 
 public class TtRClient extends WebSocketClient{
-    private static TtRClient client;
     private static Results messageResult;
 
-    private TtRClient(URI serverUri) {
+    public TtRClient(URI serverUri) {
         super(serverUri);
     }
     
-    static TtRClient getInstance() {
-    	if (client == null){
-            //TODO: Generalize from localhost
-            try {
-                client = new TtRClient(new URI("ws://10.24.217.239:8087"));
-            } catch (URISyntaxException e) {
-                System.out.println(e.getMessage());
-                e.printStackTrace();
-            }
-        }
-        return client;
-    }
     @Override
     public void onOpen(ServerHandshake handshakedata) {
         System.out.println("Connection Open!");
