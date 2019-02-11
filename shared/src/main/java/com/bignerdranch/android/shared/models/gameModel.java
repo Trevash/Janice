@@ -7,11 +7,13 @@ public class gameModel {
     private gameIDModel gameID;
     private String gameName;
     private boolean gameStarted;
+    private userModel hostUser;
     private List<playerModel> players = new ArrayList<>();
 
-    public gameModel(String newGameName){
+    public gameModel(authTokenModel auth) throws Exception {
         gameID = new gameIDModel();
-        gameName = newGameName;
+        gameName = serverModel.getInstance().getUser(auth).getUserName().getValue() + "'s Game!";
+        hostUser = serverModel.getInstance().getUser(auth);
         gameStarted = false;
     }
 
@@ -30,6 +32,10 @@ public class gameModel {
         }
 
         players.add(newPlayer);
+    }
+
+    public int numPlayers(){
+        return players.size();
     }
 
     public String getGameName() {

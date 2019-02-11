@@ -80,9 +80,26 @@ public class serverModel {
         throw new Exception("User not found!");
     }
 
+    public userModel getUser(authTokenModel auth) throws Exception{
+        for(userModel user : this.users) {
+            if(user.getAuthToken().getValue().equals(auth.getValue())) {
+                return user;
+            }
+        }
+        throw new Exception("User not found!");
+    }
+
     public boolean authTokenExists(authTokenModel auth) {
         for (userModel curUser : this.users) {
             if(curUser.getAuthToken().getValue().equals(auth.getValue()))
+                return true;
+        }
+        return false;
+    }
+
+    public boolean authTokenExists(String newValue) {
+        for (userModel curUser : this.users) {
+            if(curUser.getAuthToken().getValue().equals(newValue))
                 return true;
         }
         return false;
@@ -114,7 +131,7 @@ public class serverModel {
         games.add(newGame);
     }
 
-    public Object joinGame(JoinGameRequest request) throws Exception {
+    public void joinGame(JoinGameRequest request) throws Exception {
         for (gameModel curGame : this.games) {
             if(curGame.getGameID().equals(request.getModel().getGameID())) {
                 curGame.addPlayer(this.makeNewPlayer(this.getUserByAuth(request.getAuth())));
@@ -135,7 +152,7 @@ public class serverModel {
         throw new Exception("User not found by auth token to find game!");
     }
 
-    public Object startGame(StartGameRequest request) throws Exception {
+    public void startGame(StartGameRequest request) throws Exception {
         for (gameModel curGame : this.games) {
             if(curGame.getGameID().equals(request.getModel().getGameID())) {
                 curGame.startGame();

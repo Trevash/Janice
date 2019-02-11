@@ -36,7 +36,7 @@ public class commandHandler extends handlerBase {
 
         authTokenModel auth = new authTokenModel();
 
-        LoginData data = new LoginData(serverModel.getInstance().getGames(), auth);
+        LoginData data = new LoginData(new GameListData(), auth);
 
         return new Results("Register", true, data);
     }
@@ -50,7 +50,7 @@ public class commandHandler extends handlerBase {
 
         authTokenModel auth = new authTokenModel();
 
-        LoginData data = new LoginData(serverModel.getInstance().getGames(), auth);
+        LoginData data = new LoginData(new GameListData(), auth);
         return new Results("Login", true, data);
     }
 
@@ -59,7 +59,7 @@ public class commandHandler extends handlerBase {
             throw new Exception("Invalid Auth Token passed to createGame");
         }
 
-        serverModel.getInstance().addGame(new gameModel(request.getGameName()));
+        serverModel.getInstance().addGame(new gameModel(request.getAuth()));
         return new Results("Create", true, new GameListData());
     }
 
@@ -68,7 +68,9 @@ public class commandHandler extends handlerBase {
             throw new Exception("Invalid Auth Token passed to joinGame");
         }
 
-        return new Results("Join", true, serverModel.getInstance().joinGame(request));
+        serverModel.getInstance().joinGame(request);
+
+        return new Results("Join", true, new GameListData());
     }
 
     public Results startGame(StartGameRequest request) throws Exception {
@@ -76,6 +78,8 @@ public class commandHandler extends handlerBase {
             throw new Exception("Invalid Auth Token passed to startGame");
         }
 
-        return new Results("Start", true, serverModel.getInstance().startGame(request));
+        serverModel.getInstance().startGame(request);
+
+        return new Results("Start", true, new GameListData());
     }
 }

@@ -4,6 +4,7 @@ import com.bignerdranch.android.shared.GenericCommand;
 import com.bignerdranch.android.shared.models.authTokenModel;
 import com.bignerdranch.android.shared.models.gameModel;
 import com.bignerdranch.android.shared.requestObjects.CreateGameRequest;
+import com.bignerdranch.android.shared.requestObjects.JoinGameRequest;
 import com.bignerdranch.android.shared.requestObjects.StartGameRequest;
 import com.bignerdranch.android.shared.resultobjects.Results;
 import com.bignerdranch.android.shared.Serializer;
@@ -73,8 +74,8 @@ public class ServerProxy {
         return messageResult;
     }
 
-    public Results CreateGame(String newGameName, authTokenModel auth) throws Exception {
-        Object[] paramValues = {new CreateGameRequest(newGameName, auth)};
+    public Results CreateGame(authTokenModel auth) throws Exception {
+        Object[] paramValues = {new CreateGameRequest(auth)};
         String[] paramTypes = {"shared.requestObjects.CreateGameRequest"};
         GenericCommand commandObj = new GenericCommand("server.handlers.commandHandler", "createGame", paramTypes, paramValues);
         String commandObjStr = Serializer.getInstance().serializeObject(commandObj);
@@ -90,6 +91,19 @@ public class ServerProxy {
         Object[] paramValues = {new StartGameRequest(game, auth)};
         String[] paramTypes = {"shared.requestObjects.StartGameRequest"};
         GenericCommand commandObj = new GenericCommand("server.handlers.commandHandler", "startGame", paramTypes, paramValues);
+        String commandObjStr = Serializer.getInstance().serializeObject(commandObj);
+        client.send(commandObjStr);
+        while (messageResult == null) {
+            messageResult = client.getResults();
+            Thread.sleep(100);
+        }
+        return messageResult;
+    }
+
+    public Results JoinGame(JoinGameRequest request) throws Exception {
+        Object[] paramValues = {request};
+        String[] paramTypes = {"shared.requestObjects.JoinGameRequest"};
+        GenericCommand commandObj = new GenericCommand("server.handlers.commandHandler", "joinGame", paramTypes, paramValues);
         String commandObjStr = Serializer.getInstance().serializeObject(commandObj);
         client.send(commandObjStr);
         while (messageResult == null) {
