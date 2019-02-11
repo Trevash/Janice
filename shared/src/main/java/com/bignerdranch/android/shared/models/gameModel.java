@@ -28,7 +28,7 @@ public class gameModel {
                 throw new Exception("User is already a player in this game");
             }
         }
-        if(players.size() < 5) {
+        if(players.size() >= 5) {
             throw new Exception("Max number of players reached!");
         }
 
