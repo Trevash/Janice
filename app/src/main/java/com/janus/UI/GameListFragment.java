@@ -1,6 +1,7 @@
 package com.janus.UI;
 
 import android.content.Context;
+import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -13,11 +14,13 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bignerdranch.android.shared.models.gameModel;
 import com.bignerdranch.android.shared.models.userModel;
+import com.janus.ClientModel;
 import com.janus.Presenter.GameListFragmentPresenter;
 import com.janus.R;
 
@@ -32,7 +35,8 @@ public class GameListFragment extends Fragment implements GameListFragmentPresen
     private RecyclerView mGameList;
     private Button mJoinGame;
     private Button mCreateGame;
-    private List<gameModel> games = new ArrayList<>();
+    private List<gameModel> games;
+    private LinearLayoutManager mLayoutManager;
 
     public GameListFragment() {}
 
@@ -47,12 +51,15 @@ public class GameListFragment extends Fragment implements GameListFragmentPresen
         View v = inflater.inflate(R.layout.fragment_game_list, container, false);
 
         presenter = new GameListFragmentPresenter(this);
-        //games = userModel.getInstance().getGames();
+        games = ClientModel.getInstance().getServerGameList();
 
         mNumPlayers = (TextView) v.findViewById(R.id.num_players_text_view);
 
         mGameList = (RecyclerView) v.findViewById(R.id.game_list_recycler_view);
         mGameList.setLayoutManager(new LinearLayoutManager(getActivity()));
+
+        mLayoutManager = new LinearLayoutManager(getActivity());
+        mGameList.setLayoutManager(mLayoutManager);
 
         GameListAdapter adapter = new GameListAdapter(games);
         mGameList.setAdapter(adapter);
@@ -101,10 +108,18 @@ public class GameListFragment extends Fragment implements GameListFragmentPresen
 
         private class GameViewHolder extends RecyclerView.ViewHolder {
 
-            private gameModel game;
+            public gameModel game;
+            public RelativeLayout layout;
 
-            public GameViewHolder(View v) {
-                super(v);
+            public GameViewHolder(RelativeLayout r) {
+                super(r);
+                layout = r;
+                layout.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        presenter.selectGame(game);
+                    }
+                });
             }
         }
 
@@ -113,12 +128,15 @@ public class GameListFragment extends Fragment implements GameListFragmentPresen
         }
 
         @Override
-        public GameViewHolder onCreateViewHolder(ViewGroup viewGroup, int position) {
-            return null;
+        public GameListAdapter.GameViewHolder onCreateViewHolder(ViewGroup parent, int position) {
+            RelativeLayout r = (RelativeLayout) LayoutInflater.from(parent.getContext()).inflate(R.layout.game_list_child, parent, false);
+            GameViewHolder viewHolder = new GameViewHolder(r);
+            return viewHolder;
         }
 
         @Override
         public void onBindViewHolder(GameViewHolder holder, int position) {
+            gameModel game = games.get(position);
 
         }
 
