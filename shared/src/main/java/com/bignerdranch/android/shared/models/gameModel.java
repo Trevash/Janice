@@ -12,7 +12,7 @@ public class gameModel {
 
     public gameModel(authTokenModel auth) throws Exception {
         gameID = new gameIDModel();
-        gameName = serverModel.getInstance().getUser(auth).getUserName().getValue() + "'s Game!";
+        gameName = serverModel.getInstance().getUser(auth).getUserName().getValue() + "'s_Game!";
         hostUser = serverModel.getInstance().getUser(auth);
         gameStarted = false;
     }
