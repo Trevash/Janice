@@ -7,6 +7,7 @@ import android.view.View;
 import com.bignerdranch.android.shared.resultobjects.LoginData;
 import com.bignerdranch.android.shared.resultobjects.Results;
 import com.bignerdranch.android.shared.models.userModel;
+import com.janus.ClientModel;
 import com.janus.Communication.LoginTask;
 import com.janus.LoginRequest;
 import com.janus.R;
@@ -19,7 +20,7 @@ public class LoginFragmentPresenter implements LoginTask.Caller{
         void displaySuccess();
     }
 
-    //private userModel user = userModel.getInstance();
+    private ClientModel model = ClientModel.getInstance();
     private String username = "";
     private String password = "";
     private View view;
@@ -72,7 +73,8 @@ public class LoginFragmentPresenter implements LoginTask.Caller{
     @Override
     public void onLoginComplete(Results r) {
         LoginData data = (LoginData) r.getData();
-        //user.setGames(data.getGames());
+        model.setServerGameList(data.getGames());
+        model.setAuth(data.getAuthToken());
         view.displaySuccess();
     }
 }

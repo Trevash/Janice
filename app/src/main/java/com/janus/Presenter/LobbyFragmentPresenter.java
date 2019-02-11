@@ -1,5 +1,7 @@
 package com.janus.Presenter;
 
+import com.bignerdranch.android.shared.resultobjects.Results;
+
 public class LobbyFragmentPresenter {
 
     public interface View {

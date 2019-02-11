@@ -58,6 +58,7 @@ public class GameListFragment extends Fragment implements GameListFragmentPresen
         mGameList.setAdapter(adapter);
 
         mJoinGame = (Button) v.findViewById(R.id.join_game_button);
+        mJoinGame.setEnabled(false);
         mJoinGame.setOnClickListener(new View.OnClickListener() {
 
             @Override
