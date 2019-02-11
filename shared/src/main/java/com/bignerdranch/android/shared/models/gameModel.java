@@ -7,14 +7,15 @@ public class gameModel {
     private gameIDModel gameID;
     private String gameName;
     private boolean gameStarted;
-    private userModel hostUser;
+    private playerModel hostPlayer;
     private List<playerModel> players = new ArrayList<>();
 
     public gameModel(authTokenModel auth) throws Exception {
         gameID = new gameIDModel();
         gameName = serverModel.getInstance().getUser(auth).getUserName().getValue() + "'s_Game!";
-        hostUser = serverModel.getInstance().getUser(auth);
+        hostPlayer = new playerModel(serverModel.getInstance().getUser(auth).getUserName(), false, true);
         gameStarted = false;
+        players.add(hostPlayer);
     }
 
     public String getGameID() {
