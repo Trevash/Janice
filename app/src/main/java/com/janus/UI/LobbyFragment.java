@@ -69,6 +69,8 @@ public class LobbyFragment extends Fragment implements LobbyFragmentPresenter.Vi
         // Inflate the layout for this fragment
         mMainActivity = (MainActivity) getActivity();
 
+        mNumberOfPlayers = (TextView) v.findViewById(R.id.numPlayersView);
+
         mStartGameButton = (Button) v.findViewById(R.id.startGameButton);
         //If you are host, set the text to "Start Game"
         //Else set to "Ready"
@@ -146,6 +148,8 @@ public class LobbyFragment extends Fragment implements LobbyFragmentPresenter.Vi
         gameModel g = serverModel.getInstance().getGameByID(mGameID);
         mPlayerAdapter = new PlayerAdapter((playerModel[]) g.getPlayers().toArray());
         mPlayerRecyclerView.setAdapter(mPlayerAdapter);
+        String numPlayers = (mPlayerAdapter.getItemCount() + "/5 Players");
+        mNumberOfPlayers.setText(numPlayers);
     }
 
     /**
