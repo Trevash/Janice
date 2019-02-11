@@ -20,7 +20,12 @@ public class ServerProxy {
     private Results messageResult;
 
     private ServerProxy() {
-        client = TtRClient.getInstance();
+        try {
+			client = new TtRClient(new URI("ws://10.24.217.239:8087"));
+		} catch (URISyntaxException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
     }
 
     static ServerProxy getInstance() {
