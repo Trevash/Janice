@@ -25,7 +25,7 @@ public class gameModel {
     public void addPlayer(playerModel newPlayer) throws Exception {
         for (playerModel curPlayer : this.players) {
             if(curPlayer.getUserName().getValue().equals(newPlayer.getUserName().getValue())){
-                throw new Exception("User already a player in this game");
+                throw new Exception("User is already a player in this game");
             }
         }
         if(players.size() < 5) {
