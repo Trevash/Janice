@@ -17,10 +17,11 @@ public class userModel {
 
     public userModel(usernameModel newUserName,
                      passwordModel newPassword,
-                     userIDModel newUserID, authTokenModel authTokenModel){
+                     userIDModel newUserID, authTokenModel newAuth){
         userName = newUserName;
         password = newPassword;
         userID = newUserID;
+        authToken = newAuth;
     }
 
     public usernameModel getUserName() {
