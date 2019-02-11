@@ -47,16 +47,16 @@ public class ServerCommunicator extends WebSocketServer {
     public void onMessage(WebSocket conn, String message) {
         GenericCommand command = Serializer.getInstance().deserializeCommand(message);
         Results result = command.execute();
+        String resultGson = Serializer.getInstance().serializeObject(result);
+        
         switch(result.getType()){
-        	case "Login": System.out.println("Login");
-        	case "Register": System.out.println("Register");
-        	case "Create": System.out.println("Create");
-        	case "Join": System.out.println("Join");
-        	case "Start": System.out.println("Start");
-        	case "ERROR": System.out.println(result.getData());
+        	case "Login": broadcastOne(resultGson, conn);
+        	case "Register": broadcastOne(resultGson, conn);
+        	case "Create": broadcast(resultGson);
+        	case "Join": broadcast(resultGson);
+        	case "Start": broadcast(resultGson);
             default : System.out.println("Invalid type passed to onMessage from Result!");
         }
-        String resultGson = Serializer.getInstance().serializeObject(result);
         List<WebSocket> temp = new ArrayList<>();
         temp.add(conn);
         broadcast(resultGson, temp);
@@ -70,5 +70,16 @@ public class ServerCommunicator extends WebSocketServer {
     @Override
     public void onStart() {
         System.out.println("Server started!");
+    }
+    
+    public void broadcastOne(String resultGson, WebSocket conn) {
+    	List<WebSocket> temp = new ArrayList<>();
+        temp.add(conn);
+        broadcast(resultGson, temp);
+    }
+    
+    //to be filled out later
+    public void broadcastGame(String resultGson, gameModel game) {
+    	
     }
 }
