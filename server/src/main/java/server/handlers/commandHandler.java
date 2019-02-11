@@ -49,6 +49,7 @@ public class commandHandler extends handlerBase {
         }
 
         authTokenModel auth = new authTokenModel();
+        curUser.setAuthToken(auth);
 
         LoginData data = new LoginData(new GameListData(), auth);
         return new Results("Login", true, data);
