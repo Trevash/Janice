@@ -55,6 +55,7 @@ public class GameListFragmentPresenter implements JoinGameTask.Caller, CreateGam
 
     @Override
     public void onCreateComplete(Results r) {
+
         view.displaySuccess();
     }
 

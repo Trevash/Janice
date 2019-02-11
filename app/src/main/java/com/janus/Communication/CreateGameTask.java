@@ -3,7 +3,6 @@ package com.janus.Communication;
 import android.os.AsyncTask;
 
 import com.bignerdranch.android.shared.resultobjects.Results;
-import com.janus.LoginRequest;
 import com.bignerdranch.android.shared.models.authTokenModel;
 
 public class CreateGameTask extends AsyncTask<authTokenModel, Void, Results> {

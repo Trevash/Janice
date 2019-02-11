@@ -59,4 +59,8 @@ public class gameModel {
         this.gameStarted = true;
         //TODO:Alert all players that game has begun
     }
+
+    public List<playerModel> getPlayers() {
+        return players;
+    }
 }

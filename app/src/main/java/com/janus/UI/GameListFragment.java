@@ -29,6 +29,12 @@ import java.util.List;
 
 public class GameListFragment extends Fragment implements GameListFragmentPresenter.View {
 
+    public interface Context {
+        void onCreateGame();
+    }
+
+    private Context mContext;
+
     private GameListFragmentPresenter presenter;
 
     private TextView mNumPlayers;
@@ -100,6 +106,8 @@ public class GameListFragment extends Fragment implements GameListFragmentPresen
     @Override
     public void displaySuccess() {
         Toast.makeText(getActivity(), R.string.sign_in_welcome, Toast.LENGTH_LONG).show();
+        mContext = (Context) getActivity();
+        mContext.onCreateGame();
     }
 
     public class GameListAdapter extends RecyclerView.Adapter<GameListAdapter.GameViewHolder> {

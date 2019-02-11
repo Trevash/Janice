@@ -19,6 +19,13 @@ import com.janus.Presenter.LobbyFragmentPresenter;
 import com.janus.R;
 
 public class LobbyFragment extends Fragment implements LobbyFragmentPresenter.View{
+
+    public interface Context {
+        void onStartGame();
+    }
+
+    private Context mContext;
+
     private LobbyFragmentPresenter presenter;
 
     private RecyclerView mPlayerList;
@@ -95,9 +102,9 @@ public class LobbyFragment extends Fragment implements LobbyFragmentPresenter.Vi
         public void bind(playerModel p){
             mPersonNameView.setText(p.getUserName().getValue());
             if(p.isReady()){
-                mReadyStatusView.setText("Ready");
+                mReadyStatusView.setText(R.string.readyString);
             } else {
-                mReadyStatusView.setText("Not Ready");
+                mReadyStatusView.setText(R.string.notReadyString);
             }
         }
 

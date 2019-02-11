@@ -4,4 +4,6 @@
     <!-- TODO: Remove or change this placeholder text -->
     <string name="lobby">Lobby: </string>
     <string name="sign_in_welcome">Welcome to Ticket To Ride</string>
+    <string name="readyString">READY</string>
+    <string name="notReadyString">NOT READY</string>
 </resources>

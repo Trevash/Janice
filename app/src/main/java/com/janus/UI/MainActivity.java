@@ -8,11 +8,11 @@ import android.support.v4.app.Fragment;
 
 import com.janus.R;
 
-public class MainActivity extends AppCompatActivity implements LoginFragment.Context {
+public class MainActivity extends AppCompatActivity implements LoginFragment.Context, GameListFragment.Context, LobbyFragment.Context {
     private FragmentManager fm = getSupportFragmentManager();
     private LoginFragment loginFragment;
     private GameListFragment gameListFragment;
-    //private LobbyFragment lobbyFragment
+    private LobbyFragment lobbyFragment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,5 +47,19 @@ public class MainActivity extends AppCompatActivity implements LoginFragment.Con
         fm.beginTransaction()
                 .replace(R.id.fragment_container, gameListFragment)
                 .commit();
+    }
+
+    public void onCreateGame() {
+        lobbyFragment = new LobbyFragment();
+        fm.beginTransaction()
+                .replace(R.id.fragment_container, lobbyFragment)
+                .commit();
+    }
+
+    public void onStartGame() {
+        //lobbyFragment = new LobbyFragment();
+        //fm.beginTransaction()
+        //        .replace(R.id.fragment_container, lobbyFragment)
+        //        .commit();
     }
 }
