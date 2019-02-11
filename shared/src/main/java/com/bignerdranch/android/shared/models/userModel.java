@@ -17,7 +17,7 @@ public class userModel {
 
     public userModel(usernameModel newUserName,
                      passwordModel newPassword,
-                     userIDModel newUserID){
+                     userIDModel newUserID, authTokenModel authTokenModel){
         userName = newUserName;
         password = newPassword;
         userID = newUserID;

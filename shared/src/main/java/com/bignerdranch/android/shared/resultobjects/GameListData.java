@@ -7,6 +7,7 @@ import java.util.List;
 
 public class GameListData {
     private List<gameModel> games;
+
     public GameListData(){
         games = serverModel.getInstance().getGames();
     }

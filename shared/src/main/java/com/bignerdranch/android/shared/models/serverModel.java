@@ -9,16 +9,16 @@ import java.util.List;
 public class serverModel {
     private static serverModel sm = null;
 
+    private List<userModel> users = new ArrayList<>();
+
+    private List<gameModel> games = new ArrayList<>();
+
     public static serverModel getInstance() {
         if(sm == null){
             sm = new serverModel();
         }
         return sm;
     }
-
-    private List<userModel> users = new ArrayList<>();
-
-    private List<gameModel> games = new ArrayList<>();
 
     public void addUser(userModel newUser){
         this.users.add(newUser);

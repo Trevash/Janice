@@ -30,11 +30,11 @@ public class commandHandler extends handlerBase {
     }
 
     public Results register(String username, String password) throws Exception{
+        authTokenModel auth = new authTokenModel();
         serverModel.getInstance().addUser(new userModel(new usernameModel(username),
                 new passwordModel(password),
-                new userIDModel()));
-
-        authTokenModel auth = new authTokenModel();
+                new userIDModel(),
+                auth));
 
         LoginData data = new LoginData(new GameListData(), auth);
 
