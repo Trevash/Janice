@@ -4,7 +4,7 @@ import android.os.AsyncTask;
 
 import com.bignerdranch.android.shared.resultobjects.Results;
 
-import com.janus.LoginRequest;
+import com.bignerdranch.android.shared.requestObjects.LoginRequest;
 
 
 public class LoginTask extends AsyncTask<LoginRequest, Void, Results> {
