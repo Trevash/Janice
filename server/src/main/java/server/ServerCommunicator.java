@@ -27,7 +27,7 @@ public class ServerCommunicator extends WebSocketServer {
     }
 
     public static void main(String[] args) {
-        String host = "10.34.245.190";
+        String host = "10.37.93.67";
         int port = 8087;
 
         WebSocketServer server = new ServerCommunicator(new InetSocketAddress(host, port));
@@ -58,8 +58,8 @@ public class ServerCommunicator extends WebSocketServer {
         	case "Login": broadcastOne(resultGson, conn); break;
         	case "Register": broadcastOne(resultGson, conn); break;
         	case "Create": broadcast(resultGson); break;
-        	case "Join": broadcast(resultGson);
-        	case "Start": broadcast(resultGson);
+        	case "Join": broadcast(resultGson); break;
+        	case "Start": broadcast(resultGson); break;
             default : System.out.println("Invalid type passed to onMessage from Result!");
         }
         List<WebSocket> temp = new ArrayList<>();

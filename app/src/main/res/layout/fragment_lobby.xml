@@ -39,7 +39,7 @@
     <Button
         android:id="@+id/startGameButton"
         android:layout_width="200dp"
-        android:layout_height="match_parent"
+        android:layout_height="100dp"
         android:text="Start Game / Ready"
         android:textSize="20sp"
         android:layout_gravity="center"/>

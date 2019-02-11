@@ -82,6 +82,9 @@ public class LobbyFragment extends Fragment implements LobbyFragmentPresenter.Vi
                 startGameButtonClicked();
             }
         });
+
+        updateUI();
+
         return v;
     }
 
