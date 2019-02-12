@@ -81,7 +81,7 @@ public class ClientModel {
 
     public gameModel getGameByID(gameIDModel id) {
         for(gameModel game: serverGameList){
-            if(id.equals(game.getGameID())){
+            if(id.getValue().equals(game.getGameID().getValue())){
                 return game;
             }
         }

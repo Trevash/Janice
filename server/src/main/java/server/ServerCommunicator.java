@@ -30,7 +30,7 @@ public class ServerCommunicator extends WebSocketServer {
     }
 
     public static void main(String[] args) {
-        String host = "192.168.252.225";
+        String host = "10.37.93.67";
         int port = 8087;
 
         WebSocketServer server = new ServerCommunicator(new InetSocketAddress(host, port));
