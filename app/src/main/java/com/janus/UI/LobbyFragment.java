@@ -36,7 +36,7 @@ public class LobbyFragment extends Fragment implements LobbyFragmentPresenter.Vi
     private RecyclerView mPlayerRecyclerView;
     private TextView mNumberOfPlayers;
     private PlayerAdapter mPlayerAdapter;
-    private Boolean isHost;
+    private Boolean isHost = false;
 
     private OnFragmentInteractionListener mListener;
 
