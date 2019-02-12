@@ -174,6 +174,7 @@ public class LobbyFragment extends Fragment implements LobbyFragmentPresenter.Vi
     }
 
     public void updateUI(gameModel game) {
+        mStartGameButton.setEnabled(false);
 
         mPlayerAdapter = new PlayerAdapter((playerModel[]) game.getPlayers().toArray());
         mPlayerRecyclerView.setAdapter(mPlayerAdapter);
@@ -183,6 +184,16 @@ public class LobbyFragment extends Fragment implements LobbyFragmentPresenter.Vi
         playerModel host = game.getHostPlayer();
         usernameModel username = presenter.getUsername();
         isHost = username.getValue().equals(host.getUserName().getValue());
+
+        if(isHost){
+            mStartGameButton.setText("Start Game");
+        } else {
+            mStartGameButton.setText("Ready");
+        }
+
+        if(mPlayerAdapter.getItemCount() >= 2){
+            mStartGameButton.setEnabled(true);
+        }
     }
 
     /**
