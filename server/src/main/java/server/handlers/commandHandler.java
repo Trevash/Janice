@@ -38,7 +38,7 @@ public class commandHandler extends handlerBase {
 
         AuthData data = new AuthData(auth);
 
-        return new Results("Register", true, Serializer.getInstance().serializeObject(data));
+        return new Results("Register", true, data);
     }
 
     public Results login(String username, String password) throws Exception {
@@ -52,7 +52,7 @@ public class commandHandler extends handlerBase {
         curUser.setAuthToken(auth);
 
         AuthData data = new AuthData(auth);
-        return new Results("Login", true, Serializer.getInstance().serializeObject(data));
+        return new Results("Login", true, data);
     }
 
     public Results createGame(CreateGameRequest request) throws Exception {
@@ -61,7 +61,7 @@ public class commandHandler extends handlerBase {
         }
         gameModel newGame = new gameModel(request.getAuth());
         serverModel.getInstance().addGame(newGame);
-        return new Results("Host", true, Serializer.getInstance().serializeObject(newGame.getGameID()));
+        return new Results("Host", true, newGame.getGameID());
     }
 
     public Results joinGame(JoinGameRequest request) throws Exception {
@@ -71,7 +71,7 @@ public class commandHandler extends handlerBase {
 
         serverModel.getInstance().joinGame(request);
 
-        return new Results("Join", true, Serializer.getInstance().serializeObject(new GameListData()));
+        return new Results("Join", true, new GameListData());
     }
 
     public Results startGame(StartGameRequest request) throws Exception {
@@ -81,6 +81,6 @@ public class commandHandler extends handlerBase {
 
         serverModel.getInstance().startGame(request);
 
-        return new Results("Start", true, Serializer.getInstance().serializeObject(new GameListData()));
+        return new Results("Start", true, new GameListData());
     }
 }

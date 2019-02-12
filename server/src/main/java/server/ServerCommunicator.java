@@ -84,7 +84,7 @@ public class ServerCommunicator extends WebSocketServer {
     }
 
     private void updateAllUserGameList() {
-        Results gameListResult = new Results("GameList", true, Serializer.getInstance().serializeObject(new GameListData()));
+        Results gameListResult = new Results("GameList", true, new GameListData());
         String gameListGson = Serializer.getInstance().serializeObject(gameListResult);
         broadcast(gameListGson);
     }
