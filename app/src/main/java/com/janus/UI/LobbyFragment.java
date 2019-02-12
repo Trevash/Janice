@@ -194,7 +194,7 @@ public class LobbyFragment extends Fragment implements LobbyFragmentPresenter.Vi
         isHost = username.getValue().equals(host.getUserName().getValue());
         if (isHost) {
             mStartGameButton.setText("Start");
-            int numOfPlayers = Integer.parseInt(numPlayers);
+            int numOfPlayers = mPlayerAdapter.getItemCount();
             if(numOfPlayers >= 2 && numOfPlayers <= 5) {
                 mStartGameButton.setEnabled(true);
             } else {
