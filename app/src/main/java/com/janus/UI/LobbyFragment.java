@@ -98,6 +98,10 @@ public class LobbyFragment extends Fragment implements LobbyFragmentPresenter.Vi
             }
         });
 
+        if(!presenter.isModelEmpty()){
+            presenter.updateUI();
+        }
+
         return v;
     }
 

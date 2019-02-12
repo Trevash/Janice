@@ -54,4 +54,13 @@ public class LobbyFragmentPresenter implements ClientModel.CurrentView{
         gameModel g = model.getGame();
         view.updateUI(g);
     }
+
+    public Boolean isModelEmpty(){
+        if(model.getGame() == null){
+            return true;
+        }
+        else {
+            return false;
+        }
+    }
 }
