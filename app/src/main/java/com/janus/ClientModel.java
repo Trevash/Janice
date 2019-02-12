@@ -38,8 +38,8 @@ public class ClientModel {
         return game;
     }
 
-    public void setGame(gameModel game) {
-        this.game = game;
+    public void setGame(gameIDModel game) {
+        this.game = getGameByID(game);
     }
 
     public userModel getUser() {

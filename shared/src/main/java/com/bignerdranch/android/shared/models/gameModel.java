@@ -8,6 +8,11 @@ public class gameModel {
     private String gameName;
     private boolean gameStarted;
     private playerModel hostPlayer;
+
+    public playerModel getHostPlayer() {
+        return hostPlayer;
+    }
+
     private List<playerModel> players = new ArrayList<>();
 
     public gameModel(authTokenModel auth) throws Exception {
