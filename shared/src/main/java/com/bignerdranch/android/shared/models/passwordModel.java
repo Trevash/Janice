@@ -1,14 +1,14 @@
 package com.bignerdranch.android.shared.models;
 
 public class passwordModel {
-    private String value = null;
+    private String value;
 
-    public passwordModel(String newValue) throws Exception {
+    public passwordModel(String newValue) {
         if(newValue == null || newValue.length() == 0) {
-            throw new Exception("No password recieved!");
+            throw new IllegalArgumentException("No password received!");
         }
         else if(!newValue.matches("[a-zA-Z0-9]+")){
-            throw new Exception("Password used spaces or illegal characters!");
+            throw new IllegalArgumentException("Password used spaces or illegal characters!");
         }
 
         this.value = newValue;

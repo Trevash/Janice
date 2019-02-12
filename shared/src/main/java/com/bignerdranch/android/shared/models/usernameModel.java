@@ -1,17 +1,17 @@
 package com.bignerdranch.android.shared.models;
 
 public class usernameModel {
-    private String value = null;
+    private String value;
 
     public usernameModel(String newValue) throws Exception {
         if(serverModel.getInstance().userExists(newValue)){
             throw new Exception("The username is already taken!");
         }
         else if(newValue == null || newValue.length() == 0) {
-            throw new Exception("No username recieved!");
+            throw new IllegalArgumentException("No username received!");
         }
         else if(!newValue.matches("[a-zA-Z0-9]+")){
-            throw new Exception("Username used spaces or illegal characters!");
+            throw new IllegalArgumentException("Username used spaces or illegal characters!");
         }
 
         this.value = newValue;
