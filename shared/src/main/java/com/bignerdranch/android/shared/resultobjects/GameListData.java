@@ -9,7 +9,7 @@ public class GameListData {
     private List<gameModel> games;
 
     @Deprecated // shared code should not depend on server code - and server model should be server code
-    public GameListData(){
+    public GameListData() { // TODO find and replace all uses of this
         games = serverModel.getInstance().getGames();
     }
 
