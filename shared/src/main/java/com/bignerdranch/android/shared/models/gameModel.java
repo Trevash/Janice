@@ -18,8 +18,8 @@ public class gameModel {
         players.add(hostPlayer);
     }
 
-    public String getGameID() {
-        return gameID.getValue();
+    public gameIDModel getGameID() {
+        return gameID;
     }
 
     public void addPlayer(playerModel newPlayer) throws Exception {

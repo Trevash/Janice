@@ -7,11 +7,14 @@ import com.janus.ClientModel;
 import com.janus.Communication.CreateGameTask;
 import com.janus.Communication.JoinGameTask;
 
-public class GameListFragmentPresenter implements JoinGameTask.Caller, CreateGameTask.Caller {
+import java.util.List;
+
+public class GameListFragmentPresenter implements JoinGameTask.Caller, CreateGameTask.Caller, ClientModel.CurrentView {
 
     public interface View {
         void updateButtons(boolean isActive);
         void displayError(String message);
+        void updateGameList(List<gameModel> games);
         void displaySuccess();
     }
 
@@ -21,6 +24,10 @@ public class GameListFragmentPresenter implements JoinGameTask.Caller, CreateGam
 
     public GameListFragmentPresenter(View v) {
         this.view = v;
+    }
+
+    public void setFragment() {
+        model.setCurrentView(this);
     }
 
     public void selectGame(gameModel gameSelected) {
@@ -55,9 +62,11 @@ public class GameListFragmentPresenter implements JoinGameTask.Caller, CreateGam
 
     @Override
     public void onCreateComplete(Results r) {
-
         view.displaySuccess();
     }
 
-
+    @Override
+    public void updateUI() {
+        view.updateGameList(model.getServerGameList());
+    }
 }

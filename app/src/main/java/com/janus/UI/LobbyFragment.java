@@ -15,6 +15,7 @@ import com.bignerdranch.android.shared.models.gameModel;
 import com.bignerdranch.android.shared.models.playerModel;
 
 import com.bignerdranch.android.shared.models.serverModel;
+import com.janus.ClientModel;
 import com.janus.Presenter.LobbyFragmentPresenter;
 import com.janus.R;
 
@@ -34,7 +35,6 @@ public class LobbyFragment extends Fragment implements LobbyFragmentPresenter.Vi
     private RecyclerView mPlayerRecyclerView;
     private TextView mNumberOfPlayers;
     private PlayerAdapter mPlayerAdapter;
-    private gameIDModel mGameID;
 
     private OnFragmentInteractionListener mListener;
 
@@ -69,7 +69,10 @@ public class LobbyFragment extends Fragment implements LobbyFragmentPresenter.Vi
         // Inflate the layout for this fragment
         mMainActivity = (MainActivity) getActivity();
 
+        presenter = new LobbyFragmentPresenter(this);
+
         mNumberOfPlayers = (TextView) v.findViewById(R.id.numPlayersView);
+        presenter.setFragment();
 
         mStartGameButton = (Button) v.findViewById(R.id.startGameButton);
         //If you are host, set the text to "Start Game"
@@ -83,7 +86,7 @@ public class LobbyFragment extends Fragment implements LobbyFragmentPresenter.Vi
             }
         });
 
-        updateUI();
+        presenter.updateUI();
 
         return v;
     }
@@ -147,9 +150,8 @@ public class LobbyFragment extends Fragment implements LobbyFragmentPresenter.Vi
         }
     }
 
-    private void updateUI() {
-        gameModel g = serverModel.getInstance().getGameByID(mGameID);
-        mPlayerAdapter = new PlayerAdapter((playerModel[]) g.getPlayers().toArray());
+    public void updateUI(gameModel game) {
+        mPlayerAdapter = new PlayerAdapter((playerModel[]) game.getPlayers().toArray());
         mPlayerRecyclerView.setAdapter(mPlayerAdapter);
         String numPlayers = (mPlayerAdapter.getItemCount() + "/5 Players");
         mNumberOfPlayers.setText(numPlayers);

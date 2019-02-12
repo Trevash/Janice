@@ -43,6 +43,7 @@ public class GameListFragment extends Fragment implements GameListFragmentPresen
     private Button mCreateGame;
     private List<gameModel> games;
     private LinearLayoutManager mLayoutManager;
+    private GameListAdapter mAdapter;
 
     public GameListFragment() {}
 
@@ -57,6 +58,7 @@ public class GameListFragment extends Fragment implements GameListFragmentPresen
         View v = inflater.inflate(R.layout.fragment_game_list, container, false);
 
         presenter = new GameListFragmentPresenter(this);
+        presenter.setFragment();
         games = ClientModel.getInstance().getServerGameList();
 
         mNumPlayers = (TextView) v.findViewById(R.id.num_players_text_view);
@@ -67,8 +69,8 @@ public class GameListFragment extends Fragment implements GameListFragmentPresen
         mLayoutManager = new LinearLayoutManager(getActivity());
         mGameList.setLayoutManager(mLayoutManager);
 
-        GameListAdapter adapter = new GameListAdapter(games);
-        mGameList.setAdapter(adapter);
+        mAdapter = new GameListAdapter(games);
+        mGameList.setAdapter(mAdapter);
 
         mJoinGame = (Button) v.findViewById(R.id.join_game_button);
         mJoinGame.setEnabled(false);
@@ -161,5 +163,11 @@ public class GameListFragment extends Fragment implements GameListFragmentPresen
         public int getItemCount() {
             return games.size();
         }
+    }
+
+    @Override
+    public void updateGameList(List<gameModel> games) {
+        mAdapter = new GameListAdapter(games);
+        mGameList.setAdapter(mAdapter);
     }
 }

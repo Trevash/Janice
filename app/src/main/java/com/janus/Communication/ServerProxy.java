@@ -38,7 +38,7 @@ public class ServerProxy {
     private String className = "server.handlers";
 
     public void connectClient() throws InterruptedException, URISyntaxException {
-        client = new TtRClient(new URI("ws://10.34.245.190:8087"));
+        client = new TtRClient(new URI("ws://10.37.93.67:8087"));
         client.connectBlocking();
     }
 
