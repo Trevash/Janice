@@ -25,8 +25,8 @@ public class commandHandler extends handlerBase {
         Results results = command.execute();
         String ss = Serializer.getInstance().serializeObject(results);
 
-        if(results.isSuccess()){ return (String) results.getData(); }
-        else{ return (String) results.getData(); }
+        if(results.isSuccess()){ return (String) results.getJSONdata(); }
+        else{ return (String) results.getJSONdata(); }
     }
 
     public Results register(String username, String password) throws Exception{
@@ -38,7 +38,7 @@ public class commandHandler extends handlerBase {
 
         AuthData data = new AuthData(auth);
 
-        return new Results("Register", true, data);
+        return new Results("Register", true, Serializer.getInstance().serializeObject(data));
     }
 
     public Results login(String username, String password) throws Exception {
@@ -52,7 +52,7 @@ public class commandHandler extends handlerBase {
         curUser.setAuthToken(auth);
 
         AuthData data = new AuthData(auth);
-        return new Results("Login", true, data);
+        return new Results("Login", true, Serializer.getInstance().serializeObject(data));
     }
 
     public Results createGame(CreateGameRequest request) throws Exception {
@@ -71,7 +71,7 @@ public class commandHandler extends handlerBase {
 
         serverModel.getInstance().joinGame(request);
 
-        return new Results("Join", true, new GameListData());
+        return new Results("Join", true, Serializer.getInstance().serializeObject(new GameListData()));
     }
 
     public Results startGame(StartGameRequest request) throws Exception {
@@ -81,6 +81,6 @@ public class commandHandler extends handlerBase {
 
         serverModel.getInstance().startGame(request);
 
-        return new Results("Start", true, new GameListData());
+        return new Results("Start", true, Serializer.getInstance().serializeObject(new GameListData()));
     }
 }
