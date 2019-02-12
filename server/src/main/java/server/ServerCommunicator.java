@@ -58,7 +58,9 @@ public class ServerCommunicator extends WebSocketServer {
         switch(result.getType()){
         	case "Login":
         	    broadcastOne(resultGson, conn);
-        	    if(result.isSuccess()){updateAllUserGameList();}
+        	    if(result.isSuccess()){
+        	        updateAllUserGameList();
+        	    }
         	    break;
         	case "Register":
         	    broadcastOne(resultGson, conn);
@@ -76,6 +78,9 @@ public class ServerCommunicator extends WebSocketServer {
         	    broadcast(resultGson);
                 updateAllUserGameList();
         	    break;
+            case "ERROR":
+                broadcastOne(resultGson, conn);
+                break;
             default : System.out.println("Invalid type passed to onMessage from Result!");
         }
         List<WebSocket> temp = new ArrayList<>();

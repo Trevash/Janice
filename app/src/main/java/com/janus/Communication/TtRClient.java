@@ -42,9 +42,11 @@ public class TtRClient extends WebSocketClient{
                 }
                 case "GameList": {
                     client.setServerGameList((GameListData) result.getData(GameListData.class));
+                    break;
                 }
                 case "Create": {
                     client.setGame((gameIDModel) result.getData(gameIDModel.class));
+                    break;
                 }
             }
             messageResult = result;
@@ -67,5 +69,9 @@ public class TtRClient extends WebSocketClient{
     
     public Results getResults() {
     	return messageResult;
+    }
+
+    public void setMessageResultToNull() {
+        messageResult = null;
     }
 }
