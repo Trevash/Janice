@@ -35,7 +35,7 @@ public class JoinGameTask extends AsyncTask<JoinGameRequest, Void, Results> {
         if (r.isSuccess()) {
             caller.onJoinGameComplete(r);
         } else {
-            caller.onError((String) r.getData());
+            caller.onError((String) r.getData(String.class));
         }
     }
 }

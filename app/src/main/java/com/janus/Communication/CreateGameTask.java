@@ -36,7 +36,7 @@ public class CreateGameTask extends AsyncTask<authTokenModel, Void, Results> {
         if(r.isSuccess()) {
             caller.onCreateComplete(r);
         } else {
-            caller.onError((String) r.getData());
+            caller.onError((String) r.getData(String.class));
         }
     }
 }
