@@ -37,9 +37,11 @@ public class TtRClient extends WebSocketClient{
             switch (result.getType()) {
                 case "Login": {
                     client.setUser((userModel) result.getData(userModel.class));
+                    break;
                 }
                 case "Register": {
                     client.setUser((userModel) result.getData(userModel.class));
+                    break;
                 }
                 case "GameList": {
                     client.setServerGameList((GameListData) result.getData(GameListData.class));
