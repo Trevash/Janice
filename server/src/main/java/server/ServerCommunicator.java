@@ -3,6 +3,7 @@ package server;
 import com.bignerdranch.android.shared.GenericCommand;
 import com.bignerdranch.android.shared.requestObjects.CreateGameRequest;
 import com.bignerdranch.android.shared.requestObjects.JoinGameRequest;
+import com.bignerdranch.android.shared.requestObjects.StartGameRequest;
 import com.bignerdranch.android.shared.resultobjects.GameListData;
 import com.bignerdranch.android.shared.resultobjects.Results;
 import com.bignerdranch.android.shared.Serializer;
@@ -54,8 +55,12 @@ public class ServerCommunicator extends WebSocketServer {
             CreateGameRequest[] request = {Serializer.getInstance().deserializeCreateCommand(command.getParamValues()[0].toString())};
             command.setParamValues(request);
         }
-        if (command.getMethod().equals("joinGame")) {
+        else if (command.getMethod().equals("joinGame")) {
             JoinGameRequest[] request = {Serializer.getInstance().deserializeJoinCommand(command.getParamValues()[0].toString())};
+            command.setParamValues(request);
+        }
+        else if (command.getMethod().equals("startGame")) {
+            StartGameRequest[] request = {Serializer.getInstance().deserializeStartCommand(command.getParamValues()[0].toString())};
             command.setParamValues(request);
         }
         Results result = command.execute();

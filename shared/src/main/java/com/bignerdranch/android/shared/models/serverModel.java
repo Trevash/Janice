@@ -155,8 +155,9 @@ public class serverModel {
 
     public void startGame(StartGameRequest request) throws Exception {
         for (gameModel curGame : this.games) {
-            if(curGame.getGameID().equals(request.getModel().getGameID())) {
+            if(curGame.getGameID().getValue().equals(request.getModel().getGameID().getValue())) {
                 curGame.startGame();
+                return;
             }
         }
         throw new Exception("Game not found to start!");
