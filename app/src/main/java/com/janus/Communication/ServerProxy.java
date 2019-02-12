@@ -52,6 +52,8 @@ public class ServerProxy {
         GenericCommand commandObj = new GenericCommand("server.handlers.commandHandler", "login",paramTypes, paramValues);
         String commandObjStr = Serializer.getInstance().serializeObject(commandObj);
         client.send(commandObjStr);
+        messageResult = null;
+        client.setMessageResultToNull();
         while (messageResult == null) {
             messageResult = client.getResults();
             Thread.sleep(100);
@@ -65,6 +67,8 @@ public class ServerProxy {
         GenericCommand commandObj = new GenericCommand("server.handlers.commandHandler", "register",paramTypes, paramValues);
         String commandObjStr = Serializer.getInstance().serializeObject(commandObj);
         client.send(commandObjStr);
+        messageResult = null;
+        client.setMessageResultToNull();
         while (messageResult == null) {
             messageResult = client.getResults();
             Thread.sleep(100);
@@ -78,6 +82,8 @@ public class ServerProxy {
         GenericCommand commandObj = new GenericCommand("server.handlers.commandHandler", "createGame", paramTypes, paramValues);
         String commandObjStr = Serializer.getInstance().serializeObject(commandObj);
         client.send(commandObjStr);
+        messageResult = null;
+        client.setMessageResultToNull();
         while (messageResult == null) {
             messageResult = client.getResults();
             Thread.sleep(100);
@@ -91,6 +97,8 @@ public class ServerProxy {
         GenericCommand commandObj = new GenericCommand("server.handlers.commandHandler", "startGame", paramTypes, paramValues);
         String commandObjStr = Serializer.getInstance().serializeObject(commandObj);
         client.send(commandObjStr);
+        messageResult = null;
+        client.setMessageResultToNull();
         while (messageResult == null) {
             messageResult = client.getResults();
             Thread.sleep(100);
@@ -104,6 +112,8 @@ public class ServerProxy {
         GenericCommand commandObj = new GenericCommand("server.handlers.commandHandler", "joinGame", paramTypes, paramValues);
         String commandObjStr = Serializer.getInstance().serializeObject(commandObj);
         client.send(commandObjStr);
+        messageResult = null;
+        client.setMessageResultToNull();
         while (messageResult == null) {
             messageResult = client.getResults();
             Thread.sleep(100);
