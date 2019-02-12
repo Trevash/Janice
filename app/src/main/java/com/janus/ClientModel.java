@@ -65,4 +65,22 @@ public class ClientModel {
     public void setServerGameList(GameListData serverGameList) {
         this.serverGameList = serverGameList.getGames();
     }
+
+    public boolean gameIDExists(gameIDModel id) {
+        for(gameModel game : serverGameList){
+            if(game.getGameID().equals(id)){
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public gameModel getGameByID(gameIDModel id) {
+        for(gameModel game: serverGameList){
+            if(id.getValue().equals(game.getGameID())){
+                return game;
+            }
+        }
+        return null;
+    }
 }
