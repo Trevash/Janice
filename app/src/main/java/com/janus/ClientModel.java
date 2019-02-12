@@ -9,11 +9,17 @@ import com.bignerdranch.android.shared.resultobjects.GameListData;
 import com.janus.Communication.TtRClient;
 
 public class ClientModel {
+
+    public interface CurrentView {
+        void updateUI();
+    }
+
     private gameModel game;
     private List<gameModel> serverGameList;
     private userModel user;
     private authTokenModel auth;
     private static ClientModel model;
+    private CurrentView currentView;
 
     private ClientModel() {}
 
@@ -22,6 +28,10 @@ public class ClientModel {
             model = new ClientModel();
         }
         return model;
+    }
+
+    public void setCurrentView(CurrentView view) {
+        this.currentView = view;
     }
 
     public gameModel getGame() {
