@@ -6,6 +6,7 @@ import java.util.List;
 import org.java_websocket.client.WebSocketClient;
 import org.java_websocket.handshake.ServerHandshake;
 
+import com.bignerdranch.android.shared.models.gameIDModel;
 import com.bignerdranch.android.shared.resultobjects.AuthData;
 import com.bignerdranch.android.shared.resultobjects.Results;
 import com.bignerdranch.android.shared.Serializer;
@@ -40,6 +41,9 @@ public class TtRClient extends WebSocketClient{
                 }
                 case "GameList": {
                     client.setServerGameList((GameListData) result.getData(GameListData.class));
+                }
+                case "Create": {
+                    client.setGame((gameIDModel) result.getData(gameIDModel.class));
                 }
             }
             messageResult = result;
