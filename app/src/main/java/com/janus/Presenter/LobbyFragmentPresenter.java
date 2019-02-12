@@ -1,6 +1,7 @@
 package com.janus.Presenter;
 
 import com.bignerdranch.android.shared.models.gameModel;
+import com.bignerdranch.android.shared.models.usernameModel;
 import com.bignerdranch.android.shared.resultobjects.Results;
 import com.janus.ClientModel;
 
@@ -30,6 +31,10 @@ public class LobbyFragmentPresenter implements ClientModel.CurrentView{
         //Call startGame on serverproxy
     }
 
+    public void readyClicked(){
+        //Change ready/not ready
+    }
+
     /*public void updatePlayerList(Player[] p) {
         this.players = p;
         checkButtons();
@@ -38,6 +43,11 @@ public class LobbyFragmentPresenter implements ClientModel.CurrentView{
     private void checkButtons() {
         //Check to make sure everybody is ready and that there are at least 2 players
         view.updateButtons(true);
+    }
+
+    public usernameModel getUsername(){
+        usernameModel username = model.getUser().getUserName();
+        return username;
     }
 
     public void updateUI() {

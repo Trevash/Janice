@@ -15,6 +15,7 @@ import com.bignerdranch.android.shared.models.gameModel;
 import com.bignerdranch.android.shared.models.playerModel;
 
 import com.bignerdranch.android.shared.models.serverModel;
+import com.bignerdranch.android.shared.models.usernameModel;
 import com.janus.ClientModel;
 import com.janus.Presenter.LobbyFragmentPresenter;
 import com.janus.R;
@@ -35,6 +36,7 @@ public class LobbyFragment extends Fragment implements LobbyFragmentPresenter.Vi
     private RecyclerView mPlayerRecyclerView;
     private TextView mNumberOfPlayers;
     private PlayerAdapter mPlayerAdapter;
+    private Boolean isHost;
 
     private OnFragmentInteractionListener mListener;
 
@@ -79,14 +81,22 @@ public class LobbyFragment extends Fragment implements LobbyFragmentPresenter.Vi
         //Else set to "Ready"
         //mStartGameButton.setText("hello");
         mStartGameButton.setEnabled(false);
+        if(isHost){
+            mStartGameButton.setText("Start Game");
+        } else {
+            mStartGameButton.setText("Ready");
+        }
+
         mStartGameButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startGameButtonClicked();
+                if(isHost) {
+                    startGameButtonClicked();
+                } else {
+                    readyButtonClicked();
+                }
             }
         });
-
-        presenter.updateUI();
 
         return v;
     }
@@ -100,6 +110,10 @@ public class LobbyFragment extends Fragment implements LobbyFragmentPresenter.Vi
         //if not host, change player ready state and send to the server
     }
 
+    private void readyButtonClicked(){
+        presenter.readyClicked();
+    }
+
     private class PlayerHolder extends RecyclerView.ViewHolder{
 
         //private ImageView mColorView; (could use these for color boxes?)
@@ -109,10 +123,15 @@ public class LobbyFragment extends Fragment implements LobbyFragmentPresenter.Vi
 
         public void bind(playerModel p){
             mPersonNameView.setText(p.getUserName().getValue());
-            if(p.isReady()){
-                mReadyStatusView.setText(R.string.readyString);
-            } else {
-                mReadyStatusView.setText(R.string.notReadyString);
+            if(p.isHost()){
+                mReadyStatusView.setText(R.string.hostString);
+            }
+            else {
+                if (p.isReady()) {
+                    mReadyStatusView.setText(R.string.readyString);
+                } else {
+                    mReadyStatusView.setText(R.string.notReadyString);
+                }
             }
         }
 
@@ -151,10 +170,15 @@ public class LobbyFragment extends Fragment implements LobbyFragmentPresenter.Vi
     }
 
     public void updateUI(gameModel game) {
+
         mPlayerAdapter = new PlayerAdapter((playerModel[]) game.getPlayers().toArray());
         mPlayerRecyclerView.setAdapter(mPlayerAdapter);
         String numPlayers = (mPlayerAdapter.getItemCount() + "/5 Players");
         mNumberOfPlayers.setText(numPlayers);
+
+        playerModel host = game.getHostPlayer();
+        usernameModel username = presenter.getUsername();
+        isHost = username.getValue().equals(host.getUserName().getValue());
     }
 
     /**

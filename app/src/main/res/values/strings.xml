@@ -6,4 +6,5 @@
     <string name="sign_in_welcome">Welcome to Ticket To Ride</string>
     <string name="readyString">READY</string>
     <string name="notReadyString">NOT READY</string>
+    <string name="hostString">HOST</string>
 </resources>

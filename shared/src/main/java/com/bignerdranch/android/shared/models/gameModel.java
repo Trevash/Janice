@@ -10,6 +10,10 @@ public class gameModel {
     private List<playerModel> players = new ArrayList<>();
     // host is the first player in the list
 
+    public playerModel getHostPlayer() {
+        return players.get(0);
+    }
+
     public gameModel(authTokenModel auth) throws Exception {
         gameID = new gameIDModel();
         gameName = serverModel.getInstance().getUser(auth).getUserName().getValue() + "'s_Game!";
@@ -49,7 +53,7 @@ public class gameModel {
 
     public boolean isGameStarted(){return gameStarted;}
 
-    public void startGame() throws IllegalStateException {
+    public void startGame() {
         if (players.size() < 2){
             throw new IllegalStateException("Insufficient number of players to start game!");
         }
