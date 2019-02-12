@@ -3,6 +3,7 @@ package com.janus.UI;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -37,6 +38,7 @@ public class LobbyFragment extends Fragment implements LobbyFragmentPresenter.Vi
     private TextView mNumberOfPlayers;
     private PlayerAdapter mPlayerAdapter;
     private Boolean isHost = false;
+    private playerModel[] mPlayers = new playerModel[]{};
 
     private OnFragmentInteractionListener mListener;
 
@@ -75,6 +77,12 @@ public class LobbyFragment extends Fragment implements LobbyFragmentPresenter.Vi
 
         mNumberOfPlayers = (TextView) v.findViewById(R.id.numPlayersView);
         presenter.setFragment();
+
+        mPlayerRecyclerView = (RecyclerView) v.findViewById(R.id.playerRecyclerView);
+        mPlayerRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+
+        mPlayerAdapter = new PlayerAdapter(mPlayers);
+        mPlayerRecyclerView.setAdapter(mPlayerAdapter);
 
         mStartGameButton = (Button) v.findViewById(R.id.startGameButton);
         //If you are host, set the text to "Start Game"
@@ -173,27 +181,29 @@ public class LobbyFragment extends Fragment implements LobbyFragmentPresenter.Vi
         }
     }
 
-    public void updateUI(gameModel game) {
-        mStartGameButton.setEnabled(false);
-
-        mPlayerAdapter = new PlayerAdapter((playerModel[]) game.getPlayers().toArray());
+    public void update() {
+        playerModel[] players = new playerModel[ClientModel.getInstance().getGame().getPlayers().size()];
+        mPlayerAdapter = new PlayerAdapter(ClientModel.getInstance().getGame().getPlayers().toArray(players));
         mPlayerRecyclerView.setAdapter(mPlayerAdapter);
         String numPlayers = (mPlayerAdapter.getItemCount() + "/5 Players");
         mNumberOfPlayers.setText(numPlayers);
 
-        playerModel host = game.getHostPlayer();
+        playerModel host = ClientModel.getInstance().getGame().getHostPlayer();
         usernameModel username = presenter.getUsername();
         isHost = username.getValue().equals(host.getUserName().getValue());
-
-        if(isHost){
-            mStartGameButton.setText("Start Game");
-        } else {
-            mStartGameButton.setText("Ready");
+        if (isHost) {
+            mStartGameButton.setText("Start");
         }
+    }
 
-        if(mPlayerAdapter.getItemCount() >= 2){
-            mStartGameButton.setEnabled(true);
-        }
+    public void updateUI(gameModel gameModel) {
+
+        getActivity().runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                update();
+            }
+        });
     }
 
     /**

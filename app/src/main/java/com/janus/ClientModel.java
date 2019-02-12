@@ -3,6 +3,7 @@ package com.janus;
 
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.util.ArrayList;
 import java.util.List;
 import com.bignerdranch.android.shared.models.*;
 import com.bignerdranch.android.shared.resultobjects.GameListData;
@@ -15,7 +16,7 @@ public class ClientModel {
     }
 
     private gameModel game;
-    private List<gameModel> serverGameList;
+    private List<gameModel> serverGameList = new ArrayList<>();
     private userModel user;
     private authTokenModel auth;
     private static ClientModel model;
@@ -38,8 +39,9 @@ public class ClientModel {
         return game;
     }
 
-    public void setGame(gameIDModel game) {
-        this.game = getGameByID(game);
+    public void setGame(gameModel game) {
+        this.game = game;
+        currentView.updateUI();
     }
 
     public userModel getUser() {
@@ -64,6 +66,7 @@ public class ClientModel {
 
     public void setServerGameList(GameListData serverGameList) {
         this.serverGameList = serverGameList.getGames();
+        currentView.updateUI();
     }
 
     public boolean gameIDExists(gameIDModel id) {

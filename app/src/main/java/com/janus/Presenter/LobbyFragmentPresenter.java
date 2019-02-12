@@ -46,8 +46,7 @@ public class LobbyFragmentPresenter implements ClientModel.CurrentView{
     }
 
     public usernameModel getUsername(){
-        usernameModel username = model.getUser().getUserName();
-        return username;
+        return model.getUser().getUserName();
     }
 
     public void updateUI() {

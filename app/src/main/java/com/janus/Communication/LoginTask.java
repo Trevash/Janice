@@ -2,9 +2,11 @@ package com.janus.Communication;
 
 import android.os.AsyncTask;
 
+import com.bignerdranch.android.shared.models.userModel;
 import com.bignerdranch.android.shared.resultobjects.Results;
 
 import com.bignerdranch.android.shared.requestObjects.LoginRequest;
+import com.janus.ClientModel;
 
 
 public class LoginTask extends AsyncTask<LoginRequest, Void, Results> {
