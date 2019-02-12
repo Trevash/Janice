@@ -131,10 +131,11 @@ public class serverModel {
         games.add(newGame);
     }
 
-    public void joinGame(JoinGameRequest request) throws Exception {
+    public gameModel joinGame(JoinGameRequest request) throws Exception {
         for (gameModel curGame : this.games) {
-            if(curGame.getGameID().equals(request.getModel().getGameID())) {
+            if(curGame.getGameID().getValue().equals(request.getModel().getGameID().getValue())) {
                 curGame.addPlayer(this.makeNewPlayer(this.getUserByAuth(request.getAuth())));
+                return curGame;
             }
         }
         throw new Exception("Join game failed, game not found");

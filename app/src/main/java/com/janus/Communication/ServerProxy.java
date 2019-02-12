@@ -93,7 +93,7 @@ public class ServerProxy {
 
     public Results StartGame(gameModel game, authTokenModel auth) throws Exception {
         Object[] paramValues = {new StartGameRequest(game, auth)};
-        String[] paramTypes = {"shared.requestObjects.StartGameRequest"};
+        String[] paramTypes = {"com.bignerdranch.android.shared.requestObjects.StartGameRequest"};
         GenericCommand commandObj = new GenericCommand("server.handlers.commandHandler", "startGame", paramTypes, paramValues);
         String commandObjStr = Serializer.getInstance().serializeObject(commandObj);
         client.send(commandObjStr);
@@ -108,7 +108,7 @@ public class ServerProxy {
 
     public Results JoinGame(JoinGameRequest request) throws Exception {
         Object[] paramValues = {request};
-        String[] paramTypes = {"shared.requestObjects.JoinGameRequest"};
+        String[] paramTypes = {"com.bignerdranch.android.shared.requestObjects.JoinGameRequest"};
         GenericCommand commandObj = new GenericCommand("server.handlers.commandHandler", "joinGame", paramTypes, paramValues);
         String commandObjStr = Serializer.getInstance().serializeObject(commandObj);
         client.send(commandObjStr);

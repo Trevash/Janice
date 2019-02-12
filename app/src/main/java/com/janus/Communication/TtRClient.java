@@ -51,6 +51,10 @@ public class TtRClient extends WebSocketClient{
                     client.setGame((gameModel) result.getData(gameModel.class));
                     break;
                 }
+                case "Join": {
+                    client.setGame((gameModel) result.getData(gameModel.class));
+                    break;
+                }
             }
             messageResult = result;
         }

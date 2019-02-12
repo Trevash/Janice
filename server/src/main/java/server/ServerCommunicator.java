@@ -2,6 +2,7 @@ package server;
 
 import com.bignerdranch.android.shared.GenericCommand;
 import com.bignerdranch.android.shared.requestObjects.CreateGameRequest;
+import com.bignerdranch.android.shared.requestObjects.JoinGameRequest;
 import com.bignerdranch.android.shared.resultobjects.GameListData;
 import com.bignerdranch.android.shared.resultobjects.Results;
 import com.bignerdranch.android.shared.Serializer;
@@ -51,6 +52,10 @@ public class ServerCommunicator extends WebSocketServer {
         // TODO: generalize
         if (command.getMethod().equals("createGame")) {
             CreateGameRequest[] request = {Serializer.getInstance().deserializeCreateCommand(command.getParamValues()[0].toString())};
+            command.setParamValues(request);
+        }
+        if (command.getMethod().equals("joinGame")) {
+            JoinGameRequest[] request = {Serializer.getInstance().deserializeJoinCommand(command.getParamValues()[0].toString())};
             command.setParamValues(request);
         }
         Results result = command.execute();

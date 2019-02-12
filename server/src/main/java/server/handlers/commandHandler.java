@@ -68,9 +68,9 @@ public class commandHandler extends handlerBase {
             throw new Exception("Invalid Auth Token passed to joinGame");
         }
 
-        serverModel.getInstance().joinGame(request);
+        gameModel game = serverModel.getInstance().joinGame(request);
 
-        return new Results("Join", true, new GameListData(serverModel.getInstance().getGames()));
+        return new Results("Join", true, game);
     }
 
     public Results startGame(StartGameRequest request) throws Exception {
