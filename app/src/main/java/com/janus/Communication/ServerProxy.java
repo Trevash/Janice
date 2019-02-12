@@ -28,7 +28,7 @@ public class ServerProxy {
 
     private ServerProxy() {}
 
-    static ServerProxy getInstance() {
+    public static ServerProxy getInstance() {
         if (scp == null){
             scp = new ServerProxy();
         }

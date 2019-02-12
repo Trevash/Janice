@@ -4,10 +4,12 @@ import com.bignerdranch.android.shared.models.gameModel;
 import com.bignerdranch.android.shared.models.usernameModel;
 import com.bignerdranch.android.shared.resultobjects.Results;
 import com.janus.ClientModel;
+import com.janus.Communication.ServerProxy;
 
 public class LobbyFragmentPresenter implements ClientModel.CurrentView{
 
     private ClientModel model = ClientModel.getInstance();
+    private ServerProxy sp = ServerProxy.getInstance();
 
     public interface View {
         void updateButtons(boolean isActive);
@@ -27,8 +29,13 @@ public class LobbyFragmentPresenter implements ClientModel.CurrentView{
         this.view = v;
     }
 
+
     public void startGameClicked() {
-        //Call startGame on serverproxy
+        try {
+            sp.StartGame(model.getGame(), model.getUser().getAuthToken());
+        } catch(Exception e){
+            e.printStackTrace();
+        }
     }
 
     public void readyClicked(){
