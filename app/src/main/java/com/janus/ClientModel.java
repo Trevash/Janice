@@ -5,6 +5,7 @@ import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.List;
 import com.bignerdranch.android.shared.models.*;
+import com.bignerdranch.android.shared.resultobjects.GameListData;
 import com.janus.Communication.TtRClient;
 
 public class ClientModel {
@@ -51,7 +52,7 @@ public class ClientModel {
         return serverGameList;
     }
 
-    public void setServerGameList(List<gameModel> serverGameList) {
-        this.serverGameList = serverGameList;
+    public void setServerGameList(GameListData serverGameList) {
+        this.serverGameList = serverGameList.getGames();
     }
 }

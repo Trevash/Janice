@@ -13,8 +13,8 @@ import com.bignerdranch.android.shared.models.usernameModel;
 import com.bignerdranch.android.shared.requestObjects.CreateGameRequest;
 import com.bignerdranch.android.shared.requestObjects.JoinGameRequest;
 import com.bignerdranch.android.shared.requestObjects.StartGameRequest;
+import com.bignerdranch.android.shared.resultobjects.AuthData;
 import com.bignerdranch.android.shared.resultobjects.GameListData;
-import com.bignerdranch.android.shared.resultobjects.LoginData;
 import com.bignerdranch.android.shared.resultobjects.Results;
 import com.bignerdranch.android.shared.Serializer;
 
@@ -36,7 +36,7 @@ public class commandHandler extends handlerBase {
                 new userIDModel(),
                 auth));
 
-        LoginData data = new LoginData(new GameListData(), auth);
+        AuthData data = new AuthData(auth);
 
         return new Results("Register", true, data);
     }
@@ -51,7 +51,7 @@ public class commandHandler extends handlerBase {
         authTokenModel auth = new authTokenModel();
         curUser.setAuthToken(auth);
 
-        LoginData data = new LoginData(new GameListData(), auth);
+        AuthData data = new AuthData(auth);
         return new Results("Login", true, data);
     }
 
@@ -59,9 +59,9 @@ public class commandHandler extends handlerBase {
         if(!serverModel.getInstance().authTokenExists(request.getAuth())){
             throw new Exception("Invalid Auth Token passed to createGame");
         }
-
-        serverModel.getInstance().addGame(new gameModel(request.getAuth()));
-        return new Results("Create", true, new GameListData());
+        gameModel newGame = new gameModel(request.getAuth());
+        serverModel.getInstance().addGame(newGame);
+        return new Results("Host", true, newGame.getGameID());
     }
 
     public Results joinGame(JoinGameRequest request) throws Exception {

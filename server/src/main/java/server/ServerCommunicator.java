@@ -2,6 +2,7 @@ package server;
 
 import com.bignerdranch.android.shared.GenericCommand;
 import com.bignerdranch.android.shared.requestObjects.CreateGameRequest;
+import com.bignerdranch.android.shared.resultobjects.GameListData;
 import com.bignerdranch.android.shared.resultobjects.Results;
 import com.bignerdranch.android.shared.Serializer;
 import com.bignerdranch.android.shared.models.*;
@@ -55,16 +56,37 @@ public class ServerCommunicator extends WebSocketServer {
         String resultGson = Serializer.getInstance().serializeObject(result);
         
         switch(result.getType()){
-        	case "Login": broadcastOne(resultGson, conn); break;
-        	case "Register": broadcastOne(resultGson, conn); break;
-        	case "Create": broadcast(resultGson); break;
-        	case "Join": broadcast(resultGson); break;
-        	case "Start": broadcast(resultGson); break;
+        	case "Login":
+        	    broadcastOne(resultGson, conn);
+        	    if(result.isSuccess()){updateAllUserGameList();}
+        	    break;
+        	case "Register":
+        	    broadcastOne(resultGson, conn);
+                if(result.isSuccess()){updateAllUserGameList();}
+        	    break;
+        	case "Create":
+        	    broadcastOne(resultGson, conn);
+        	    updateAllUserGameList();
+        	    break;
+        	case "Join":
+        	    broadcast(resultGson);
+                updateAllUserGameList();
+        	    break;
+        	case "Start":
+        	    broadcast(resultGson);
+                updateAllUserGameList();
+        	    break;
             default : System.out.println("Invalid type passed to onMessage from Result!");
         }
         List<WebSocket> temp = new ArrayList<>();
         temp.add(conn);
         broadcast(resultGson, temp);
+    }
+
+    private void updateAllUserGameList() {
+        Results gameListResult = new Results("GameList", true, new GameListData());
+        String gameListGson = Serializer.getInstance().serializeObject(gameListResult);
+        broadcast(gameListGson);
     }
 
     @Override

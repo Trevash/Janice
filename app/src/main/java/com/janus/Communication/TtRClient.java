@@ -5,9 +5,10 @@ import java.net.URI;
 import org.java_websocket.client.WebSocketClient;
 import org.java_websocket.handshake.ServerHandshake;
 
-import com.bignerdranch.android.shared.resultobjects.LoginData;
+import com.bignerdranch.android.shared.resultobjects.AuthData;
 import com.bignerdranch.android.shared.resultobjects.Results;
 import com.bignerdranch.android.shared.Serializer;
+import com.janus.ClientModel;
 
 public class TtRClient extends WebSocketClient{
     private static Results messageResult;
@@ -15,6 +16,8 @@ public class TtRClient extends WebSocketClient{
     public TtRClient(URI serverUri) {
         super(serverUri);
     }
+
+    private ClientModel client = ClientModel.getInstance();
 
     @Override
     public void onOpen(ServerHandshake handshakedata) {
@@ -28,14 +31,17 @@ public class TtRClient extends WebSocketClient{
             System.out.println("Received Message: " + result.getData());
             switch (result.getType()) {
                 case "Login": {
-                    LoginData data = Serializer.getInstance().deserializeLoginData(result.getData().toString());
+                    AuthData data = Serializer.getInstance().deserializeAuthData(result.getData().toString());
                     result.setData(data);
                     break;
                 }
                 case "Register": {
-                    LoginData data = Serializer.getInstance().deserializeLoginData(result.getData().toString());
+                    AuthData data = Serializer.getInstance().deserializeAuthData(result.getData().toString());
                     result.setData(data);
                     break;
+                }
+                case "GameList": {
+                    client.setServerGameList(Serializer.getInstance().deserializeGameListData(result.getData().toString()));
                 }
             }
             messageResult = result;

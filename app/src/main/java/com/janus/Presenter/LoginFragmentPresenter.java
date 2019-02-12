@@ -1,6 +1,6 @@
 package com.janus.Presenter;
 
-import com.bignerdranch.android.shared.resultobjects.LoginData;
+import com.bignerdranch.android.shared.resultobjects.AuthData;
 import com.bignerdranch.android.shared.resultobjects.Results;
 import com.janus.ClientModel;
 import com.janus.Communication.LoginTask;
@@ -67,8 +67,7 @@ public class LoginFragmentPresenter implements LoginTask.Caller{
     @Override
     public void onLoginComplete(Results r) {
         //LoginData data = Serializer.getInstance().deserializeLoginData(r.getData().toString());
-        LoginData data = (LoginData) r.getData();
-        model.setServerGameList(data.getGames().getGames());
+        AuthData data = (AuthData) r.getData();
         model.setAuth(data.getAuthToken());
         view.displaySuccess();
     }

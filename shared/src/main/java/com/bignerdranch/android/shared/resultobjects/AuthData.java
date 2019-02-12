@@ -4,17 +4,11 @@ import java.util.List;
 
 import com.bignerdranch.android.shared.models.*;
 
-public class LoginData {
-    private GameListData games;
+public class AuthData {
     private authTokenModel authToken;
 
-    public LoginData(GameListData games, authTokenModel authToken) {
-        this.games = games;
+    public AuthData(authTokenModel authToken) {
         this.authToken = authToken;
-    }
-
-    public GameListData getGames() {
-        return games;
     }
 
     public authTokenModel getAuthToken() {
