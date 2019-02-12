@@ -23,8 +23,8 @@ public class commandHandler extends handlerBase {
         Results results = command.execute();
         String ss = Serializer.getInstance().serializeObject(results);
 
-        if(results.isSuccess()){ return (String) results.getJSONdata(); }
-        else{ return (String) results.getJSONdata(); }
+        if(results.isSuccess()){ return results.getJSONdata(); }
+        else{ return results.getJSONdata(); }
     }
 
     public Results register(String username, String password) throws Exception{
@@ -73,7 +73,7 @@ public class commandHandler extends handlerBase {
 
         serverModel.getInstance().joinGame(request);
 
-        return new Results("Join", true, new GameListData());
+        return new Results("Join", true, new GameListData(serverModel.getInstance().getGames()));
     }
 
     public Results startGame(StartGameRequest request) throws Exception {
@@ -83,6 +83,6 @@ public class commandHandler extends handlerBase {
 
         serverModel.getInstance().startGame(request);
 
-        return new Results("Start", true, new GameListData());
+        return new Results("Start", true, new GameListData(serverModel.getInstance().getGames()));
     }
 }
