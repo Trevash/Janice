@@ -8,8 +8,9 @@ public class gameModel {
     private String gameName;
     private boolean gameStarted;
     private List<playerModel> players = new ArrayList<>();
-    // host is the first player in the list
+    // private playerModel hostPlayer;
 
+    // host is the first player in the list
     public playerModel getHostPlayer() {
         return players.get(0);
     }

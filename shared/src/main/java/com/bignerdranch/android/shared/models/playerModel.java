@@ -3,6 +3,8 @@ package com.bignerdranch.android.shared.models;
 public class playerModel {
     private usernameModel userName;
     private playerIDModel id;
+    private boolean isReady;
+    private boolean isHost;
 
     public playerModel(usernameModel userName, boolean isReady, boolean isHost) {
         this.userName = userName;
@@ -14,9 +16,6 @@ public class playerModel {
     public boolean isHost() {
         return isHost;
     }
-
-    private boolean isReady;
-    private boolean isHost;
 
     public playerIDModel getId() {
         return id;
