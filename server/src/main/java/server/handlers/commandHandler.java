@@ -33,14 +33,13 @@ public class commandHandler extends handlerBase {
         userIDModel newUserID = new userIDModel();
         authTokenModel auth = new authTokenModel();
 
-        serverModel.getInstance().addUser(new userModel(newUserName,
+        userModel user = new userModel(newUserName,
                 newPassword,
                 newUserID,
-                auth));
+                auth);
+        serverModel.getInstance().addUser(user);
 
-        AuthData data = new AuthData(auth);
-
-        return new Results("Register", true, data);
+        return new Results("Register", true, user);
     }
 
     public Results login(String username, String password) throws Exception {
@@ -52,9 +51,7 @@ public class commandHandler extends handlerBase {
 
         authTokenModel auth = new authTokenModel();
         curUser.setAuthToken(auth);
-
-        AuthData data = new AuthData(auth);
-        return new Results("Login", true, data);
+        return new Results("Login", true, curUser);
     }
 
     public Results createGame(CreateGameRequest request) throws Exception {
