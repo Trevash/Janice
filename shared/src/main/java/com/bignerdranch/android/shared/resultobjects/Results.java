@@ -7,13 +7,11 @@ public class Results {
     private String type;
     private boolean success;
     private String JSONdata;
-    private Gson gson;
     
     public Results(String type, boolean success, Object JSONdata) {
         this.type = type;
         this.success = success;
-        this.gson = new Gson();
-        this.JSONdata = gson.toJson(JSONdata);
+        this.JSONdata = Serializer.getInstance().serializeObject(JSONdata);
     }
 
     public String getType() {
@@ -30,11 +28,13 @@ public class Results {
     
     //Object should be the data object specific to the type
     public Object getData(Class<?> classType) {
+        Gson gson = new Gson();
+
     	Object dataObject = gson.fromJson(JSONdata, classType); //possibly return classType not Object.class
         return dataObject;
     }
 
     public void setData(Object JSONdata) {
-        this.JSONdata = gson.toJson(JSONdata);
+        this.JSONdata = Serializer.getInstance().serializeObject(JSONdata);
     }
 }
