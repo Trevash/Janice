@@ -6,7 +6,7 @@ import com.janus.ClientModel;
 import com.janus.Communication.LoginTask;
 import com.bignerdranch.android.shared.requestObjects.LoginRequest;
 
-public class LoginFragmentPresenter implements LoginTask.Caller{
+public class LoginFragmentPresenter implements LoginTask.Caller, ClientModel.CurrentView{
 
     public interface View {
         void updateButtons(boolean isActive);
@@ -49,6 +49,10 @@ public class LoginFragmentPresenter implements LoginTask.Caller{
         loginTask.execute(loginRequest);
     }
 
+    public void setFragment() {
+        model.setCurrentView(this);
+    }
+
     private void checkButtons() {
         if(username.equals("") || password.equals("")){
             view.updateButtons(false);
@@ -70,4 +74,7 @@ public class LoginFragmentPresenter implements LoginTask.Caller{
         model.setAuth(data.getAuthToken());
         view.displaySuccess();
     }
+
+    @Override
+    public void updateUI() {}
 }

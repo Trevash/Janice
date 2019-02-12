@@ -60,7 +60,7 @@ public class commandHandler extends handlerBase {
         }
         gameModel newGame = new gameModel(request.getAuth());
         serverModel.getInstance().addGame(newGame);
-        return new Results("Host", true, newGame.getGameID());
+        return new Results("Create", true, newGame);
     }
 
     public Results joinGame(JoinGameRequest request) throws Exception {

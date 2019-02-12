@@ -1,5 +1,6 @@
 package com.janus.UI;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
@@ -65,9 +66,6 @@ public class GameListFragment extends Fragment implements GameListFragmentPresen
 
         mGameList = (RecyclerView) v.findViewById(R.id.game_list_recycler_view);
         mGameList.setLayoutManager(new LinearLayoutManager(getActivity()));
-
-        mLayoutManager = new LinearLayoutManager(getActivity());
-        mGameList.setLayoutManager(mLayoutManager);
 
         mAdapter = new GameListAdapter(games);
         mGameList.setAdapter(mAdapter);
@@ -165,9 +163,18 @@ public class GameListFragment extends Fragment implements GameListFragmentPresen
         }
     }
 
+    public void update() {
+        mAdapter = new GameListAdapter(ClientModel.getInstance().getServerGameList());
+        mGameList.setAdapter(mAdapter);
+    }
+
     @Override
     public void updateGameList(List<gameModel> games) {
-        mAdapter = new GameListAdapter(games);
-        mGameList.setAdapter(mAdapter);
+        getActivity().runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                update();
+            }
+        });
     }
 }

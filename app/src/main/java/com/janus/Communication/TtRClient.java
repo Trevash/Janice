@@ -8,6 +8,7 @@ import org.java_websocket.handshake.ServerHandshake;
 
 import com.bignerdranch.android.shared.models.gameIDModel;
 import com.bignerdranch.android.shared.models.userModel;
+import com.bignerdranch.android.shared.models.gameModel;
 import com.bignerdranch.android.shared.resultobjects.AuthData;
 import com.bignerdranch.android.shared.resultobjects.Results;
 import com.bignerdranch.android.shared.Serializer;
@@ -32,7 +33,7 @@ public class TtRClient extends WebSocketClient{
     public void onMessage(String message) {
         Results result = Serializer.getInstance().deserializeResults(message);
         if (result.isSuccess()) {
-            System.out.println("Received Message: ");
+            System.out.println("Received Message: " + result.getJSONdata());
             switch (result.getType()) {
                 case "Login": {
                     client.setUser((userModel) result.getData(userModel.class));
@@ -45,7 +46,7 @@ public class TtRClient extends WebSocketClient{
                     break;
                 }
                 case "Create": {
-                    client.setGame((gameIDModel) result.getData(gameIDModel.class));
+                    client.setGame((gameModel) result.getData(gameModel.class));
                     break;
                 }
             }

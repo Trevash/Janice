@@ -12,6 +12,7 @@ import android.widget.EditText;
 import android.widget.TabHost;
 import android.widget.Toast;
 
+import com.janus.ClientModel;
 import com.janus.Presenter.LoginFragmentPresenter;
 import com.janus.R;
 
@@ -42,6 +43,7 @@ public class LoginFragment extends Fragment implements LoginFragmentPresenter.Vi
         View v = inflater.inflate(R.layout.fragment_login, container, false);
 
         presenter = new LoginFragmentPresenter(this);
+        presenter.setFragment();
 
         mUsername = (EditText) v.findViewById(R.id.username_editText);
         mUsername.addTextChangedListener(new TextWatcher() {
