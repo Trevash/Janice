@@ -137,7 +137,13 @@ public class GameListFragment extends Fragment implements GameListFragmentPresen
         }
 
         public GameListAdapter(List<gameModel> games) {
-            this.games = games;
+            List<gameModel> filteredGames = new ArrayList<>();
+            for (int i = 0; i < games.size(); i++) {
+                if (!games.get(i).isGameStarted()) {
+                    filteredGames.add(games.get(i));
+                }
+            }
+            this.games = filteredGames;
         }
 
         @Override
