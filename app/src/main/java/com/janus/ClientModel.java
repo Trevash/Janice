@@ -11,6 +11,7 @@ import com.janus.Communication.TtRClient;
 
 public class ClientModel {
 
+    // TODO answer: What implements CurrentView?
     public interface CurrentView {
         void updateUI();
     }
@@ -80,7 +81,7 @@ public class ClientModel {
 
     public gameModel getGameByID(gameIDModel id) {
         for(gameModel game: serverGameList){
-            if(id.getValue().equals(game.getGameID())){
+            if(id.equals(game.getGameID())){
                 return game;
             }
         }

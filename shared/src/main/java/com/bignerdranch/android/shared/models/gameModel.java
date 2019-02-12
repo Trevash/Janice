@@ -69,4 +69,13 @@ public class gameModel {
     public List<playerModel> getPlayers() {
         return players;
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (o == null || o.getClass() != this.getClass()) {
+            return false;
+        } else {
+            return this.getGameID() == ((gameModel) o).getGameID();
+        }
+    }
 }

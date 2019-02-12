@@ -48,6 +48,7 @@ public class ServerCommunicator extends WebSocketServer {
     @Override
     public void onMessage(WebSocket conn, String message) {
         GenericCommand command = Serializer.getInstance().deserializeCommand(message);
+        // TODO: generalize
         if (command.getMethod().equals("createGame")) {
             CreateGameRequest[] request = {Serializer.getInstance().deserializeCreateCommand(command.getParamValues()[0].toString())};
             command.setParamValues(request);

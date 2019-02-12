@@ -164,6 +164,7 @@ public class GameListFragment extends Fragment implements GameListFragmentPresen
     }
 
     public void update() {
+        // TODO fix: modify so that this UI class isn't directly accessing the model
         mAdapter = new GameListAdapter(ClientModel.getInstance().getServerGameList());
         mGameList.setAdapter(mAdapter);
     }
