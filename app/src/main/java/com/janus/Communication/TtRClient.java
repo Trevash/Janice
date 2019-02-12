@@ -1,6 +1,7 @@
 package com.janus.Communication;
 
 import java.net.URI;
+import java.util.List;
 
 import org.java_websocket.client.WebSocketClient;
 import org.java_websocket.handshake.ServerHandshake;
@@ -9,6 +10,7 @@ import com.bignerdranch.android.shared.resultobjects.AuthData;
 import com.bignerdranch.android.shared.resultobjects.Results;
 import com.bignerdranch.android.shared.Serializer;
 import com.janus.ClientModel;
+import com.bignerdranch.android.shared.resultobjects.GameListData;
 
 public class TtRClient extends WebSocketClient{
     private static Results messageResult;
@@ -28,26 +30,22 @@ public class TtRClient extends WebSocketClient{
     public void onMessage(String message) {
         Results result = Serializer.getInstance().deserializeResults(message);
         if (result.isSuccess()) {
-            System.out.println("Received Message: " + result.getData());
+            System.out.println("Received Message: ");
             switch (result.getType()) {
                 case "Login": {
-                    AuthData data = Serializer.getInstance().deserializeAuthData(result.getData().toString());
-                    result.setData(data);
                     break;
                 }
                 case "Register": {
-                    AuthData data = Serializer.getInstance().deserializeAuthData(result.getData().toString());
-                    result.setData(data);
                     break;
                 }
                 case "GameList": {
-                    client.setServerGameList(Serializer.getInstance().deserializeGameListData(result.getData().toString()));
+                    client.setServerGameList((GameListData) result.getData(GameListData.class));
                 }
             }
             messageResult = result;
         }
         else {
-            System.out.println("Received Error: " + result.getData());
+            System.out.println("Received Error: " + result.getData(String.class));
             messageResult = result;
         }
     }

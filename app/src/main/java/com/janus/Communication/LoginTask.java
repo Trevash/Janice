@@ -52,7 +52,7 @@ public class LoginTask extends AsyncTask<LoginRequest, Void, Results> {
         if(r.isSuccess()) {
             caller.onLoginComplete(r);
         } else {
-            caller.onError((String) r.getData());
+            caller.onError((String) r.getData(String.class));
         }
     }
 }

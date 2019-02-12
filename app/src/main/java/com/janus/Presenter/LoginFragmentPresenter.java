@@ -66,8 +66,7 @@ public class LoginFragmentPresenter implements LoginTask.Caller{
 
     @Override
     public void onLoginComplete(Results r) {
-        //LoginData data = Serializer.getInstance().deserializeLoginData(r.getData().toString());
-        AuthData data = (AuthData) r.getData();
+        AuthData data = (AuthData) r.getData(AuthData.class);
         model.setAuth(data.getAuthToken());
         view.displaySuccess();
     }
