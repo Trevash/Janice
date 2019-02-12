@@ -2,6 +2,7 @@ package com.bignerdranch.android.shared;
 
 import java.security.SecureRandom;
 
+@Deprecated
 public class randomIDGenerator {
     private static randomIDGenerator rig = null;
 

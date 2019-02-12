@@ -1,7 +1,5 @@
 package com.bignerdranch.android.shared.resultobjects;
 
-import java.util.List;
-
 import com.bignerdranch.android.shared.models.*;
 
 public class AuthData {

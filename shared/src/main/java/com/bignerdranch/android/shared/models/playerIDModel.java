@@ -1,16 +1,12 @@
 package com.bignerdranch.android.shared.models;
 
-import com.bignerdranch.android.shared.randomIDGenerator;
+import java.util.UUID;
 
 public class playerIDModel {
     private String value;
 
     playerIDModel() {
-        String newValue = randomIDGenerator.getInstance().getRandomString(16);
-        while(serverModel.getInstance().playerIDExists(newValue)){
-            newValue = randomIDGenerator.getInstance().getRandomString(16);
-        }
-        value = newValue;
+        value = UUID.randomUUID().toString();
     }
 
     public String getValue() {

@@ -6,7 +6,7 @@ import java.util.List;
 public class userModel {
     /*
     userModel represents a row of data in the user table of the database.
-    Each private variable is a difference collumn
+    Each private variable is a difference column
      */
 
     private usernameModel userName;

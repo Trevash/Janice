@@ -7,13 +7,13 @@ public class gameModel {
     private gameIDModel gameID;
     private String gameName;
     private boolean gameStarted;
-    private playerModel hostPlayer;
     private List<playerModel> players = new ArrayList<>();
+    // host is the first player in the list
 
     public gameModel(authTokenModel auth) throws Exception {
         gameID = new gameIDModel();
         gameName = serverModel.getInstance().getUser(auth).getUserName().getValue() + "'s_Game!";
-        hostPlayer = new playerModel(serverModel.getInstance().getUser(auth).getUserName(), false, true);
+        playerModel hostPlayer = new playerModel(serverModel.getInstance().getUser(auth).getUserName(), false, true);
         gameStarted = false;
         players.add(hostPlayer);
     }
@@ -29,7 +29,7 @@ public class gameModel {
             }
         }
         if(players.size() >= 5) {
-            throw new Exception("Max number of players reached!");
+            throw new IllegalStateException("Max number of players reached!");
         }
 
         players.add(newPlayer);
@@ -49,12 +49,12 @@ public class gameModel {
 
     public boolean isGameStarted(){return gameStarted;}
 
-    public void startGame() throws Exception {
+    public void startGame() throws IllegalStateException {
         if (players.size() < 2){
-            throw new Exception("Insufficient number of players to start game!");
+            throw new IllegalStateException("Insufficient number of players to start game!");
         }
         else if(players.size() > 5){
-            throw new Exception("Too many players to start game!");
+            throw new IllegalStateException("Too many players to start game!");
         }
 
         this.gameStarted = true;
