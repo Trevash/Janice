@@ -1,6 +1,7 @@
 package com.janus.Communication;
 
 import com.bignerdranch.android.shared.GenericCommand;
+import com.bignerdranch.android.shared.IServer;
 import com.bignerdranch.android.shared.models.authTokenModel;
 import com.bignerdranch.android.shared.models.gameModel;
 import com.bignerdranch.android.shared.requestObjects.CreateGameRequest;
@@ -14,7 +15,7 @@ import org.java_websocket.handshake.ServerHandshake;
 import java.net.URI;
 import java.net.URISyntaxException;
 
-public class ServerProxy {
+public class ServerProxy implements IServer {
 
     public interface CurrentState {
 
@@ -46,7 +47,13 @@ public class ServerProxy {
         client.closeBlocking();
     }
 
+    // TODO rename methods: lowercase on first letter
+    @Deprecated
     public Results Login(String username, String password) throws Exception {
+        return login(username, password);
+    }
+
+    public Results login(String username, String password) throws Exception {
         String[] paramValues = {username, password};
         String[] paramTypes = {"java.lang.String", "java.lang.String"};
         GenericCommand commandObj = new GenericCommand("server.handlers.commandHandler", "login",paramTypes, paramValues);
@@ -61,7 +68,12 @@ public class ServerProxy {
         return messageResult;
     }
 
+    @Deprecated
     public Results Register(String username, String password) throws Exception {
+        return register(username, password);
+    }
+
+    public Results register(String username, String password) throws Exception {
         String[] paramValues = {username, password};
         String[] paramTypes = {"java.lang.String", "java.lang.String"};
         GenericCommand commandObj = new GenericCommand("server.handlers.commandHandler", "register",paramTypes, paramValues);
@@ -76,7 +88,12 @@ public class ServerProxy {
         return messageResult;
     }
 
+    @Deprecated
     public Results CreateGame(authTokenModel auth) throws Exception {
+        return createGame(auth);
+    }
+
+    public Results createGame(authTokenModel auth) throws Exception {
         Object[] paramValues = {new CreateGameRequest(auth)};
         String[] paramTypes = {"com.bignerdranch.android.shared.requestObjects.CreateGameRequest"};
         GenericCommand commandObj = new GenericCommand("server.handlers.commandHandler", "createGame", paramTypes, paramValues);
@@ -91,7 +108,12 @@ public class ServerProxy {
         return messageResult;
     }
 
+    @Deprecated
     public Results StartGame(gameModel game, authTokenModel auth) throws Exception {
+        return startGame(game, auth);
+    }
+
+    public Results startGame(gameModel game, authTokenModel auth) throws Exception {
         Object[] paramValues = {new StartGameRequest(game, auth)};
         String[] paramTypes = {"com.bignerdranch.android.shared.requestObjects.StartGameRequest"};
         GenericCommand commandObj = new GenericCommand("server.handlers.commandHandler", "startGame", paramTypes, paramValues);
@@ -106,7 +128,12 @@ public class ServerProxy {
         return messageResult;
     }
 
+    @Deprecated
     public Results JoinGame(JoinGameRequest request) throws Exception {
+        return joinGame(request);
+    }
+
+    public Results joinGame(JoinGameRequest request) throws Exception {
         Object[] paramValues = {request};
         String[] paramTypes = {"com.bignerdranch.android.shared.requestObjects.JoinGameRequest"};
         GenericCommand commandObj = new GenericCommand("server.handlers.commandHandler", "joinGame", paramTypes, paramValues);

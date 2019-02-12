@@ -28,6 +28,9 @@ public class gameModel {
     }
 
     public void addPlayer(playerModel newPlayer) throws Exception {
+        if(gameStarted) {
+            throw new IllegalStateException("Game has already been started");
+        }
         for (playerModel curPlayer : this.players) {
             if(curPlayer.getUserName().getValue().equals(newPlayer.getUserName().getValue())){
                 throw new Exception("User is already a player in this game");

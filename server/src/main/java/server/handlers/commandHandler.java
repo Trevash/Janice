@@ -1,6 +1,7 @@
 package server.handlers;
 
 import com.bignerdranch.android.shared.GenericCommand;
+import com.bignerdranch.android.shared.IServer;
 import com.bignerdranch.android.shared.models.authTokenModel;
 import com.bignerdranch.android.shared.models.gameModel;
 import com.bignerdranch.android.shared.models.passwordModel;
@@ -16,7 +17,7 @@ import com.bignerdranch.android.shared.resultobjects.GameListData;
 import com.bignerdranch.android.shared.resultobjects.Results;
 import com.bignerdranch.android.shared.Serializer;
 
-public class commandHandler extends handlerBase {
+public class commandHandler extends handlerBase { //implements IServer { TODO fix this - unify the commandHandler and the ServerProxy
     @Override
     public String execute(String s) {
         GenericCommand command = Serializer.getInstance().deserializeCommand(s);

@@ -187,6 +187,7 @@ public class LobbyFragment extends Fragment implements LobbyFragmentPresenter.Vi
         mPlayerAdapter = new PlayerAdapter(ClientModel.getInstance().getGame().getPlayers().toArray(players));
         mPlayerRecyclerView.setAdapter(mPlayerAdapter);
         String numPlayers = (mPlayerAdapter.getItemCount() + "/5 Players");
+        int numOfPlayers = mPlayerAdapter.getItemCount();
         mNumberOfPlayers.setText(numPlayers);
 
         playerModel host = ClientModel.getInstance().getGame().getHostPlayer();
@@ -194,7 +195,6 @@ public class LobbyFragment extends Fragment implements LobbyFragmentPresenter.Vi
         isHost = username.getValue().equals(host.getUserName().getValue());
         if (isHost) {
             mStartGameButton.setText("Start");
-            int numOfPlayers = mPlayerAdapter.getItemCount();
             if(numOfPlayers >= 2 && numOfPlayers <= 5) {
                 mStartGameButton.setEnabled(true);
             } else {
