@@ -2,10 +2,8 @@ package server.handlers;
 
 import com.bignerdranch.android.shared.GenericCommand;
 import com.bignerdranch.android.shared.models.authTokenModel;
-import com.bignerdranch.android.shared.models.gameIDModel;
 import com.bignerdranch.android.shared.models.gameModel;
 import com.bignerdranch.android.shared.models.passwordModel;
-import com.bignerdranch.android.shared.models.playerModel;
 import com.bignerdranch.android.shared.models.serverModel;
 import com.bignerdranch.android.shared.models.userIDModel;
 import com.bignerdranch.android.shared.models.userModel;
@@ -30,10 +28,14 @@ public class commandHandler extends handlerBase {
     }
 
     public Results register(String username, String password) throws Exception{
+        usernameModel newUserName = new usernameModel(username);
+        passwordModel newPassword = new passwordModel(password);
+        userIDModel newUserID = new userIDModel();
         authTokenModel auth = new authTokenModel();
-        serverModel.getInstance().addUser(new userModel(new usernameModel(username),
-                new passwordModel(password),
-                new userIDModel(),
+
+        serverModel.getInstance().addUser(new userModel(newUserName,
+                newPassword,
+                newUserID,
                 auth));
 
         AuthData data = new AuthData(auth);
