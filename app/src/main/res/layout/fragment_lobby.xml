@@ -44,12 +44,4 @@
         android:textSize="20sp"
         android:layout_gravity="center"/>
 
-    <Button
-        android:id="@+id/create_game_button"
-        android:layout_width="200dp"
-        android:layout_height="match_parent"
-        android:text="Create Game" />
-
-
-
 </LinearLayout>
