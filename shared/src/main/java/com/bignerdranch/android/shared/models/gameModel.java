@@ -1,5 +1,7 @@
 package com.bignerdranch.android.shared.models;
 
+import com.bignerdranch.android.shared.exceptions.DuplicateException;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -27,13 +29,13 @@ public class gameModel {
         return gameID;
     }
 
-    public void addPlayer(playerModel newPlayer) throws Exception {
+    public void addPlayer(playerModel newPlayer) throws DuplicateException {
         if(gameStarted) {
             throw new IllegalStateException("Game has already been started");
         }
         for (playerModel curPlayer : this.players) {
             if(curPlayer.getUserName().getValue().equals(newPlayer.getUserName().getValue())){
-                throw new Exception("User is already a player in this game");
+                throw new DuplicateException("User is already a player in this game");
             }
         }
         if(players.size() >= 5) {

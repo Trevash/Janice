@@ -1,5 +1,6 @@
 package com.bignerdranch.android.shared.models;
 
+import com.bignerdranch.android.shared.exceptions.InvalidAuthorizationException;
 import com.bignerdranch.android.shared.requestObjects.JoinGameRequest;
 import com.bignerdranch.android.shared.requestObjects.StartGameRequest;
 
@@ -24,7 +25,7 @@ public class serverModel {
         this.users.add(newUser);
     }
 
-    public boolean userExists(String test){
+    public boolean userExists(String test) {
         for (userModel user : this.users) {
             if(test.equals(user.getUserName().getValue())){
                 return true;
@@ -42,7 +43,7 @@ public class serverModel {
         return false;
     }
 
-    public boolean userExists(userIDModel test){
+    public boolean userExists(userIDModel test) {
         for (userModel user : this.users) {
             if(test == user.getUserID()){
                 return true;
@@ -107,7 +108,7 @@ public class serverModel {
 
     public boolean gameIDExists(String newValue) {
         for(gameModel game : this.games){
-            if(game.getGameID().equals(newValue)){
+            if(game.getGameID().getValue().equals(newValue)){
                 return true;
             }
         }
@@ -120,7 +121,7 @@ public class serverModel {
 
     public gameModel getGameByID(gameIDModel id) {
         for(gameModel game: this.games){
-            if(id.getValue().equals(game.getGameID())){
+            if(id.equals(game.getGameID())) {
                 return game;
             }
         }
@@ -145,12 +146,12 @@ public class serverModel {
         return new playerModel(userByAuth.getUserName(), false, false);
     }
 
-    private userModel getUserByAuth(authTokenModel auth) throws Exception {
+    private userModel getUserByAuth(authTokenModel auth) throws InvalidAuthorizationException {
         for (userModel curUser : this.users) {
             if(curUser.getAuthToken().getValue().equals(auth.getValue()))
                 return curUser;
         }
-        throw new Exception("User not found by auth token to find game!");
+        throw new InvalidAuthorizationException("User not found by auth token to find game!");
     }
 
     public void startGame(StartGameRequest request) throws Exception {

@@ -1,4 +1,4 @@
-package com.bignerdranch.android.shared;
+package com.bignerdranch.android.shared.exceptions;
 
 public class DuplicateException extends Exception { // TODO what would be a good name for this?
     public DuplicateException(){}
