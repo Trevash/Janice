@@ -10,17 +10,17 @@ public class gameModel {
     private List<playerModel> players = new ArrayList<>();
     // private playerModel hostPlayer;
 
-    // host is the first player in the list
-    public playerModel getHostPlayer() {
-        return players.get(0);
-    }
-
     public gameModel(authTokenModel auth) throws Exception {
         gameID = new gameIDModel();
         gameName = serverModel.getInstance().getUser(auth).getUserName().getValue() + "'s_Game!";
         playerModel hostPlayer = new playerModel(serverModel.getInstance().getUser(auth).getUserName(), false, true);
         gameStarted = false;
         players.add(hostPlayer);
+    }
+
+    // host is the first player in the list
+    public playerModel getHostPlayer() {
+        return players.get(0);
     }
 
     public gameIDModel getGameID() {
@@ -43,7 +43,7 @@ public class gameModel {
         players.add(newPlayer);
     }
 
-    public int numPlayers(){
+    public int numPlayers() {
         return players.size();
     }
 
@@ -81,4 +81,5 @@ public class gameModel {
             return this.getGameID() == ((gameModel) o).getGameID();
         }
     }
+
 }
