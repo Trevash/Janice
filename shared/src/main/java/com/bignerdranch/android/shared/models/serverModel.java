@@ -1,6 +1,9 @@
 package com.bignerdranch.android.shared.models;
 
+import com.bignerdranch.android.shared.exceptions.DuplicateException;
+import com.bignerdranch.android.shared.exceptions.GameNotFoundException;
 import com.bignerdranch.android.shared.exceptions.InvalidAuthorizationException;
+import com.bignerdranch.android.shared.exceptions.UserNotFoundException;
 import com.bignerdranch.android.shared.requestObjects.JoinGameRequest;
 import com.bignerdranch.android.shared.requestObjects.StartGameRequest;
 
@@ -34,7 +37,7 @@ public class serverModel {
         return false;
     }
 
-    public boolean userExists(userModel test){
+    public boolean userExists(userModel test) {
         for (userModel user : this.users) {
             if(test == user){
                 return true;
@@ -72,22 +75,22 @@ public class serverModel {
         return false;
     }
 
-    public userModel getUser(String username) throws Exception{
+    public userModel getUser(String username) throws UserNotFoundException {
         for(userModel user : this.users) {
             if(user.getUserName().getValue().equals(username)) {
                 return user;
             }
         }
-        throw new Exception("User not found!");
+        throw new UserNotFoundException("User not found!");
     }
 
-    public userModel getUser(authTokenModel auth) throws Exception{
+    public userModel getUser(authTokenModel auth) throws UserNotFoundException {
         for(userModel user : this.users) {
             if(user.getAuthToken().getValue().equals(auth.getValue())) {
                 return user;
             }
         }
-        throw new Exception("User not found!");
+        throw new UserNotFoundException("User not found!");
     }
 
     public boolean authTokenExists(authTokenModel auth) {
@@ -132,14 +135,15 @@ public class serverModel {
         games.add(newGame);
     }
 
-    public gameModel joinGame(JoinGameRequest request) throws Exception {
+    public gameModel joinGame(JoinGameRequest request) throws GameNotFoundException,
+            InvalidAuthorizationException, DuplicateException {
         for (gameModel curGame : this.games) {
             if(curGame.getGameID().getValue().equals(request.getModel().getGameID().getValue())) {
                 curGame.addPlayer(this.makeNewPlayer(this.getUserByAuth(request.getAuth())));
                 return curGame;
             }
         }
-        throw new Exception("Join game failed, game not found");
+        throw new GameNotFoundException("Join game failed, game not found");
     }
 
     private playerModel makeNewPlayer(userModel userByAuth) {
@@ -154,13 +158,13 @@ public class serverModel {
         throw new InvalidAuthorizationException("User not found by auth token to find game!");
     }
 
-    public void startGame(StartGameRequest request) throws Exception {
+    public void startGame(StartGameRequest request) throws GameNotFoundException {
         for (gameModel curGame : this.games) {
             if(curGame.getGameID().getValue().equals(request.getModel().getGameID().getValue())) {
                 curGame.startGame();
                 return;
             }
         }
-        throw new Exception("Game not found to start!");
+        throw new GameNotFoundException("Game not found to start!");
     }
 }
