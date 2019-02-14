@@ -3,13 +3,13 @@ package com.janus.Presenter;
 import com.bignerdranch.android.shared.models.gameModel;
 import com.bignerdranch.android.shared.requestObjects.JoinGameRequest;
 import com.bignerdranch.android.shared.resultobjects.Results;
-import com.janus.ClientModel;
+import com.janus.ClientFacade;
 import com.janus.Communication.CreateGameTask;
 import com.janus.Communication.JoinGameTask;
 
 import java.util.List;
 
-public class GameListFragmentPresenter implements JoinGameTask.Caller, CreateGameTask.Caller, ClientModel.CurrentView {
+public class GameListFragmentPresenter implements JoinGameTask.Caller, CreateGameTask.Caller, ClientFacade.Presenter {
 
     public interface View {
         void updateButtons(boolean isActive);
@@ -20,14 +20,14 @@ public class GameListFragmentPresenter implements JoinGameTask.Caller, CreateGam
 
     private View view;
     private gameModel gameSelected;
-    private ClientModel model = ClientModel.getInstance();
+    private ClientFacade facade = ClientFacade.getInstance();
 
     public GameListFragmentPresenter(View v) {
         this.view = v;
     }
 
     public void setFragment() {
-        model.setCurrentView(this);
+        facade.setPresenter(this);
     }
 
     public void selectGame(gameModel gameSelected) {
@@ -37,7 +37,7 @@ public class GameListFragmentPresenter implements JoinGameTask.Caller, CreateGam
 
     public void joinGameClicked() {
         view.updateButtons(false);
-        JoinGameRequest request = new JoinGameRequest(gameSelected, model.getUser().getAuthToken());
+        JoinGameRequest request = new JoinGameRequest(gameSelected, facade.getUser().getAuthToken());
         JoinGameTask joinGameTask = new JoinGameTask(this);
         joinGameTask.execute(request);
     }
@@ -45,7 +45,7 @@ public class GameListFragmentPresenter implements JoinGameTask.Caller, CreateGam
     public void createGameClicked() {
         view.updateButtons(false);
         CreateGameTask createGameTask = new CreateGameTask(this);
-        createGameTask.execute(model.getAuth());
+        createGameTask.execute(facade.getUser().getAuthToken());
     }
 
     @Override
@@ -67,6 +67,6 @@ public class GameListFragmentPresenter implements JoinGameTask.Caller, CreateGam
 
     @Override
     public void updateUI() {
-        view.updateGameList(model.getServerGameList());
+        view.updateGameList(facade.getServerGameList());
     }
 }

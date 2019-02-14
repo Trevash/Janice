@@ -13,7 +13,7 @@ public class LoginTask extends AsyncTask<LoginRequest, Void, Results> {
 
     public interface Caller {
         void onError(String s);
-        void onLoginComplete(Results r);
+        void onLoginComplete();
     }
 
     private Caller caller;
@@ -48,7 +48,7 @@ public class LoginTask extends AsyncTask<LoginRequest, Void, Results> {
     @Override
     protected void onPostExecute(Results r) {
         if(r.isSuccess()) {
-            caller.onLoginComplete(r);
+            caller.onLoginComplete();
         } else {
             caller.onError((String) r.getData(String.class));
         }

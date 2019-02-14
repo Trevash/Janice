@@ -2,11 +2,11 @@ package com.janus.Presenter;
 
 import com.bignerdranch.android.shared.resultobjects.AuthData;
 import com.bignerdranch.android.shared.resultobjects.Results;
-import com.janus.ClientModel;
+import com.janus.ClientFacade;
 import com.janus.Communication.LoginTask;
 import com.bignerdranch.android.shared.requestObjects.LoginRequest;
 
-public class LoginFragmentPresenter implements LoginTask.Caller, ClientModel.CurrentView{
+public class LoginFragmentPresenter implements LoginTask.Caller, ClientFacade.Presenter {
 
     public interface View {
         void updateButtons(boolean isActive);
@@ -14,7 +14,7 @@ public class LoginFragmentPresenter implements LoginTask.Caller, ClientModel.Cur
         void displaySuccess();
     }
 
-    private ClientModel model = ClientModel.getInstance();
+    private ClientFacade facade = ClientFacade.getInstance();
     private String username = "";
     private String password = "";
     private View view;
@@ -50,7 +50,7 @@ public class LoginFragmentPresenter implements LoginTask.Caller, ClientModel.Cur
     }
 
     public void setFragment() {
-        model.setCurrentView(this);
+        facade.setPresenter(this);
     }
 
     private void checkButtons() {
@@ -69,9 +69,7 @@ public class LoginFragmentPresenter implements LoginTask.Caller, ClientModel.Cur
     }
 
     @Override
-    public void onLoginComplete(Results r) {
-        AuthData data = (AuthData) r.getData(AuthData.class);
-        model.setAuth(data.getAuthToken());
+    public void onLoginComplete() {
         view.displaySuccess();
     }
 

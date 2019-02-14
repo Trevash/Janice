@@ -6,13 +6,11 @@ import java.util.List;
 import org.java_websocket.client.WebSocketClient;
 import org.java_websocket.handshake.ServerHandshake;
 
-import com.bignerdranch.android.shared.models.gameIDModel;
 import com.bignerdranch.android.shared.models.userModel;
 import com.bignerdranch.android.shared.models.gameModel;
-import com.bignerdranch.android.shared.resultobjects.AuthData;
 import com.bignerdranch.android.shared.resultobjects.Results;
 import com.bignerdranch.android.shared.Serializer;
-import com.janus.ClientModel;
+import com.janus.ClientFacade;
 import com.bignerdranch.android.shared.resultobjects.GameListData;
 
 public class TtRClient extends WebSocketClient{
@@ -22,7 +20,7 @@ public class TtRClient extends WebSocketClient{
         super(serverUri);
     }
 
-    private ClientModel client = ClientModel.getInstance();
+    private ClientFacade facade = ClientFacade.getInstance();
 
     @Override
     public void onOpen(ServerHandshake handshakedata) {
@@ -36,23 +34,23 @@ public class TtRClient extends WebSocketClient{
             System.out.println("Received Message: " + result.getJSONdata());
             switch (result.getType()) {
                 case "Login": {
-                    client.setUser((userModel) result.getData(userModel.class));
+                    facade.setUser((userModel) result.getData(userModel.class));
                     break;
                 }
                 case "Register": {
-                    client.setUser((userModel) result.getData(userModel.class));
+                    facade.setUser((userModel) result.getData(userModel.class));
                     break;
                 }
                 case "GameList": {
-                    client.setServerGameList((GameListData) result.getData(GameListData.class));
+                    facade.setServerGameList((GameListData) result.getData(GameListData.class));
                     break;
                 }
                 case "Create": {
-                    client.setGame((gameModel) result.getData(gameModel.class));
+                    facade.setGame((gameModel) result.getData(gameModel.class));
                     break;
                 }
                 case "Join": {
-                    client.setGame((gameModel) result.getData(gameModel.class));
+                    facade.setGame((gameModel) result.getData(gameModel.class));
                     break;
                 }
             }
