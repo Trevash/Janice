@@ -1,14 +1,16 @@
 package com.janus.Presenter;
 
+import com.bignerdranch.android.shared.IServer;
 import com.bignerdranch.android.shared.models.gameModel;
 import com.bignerdranch.android.shared.models.usernameModel;
+import com.bignerdranch.android.shared.requestObjects.StartGameRequest;
 import com.janus.ClientFacade;
 import com.janus.Communication.ServerProxy;
 
 public class LobbyFragmentPresenter implements ClientFacade.Presenter {
 
     private ClientFacade facade = ClientFacade.getInstance();
-    private ServerProxy sp = ServerProxy.getInstance();
+    private IServer sp = ServerProxy.getInstance();
 
     public interface View {
         void updateButtons(boolean isActive);
@@ -31,7 +33,7 @@ public class LobbyFragmentPresenter implements ClientFacade.Presenter {
 
     public void startGameClicked() {
         try {
-            sp.StartGame(facade.getGame(), facade.getUser().getAuthToken());
+            sp.startGame(new StartGameRequest(facade.getGame(), facade.getUser().getAuthToken()));
         } catch(Exception e){
             e.printStackTrace();
         }
@@ -61,11 +63,6 @@ public class LobbyFragmentPresenter implements ClientFacade.Presenter {
     }
 
     public Boolean isModelEmpty(){
-        if(facade.getGame() == null){
-            return true;
-        }
-        else {
-            return false;
-        }
+        return facade.getGame() == null;
     }
 }

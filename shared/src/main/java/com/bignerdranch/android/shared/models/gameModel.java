@@ -1,6 +1,7 @@
 package com.bignerdranch.android.shared.models;
 
 import com.bignerdranch.android.shared.exceptions.DuplicateException;
+import com.bignerdranch.android.shared.exceptions.UserNotFoundException;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -12,7 +13,7 @@ public class gameModel {
     private List<playerModel> players = new ArrayList<>();
     // private playerModel hostPlayer;
 
-    public gameModel(String newGameName, playerModel hostPlayer) throws Exception {
+    public gameModel(String newGameName, playerModel hostPlayer) {
         gameID = new gameIDModel();
         gameName = newGameName;
         gameStarted = false;

@@ -16,7 +16,6 @@ import com.bignerdranch.android.shared.models.gameIDModel;
 import com.bignerdranch.android.shared.models.gameModel;
 import com.bignerdranch.android.shared.models.playerModel;
 
-import com.bignerdranch.android.shared.models.serverModel;
 import com.bignerdranch.android.shared.models.usernameModel;
 import com.janus.ClientModel;
 import com.janus.Presenter.LobbyFragmentPresenter;
