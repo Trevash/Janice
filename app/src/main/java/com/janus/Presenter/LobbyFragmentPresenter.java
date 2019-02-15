@@ -2,13 +2,12 @@ package com.janus.Presenter;
 
 import com.bignerdranch.android.shared.models.gameModel;
 import com.bignerdranch.android.shared.models.usernameModel;
-import com.bignerdranch.android.shared.resultobjects.Results;
-import com.janus.ClientModel;
+import com.janus.ClientFacade;
 import com.janus.Communication.ServerProxy;
 
-public class LobbyFragmentPresenter implements ClientModel.CurrentView{
+public class LobbyFragmentPresenter implements ClientFacade.Presenter {
 
-    private ClientModel model = ClientModel.getInstance();
+    private ClientFacade facade = ClientFacade.getInstance();
     private ServerProxy sp = ServerProxy.getInstance();
 
     public interface View {
@@ -19,7 +18,7 @@ public class LobbyFragmentPresenter implements ClientModel.CurrentView{
     }
 
     public void setFragment() {
-        model.setCurrentView(this);
+        facade.setPresenter(this);
     }
 
     private LobbyFragmentPresenter.View view;
@@ -32,7 +31,7 @@ public class LobbyFragmentPresenter implements ClientModel.CurrentView{
 
     public void startGameClicked() {
         try {
-            sp.StartGame(model.getGame(), model.getUser().getAuthToken());
+            sp.StartGame(facade.getGame(), facade.getUser().getAuthToken());
         } catch(Exception e){
             e.printStackTrace();
         }
@@ -53,16 +52,16 @@ public class LobbyFragmentPresenter implements ClientModel.CurrentView{
     }
 
     public usernameModel getUsername(){
-        return model.getUser().getUserName();
+        return facade.getUser().getUserName();
     }
 
     public void updateUI() {
-        gameModel g = model.getGame();
+        gameModel g = facade.getGame();
         view.updateUI(g);
     }
 
     public Boolean isModelEmpty(){
-        if(model.getGame() == null){
+        if(facade.getGame() == null){
             return true;
         }
         else {

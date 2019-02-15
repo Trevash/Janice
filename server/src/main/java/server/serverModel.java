@@ -1,11 +1,18 @@
-package com.bignerdranch.android.shared.models;
+package server;
 
-import com.bignerdranch.android.shared.exceptions.DuplicateException;
-import com.bignerdranch.android.shared.exceptions.GameNotFoundException;
 import com.bignerdranch.android.shared.exceptions.InvalidAuthorizationException;
-import com.bignerdranch.android.shared.exceptions.UserNotFoundException;
+import com.bignerdranch.android.shared.models.authTokenModel;
+import com.bignerdranch.android.shared.models.gameIDModel;
+import com.bignerdranch.android.shared.models.gameModel;
+import com.bignerdranch.android.shared.models.playerIDModel;
+import com.bignerdranch.android.shared.models.playerModel;
+import com.bignerdranch.android.shared.models.userIDModel;
+import com.bignerdranch.android.shared.models.userModel;
 import com.bignerdranch.android.shared.requestObjects.JoinGameRequest;
 import com.bignerdranch.android.shared.requestObjects.StartGameRequest;
+import com.bignerdranch.android.shared.exceptions.DuplicateException;
+import com.bignerdranch.android.shared.exceptions.GameNotFoundException;
+import com.bignerdranch.android.shared.exceptions.UserNotFoundException;
 
 import java.util.ArrayList;
 import java.util.List;

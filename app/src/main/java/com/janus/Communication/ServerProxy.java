@@ -6,6 +6,8 @@ import com.bignerdranch.android.shared.models.authTokenModel;
 import com.bignerdranch.android.shared.models.gameModel;
 import com.bignerdranch.android.shared.requestObjects.CreateGameRequest;
 import com.bignerdranch.android.shared.requestObjects.JoinGameRequest;
+import com.bignerdranch.android.shared.requestObjects.LoginRequest;
+import com.bignerdranch.android.shared.requestObjects.RegisterRequest;
 import com.bignerdranch.android.shared.requestObjects.StartGameRequest;
 import com.bignerdranch.android.shared.resultobjects.Results;
 import com.bignerdranch.android.shared.Serializer;
@@ -47,15 +49,9 @@ public class ServerProxy implements IServer {
         client.closeBlocking();
     }
 
-    // TODO rename methods: lowercase on first letter
-    @Deprecated
-    public Results Login(String username, String password) throws Exception {
-        return login(username, password);
-    }
-
-    public Results login(String username, String password) throws Exception {
-        String[] paramValues = {username, password};
-        String[] paramTypes = {"java.lang.String", "java.lang.String"};
+    public Results login(LoginRequest request) throws Exception {
+        Object[] paramValues = {request};
+        String[] paramTypes = {"com.bignerdranch.android.shared.requestObjects.LoginRequest"};
         GenericCommand commandObj = new GenericCommand("server.handlers.commandHandler", "login",paramTypes, paramValues);
         String commandObjStr = Serializer.getInstance().serializeObject(commandObj);
         client.send(commandObjStr);
@@ -68,14 +64,9 @@ public class ServerProxy implements IServer {
         return messageResult;
     }
 
-    @Deprecated
-    public Results Register(String username, String password) throws Exception {
-        return register(username, password);
-    }
-
-    public Results register(String username, String password) throws Exception {
-        String[] paramValues = {username, password};
-        String[] paramTypes = {"java.lang.String", "java.lang.String"};
+    public Results register(RegisterRequest request) throws Exception {
+        Object[] paramValues = {request};
+        String[] paramTypes = {"com.bignerdranch.android.shared.requestObjects.RegisterRequest"};
         GenericCommand commandObj = new GenericCommand("server.handlers.commandHandler", "register",paramTypes, paramValues);
         String commandObjStr = Serializer.getInstance().serializeObject(commandObj);
         client.send(commandObjStr);
@@ -88,13 +79,8 @@ public class ServerProxy implements IServer {
         return messageResult;
     }
 
-    @Deprecated
-    public Results CreateGame(authTokenModel auth) throws Exception {
-        return createGame(auth);
-    }
-
-    public Results createGame(authTokenModel auth) throws Exception {
-        Object[] paramValues = {new CreateGameRequest(auth)};
+    public Results createGame(CreateGameRequest request) throws Exception {
+        Object[] paramValues = {request};
         String[] paramTypes = {"com.bignerdranch.android.shared.requestObjects.CreateGameRequest"};
         GenericCommand commandObj = new GenericCommand("server.handlers.commandHandler", "createGame", paramTypes, paramValues);
         String commandObjStr = Serializer.getInstance().serializeObject(commandObj);
@@ -108,13 +94,8 @@ public class ServerProxy implements IServer {
         return messageResult;
     }
 
-    @Deprecated
-    public Results StartGame(gameModel game, authTokenModel auth) throws Exception {
-        return startGame(game, auth);
-    }
-
-    public Results startGame(gameModel game, authTokenModel auth) throws Exception {
-        Object[] paramValues = {new StartGameRequest(game, auth)};
+    public Results startGame(StartGameRequest request) throws Exception {
+        Object[] paramValues = {request};
         String[] paramTypes = {"com.bignerdranch.android.shared.requestObjects.StartGameRequest"};
         GenericCommand commandObj = new GenericCommand("server.handlers.commandHandler", "startGame", paramTypes, paramValues);
         String commandObjStr = Serializer.getInstance().serializeObject(commandObj);
@@ -126,11 +107,6 @@ public class ServerProxy implements IServer {
             Thread.sleep(100);
         }
         return messageResult;
-    }
-
-    @Deprecated
-    public Results JoinGame(JoinGameRequest request) throws Exception {
-        return joinGame(request);
     }
 
     public Results joinGame(JoinGameRequest request) throws Exception {

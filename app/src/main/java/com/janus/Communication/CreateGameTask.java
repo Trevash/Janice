@@ -2,6 +2,7 @@ package com.janus.Communication;
 
 import android.os.AsyncTask;
 
+import com.bignerdranch.android.shared.requestObjects.CreateGameRequest;
 import com.bignerdranch.android.shared.resultobjects.Results;
 import com.bignerdranch.android.shared.models.authTokenModel;
 
@@ -22,7 +23,7 @@ public class CreateGameTask extends AsyncTask<authTokenModel, Void, Results> {
         ServerProxy proxy = ServerProxy.getInstance();
         try {
             Results res;
-            res = proxy.CreateGame(authTokenModels[0]);
+            res = proxy.createGame(new CreateGameRequest(authTokenModels[0]));
             return res;
         } catch(Exception e){
             e.printStackTrace();

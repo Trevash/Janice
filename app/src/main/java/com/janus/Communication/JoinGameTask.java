@@ -22,7 +22,7 @@ public class JoinGameTask extends AsyncTask<JoinGameRequest, Void, Results> {
     protected Results doInBackground(JoinGameRequest... request) {
         ServerProxy proxy = ServerProxy.getInstance();
         try {
-            return proxy.JoinGame(request[0]);
+            return proxy.joinGame(request[0]);
         } catch (Exception e) {
             e.printStackTrace();
             System.out.print(e.getMessage());
