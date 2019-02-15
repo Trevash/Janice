@@ -1,6 +1,8 @@
 package com.janus.Communication;
 
 import com.bignerdranch.android.shared.Serializer;
+import com.bignerdranch.android.shared.requestObjects.LoginRequest;
+import com.bignerdranch.android.shared.requestObjects.RegisterRequest;
 
 import org.java_websocket.client.WebSocketClient;
 
@@ -30,25 +32,25 @@ public class ClientCommunicator {
             ServerProxy server = ServerProxy.getInstance();
             server.connectClient();
             System.out.println("REGISTER FAIL");
-            server.Register("illegal Username", "somePassword");
-            server.Register("legalUsername", "illegal Password");
+            server.register(new RegisterRequest("illegal Username", "somePassword"));
+            server.register(new RegisterRequest("legalUsername", "illegal Password"));
             System.out.println("");
             System.out.println("LOGIN FAIL");
-            server.Login("illegal Username", "somePassword");
-            server.Login("legalUsername", "illegal Password");
+            server.login(new LoginRequest("illegal Username", "somePassword"));
+            server.login(new LoginRequest("legalUsername", "illegal Password"));
 
             System.out.println("");
             System.out.println("SUCCESSFUL REGISTER");
-            server.Register("legalUsername", "legalPassword");
+            server.register(new RegisterRequest("legalUsername", "legalPassword"));
 
 //            System.out.println("");
             System.out.println("ANOTHER FAILED LOGIN");
-            server.Login("legal Username", "legalPassword");
-            server.Login("legalUsername", "legal Password");
+            server.login(new LoginRequest("legal Username", "legalPassword"));
+            server.login(new LoginRequest("legalUsername", "legal Password"));
 
             System.out.println("");
             System.out.println("SUCCESSFUL LOGIN");
-            server.Login("legalUsername", "legalPassword");
+            server.login(new LoginRequest("legalUsername", "legalPassword"));
 
         } catch (Exception e) {
             e.printStackTrace();

@@ -3,6 +3,7 @@ package com.janus.Communication;
 import android.os.AsyncTask;
 
 import com.bignerdranch.android.shared.models.userModel;
+import com.bignerdranch.android.shared.requestObjects.RegisterRequest;
 import com.bignerdranch.android.shared.resultobjects.Results;
 
 import com.bignerdranch.android.shared.requestObjects.LoginRequest;
@@ -31,10 +32,10 @@ public class LoginTask extends AsyncTask<LoginRequest, Void, Results> {
             Results res;
             if(requestType.equals("Login")) {
                 proxy.connectClient();
-                res = proxy.Login(r[0].getUsername(), r[0].getPassword());
+                res = proxy.login(new LoginRequest(r[0].getUsername(), r[0].getPassword()));
             } else {
                 proxy.connectClient();
-                res = proxy.Register(r[0].getUsername(), r[0].getPassword());
+                res = proxy.register(new RegisterRequest(r[0].getUsername(), r[0].getPassword()));
             }
 
             return res;

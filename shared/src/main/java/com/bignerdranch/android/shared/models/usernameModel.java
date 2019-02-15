@@ -6,10 +6,7 @@ public class usernameModel {
     private String value;
 
     public usernameModel(String newValue) throws DuplicateException {
-        if(serverModel.getInstance().userExists(newValue)){
-            throw new DuplicateException("The username is already taken!");
-        }
-        else if(newValue == null || newValue.length() == 0) {
+        if(newValue == null || newValue.length() == 0) {
             throw new IllegalArgumentException("No username received!");
         }
         else if(!newValue.matches("[a-zA-Z0-9]+")) {

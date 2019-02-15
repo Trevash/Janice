@@ -12,10 +12,9 @@ public class gameModel {
     private List<playerModel> players = new ArrayList<>();
     // private playerModel hostPlayer;
 
-    public gameModel(authTokenModel auth) throws Exception {
+    public gameModel(String newGameName, playerModel hostPlayer) throws Exception {
         gameID = new gameIDModel();
-        gameName = serverModel.getInstance().getUser(auth).getUserName().getValue() + "'s_Game!";
-        playerModel hostPlayer = new playerModel(serverModel.getInstance().getUser(auth).getUserName(), false, true);
+        gameName = newGameName;
         gameStarted = false;
         players.add(hostPlayer);
     }
