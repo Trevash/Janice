@@ -6,7 +6,9 @@ import com.bignerdranch.android.shared.exceptions.DuplicateException;
 import com.bignerdranch.android.shared.models.authTokenModel;
 import com.bignerdranch.android.shared.models.gameModel;
 import com.bignerdranch.android.shared.models.passwordModel;
-import server.serverModel;
+
+import server.serverClasses.serverFacade;
+import server.serverClasses.serverModel;
 
 import com.bignerdranch.android.shared.models.playerModel;
 import com.bignerdranch.android.shared.models.userIDModel;
@@ -33,65 +35,22 @@ public class commandHandler extends handlerBase implements IServer { //implement
     }
 
     public Results register(RegisterRequest request) throws Exception{
-        usernameModel newUserName = new usernameModel(request.getUsername());
-        if(serverModel.getInstance().userExists(newUserName.getValue())){
-            throw new DuplicateException("The username is already taken!");
-        }
-        passwordModel newPassword = new passwordModel(request.getPassword());
-        userIDModel newUserID = new userIDModel();
-        authTokenModel auth = new authTokenModel();
-
-        userModel user = new userModel(newUserName,
-                newPassword,
-                newUserID,
-                auth);
-        serverModel.getInstance().addUser(user);
-
-        return new Results("Register", true, user);
+        return serverFacade.getInstance().register(request);
     }
 
     public Results createGame(CreateGameRequest request) throws Exception {
-        if(!serverModel.getInstance().authTokenExists(request.getAuth())){
-            throw new Exception("Invalid Auth Token passed to createGame");
-        }
-
-        String newGameName = serverModel.getInstance().getUser(request.getAuth()).getUserName().getValue() + "'s_Game!";
-        playerModel hostPlayer = new playerModel(serverModel.getInstance().getUser(request.getAuth()).getUserName(), false, true);
-
-        gameModel newGame = new gameModel(newGameName, hostPlayer);
-        serverModel.getInstance().addGame(newGame);
-        return new Results("Create", true, newGame);
+        return serverFacade.getInstance().createGame(request);
     }
 
     public Results startGame(StartGameRequest request) throws Exception {
-        if(!serverModel.getInstance().authTokenExists(request.getAuth())){
-            throw new Exception("Invalid Auth Token passed to startGame");
-        }
-
-        serverModel.getInstance().startGame(request);
-
-        return new Results("Start", true, new GameListData(serverModel.getInstance().getGames()));
+        return serverFacade.getInstance().startGame(request);
     }
 
     public Results login(LoginRequest request) throws Exception {
-        userModel curUser = serverModel.getInstance().getUser(request.getUsername());
-
-        if (!curUser.getPassword().getValue().equals(request.getPassword())) {
-            throw new Exception("Password incorrect!");
-        }
-
-        authTokenModel auth = new authTokenModel();
-        curUser.setAuthToken(auth);
-        return new Results("Login", true, curUser);
+        return serverFacade.getInstance().login(request);
     }
 
     public Results joinGame(JoinGameRequest request) throws Exception {
-        if(!serverModel.getInstance().authTokenExists(request.getAuth())){
-            throw new Exception("Invalid Auth Token passed to joinGame");
-        }
-
-        gameModel game = serverModel.getInstance().joinGame(request);
-
-        return new Results("Join", true, game);
+        return serverFacade.getInstance().joinGame(request);
     }
 }

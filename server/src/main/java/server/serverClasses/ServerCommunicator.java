@@ -1,4 +1,4 @@
-package server;
+package server.serverClasses;
 
 import com.bignerdranch.android.shared.GenericCommand;
 import com.bignerdranch.android.shared.requestObjects.CreateGameRequest;
