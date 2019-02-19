@@ -2,6 +2,9 @@ package server.serverClasses;
 
 import com.bignerdranch.android.shared.IServer;
 import com.bignerdranch.android.shared.exceptions.DuplicateException;
+import com.bignerdranch.android.shared.exceptions.GameNotFoundException;
+import com.bignerdranch.android.shared.exceptions.InvalidAuthorizationException;
+import com.bignerdranch.android.shared.exceptions.UserNotFoundException;
 import com.bignerdranch.android.shared.models.authTokenModel;
 import com.bignerdranch.android.shared.models.gameModel;
 import com.bignerdranch.android.shared.models.passwordModel;
@@ -20,18 +23,32 @@ import com.bignerdranch.android.shared.resultobjects.Results;
 public class serverFacade implements IServer {
     private static serverFacade sf = null;
 
-    public static serverFacade getInstance(){
-        if (sf == null){
+    public static serverFacade getInstance() {
+        if (sf == null) {
             sf = new serverFacade();
         }
         return sf;
     }
 
+    @Override
+    public Results login(LoginRequest request)
+            throws UserNotFoundException, InvalidAuthorizationException {
+        userModel curUser = serverModel.getInstance().getUser(request.getUsername());
+
+        if (!curUser.getPassword().getValue().equals(request.getPassword())) {
+            throw new InvalidAuthorizationException("Password incorrect!");
+            // probably not the ideal exception, but it does work
+        }
+
+        authTokenModel auth = new authTokenModel();
+        curUser.setAuthToken(auth);
+        return new Results("Login", true, curUser);
+    }
 
     @Override
-    public Results login(LoginRequest request) throws Exception {
+    public Results register(RegisterRequest request) throws DuplicateException {
         usernameModel newUserName = new usernameModel(request.getUsername());
-        if(serverModel.getInstance().userExists(newUserName.getValue())){
+        if (serverModel.getInstance().userExists(newUserName.getValue())) {
             throw new DuplicateException("The username is already taken!");
         }
         passwordModel newPassword = new passwordModel(request.getPassword());
@@ -48,28 +65,10 @@ public class serverFacade implements IServer {
     }
 
     @Override
-    public Results register(RegisterRequest request) throws Exception {
-        usernameModel newUserName = new usernameModel(request.getUsername());
-        if(serverModel.getInstance().userExists(newUserName.getValue())){
-            throw new DuplicateException("The username is already taken!");
-        }
-        passwordModel newPassword = new passwordModel(request.getPassword());
-        userIDModel newUserID = new userIDModel();
-        authTokenModel auth = new authTokenModel();
-
-        userModel user = new userModel(newUserName,
-                newPassword,
-                newUserID,
-                auth);
-        serverModel.getInstance().addUser(user);
-
-        return new Results("Register", true, user);
-    }
-
-    @Override
-    public Results createGame(CreateGameRequest request) throws Exception {
-        if(!serverModel.getInstance().authTokenExists(request.getAuth())){
-            throw new Exception("Invalid Auth Token passed to createGame");
+    public Results createGame(CreateGameRequest request) throws InvalidAuthorizationException,
+            UserNotFoundException {
+        if (!serverModel.getInstance().authTokenExists(request.getAuth())) {
+            throw new InvalidAuthorizationException("Invalid Auth Token passed to createGame");
         }
 
         String newGameName = serverModel.getInstance().getUser(request.getAuth()).getUserName().getValue() + "'s_Game!";
@@ -81,9 +80,10 @@ public class serverFacade implements IServer {
     }
 
     @Override
-    public Results startGame(StartGameRequest request) throws Exception {
-        if(!serverModel.getInstance().authTokenExists(request.getAuth())){
-            throw new Exception("Invalid Auth Token passed to startGame");
+    public Results startGame(StartGameRequest request) throws InvalidAuthorizationException,
+            GameNotFoundException {
+        if (!serverModel.getInstance().authTokenExists(request.getAuth())) {
+            throw new InvalidAuthorizationException("Invalid Auth Token passed to startGame");
         }
 
         serverModel.getInstance().startGame(request);
@@ -92,9 +92,10 @@ public class serverFacade implements IServer {
     }
 
     @Override
-    public Results joinGame(JoinGameRequest request) throws Exception {
-        if(!serverModel.getInstance().authTokenExists(request.getAuth())){
-            throw new Exception("Invalid Auth Token passed to joinGame");
+    public Results joinGame(JoinGameRequest request) throws InvalidAuthorizationException,
+            DuplicateException, GameNotFoundException {
+        if (!serverModel.getInstance().authTokenExists(request.getAuth())) {
+            throw new InvalidAuthorizationException("Invalid Auth Token passed to joinGame");
         }
 
         gameModel game = serverModel.getInstance().joinGame(request);

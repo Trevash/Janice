@@ -6,6 +6,13 @@ public class playerModel {
     private boolean isReady;
     private boolean isHost;
 
+    // train hand
+    // destination hand
+    // claimed routes
+    // color
+    // Locomotives left
+    // points
+
     public playerModel(usernameModel userName, boolean isReady, boolean isHost) {
         this.userName = userName;
         this.id = new playerIDModel();

@@ -13,9 +13,20 @@ public class gameModel {
     private List<playerModel> players = new ArrayList<>();
     // private playerModel hostPlayer;
 
+    // MapPic
+    // Map<City, coordinate)
+    // List<Route> routes
+    // ChatBox
+    // Decks
+        // Train
+        // Dest
+        // Face-up
+        // Discard
+
+
     public gameModel(String newGameName, playerModel hostPlayer) {
         gameID = new gameIDModel();
-        gameName = newGameName;
+        setGameName(newGameName);
         gameStarted = false;
         players.add(hostPlayer);
     }
