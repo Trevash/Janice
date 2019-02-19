@@ -1,4 +1,4 @@
-package server;
+package server.serverClasses;
 
 import com.bignerdranch.android.shared.exceptions.InvalidAuthorizationException;
 import com.bignerdranch.android.shared.models.authTokenModel;
