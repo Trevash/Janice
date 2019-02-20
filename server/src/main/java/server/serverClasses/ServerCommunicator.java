@@ -25,7 +25,7 @@ public class ServerCommunicator extends WebSocketServer {
     private HttpServer server;
     private Map<String, WebSocket> usernameWSMap = new HashMap();
 
-    private ServerCommunicator(InetSocketAddress address){
+    private ServerCommunicator(InetSocketAddress address) {
         super(address);
     }
 
@@ -54,45 +54,46 @@ public class ServerCommunicator extends WebSocketServer {
         if (command.getMethod().equals("createGame")) {
             CreateGameRequest[] request = {Serializer.getInstance().deserializeCreateCommand(command.getParamValues()[0].toString())};
             command.setParamValues(request);
-        }
-        else if (command.getMethod().equals("joinGame")) {
+        } else if (command.getMethod().equals("joinGame")) {
             JoinGameRequest[] request = {Serializer.getInstance().deserializeJoinCommand(command.getParamValues()[0].toString())};
             command.setParamValues(request);
-        }
-        else if (command.getMethod().equals("startGame")) {
+        } else if (command.getMethod().equals("startGame")) {
             StartGameRequest[] request = {Serializer.getInstance().deserializeStartCommand(command.getParamValues()[0].toString())};
             command.setParamValues(request);
         }
         Results result = command.execute();
         String resultGson = Serializer.getInstance().serializeObject(result);
-        
-        switch(result.getType()){
-        	case "Login":
-        	    broadcastOne(resultGson, conn);
-        	    if(result.isSuccess()){
-        	        updateAllUserGameList();
-        	    }
-        	    break;
-        	case "Register":
-        	    broadcastOne(resultGson, conn);
-                if(result.isSuccess()){updateAllUserGameList();}
-        	    break;
-        	case "Create":
-        	    broadcastOne(resultGson, conn);
-        	    updateAllUserGameList();
-        	    break;
-        	case "Join":
-        	    broadcast(resultGson);
+
+        switch (result.getType()) {
+            case "Login":
+                broadcastOne(resultGson, conn);
+                if (result.isSuccess()) {
+                    updateAllUserGameList();
+                }
+                break;
+            case "Register":
+                broadcastOne(resultGson, conn);
+                if (result.isSuccess()) {
+                    updateAllUserGameList();
+                }
+                break;
+            case "Create":
+                broadcastOne(resultGson, conn);
                 updateAllUserGameList();
-        	    break;
-        	case "Start":
-        	    broadcast(resultGson);
+                break;
+            case "Join":
+                broadcast(resultGson);
                 updateAllUserGameList();
-        	    break;
+                break;
+            case "Start":
+                broadcast(resultGson);
+                updateAllUserGameList();
+                break;
             case "ERROR":
                 broadcastOne(resultGson, conn);
                 break;
-            default : System.out.println("Invalid type passed to onMessage from Result!");
+            default:
+                System.out.println("Invalid type passed to onMessage from Result: " + result.getType());
         }
         List<WebSocket> temp = new ArrayList<>();
         temp.add(conn);
@@ -115,15 +116,15 @@ public class ServerCommunicator extends WebSocketServer {
     public void onStart() {
         System.out.println("Server started!");
     }
-    
+
     public void broadcastOne(String resultGson, WebSocket conn) {
-    	List<WebSocket> temp = new ArrayList<>();
+        List<WebSocket> temp = new ArrayList<>();
         temp.add(conn);
         broadcast(resultGson, temp);
     }
-    
+
     //to be filled out later
     public void broadcastGame(String resultGson, gameModel game) {
-    	
+
     }
 }
