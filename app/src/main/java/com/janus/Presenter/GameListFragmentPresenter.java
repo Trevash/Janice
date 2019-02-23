@@ -12,10 +12,10 @@ import java.util.List;
 public class GameListFragmentPresenter implements JoinGameTask.Caller, CreateGameTask.Caller, ClientFacade.Presenter {
 
     public interface View {
-        void updateButtons(boolean isActive);
-        void displayError(String message);
+        void updateGameListButtons(boolean isActive);
+        void displayGameListError(String message);
         void updateGameList(List<gameModel> games);
-        void displaySuccess();
+        void displayGameListSuccess();
     }
 
     private View view;
@@ -32,37 +32,37 @@ public class GameListFragmentPresenter implements JoinGameTask.Caller, CreateGam
 
     public void selectGame(gameModel gameSelected) {
         this.gameSelected = gameSelected;
-        view.updateButtons(true);
+        view.updateGameListButtons(true);
     }
 
     public void joinGameClicked() {
-        view.updateButtons(false);
+        view.updateGameListButtons(false);
         JoinGameRequest request = new JoinGameRequest(gameSelected, facade.getUser().getAuthToken());
         JoinGameTask joinGameTask = new JoinGameTask(this);
         joinGameTask.execute(request);
     }
 
     public void createGameClicked() {
-        view.updateButtons(false);
+        view.updateGameListButtons(false);
         CreateGameTask createGameTask = new CreateGameTask(this);
         createGameTask.execute(facade.getUser().getAuthToken());
     }
 
     @Override
     public void onError(String s) {
-        view.displayError(s);
-        view.updateButtons(true);
+        view.displayGameListError(s);
+        view.updateGameListButtons(true);
     }
 
     @Override
     public void onJoinGameComplete(Results r) {
         //JoinGameData data = (JoinGameData) r.getData();
-        view.displaySuccess();
+        view.displayGameListSuccess();
     }
 
     @Override
     public void onCreateComplete(Results r) {
-        view.displaySuccess();
+        view.displayGameListSuccess();
     }
 
     @Override

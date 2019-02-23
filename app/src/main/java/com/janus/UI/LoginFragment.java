@@ -9,10 +9,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.TabHost;
 import android.widget.Toast;
 
-import com.janus.ClientModel;
 import com.janus.Presenter.LoginFragmentPresenter;
 import com.janus.R;
 
@@ -95,18 +93,18 @@ public class LoginFragment extends Fragment implements LoginFragmentPresenter.Vi
     }
 
     @Override
-    public void updateButtons(boolean isActive){
+    public void updateLoginButtons(boolean isActive){
         mLoginButton.setEnabled(isActive);
         mRegisterButton.setEnabled(isActive);
     }
 
     @Override
-    public void displayError(String message) {
+    public void displayLoginError(String message) {
         Toast.makeText(getActivity(), "Failed connecting " + message, Toast.LENGTH_LONG).show();
     }
 
     @Override
-    public void displaySuccess() {
+    public void displayLoginSuccess() {
         Toast.makeText(getActivity(), R.string.sign_in_welcome, Toast.LENGTH_LONG).show();
         mContext = (Context) getActivity();
         mContext.onSignIn();

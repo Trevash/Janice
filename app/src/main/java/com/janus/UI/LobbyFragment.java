@@ -47,17 +47,17 @@ public class LobbyFragment extends Fragment implements LobbyFragmentPresenter.Vi
     }
 
     @Override
-    public void updateButtons(boolean isActive) {
+    public void updateLobbyButtons(boolean isActive) {
         mStartGameButton.setEnabled(isActive);
     }
 
     @Override
-    public void displaySuccess() {
+    public void displayLobbySuccess() {
 
     }
 
     @Override
-    public void displayError(String message) {
+    public void displayLobbyError(String message) {
 
     }
 
@@ -209,7 +209,8 @@ public class LobbyFragment extends Fragment implements LobbyFragmentPresenter.Vi
         }
     }
 
-    public void updateUI(gameModel gameModel) {
+    @Override
+    public void updateLobbyUI(gameModel gameModel) {
 
         getActivity().runOnUiThread(new Runnable() {
             @Override

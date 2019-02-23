@@ -1,7 +1,5 @@
 package com.janus.Presenter;
 
-import com.bignerdranch.android.shared.resultobjects.AuthData;
-import com.bignerdranch.android.shared.resultobjects.Results;
 import com.janus.ClientFacade;
 import com.janus.Communication.LoginTask;
 import com.bignerdranch.android.shared.requestObjects.LoginRequest;
@@ -9,9 +7,9 @@ import com.bignerdranch.android.shared.requestObjects.LoginRequest;
 public class LoginFragmentPresenter implements LoginTask.Caller, ClientFacade.Presenter {
 
     public interface View {
-        void updateButtons(boolean isActive);
-        void displayError(String message);
-        void displaySuccess();
+        void updateLoginButtons(boolean isActive);
+        void displayLoginError(String message);
+        void displayLoginSuccess();
     }
 
     private ClientFacade facade = ClientFacade.getInstance();
@@ -34,7 +32,7 @@ public class LoginFragmentPresenter implements LoginTask.Caller, ClientFacade.Pr
     }
 
     public void loginClicked() {
-        view.updateButtons(false);
+        view.updateLoginButtons(false);
         LoginRequest loginRequest = new LoginRequest(username, password);
         LoginTask loginTask = new LoginTask(this, "Login");
 
@@ -42,7 +40,7 @@ public class LoginFragmentPresenter implements LoginTask.Caller, ClientFacade.Pr
     }
 
     public void registerClicked() {
-        view.updateButtons(false);
+        view.updateLoginButtons(false);
         LoginRequest loginRequest = new LoginRequest(username, password);
         LoginTask loginTask = new LoginTask(this, "Register");
 
@@ -55,22 +53,22 @@ public class LoginFragmentPresenter implements LoginTask.Caller, ClientFacade.Pr
 
     private void checkButtons() {
         if(username.equals("") || password.equals("")){
-            view.updateButtons(false);
+            view.updateLoginButtons(false);
         }
         else {
-            view.updateButtons(true);
+            view.updateLoginButtons(true);
         }
     }
 
     @Override
     public void onError(String s) {
-        view.displayError(s);
-        view.updateButtons(true);
+        view.displayLoginError(s);
+        view.updateLoginButtons(true);
     }
 
     @Override
     public void onLoginComplete() {
-        view.displaySuccess();
+        view.displayLoginSuccess();
     }
 
     @Override

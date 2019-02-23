@@ -1,27 +1,19 @@
 package com.janus.UI;
 
-import android.app.Activity;
-import android.content.Context;
-import android.content.Intent;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.text.Editable;
-import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bignerdranch.android.shared.models.gameModel;
-import com.bignerdranch.android.shared.models.userModel;
-import com.janus.ClientModel;
+import com.janus.ClientModel; // TODO remove this import
 import com.janus.Presenter.GameListFragmentPresenter;
 import com.janus.R;
 
@@ -33,8 +25,6 @@ public class GameListFragment extends Fragment implements GameListFragmentPresen
     public interface Context {
         void onCreateGame();
     }
-
-    private Context mContext;
 
     private GameListFragmentPresenter presenter;
 
@@ -60,7 +50,7 @@ public class GameListFragment extends Fragment implements GameListFragmentPresen
 
         presenter = new GameListFragmentPresenter(this);
         presenter.setFragment();
-        games = ClientModel.getInstance().getServerGameList();
+        games = ClientModel.getInstance().getServerGameList(); // TODO pass games in somehow
 
         mNumPlayers = (TextView) v.findViewById(R.id.num_players_text_view);
 
@@ -93,21 +83,20 @@ public class GameListFragment extends Fragment implements GameListFragmentPresen
     }
 
     @Override
-    public void updateButtons(boolean isActive){
+    public void updateGameListButtons(boolean isActive){
         mCreateGame.setEnabled(isActive);
         mJoinGame.setEnabled(isActive);
     }
 
     @Override
-    public void displayError(String message) {
+    public void displayGameListError(String message) {
         Toast.makeText(getActivity(), message, Toast.LENGTH_LONG).show();
     }
 
     @Override
-    public void displaySuccess() {
+    public void displayGameListSuccess() {
         Toast.makeText(getActivity(), R.string.sign_in_welcome, Toast.LENGTH_LONG).show();
-        mContext = (Context) getActivity();
-        mContext.onCreateGame();
+        ((Context) getActivity()).onCreateGame();
     }
 
     public class GameListAdapter extends RecyclerView.Adapter<GameListAdapter.GameViewHolder> {
@@ -169,18 +158,18 @@ public class GameListFragment extends Fragment implements GameListFragmentPresen
         }
     }
 
-    public void update() {
-        // TODO fix: modify so that this UI class isn't directly accessing the model
-        mAdapter = new GameListAdapter(ClientModel.getInstance().getServerGameList());
+    public void update(List<gameModel> games) {
+        mAdapter = new GameListAdapter(games);
         mGameList.setAdapter(mAdapter);
     }
 
     @Override
-    public void updateGameList(List<gameModel> games) {
+    public void updateGameList(final List<gameModel> games) {
+        // final allows games to be accessed by Runnable
         getActivity().runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                update();
+                update(games);
             }
         });
     }

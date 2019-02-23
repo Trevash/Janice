@@ -13,10 +13,10 @@ public class LobbyFragmentPresenter implements ClientFacade.Presenter {
     private IServer sp = ServerProxy.getInstance();
 
     public interface View {
-        void updateButtons(boolean isActive);
-        void updateUI(gameModel game);
-        void displayError(String message);
-        void displaySuccess();
+        void updateLobbyButtons(boolean isActive);
+        void updateLobbyUI(gameModel game);
+        void displayLobbyError(String message);
+        void displayLobbySuccess();
     }
 
     public void setFragment() {
@@ -50,7 +50,7 @@ public class LobbyFragmentPresenter implements ClientFacade.Presenter {
 
     private void checkButtons() {
         //Check to make sure everybody is ready and that there are at least 2 players
-        view.updateButtons(true);
+        view.updateLobbyButtons(true);
     }
 
     public usernameModel getUsername(){
@@ -59,7 +59,7 @@ public class LobbyFragmentPresenter implements ClientFacade.Presenter {
 
     public void updateUI() {
         gameModel g = facade.getGame();
-        view.updateUI(g);
+        view.updateLobbyUI(g);
     }
 
     public Boolean isModelEmpty(){
