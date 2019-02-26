@@ -17,5 +17,5 @@ public interface IServer {
     public Results createGame(CreateGameRequest request) throws Exception;
     public Results startGame(StartGameRequest request) throws Exception;
     public Results joinGame(JoinGameRequest request) throws Exception;
-
+    //public Results updateChatbox(updateChatboxRequest request) throws Exception;
 }

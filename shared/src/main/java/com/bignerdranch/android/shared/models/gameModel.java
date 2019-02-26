@@ -11,6 +11,7 @@ public class gameModel {
     private String gameName;
     private boolean gameStarted;
     private List<playerModel> players = new ArrayList<>();
+    private chatboxModel chatbox;
     // private playerModel hostPlayer;
 
     // MapPic
@@ -29,6 +30,7 @@ public class gameModel {
         setGameName(newGameName);
         gameStarted = false;
         players.add(hostPlayer);
+        chatbox = new chatboxModel(gameID);
     }
 
     // host is the first player in the list
@@ -86,6 +88,14 @@ public class gameModel {
         return players;
     }
 
+    public void updateChatbox(chatboxModel chatbox) {
+    	this.chatbox = chatbox;
+    }
+    
+    public chatboxModel getChatbox() {
+    	return chatbox;
+    }
+    
     @Override
     public boolean equals(Object o) {
         if (o == null || o.getClass() != this.getClass()) {
