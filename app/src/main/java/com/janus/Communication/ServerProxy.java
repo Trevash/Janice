@@ -9,6 +9,7 @@ import com.bignerdranch.android.shared.requestObjects.JoinGameRequest;
 import com.bignerdranch.android.shared.requestObjects.LoginRequest;
 import com.bignerdranch.android.shared.requestObjects.RegisterRequest;
 import com.bignerdranch.android.shared.requestObjects.StartGameRequest;
+import com.bignerdranch.android.shared.requestObjects.UpdateChatboxRequest;
 import com.bignerdranch.android.shared.resultobjects.Results;
 import com.bignerdranch.android.shared.Serializer;
 import org.java_websocket.client.WebSocketClient;
@@ -123,4 +124,20 @@ public class ServerProxy implements IServer {
         }
         return messageResult;
     }
+
+	@Override
+	public Results updateChatbox(UpdateChatboxRequest request) throws Exception {
+        Object[] paramValues = {request};
+        String[] paramTypes = {"com.bignerdranch.android.shared.requestObjects.UpdateChatboxRequest"};
+        GenericCommand commandObj = new GenericCommand("server.handlers.commandHandler", "updateChatbox", paramTypes, paramValues);
+        String commandObjStr = Serializer.getInstance().serializeObject(commandObj);
+        client.send(commandObjStr);
+        messageResult = null;
+        client.setMessageResultToNull();
+        while (messageResult == null) {
+            messageResult = client.getResults();
+            Thread.sleep(100);
+        }
+        return messageResult;
+	}
 }

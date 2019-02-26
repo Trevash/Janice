@@ -60,7 +60,7 @@ public class ServerCommunicator extends WebSocketServer {
         } else if (command.getMethod().equals("startGame")) {
             StartGameRequest[] request = {Serializer.getInstance().deserializeStartCommand(command.getParamValues()[0].toString())};
             command.setParamValues(request);
-        }
+        } 
         Results result = command.execute();
         String resultGson = Serializer.getInstance().serializeObject(result);
 

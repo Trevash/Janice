@@ -13,6 +13,7 @@ import com.bignerdranch.android.shared.requestObjects.JoinGameRequest;
 import com.bignerdranch.android.shared.requestObjects.LoginRequest;
 import com.bignerdranch.android.shared.requestObjects.RegisterRequest;
 import com.bignerdranch.android.shared.requestObjects.StartGameRequest;
+import com.bignerdranch.android.shared.requestObjects.UpdateChatboxRequest;
 import com.bignerdranch.android.shared.resultobjects.Results;
 import com.bignerdranch.android.shared.Serializer;
 
@@ -54,4 +55,10 @@ public class commandHandler extends handlerBase implements IServer {
             GameNotFoundException, InvalidAuthorizationException {
         return serverFacade.getInstance().joinGame(request);
     }
+
+	@Override
+	public Results updateChatbox(UpdateChatboxRequest request) throws DuplicateException,
+			GameNotFoundException, InvalidAuthorizationException {
+		return serverFacade.getInstance().updateChatbox(request);
+	}
 }

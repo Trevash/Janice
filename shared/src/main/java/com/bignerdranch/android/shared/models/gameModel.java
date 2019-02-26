@@ -30,7 +30,7 @@ public class gameModel {
         setGameName(newGameName);
         gameStarted = false;
         players.add(hostPlayer);
-        chatbox = new chatboxModel(gameID);
+        chatbox = new chatboxModel();
     }
 
     // host is the first player in the list

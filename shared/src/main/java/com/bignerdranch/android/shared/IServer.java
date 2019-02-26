@@ -7,6 +7,7 @@ import com.bignerdranch.android.shared.requestObjects.JoinGameRequest;
 import com.bignerdranch.android.shared.requestObjects.LoginRequest;
 import com.bignerdranch.android.shared.requestObjects.RegisterRequest;
 import com.bignerdranch.android.shared.requestObjects.StartGameRequest;
+import com.bignerdranch.android.shared.requestObjects.UpdateChatboxRequest;
 import com.bignerdranch.android.shared.resultobjects.Results;
 
 public interface IServer {
@@ -17,5 +18,5 @@ public interface IServer {
     public Results createGame(CreateGameRequest request) throws Exception;
     public Results startGame(StartGameRequest request) throws Exception;
     public Results joinGame(JoinGameRequest request) throws Exception;
-    //public Results updateChatbox(updateChatboxRequest request) throws Exception;
+    public Results updateChatbox(UpdateChatboxRequest request) throws Exception;
 }

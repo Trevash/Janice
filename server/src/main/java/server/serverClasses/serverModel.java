@@ -10,6 +10,7 @@ import com.bignerdranch.android.shared.models.userIDModel;
 import com.bignerdranch.android.shared.models.userModel;
 import com.bignerdranch.android.shared.requestObjects.JoinGameRequest;
 import com.bignerdranch.android.shared.requestObjects.StartGameRequest;
+import com.bignerdranch.android.shared.requestObjects.UpdateChatboxRequest;
 import com.bignerdranch.android.shared.exceptions.DuplicateException;
 import com.bignerdranch.android.shared.exceptions.GameNotFoundException;
 import com.bignerdranch.android.shared.exceptions.UserNotFoundException;
@@ -174,4 +175,14 @@ public class serverModel {
         }
         throw new GameNotFoundException("Game not found to start!");
     }
+    
+    public gameModel updateChatbox(UpdateChatboxRequest request) throws GameNotFoundException, 
+    		InvalidAuthorizationException, DuplicateException {
+        for (gameModel curGame : this.games) {
+            if(curGame.getGameID().getValue().equals(request.getGameID().getValue())) {
+                curGame.updateChatbox(request.getChatbox());
+                return curGame;
+            }
+        }
+        throw new GameNotFoundException("Join game failed, game not found");    }
 }
