@@ -1,8 +1,22 @@
 package com.janus.Presenter;
 
+import com.bignerdranch.android.shared.models.chatMessageModel;
+import com.bignerdranch.android.shared.requestObjects.UpdateChatboxRequest;
+import com.bignerdranch.android.shared.resultobjects.Results;
 import com.janus.ClientFacade;
+import com.janus.Communication.UpdateChatTask;
 
-public class ChatFragmentPresenter implements ClientFacade.Presenter {
+public class ChatFragmentPresenter implements ClientFacade.Presenter, UpdateChatTask.Caller {
+
+    @Override
+    public void onError(String s) {
+
+    }
+
+    @Override
+    public void onCreateComplete(Results r) {
+
+    }
 
     public interface View {
         void updateSendButton(boolean isActive);
@@ -27,6 +41,16 @@ public class ChatFragmentPresenter implements ClientFacade.Presenter {
 
     public void sendClicked() {
         view.updateSendButton(false);
+        UpdateChatboxRequest request = new UpdateChatboxRequest(
+                facade.getGame().getGameID(),
+                facade.getUser().getAuthToken(),
+                new chatMessageModel(
+                        facade.getUser().getUserName(),
+                        this.chatMessage
+                )
+        );
+        UpdateChatTask updateChatTask = new UpdateChatTask(this);
+        updateChatTask.execute(request);
     }
 
     public void setFragment() {

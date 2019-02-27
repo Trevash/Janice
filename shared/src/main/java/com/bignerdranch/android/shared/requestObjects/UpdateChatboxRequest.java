@@ -1,6 +1,7 @@
 package com.bignerdranch.android.shared.requestObjects;
 
 import com.bignerdranch.android.shared.models.authTokenModel;
+import com.bignerdranch.android.shared.models.chatMessageModel;
 import com.bignerdranch.android.shared.models.chatboxModel;
 import com.bignerdranch.android.shared.models.gameIDModel;
 import com.bignerdranch.android.shared.models.gameModel;
@@ -8,12 +9,12 @@ import com.bignerdranch.android.shared.models.gameModel;
 public class UpdateChatboxRequest {
 	private gameIDModel gameID;
 	private authTokenModel auth;
-	private chatboxModel chatbox;
+	private chatMessageModel message;
 	
-	public UpdateChatboxRequest(gameIDModel game, authTokenModel auth, chatboxModel chatbox) {
+	public UpdateChatboxRequest(gameIDModel game, authTokenModel auth, chatMessageModel message) {
 		this.gameID = game;
 		this.auth = auth;
-		this.chatbox = chatbox;
+		this.message = message;
 	}
 	
 	public gameIDModel getGameID() {
@@ -24,7 +25,7 @@ public class UpdateChatboxRequest {
 		return auth;
 	}
 	
-	public chatboxModel getChatbox() {
-		return chatbox;
+	public chatMessageModel getMessage() {
+		return message;
 	}
 }

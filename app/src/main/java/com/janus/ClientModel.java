@@ -15,6 +15,7 @@ public class ClientModel {
     private userModel user;
     private authTokenModel auth;
     private static ClientModel model;
+    private chatboxModel chatbox;
 
     private ClientModel() {}
 
@@ -73,5 +74,13 @@ public class ClientModel {
             }
         }
         return null;
+    }
+
+    public chatboxModel getChatbox() {
+        return chatbox;
+    }
+
+    public void setChatbox(chatboxModel chatbox) {
+        this.chatbox = chatbox;
     }
 }

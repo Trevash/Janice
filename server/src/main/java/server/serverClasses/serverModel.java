@@ -2,6 +2,7 @@ package server.serverClasses;
 
 import com.bignerdranch.android.shared.exceptions.InvalidAuthorizationException;
 import com.bignerdranch.android.shared.models.authTokenModel;
+import com.bignerdranch.android.shared.models.chatboxModel;
 import com.bignerdranch.android.shared.models.gameIDModel;
 import com.bignerdranch.android.shared.models.gameModel;
 import com.bignerdranch.android.shared.models.playerIDModel;
@@ -176,13 +177,12 @@ public class serverModel {
         throw new GameNotFoundException("Game not found to start!");
     }
     
-    public gameModel updateChatbox(UpdateChatboxRequest request) throws GameNotFoundException, 
-    		InvalidAuthorizationException, DuplicateException {
+    public chatboxModel updateChatbox(UpdateChatboxRequest request) throws GameNotFoundException {
         for (gameModel curGame : this.games) {
             if(curGame.getGameID().getValue().equals(request.getGameID().getValue())) {
-                curGame.updateChatbox(request.getChatbox());
-                return curGame;
+                curGame.updateChatbox(request.getMessage());
+                return curGame.getChatbox();
             }
         }
-        throw new GameNotFoundException("Join game failed, game not found");    }
+        throw new GameNotFoundException("Update chat failed, game not found");    }
 }

@@ -58,4 +58,12 @@ public class ClientFacade {
         model.setGame(game);
         currentPresenter.updateUI();
     }
+
+    public chatboxModel getChatbox() {
+        return model.getChatbox();
+    }
+
+    public void setChatbox(chatboxModel chatbox) {
+        model.setChatbox(chatbox);
+    }
 }

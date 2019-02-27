@@ -39,7 +39,7 @@ public class ServerCommunicator extends WebSocketServer {
 
     @Override
     public void onOpen(WebSocket conn, ClientHandshake handshake) {
-        //System.out.println("Server open!");
+        System.out.println("Server open!");
     }
 
     @Override
@@ -88,6 +88,10 @@ public class ServerCommunicator extends WebSocketServer {
             case "Start":
                 broadcast(resultGson);
                 updateAllUserGameList();
+                break;
+            case "UpdateChat":
+                //TODO: broadcast all players in the game
+                //broadcastGame();
                 break;
             case "ERROR":
                 broadcastOne(resultGson, conn);

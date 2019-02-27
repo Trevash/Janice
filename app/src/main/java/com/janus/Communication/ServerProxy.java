@@ -46,7 +46,7 @@ public class ServerProxy implements IServer {
         client.connectBlocking();
     }
 
-    public void disconnectClient() throws InterruptedException, URISyntaxException {
+    public void disconnectClient() throws InterruptedException {
         client.closeBlocking();
     }
 
@@ -125,7 +125,6 @@ public class ServerProxy implements IServer {
         return messageResult;
     }
 
-	@Override
 	public Results updateChatbox(UpdateChatboxRequest request) throws Exception {
         Object[] paramValues = {request};
         String[] paramTypes = {"com.bignerdranch.android.shared.requestObjects.UpdateChatboxRequest"};

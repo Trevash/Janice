@@ -56,7 +56,6 @@ public class commandHandler extends handlerBase implements IServer {
         return serverFacade.getInstance().joinGame(request);
     }
 
-	@Override
 	public Results updateChatbox(UpdateChatboxRequest request) throws DuplicateException,
 			GameNotFoundException, InvalidAuthorizationException {
 		return serverFacade.getInstance().updateChatbox(request);

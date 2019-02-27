@@ -6,6 +6,7 @@ import com.bignerdranch.android.shared.exceptions.GameNotFoundException;
 import com.bignerdranch.android.shared.exceptions.InvalidAuthorizationException;
 import com.bignerdranch.android.shared.exceptions.UserNotFoundException;
 import com.bignerdranch.android.shared.models.authTokenModel;
+import com.bignerdranch.android.shared.models.chatboxModel;
 import com.bignerdranch.android.shared.models.gameModel;
 import com.bignerdranch.android.shared.models.passwordModel;
 import com.bignerdranch.android.shared.models.playerModel;
@@ -108,10 +109,10 @@ public class serverFacade implements IServer {
 	public Results updateChatbox(UpdateChatboxRequest request) throws InvalidAuthorizationException, 
 			GameNotFoundException, DuplicateException {
         if (!serverModel.getInstance().authTokenExists(request.getAuth())) {
-            throw new InvalidAuthorizationException("Invalid Auth Token passed to joinGame");
+            throw new InvalidAuthorizationException("Invalid Auth Token passed to updateChatBox");
         }
         
-        gameModel game = serverModel.getInstance().updateChatbox(request);
-        return new Results("updateChat", true, game);
+        chatboxModel chatbox = serverModel.getInstance().updateChatbox(request);
+        return new Results("UpdateChat", true, chatbox);
 	}
 }

@@ -88,8 +88,8 @@ public class gameModel {
         return players;
     }
 
-    public void updateChatbox(chatboxModel chatbox) {
-    	this.chatbox = chatbox;
+    public void updateChatbox(chatMessageModel message) {
+    	this.chatbox.addMessage(message);
     }
     
     public chatboxModel getChatbox() {

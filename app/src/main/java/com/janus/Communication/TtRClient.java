@@ -6,6 +6,7 @@ import java.util.List;
 import org.java_websocket.client.WebSocketClient;
 import org.java_websocket.handshake.ServerHandshake;
 
+import com.bignerdranch.android.shared.models.chatboxModel;
 import com.bignerdranch.android.shared.models.userModel;
 import com.bignerdranch.android.shared.models.gameModel;
 import com.bignerdranch.android.shared.resultobjects.Results;
@@ -52,6 +53,9 @@ public class TtRClient extends WebSocketClient{
                 case "Join": {
                     facade.setGame((gameModel) result.getData(gameModel.class));
                     break;
+                }
+                case "UpdateChat": {
+                    facade.setChatbox((chatboxModel) result.getData(chatboxModel.class));
                 }
             }
             messageResult = result;
