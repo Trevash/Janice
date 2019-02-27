@@ -51,7 +51,7 @@ public class ServerProxy implements IServer {
     }
 
     public Results login(LoginRequest request) throws Exception {
-        Object[] paramValues = {request};
+        Object[] paramValues = {Serializer.getInstance().serializeObject(request)};
         String[] paramTypes = {"com.bignerdranch.android.shared.requestObjects.LoginRequest"};
         GenericCommand commandObj = new GenericCommand("server.handlers.commandHandler", "login",paramTypes, paramValues);
         String commandObjStr = Serializer.getInstance().serializeObject(commandObj);
@@ -66,7 +66,7 @@ public class ServerProxy implements IServer {
     }
 
     public Results register(RegisterRequest request) throws Exception {
-        Object[] paramValues = {request};
+        Object[] paramValues = {Serializer.getInstance().serializeObject(request)};
         String[] paramTypes = {"com.bignerdranch.android.shared.requestObjects.RegisterRequest"};
         GenericCommand commandObj = new GenericCommand("server.handlers.commandHandler", "register",paramTypes, paramValues);
         String commandObjStr = Serializer.getInstance().serializeObject(commandObj);
@@ -81,7 +81,7 @@ public class ServerProxy implements IServer {
     }
 
     public Results createGame(CreateGameRequest request) throws Exception {
-        Object[] paramValues = {request};
+        Object[] paramValues = {Serializer.getInstance().serializeObject(request)};
         String[] paramTypes = {"com.bignerdranch.android.shared.requestObjects.CreateGameRequest"};
         GenericCommand commandObj = new GenericCommand("server.handlers.commandHandler", "createGame", paramTypes, paramValues);
         String commandObjStr = Serializer.getInstance().serializeObject(commandObj);
@@ -96,7 +96,7 @@ public class ServerProxy implements IServer {
     }
 
     public Results startGame(StartGameRequest request) throws Exception {
-        Object[] paramValues = {request};
+        Object[] paramValues = {Serializer.getInstance().serializeObject(request)};
         String[] paramTypes = {"com.bignerdranch.android.shared.requestObjects.StartGameRequest"};
         GenericCommand commandObj = new GenericCommand("server.handlers.commandHandler", "startGame", paramTypes, paramValues);
         String commandObjStr = Serializer.getInstance().serializeObject(commandObj);
@@ -111,7 +111,7 @@ public class ServerProxy implements IServer {
     }
 
     public Results joinGame(JoinGameRequest request) throws Exception {
-        Object[] paramValues = {request};
+        Object[] paramValues = {Serializer.getInstance().serializeObject(request)};
         String[] paramTypes = {"com.bignerdranch.android.shared.requestObjects.JoinGameRequest"};
         GenericCommand commandObj = new GenericCommand("server.handlers.commandHandler", "joinGame", paramTypes, paramValues);
         String commandObjStr = Serializer.getInstance().serializeObject(commandObj);
@@ -126,7 +126,7 @@ public class ServerProxy implements IServer {
     }
 
 	public Results updateChatbox(UpdateChatboxRequest request) throws Exception {
-        Object[] paramValues = {request};
+        Object[] paramValues = {Serializer.getInstance().serializeObject(request)};
         String[] paramTypes = {"com.bignerdranch.android.shared.requestObjects.UpdateChatboxRequest"};
         GenericCommand commandObj = new GenericCommand("server.handlers.commandHandler", "updateChatbox", paramTypes, paramValues);
         String commandObjStr = Serializer.getInstance().serializeObject(commandObj);
