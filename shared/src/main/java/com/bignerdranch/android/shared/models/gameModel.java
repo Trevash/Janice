@@ -2,6 +2,7 @@ package com.bignerdranch.android.shared.models;
 
 import com.bignerdranch.android.shared.exceptions.DuplicateException;
 import com.bignerdranch.android.shared.exceptions.UserNotFoundException;
+import com.bignerdranch.android.shared.models.colors.routesColorsEnum;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -12,6 +13,7 @@ public class gameModel {
     private boolean gameStarted;
     private List<playerModel> players = new ArrayList<>();
     private chatboxModel chatbox;
+    private List<routeModel> routes;
     // private playerModel hostPlayer;
 
     // MapPic
@@ -31,6 +33,21 @@ public class gameModel {
         gameStarted = false;
         players.add(hostPlayer);
         chatbox = new chatboxModel();
+        routes = this.setGameRoutes();
+    }
+
+    private List<routeModel> setGameRoutes() {
+        List<routeModel> gameRoutes = new ArrayList<>();
+        routesColorsEnum.Color defaultColor  = routesColorsEnum.Color.WHITE;
+
+        //Create city models here
+        cityModel losAngelas = new cityModel("Los Angelas");
+        cityModel newYork = new cityModel("New York");
+
+        //Create default routes here
+        gameRoutes.add(new routeModel(losAngelas, newYork, defaultColor));
+
+        return gameRoutes;
     }
 
     // host is the first player in the list
@@ -105,4 +122,7 @@ public class gameModel {
         }
     }
 
+    public List<routeModel> getRoutes() {
+        return routes;
+    }
 }

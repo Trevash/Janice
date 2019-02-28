@@ -1,8 +1,17 @@
 package com.janus.Communication;
 
 import com.bignerdranch.android.shared.Serializer;
+import com.bignerdranch.android.shared.models.authTokenModel;
+import com.bignerdranch.android.shared.models.chatMessageModel;
+import com.bignerdranch.android.shared.models.gameIDModel;
+import com.bignerdranch.android.shared.models.gameModel;
+import com.bignerdranch.android.shared.models.usernameModel;
+import com.bignerdranch.android.shared.requestObjects.CreateGameRequest;
 import com.bignerdranch.android.shared.requestObjects.LoginRequest;
 import com.bignerdranch.android.shared.requestObjects.RegisterRequest;
+import com.bignerdranch.android.shared.requestObjects.UpdateChatboxRequest;
+import com.bignerdranch.android.shared.resultobjects.Results;
+import com.janus.ClientFacade;
 
 import org.java_websocket.client.WebSocketClient;
 
@@ -31,26 +40,41 @@ public class ClientCommunicator {
         try {
             ServerProxy server = ServerProxy.getInstance();
             server.connectClient();
-            System.out.println("REGISTER FAIL");
-            server.register(new RegisterRequest("illegal Username", "somePassword"));
-            server.register(new RegisterRequest("legalUsername", "illegal Password"));
-            System.out.println("");
-            System.out.println("LOGIN FAIL");
-            server.login(new LoginRequest("illegal Username", "somePassword"));
-            server.login(new LoginRequest("legalUsername", "illegal Password"));
-
-            System.out.println("");
+//            System.out.println("REGISTER FAIL");
+//            server.register(new RegisterRequest("illegal Username", "somePassword"));
+//            server.register(new RegisterRequest("legalUsername", "illegal Password"));
+//            System.out.println("");
+//            System.out.println("LOGIN FAIL");
+//            server.login(new LoginRequest("illegal Username", "somePassword"));
+//            server.login(new LoginRequest("legalUsername", "illegal Password"));
+//
+//            System.out.println("");
             System.out.println("SUCCESSFUL REGISTER");
             server.register(new RegisterRequest("legalUsername", "legalPassword"));
-
+//            authTokenModel curAuthToken = (authTokenModel) registerResult.getData(authTokenModel.class);
+////            System.out.println("");
+//            System.out.println("ANOTHER FAILED LOGIN");
+//            server.login(new LoginRequest("legal Username", "legalPassword"));
+//            server.login(new LoginRequest("legalUsername", "legal Password"));
+//
 //            System.out.println("");
-            System.out.println("ANOTHER FAILED LOGIN");
-            server.login(new LoginRequest("legal Username", "legalPassword"));
-            server.login(new LoginRequest("legalUsername", "legal Password"));
+//            System.out.println("SUCCESSFUL LOGIN");
+//            server.login(new LoginRequest("legalUsername", "legalPassword"));
 
-            System.out.println("");
-            System.out.println("SUCCESSFUL LOGIN");
-            server.login(new LoginRequest("legalUsername", "legalPassword"));
+            //Step 1: Create Game
+            server.createGame(new CreateGameRequest(ClientFacade.getInstance().getUser().getAuthToken()));
+
+            //Step 2: Send messages
+            gameIDModel gameID = ClientFacade.getInstance().getServerGameList().get(0).getGameID();
+            UpdateChatboxRequest request = new UpdateChatboxRequest(
+                    gameID,
+                    ClientFacade.getInstance().getUser().getAuthToken(),
+                    new chatMessageModel(
+                            new usernameModel("legalUsername"),
+                            "We are testing the chat!"
+                    )
+            );
+            server.updateChatbox(request);
 
         } catch (Exception e) {
             e.printStackTrace();

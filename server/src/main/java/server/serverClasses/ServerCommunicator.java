@@ -81,6 +81,8 @@ public class ServerCommunicator extends WebSocketServer {
             case "UpdateChat":
                 //TODO: broadcast all players in the game
                 //broadcastGame();
+                //TODO: Caleb change this later
+                broadcastOne(resultGson, conn);
                 break;
             case "ERROR":
                 broadcastOne(resultGson, conn);
