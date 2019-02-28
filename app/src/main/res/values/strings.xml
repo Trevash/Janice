@@ -7,4 +7,11 @@
     <string name="readyString">READY</string>
     <string name="notReadyString">NOT READY</string>
     <string name="hostString">HOST</string>
+    <string name="routesString">Routes:</string>
+    <string name="available">Available</string>
+    <string name="myRoutes">My Routes</string>
+    <string name="claim">Claim</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>
