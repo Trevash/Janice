@@ -6,4 +6,8 @@ public class cityModel {
     public cityModel(String name){
         this.name = name;
     }
+
+    public String getName() {
+        return name;
+    }
 }
