@@ -12,7 +12,7 @@ public class gameModel {
     private boolean gameStarted;
     private List<playerModel> players = new ArrayList<>();
     private chatboxModel chatbox;
-    private List<routeModel> routes;
+    private List<abstractRoute> routes;
     // private playerModel hostPlayer;
 
     // MapPic
@@ -35,8 +35,8 @@ public class gameModel {
         routes = this.setGameRoutes();
     }
 
-    private List<routeModel> setGameRoutes() {
-        List<routeModel> gameRoutes = new ArrayList<>();
+    private List<abstractRoute> setGameRoutes() {
+        List<abstractRoute> gameRoutes = new ArrayList<>();
         routeColorEnum defaultColor  = routeColorEnum.WHITE;
 
         //Create city models here
@@ -44,7 +44,7 @@ public class gameModel {
         cityModel newYork = new cityModel("New York");
 
         //Create default routes here
-        gameRoutes.add(new routeModel(losAngelas, newYork, defaultColor));
+        gameRoutes.add(new singleRouteModel(losAngelas, newYork, 5, defaultColor));
 
         return gameRoutes;
     }
@@ -121,7 +121,7 @@ public class gameModel {
         }
     }
 
-    public List<routeModel> getRoutes() {
+    public List<abstractRoute> getRoutes() {
         return routes;
     }
 }

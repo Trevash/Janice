@@ -1,14 +1,14 @@
 package com.bignerdranch.android.shared.models;
 
 import com.bignerdranch.android.shared.exceptions.RouteAlreadyClaimedException;
-import com.bignerdranch.android.shared.models.colors.playerColorsEnum;
-import com.bignerdranch.android.shared.models.colors.routesColorsEnum;
+import com.bignerdranch.android.shared.models.colors.playerColorEnum;
+import com.bignerdranch.android.shared.models.colors.routeColorEnum;
 
 public class singleRouteModel extends abstractRoute{
-    private routesColorsEnum trainColor;
+    private routeColorEnum trainColor;
     private playerIDModel claimer = null;
 
-    public singleRouteModel(cityModel city1, cityModel city2, int length, routesColorsEnum defaultColor){
+    public singleRouteModel(cityModel city1, cityModel city2, int length, routeColorEnum defaultColor){
         super(city1, city2, length);
         this.trainColor = defaultColor;
     }
@@ -18,7 +18,7 @@ public class singleRouteModel extends abstractRoute{
     }
 
     @Override
-    public void claim(playerIDModel claimer, routesColorsEnum newColor) throws RouteAlreadyClaimedException {
+    public void claim(playerIDModel claimer, routeColorEnum newColor) throws RouteAlreadyClaimedException {
         if(this.claimer != null){
             throw new RouteAlreadyClaimedException("Route from " + this.getCity1().getName() + " to " + this.getCity2().getName() + " already claimed!");
         }
@@ -26,11 +26,11 @@ public class singleRouteModel extends abstractRoute{
         this.trainColor = newColor;
     }
 
-    public routesColorsEnum getTrainColor() {
+    public routeColorEnum getTrainColor() {
         return trainColor;
     }
 
-    public void setTrainColor(routesColorsEnum newColor) {
+    public void setTrainColor(routeColorEnum newColor) {
         this.trainColor = newColor;
     }
 
