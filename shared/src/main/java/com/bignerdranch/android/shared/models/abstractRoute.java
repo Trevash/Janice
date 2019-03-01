@@ -40,7 +40,7 @@ abstract public class abstractRoute {
 
     public boolean isClaimedBy(playerIDModel pm){return false;}
 
-    public void claim(playerIDModel claimer, routesColorsEnum.Color newColor) throws RouteAlreadyClaimedException{}
+    public void claim(playerIDModel claimer, routesColorsEnum newColor) throws RouteAlreadyClaimedException{}
 }
 
 
