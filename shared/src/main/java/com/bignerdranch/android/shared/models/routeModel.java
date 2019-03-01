@@ -1,14 +1,14 @@
 package com.bignerdranch.android.shared.models;
 
-import com.bignerdranch.android.shared.models.colors.routesColorsEnum;
+import com.bignerdranch.android.shared.models.colors.routeColorEnum;
 
 public class routeModel {
     private cityModel cityA;
     private cityModel cityB;
-    private routesColorsEnum color;
+    private routeColorEnum color;
     private usernameModel claimer;
 
-    public routeModel(cityModel cityA, cityModel cityB, routesColorsEnum defaultColor){
+    public routeModel(cityModel cityA, cityModel cityB, routeColorEnum defaultColor){
         this.cityA = cityA;
         this.cityB = cityB;
         this.color = defaultColor;
@@ -22,11 +22,11 @@ public class routeModel {
         this.claimer = claimer;
     }
 
-    public routesColorsEnum getColor() {
+    public routeColorEnum getColor() {
         return color;
     }
 
-    public void setColor(routesColorsEnum color) {
+    public void setColor(routeColorEnum color) {
         this.color = color;
     }
 

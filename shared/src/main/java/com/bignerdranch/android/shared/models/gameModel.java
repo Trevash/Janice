@@ -1,7 +1,7 @@
 package com.bignerdranch.android.shared.models;
 
 import com.bignerdranch.android.shared.exceptions.DuplicateException;
-import com.bignerdranch.android.shared.models.colors.routesColorsEnum;
+import com.bignerdranch.android.shared.models.colors.routeColorEnum;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -37,7 +37,7 @@ public class gameModel {
 
     private List<routeModel> setGameRoutes() {
         List<routeModel> gameRoutes = new ArrayList<>();
-        routesColorsEnum defaultColor  = routesColorsEnum.WHITE;
+        routeColorEnum defaultColor  = routeColorEnum.WHITE;
 
         //Create city models here
         cityModel losAngelas = new cityModel("Los Angelas");
