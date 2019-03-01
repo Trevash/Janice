@@ -13,7 +13,7 @@ abstract public class abstractDoubleRoute extends abstractRoute{
     protected playerIDModel claimer2 = null;
 
     public abstractDoubleRoute(cityModel city1, cityModel city2, int length, routeColorEnum defaultColor) {
-        super(city1, city2, length);
+        super(city1, city2, length, defaultColor);
         trainColor1 = defaultColor;
         trainColor2 = defaultColor;
     }
