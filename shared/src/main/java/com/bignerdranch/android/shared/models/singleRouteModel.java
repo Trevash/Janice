@@ -1,7 +1,6 @@
 package com.bignerdranch.android.shared.models;
 
 import com.bignerdranch.android.shared.exceptions.RouteAlreadyClaimedException;
-import com.bignerdranch.android.shared.models.colors.playerColorEnum;
 import com.bignerdranch.android.shared.models.colors.routeColorEnum;
 
 public class singleRouteModel extends abstractRoute{
@@ -9,7 +8,7 @@ public class singleRouteModel extends abstractRoute{
     private playerIDModel claimer = null;
 
     public singleRouteModel(cityModel city1, cityModel city2, int length, routeColorEnum defaultColor){
-        super(city1, city2, length, defaultColor);
+        super(city1, city2, length);
         this.trainColor = defaultColor;
     }
 
@@ -17,7 +16,6 @@ public class singleRouteModel extends abstractRoute{
         return claimer;
     }
 
-    @Override
     public void claim(playerIDModel claimer, routeColorEnum newColor) throws RouteAlreadyClaimedException {
         if(this.claimer != null){
             throw new RouteAlreadyClaimedException("Route from " + this.getCity1().getName() + " to " + this.getCity2().getName() + " already claimed!");
@@ -34,12 +32,10 @@ public class singleRouteModel extends abstractRoute{
         this.trainColor = newColor;
     }
 
-    @Override
     public boolean claimable() {
         return this.claimer == null;
     }
 
-    @Override
     public boolean isClaimedBy(playerIDModel pm) {
         if(claimer == null){
             return false;

@@ -15,4 +15,8 @@ public class doubleRouteModelFew extends abstractDoubleRoute {
         this.claimer1 = claimer;
         this.trainColor1 = newColor;
     }
+
+    public boolean claimable() {
+        return (this.claimer1 == null) && (this.claimer2 == null);
+    }
 }

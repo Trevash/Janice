@@ -11,6 +11,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bignerdranch.android.shared.models.colors.cardColorEnum;
+import com.bignerdranch.android.shared.models.trainCardModel;
 import com.janus.Presenter.DeckFragmentPresenter;
 import com.janus.R;
 
@@ -28,8 +29,8 @@ import java.util.Map;
 public class DeckFragment extends Fragment implements DeckFragmentPresenter.View{
 
     private DeckFragmentPresenter presenter;
-    private List<trainCard> deck;
-    private List<trainCard> faceUpCards;
+    private List<trainCardModel> deck;
+    private List<trainCardModel> faceUpCards;
     private TextView mDeckSizeView;
     private ImageView mFaceDownDeckView;
     private ImageView mCard1View;
@@ -136,13 +137,13 @@ public class DeckFragment extends Fragment implements DeckFragmentPresenter.View
         return v;
     }
 
-    public void updateDeck(List<trainCard> updatedDeck){
+    public void updateDeck(List<trainCardModel> updatedDeck){
         deck = updatedDeck;
 
         mDeckSizeView.setText("Number of Cards in the Deck: " + deck.size());
     }
 
-    public void updateFaceUpCards(List<trainCard> updatedTrainCards){
+    public void updateFaceUpCards(List<trainCardModel> updatedTrainCards){
         //Assumes precondition that there are 5 faceup cards
 
         faceUpCards = updatedTrainCards;

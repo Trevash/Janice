@@ -1,16 +1,15 @@
 package com.janus.Presenter;
 
-import com.bignerdranch.android.shared.models.colors.cardColorEnum;
+import com.bignerdranch.android.shared.models.trainCardModel;
 import com.janus.ClientFacade;
 import com.janus.ClientModel;
 
 import java.util.List;
-import java.util.Map;
 
 public class DeckFragmentPresenter implements ClientFacade.Presenter{
     public interface View {
-        void updateDeck(List<trainCard> cards);
-        void updateFaceUpCards(List<String> cards);
+        void updateDeck(List<trainCardModel> cards);
+        void updateFaceUpCards(List<trainCardModel> cards);
     }
     private View view;
     private ClientFacade facade = ClientFacade.getInstance();
@@ -21,7 +20,7 @@ public class DeckFragmentPresenter implements ClientFacade.Presenter{
     }
 
     public void updateUI(){
-        view.updateDeck(model.getGame().getDeck());
+        view.updateDeck(model.getGame().getTrainCardDeck());
         view.updateFaceUpCards(model.getGame().getFaceUpCards());
     }
 

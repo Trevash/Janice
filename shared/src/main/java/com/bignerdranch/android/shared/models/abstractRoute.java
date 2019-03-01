@@ -8,22 +8,12 @@ abstract public class abstractRoute {
     private cityModel city1;
     private cityModel city2;
     private int length;
-    private routeColorEnum color;
 
-    public routeColorEnum getColor() {
-        return color;
-    }
-
-    public void setColor(routeColorEnum color) {
-        this.color = color;
-    }
-
-    public abstractRoute(cityModel city1, cityModel city2, int length, routeColorEnum color){
+    public abstractRoute(cityModel city1, cityModel city2, int length){
         this.city1 = city1;
         this.city2 = city2;
         this.length = length;
         this.routeID = new routeIDModel();
-        this.color = color;
     }
 
     public routeIDModel getRouteID() {
@@ -46,11 +36,5 @@ abstract public class abstractRoute {
         return city2;
     }
 
-    public boolean claimable(){return false;}
-
-    public boolean isClaimedBy(playerIDModel pm){return false;}
-
     public void claim(playerIDModel claimer, routeColorEnum newColor) throws RouteAlreadyClaimedException{}
 }
-
-

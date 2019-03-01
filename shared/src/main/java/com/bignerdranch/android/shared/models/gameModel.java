@@ -24,9 +24,9 @@ public class gameModel {
     // ChatBox
     // Decks
         // Train
-    private LinkedList<trainCardModel> trainCardDeck = new LinkedList();
+    private ArrayList<trainCardModel> trainCardDeck = new ArrayList<>();
         // Dest
-    private LinkedList<destinationCardModel> destinationCardDeck = new LinkedList();
+    private LinkedList<destinationCardModel> destinationCardDeck = new LinkedList<>();
         // Face-up
     private List<trainCardModel> faceUpCards = new ArrayList<>();
         // Discard
@@ -71,7 +71,13 @@ public class gameModel {
     }
 
     private trainCardModel drawTrainCard() {
-        return this.trainCardDeck.pop();
+        int numCards = (trainCardDeck.size() - 1);
+        if(numCards > 0) {
+            return this.trainCardDeck.get(numCards); //Get top card
+            trainCardDeck.remove(numCards); //Eliminate top card from array
+        } else {
+            //throw exception;
+        }
     }
 
     // host is the first player in the list
@@ -144,6 +150,14 @@ public class gameModel {
         } else {
             return this.getGameID() == ((gameModel) o).getGameID();
         }
+    }
+
+    public ArrayList<trainCardModel> getTrainCardDeck() {
+        return trainCardDeck;
+    }
+
+    public List<trainCardModel> getFaceUpCards() {
+        return faceUpCards;
     }
 
     public List<abstractRoute> getRoutes() {
