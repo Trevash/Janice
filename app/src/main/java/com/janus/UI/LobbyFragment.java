@@ -31,7 +31,6 @@ public class LobbyFragment extends Fragment implements LobbyFragmentPresenter.Vi
 
     private LobbyFragmentPresenter presenter;
 
-    private RecyclerView mPlayerList;
     private Button mStartGameButton;
     private MainActivity mMainActivity;
     private RecyclerView mPlayerRecyclerView;
@@ -39,8 +38,6 @@ public class LobbyFragment extends Fragment implements LobbyFragmentPresenter.Vi
     private PlayerAdapter mPlayerAdapter;
     private Boolean isHost = false;
     private playerModel[] mPlayers = new playerModel[]{};
-
-    private OnFragmentInteractionListener mListener;
 
     public LobbyFragment() {
         // Required empty public constructor

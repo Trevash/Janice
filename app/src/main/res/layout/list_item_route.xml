@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    android:padding="8dp">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/routeCitiesView"
+        android:text=""
+        android:layout_margin="10dp"
+        android:textSize="15sp"/>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/routeLengthView"
+        android:text=""
+        android:layout_margin="10dp"
+        android:textSize="15sp"/>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/routeColorView"
+        android:text=""
+        android:layout_margin="10dp"
+        android:textSize="15sp"/>
+
+    <Button
+        android:id="@+id/claimRouteButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:text="@string/claim"
+        android:layout_margin="10dp"
+        android:textSize="15sp"
+        android:gravity="end"/>
+
+</LinearLayout>
