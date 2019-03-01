@@ -1,9 +1,11 @@
 package com.bignerdranch.android.shared.models;
 
 import com.bignerdranch.android.shared.exceptions.DuplicateException;
+import com.bignerdranch.android.shared.models.colors.cardColorEnum;
 import com.bignerdranch.android.shared.models.colors.routeColorEnum;
 
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 
 public class gameModel {
@@ -12,19 +14,23 @@ public class gameModel {
     private boolean gameStarted;
     private List<playerModel> players = new ArrayList<>();
     private chatboxModel chatbox;
-    private List<abstractRoute> routes;
-    private List<destinationCardModel> destinationCards = new ArrayList<>();
+
     // private playerModel hostPlayer;
 
     // MapPic
     // Map<City, coordinate)
     // List<Route> routes
+    private List<abstractRoute> routes = new ArrayList<>();
     // ChatBox
     // Decks
         // Train
+    private LinkedList<trainCardModel> trainCardDeck = new LinkedList();
         // Dest
+    private LinkedList<destinationCardModel> destinationCardDeck = new LinkedList();
         // Face-up
+    private List<trainCardModel> faceUpCards = new ArrayList<>();
         // Discard
+    private LinkedList trainCardDiscard = new LinkedList();
 
 
     public gameModel(String newGameName, playerModel hostPlayer) {
@@ -33,24 +39,39 @@ public class gameModel {
         gameStarted = false;
         players.add(hostPlayer);
         chatbox = new chatboxModel();
-        routes = this.setGameRoutesAndDestCards();
+        this.setGameRoutesAndDecks();
     }
 
-    private List<abstractRoute> setGameRoutesAndDestCards() {
-        List<abstractRoute> gameRoutes = new ArrayList<>();
-        routeColorEnum defaultColor  = routeColorEnum.WHITE;
+    private void setGameRoutesAndDecks() {
 
         //Create city models here
         cityModel losAngelas = new cityModel("Los Angelas");
         cityModel newYork = new cityModel("New York");
 
         //Create default routes here
-        gameRoutes.add(new singleRouteModel(losAngelas, newYork, 5, defaultColor));
+        this.routes.add(new singleRouteModel(losAngelas, newYork, 5, routeColorEnum.WHITE));
 
-        //Create dest cards here
-        destinationCards.add(new destinationCardModel(losAngelas, newYork, 20));
+        //Create dest cards deck here
+        this.destinationCardDeck.add(new destinationCardModel(losAngelas, newYork, 20));
 
-        return gameRoutes;
+        //Create train card deck here (shuffle?)
+        this.trainCardDeck.add(new trainCardModel(cardColorEnum.WHITE));
+        this.trainCardDeck.add(new trainCardModel(cardColorEnum.BLUE));
+        this.trainCardDeck.add(new trainCardModel(cardColorEnum.RED));
+        this.trainCardDeck.add(new trainCardModel(cardColorEnum.GREEN));
+        this.trainCardDeck.add(new trainCardModel(cardColorEnum.BLACK));
+        this.trainCardDeck.add(new trainCardModel(cardColorEnum.YELLOW));
+
+        //Draw 5 cards from deck, assign to the faceUp stuff
+        this.faceUpCards.add(this.drawTrainCard());
+        this.faceUpCards.add(this.drawTrainCard());
+        this.faceUpCards.add(this.drawTrainCard());
+        this.faceUpCards.add(this.drawTrainCard());
+        this.faceUpCards.add(this.drawTrainCard());
+    }
+
+    private trainCardModel drawTrainCard() {
+        return this.trainCardDeck.pop();
     }
 
     // host is the first player in the list

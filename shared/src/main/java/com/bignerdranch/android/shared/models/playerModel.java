@@ -13,8 +13,10 @@ public class playerModel {
 
 
     // train hand
+    private List<trainCardModel> trainCardHand = new ArrayList<>();
+
     // destination hand
-    private List<destinationCardModel> destinationCards = new ArrayList<>();
+    private List<destinationCardModel> destinationCardHand = new ArrayList<>();
 
     // claimed routes
     private List<abstractRoute> claimedRoutes = new ArrayList<>();
@@ -56,6 +58,20 @@ public class playerModel {
 
     public playerColorEnum getPlayerColor() {
         return playerColor;
+    }
+
+    public void drawDestCards(){
+
+    }
+
+    public void drawTrainCardFromDeck(){
+
+    }
+
+    public void drawFaceUpTrainCard(int pos) throws Exception {
+        if(pos < 0 || pos > 4){
+            throw new Exception("Invalid card position requested from face up train cards: " + pos);
+        }
     }
 }
 
