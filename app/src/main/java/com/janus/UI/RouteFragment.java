@@ -11,7 +11,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
 
-import com.bignerdranch.android.shared.models.routeModel;
+import com.bignerdranch.android.shared.models.abstractRoute;
 import com.janus.Presenter.RouteFragmentPresenter;
 import com.janus.R;
 
@@ -82,9 +82,9 @@ public class RouteFragment extends Fragment implements RouteFragmentPresenter.Vi
         private TextView mRouteColorView;
         private Button mClaimRouteButton;
 
-        public void bind(routeModel r){
-            mRouteCitiesView.setText(r.getCityA() + " - " + r.getCityB());
-            mRouteLengthView.setText(/*r.getLength()*/"5");
+        public void bind(abstractRoute r){
+            mRouteCitiesView.setText(r.getCity1() + " - " + r.getCity2());
+            mRouteLengthView.setText(r.getLength());
             mRouteColorView.setText(r.getColor().toString());
         }
 
@@ -95,6 +95,7 @@ public class RouteFragment extends Fragment implements RouteFragmentPresenter.Vi
             mRouteColorView = itemView.findViewById(R.id.routeColorView);
             mClaimRouteButton = itemView.findViewById(R.id.claimRouteButton);
 
+            //This button could be eliminated by making the list elements clickable
             mClaimRouteButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -106,9 +107,9 @@ public class RouteFragment extends Fragment implements RouteFragmentPresenter.Vi
 
     private class RouteAdapter extends RecyclerView.Adapter<RouteHolder> {
 
-        private List<routeModel> mRoutes;
+        private List<abstractRoute> mRoutes;
 
-        public RouteAdapter(List<routeModel> routes){
+        public RouteAdapter(List<abstractRoute> routes){
             mRoutes = routes;
         }
 
@@ -121,7 +122,7 @@ public class RouteFragment extends Fragment implements RouteFragmentPresenter.Vi
 
         @Override
         public void onBindViewHolder(RouteHolder holder, int position) {
-            routeModel r = mRoutes.get(position);
+            abstractRoute r = mRoutes.get(position);
             holder.bind(r);
         }
 
@@ -131,7 +132,7 @@ public class RouteFragment extends Fragment implements RouteFragmentPresenter.Vi
         }
     }
 
-    public void updateRoutes(List<routeModel> routes){
+    public void updateRoutes(List<abstractRoute> routes){
         mRouteAdapter = new RouteAdapter(routes);
         mRouteRecyclerView.setAdapter(mRouteAdapter);
     }

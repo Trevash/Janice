@@ -1,6 +1,6 @@
 package com.janus.Presenter;
 
-import com.bignerdranch.android.shared.models.routeModel;
+import com.bignerdranch.android.shared.models.abstractRoute;
 import com.janus.ClientFacade;
 import com.janus.ClientModel;
 
@@ -8,7 +8,7 @@ import java.util.List;
 
 public class RouteFragmentPresenter implements ClientFacade.Presenter{
     public interface View {
-        void updateRoutes(List<routeModel> routes);
+        void updateRoutes(List<abstractRoute> routes);
     }
     private View view;
     private ClientFacade facade = ClientFacade.getInstance();
