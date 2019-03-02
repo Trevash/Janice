@@ -1,6 +1,7 @@
 package server.serverClasses;
 
 import com.bignerdranch.android.shared.GenericCommand;
+import com.bignerdranch.android.shared.constants;
 import com.bignerdranch.android.shared.requestObjects.CreateGameRequest;
 import com.bignerdranch.android.shared.requestObjects.JoinGameRequest;
 import com.bignerdranch.android.shared.requestObjects.StartGameRequest;
@@ -30,8 +31,9 @@ public class ServerCommunicator extends WebSocketServer {
     }
 
     public static void main(String[] args) {
-        String host = "10.37.93.67";
-        int port = 8087;
+        //String host = "10.37.93.67";
+        String host = constants.IP_ADDRESS;
+        int port = constants.PORT;
 
         WebSocketServer server = new ServerCommunicator(new InetSocketAddress(host, port));
         server.run();

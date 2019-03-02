@@ -1,6 +1,5 @@
 package com.janus.UI;
 
-import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -74,7 +73,7 @@ public class DeckFragment extends Fragment implements DeckFragmentPresenter.View
 
         mDeckSizeView = v.findViewById(R.id.deckSizeView);
         mFaceDownDeckView = v.findViewById(R.id.faceDownDeckView);
-        mFaceDownDeckView.setImageResource(R.drawable.ttrBack);
+        mFaceDownDeckView.setImageResource(R.drawable.ttr_back);
         mCard1View = v.findViewById(R.id.card1View);
         mCard2View = v.findViewById(R.id.card2View);
         mCard3View = v.findViewById(R.id.card3View);
@@ -123,15 +122,15 @@ public class DeckFragment extends Fragment implements DeckFragmentPresenter.View
             }
         });
 
-        colorMap.put(cardColorEnum.BLUE, R.drawable.ttrBlue);
-        colorMap.put(cardColorEnum.BLACK, R.drawable.ttrBlack);
-        colorMap.put(cardColorEnum.ORANGE, R.drawable.ttrOrange);
-        colorMap.put(cardColorEnum.GREEN, R.drawable.ttrGreen);
-        colorMap.put(cardColorEnum.LOCOMOTIVE, R.drawable.ttrLocomotive);
-        colorMap.put(cardColorEnum.PURPLE, R.drawable.ttrPurple);
-        colorMap.put(cardColorEnum.RED, R.drawable.ttrRed);
-        colorMap.put(cardColorEnum.WHITE, R.drawable.ttrWhite);
-        colorMap.put(cardColorEnum.YELLOW, R.drawable.ttrYellow);
+        colorMap.put(cardColorEnum.BLUE, R.drawable.ttr_blue);
+        colorMap.put(cardColorEnum.BLACK, R.drawable.ttr_black);
+        colorMap.put(cardColorEnum.ORANGE, R.drawable.ttr_orange);
+        colorMap.put(cardColorEnum.GREEN, R.drawable.ttr_green);
+        colorMap.put(cardColorEnum.LOCOMOTIVE, R.drawable.ttr_locomotive);
+        colorMap.put(cardColorEnum.PURPLE, R.drawable.ttr_purple);
+        colorMap.put(cardColorEnum.RED, R.drawable.ttr_red);
+        colorMap.put(cardColorEnum.WHITE, R.drawable.ttr_white);
+        colorMap.put(cardColorEnum.YELLOW, R.drawable.ttr_yellow);
 
         presenter.updateUI();
         return v;

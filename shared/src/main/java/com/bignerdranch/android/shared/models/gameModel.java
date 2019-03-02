@@ -74,10 +74,12 @@ public class gameModel {
         int numCards = (trainCardDeck.size() - 1);
         if(numCards > 0) {
             return this.trainCardDeck.get(numCards); //Get top card
-            trainCardDeck.remove(numCards); //Eliminate top card from array
+            //trainCardDeck.remove(numCards); //Eliminate top card from array
+            // TODO unreachable code commented out to allow compilation
         } else {
             //throw exception;
         }
+        return null; // TODO fix this method: added this in to allow the code to compile
     }
 
     // host is the first player in the list
@@ -128,7 +130,7 @@ public class gameModel {
         }
 
         this.gameStarted = true;
-        //TODO:Alert all players that game has begun
+        // TODO:Alert all players that game has begun
     }
 
     public List<playerModel> getPlayers() {

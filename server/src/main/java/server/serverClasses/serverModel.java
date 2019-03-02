@@ -3,6 +3,7 @@ package server.serverClasses;
 import com.bignerdranch.android.shared.exceptions.InvalidAuthorizationException;
 import com.bignerdranch.android.shared.models.authTokenModel;
 import com.bignerdranch.android.shared.models.chatboxModel;
+import com.bignerdranch.android.shared.models.colors.playerColorEnum;
 import com.bignerdranch.android.shared.models.gameIDModel;
 import com.bignerdranch.android.shared.models.gameModel;
 import com.bignerdranch.android.shared.models.playerIDModel;
@@ -156,7 +157,8 @@ public class serverModel {
     }
 
     private playerModel makeNewPlayer(userModel userByAuth) {
-        return new playerModel(userByAuth.getUserName(), false, false);
+        // TODO change so that not every new player has the same color - only added this to allow compilation
+        return new playerModel(userByAuth.getUserName(), false, false, playerColorEnum.BLUE);
     }
 
     private userModel getUserByAuth(authTokenModel auth) throws InvalidAuthorizationException {

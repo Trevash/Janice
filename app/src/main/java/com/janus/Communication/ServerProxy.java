@@ -2,6 +2,7 @@ package com.janus.Communication;
 
 import com.bignerdranch.android.shared.GenericCommand;
 import com.bignerdranch.android.shared.IServer;
+import com.bignerdranch.android.shared.constants;
 import com.bignerdranch.android.shared.models.authTokenModel;
 import com.bignerdranch.android.shared.models.gameModel;
 import com.bignerdranch.android.shared.requestObjects.CreateGameRequest;
@@ -42,7 +43,8 @@ public class ServerProxy implements IServer {
     private String className = "server.handlers";
 
     public void connectClient() throws InterruptedException, URISyntaxException {
-        client = new TtRClient(new URI("ws://192.168.252.225:8087"));
+        String webSocketAddress = "ws://" + constants.IP_ADDRESS + ':' + constants.PORT;
+        client = new TtRClient(new URI(webSocketAddress));
         client.connectBlocking();
     }
 

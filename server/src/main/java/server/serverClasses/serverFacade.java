@@ -7,6 +7,7 @@ import com.bignerdranch.android.shared.exceptions.InvalidAuthorizationException;
 import com.bignerdranch.android.shared.exceptions.UserNotFoundException;
 import com.bignerdranch.android.shared.models.authTokenModel;
 import com.bignerdranch.android.shared.models.chatboxModel;
+import com.bignerdranch.android.shared.models.colors.playerColorEnum;
 import com.bignerdranch.android.shared.models.gameModel;
 import com.bignerdranch.android.shared.models.passwordModel;
 import com.bignerdranch.android.shared.models.playerModel;
@@ -74,7 +75,9 @@ public class serverFacade implements IServer {
         }
 
         String newGameName = serverModel.getInstance().getUser(request.getAuth()).getUserName().getValue() + "'s_Game!";
-        playerModel hostPlayer = new playerModel(serverModel.getInstance().getUser(request.getAuth()).getUserName(), false, true);
+        playerModel hostPlayer = new playerModel(serverModel.getInstance().getUser(request.getAuth()).getUserName(),
+                false, true, playerColorEnum.BLACK);
+        // TODO decide on what the color should actually be
 
         gameModel newGame = new gameModel(newGameName, hostPlayer);
         serverModel.getInstance().addGame(newGame);
@@ -107,7 +110,7 @@ public class serverFacade implements IServer {
 
 	@Override
 	public Results updateChatbox(UpdateChatboxRequest request) throws InvalidAuthorizationException, 
-			GameNotFoundException, DuplicateException {
+			GameNotFoundException {
         if (!serverModel.getInstance().authTokenExists(request.getAuth())) {
             throw new InvalidAuthorizationException("Invalid Auth Token passed to updateChatBox");
         }

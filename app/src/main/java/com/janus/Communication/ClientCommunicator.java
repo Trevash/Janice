@@ -1,6 +1,7 @@
 package com.janus.Communication;
 
 import com.bignerdranch.android.shared.Serializer;
+import com.bignerdranch.android.shared.constants;
 import com.bignerdranch.android.shared.models.authTokenModel;
 import com.bignerdranch.android.shared.models.chatMessageModel;
 import com.bignerdranch.android.shared.models.gameIDModel;
@@ -81,11 +82,11 @@ public class ClientCommunicator {
         }
     }
 
-    private String serverHost = "localhost";
-    private String serverPort = "8080";
+    private String serverHost = constants.IP_ADDRESS;
+    private int serverPort = constants.PORT;
 
     // The Register method calls the server's /user/register handler
-    String sendResponse(String context, String data) throws Exception {
+    String sendResponse(String context, String data) { //throws Exception {
 
         String registerUrl = "http://" + serverHost + ":" + serverPort + "/" + context;
 
