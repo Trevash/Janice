@@ -70,16 +70,12 @@ public class gameModel {
         this.faceUpCards.add(this.drawTrainCard());
     }
 
+    //Todo: Check for empty deck and other special cases
     private trainCardModel drawTrainCard() {
         int numCards = (trainCardDeck.size() - 1);
-        if(numCards > 0) {
-            return this.trainCardDeck.get(numCards); //Get top card
-            //trainCardDeck.remove(numCards); //Eliminate top card from array
-            // TODO unreachable code commented out to allow compilation
-        } else {
-            //throw exception;
-        }
-        return null; // TODO fix this method: added this in to allow the code to compile
+        trainCardModel card = this.trainCardDeck.get(numCards); //Get top card
+        trainCardDeck.remove(numCards); //Eliminate top card from array
+        return card;
     }
 
     // host is the first player in the list
@@ -130,7 +126,7 @@ public class gameModel {
         }
 
         this.gameStarted = true;
-        // TODO:Alert all players that game has begun
+        //TODO:Alert all players that game has begun
     }
 
     public List<playerModel> getPlayers() {
