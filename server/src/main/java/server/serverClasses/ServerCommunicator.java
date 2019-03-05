@@ -5,6 +5,7 @@ import com.bignerdranch.android.shared.constants;
 import com.bignerdranch.android.shared.requestObjects.CreateGameRequest;
 import com.bignerdranch.android.shared.requestObjects.JoinGameRequest;
 import com.bignerdranch.android.shared.requestObjects.StartGameRequest;
+import com.bignerdranch.android.shared.resultobjects.ChatboxData;
 import com.bignerdranch.android.shared.resultobjects.GameListData;
 import com.bignerdranch.android.shared.resultobjects.Results;
 import com.bignerdranch.android.shared.Serializer;
@@ -18,13 +19,14 @@ import org.java_websocket.server.WebSocketServer;
 import java.net.InetSocketAddress;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
 public class ServerCommunicator extends WebSocketServer {
     private static final int MAX_WAITING_CONNECTIONS = 12;
     private HttpServer server;
-    private Map<String, WebSocket> usernameWSMap = new HashMap();
+    private Map<String, WebSocket> usernameWSMap = new HashMap<>();
 
     private ServerCommunicator(InetSocketAddress address) {
         super(address);
@@ -47,6 +49,13 @@ public class ServerCommunicator extends WebSocketServer {
     @Override
     public void onClose(WebSocket conn, int code, String reason, boolean remote) {
         System.out.println("Server closed!");
+        Iterator<String> iterator = usernameWSMap.keySet().iterator();
+        while(iterator.hasNext()) {
+        	String username = iterator.next();
+        	if(usernameWSMap.get(username).equals(conn)) {
+        		iterator.remove();
+        	}
+        }
     }
 
     @Override
@@ -60,12 +69,16 @@ public class ServerCommunicator extends WebSocketServer {
                 broadcastOne(resultGson, conn);
                 if (result.isSuccess()) {
                     updateAllUserGameList();
+                    userModel user = (userModel) result.getData(userModel.class);
+                    usernameWSMap.put(user.getUserName().getValue(), conn);
                 }
                 break;
             case "Register":
                 broadcastOne(resultGson, conn);
                 if (result.isSuccess()) {
                     updateAllUserGameList();
+                    userModel user = (userModel) result.getData(userModel.class);
+                    usernameWSMap.put(user.getUserName().getValue(), conn);
                 }
                 break;
             case "Create":
@@ -84,6 +97,11 @@ public class ServerCommunicator extends WebSocketServer {
                 //TODO: broadcast all players in the game
                 //broadcastGame();
                 //TODO: Caleb change this later
+            	ChatboxData chatboxData = (ChatboxData) result.getData(ChatboxData.class);
+            	gameIDModel gameID = chatboxData.getGameID();
+            	gameModel game = serverModel.getInstance().getGameByID(gameID);
+            	//broadcastGame(resultGson, game);
+
                 broadcastOne(resultGson, conn);
                 break;
             case "ERROR":
@@ -96,14 +114,6 @@ public class ServerCommunicator extends WebSocketServer {
         temp.add(conn);
         broadcast(resultGson, temp);
     }
-
-    private void updateAllUserGameList() {
-        Results gameListResult = new Results("GameList", true,
-                new GameListData(serverModel.getInstance().getGames()));
-        String gameListGson = Serializer.getInstance().serializeObject(gameListResult);
-        broadcast(gameListGson);
-    }
-
     @Override
     public void onError(WebSocket conn, Exception ex) {
         System.out.println(ex.getMessage());
@@ -112,6 +122,13 @@ public class ServerCommunicator extends WebSocketServer {
     @Override
     public void onStart() {
         System.out.println("Server started!");
+    }
+    
+    private void updateAllUserGameList() {
+        Results gameListResult = new Results("GameList", true,
+                new GameListData(serverModel.getInstance().getGames()));
+        String gameListGson = Serializer.getInstance().serializeObject(gameListResult);
+        broadcast(gameListGson);
     }
 
     public void broadcastOne(String resultGson, WebSocket conn) {
@@ -122,6 +139,17 @@ public class ServerCommunicator extends WebSocketServer {
 
     //to be filled out later
     public void broadcastGame(String resultGson, gameModel game) {
+    	List<WebSocket> temp = new ArrayList<>();
 
+    	for(playerModel player: game.getPlayers()) {
+    		String username = player.getUserName().getValue();
+    		if(usernameWSMap.containsKey(username)) {
+    			temp.add(usernameWSMap.get(username));
+    		}
+    	}
+    	
+    	broadcast(resultGson, temp);
+
+    	
     }
 }
