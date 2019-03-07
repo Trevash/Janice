@@ -60,4 +60,9 @@ public class commandHandler extends handlerBase implements IServer {
 			GameNotFoundException, InvalidAuthorizationException {
 		return serverFacade.getInstance().updateChatbox(request);
 	}
+	
+	public Results testSocket(UpdateChatboxRequest test) {
+		return new Results("test", true, "It worked!");
+		
+	}
 }

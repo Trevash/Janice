@@ -2,6 +2,7 @@ package com.bignerdranch.android.shared.models;
 
 import com.bignerdranch.android.shared.exceptions.DuplicateException;
 import com.bignerdranch.android.shared.models.colors.cardColorEnum;
+import com.bignerdranch.android.shared.models.colors.playerColorEnum;
 import com.bignerdranch.android.shared.models.colors.routeColorEnum;
 
 import java.util.ArrayList;
@@ -14,6 +15,7 @@ public class gameModel {
     private boolean gameStarted;
     private List<playerModel> players = new ArrayList<>();
     private chatboxModel chatbox;
+    private int turnCounter;
 
     // private playerModel hostPlayer;
 
@@ -40,6 +42,7 @@ public class gameModel {
         players.add(hostPlayer);
         chatbox = new chatboxModel();
         this.setGameRoutesAndDecks();
+        this.turnCounter = 0;
     }
 
     private void setGameRoutesAndDecks() {
@@ -99,7 +102,10 @@ public class gameModel {
         if(players.size() >= 5) {
             throw new IllegalStateException("Max number of players reached!");
         }
-
+        //assigns player color
+        newPlayer.setPlayerColor(playerColorEnum.values()[players.size()]);
+        //draws new player's starting hand
+        newPlayer.drawStartingTrainCardHand();
         players.add(newPlayer);
     }
 
@@ -126,7 +132,13 @@ public class gameModel {
         }
 
         this.gameStarted = true;
-        //TODO:Alert all players that game has begun
+        
+        //color assigned in the addPlayer() function
+        //determine player order: order they joined (order in 'players' array)
+        //starting hand provided in the addPlayer() function
+        //each player chooses their destination cards in turn order?
+        
+        
     }
 
     public List<playerModel> getPlayers() {
@@ -160,5 +172,30 @@ public class gameModel {
 
     public List<abstractRoute> getRoutes() {
         return routes;
+    }
+    
+    public playerModel getPlayerByID(usernameModel username) {
+    	for (playerModel player : this.players) {
+    		if(player.getUserName().equals(username)) {
+    			return player;
+    		}
+    	}
+    	return null;
+    }
+    
+    //Returns a list of int arrays
+    // stats[0] = numbers of each color train card held by the player [int array length 9]
+    // stats[1...n] = stats for player 1, player 2... player n [int array length 4]
+    public List<int[]> getStats(usernameModel username) {
+    	List<int[]> stats = new ArrayList<int[]>();
+
+    	List<trainCardModel> curPlayerHand = getPlayerByID(username).getTrainCardHand();
+    	int[] cardTypes = new int[9];
+    	for (int i = 0; i < curPlayerHand.size(); i++) {
+    		cardTypes[curPlayerHand.get(i).getColor().ordinal()] += 1;
+    		}
+    	stats.add(cardTypes);
+    	for (int i = 0; i < players.size(); i++) {stats.add(players.get(i).getStats());}
+    	return stats;
     }
 }

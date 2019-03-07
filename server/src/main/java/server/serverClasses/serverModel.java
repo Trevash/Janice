@@ -169,11 +169,11 @@ public class serverModel {
         throw new InvalidAuthorizationException("User not found by auth token to find game!");
     }
 
-    public void startGame(StartGameRequest request) throws GameNotFoundException {
+    public gameModel startGame(StartGameRequest request) throws GameNotFoundException {
         for (gameModel curGame : this.games) {
             if(curGame.getGameID().getValue().equals(request.getModel().getGameID().getValue())) {
                 curGame.startGame();
-                return;
+                return curGame;
             }
         }
         throw new GameNotFoundException("Game not found to start!");

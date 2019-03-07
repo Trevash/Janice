@@ -90,17 +90,17 @@ public class ServerCommunicator extends WebSocketServer {
                 updateAllUserGameList();
                 break;
             case "Start":
+            	gameModel gameStart = (gameModel) result.getData(gameModel.class);
+            	broadcastGame(resultGson, gameStart);
                 broadcast(resultGson);
                 updateAllUserGameList();
                 break;
             case "UpdateChat":
-                //TODO: broadcast all players in the game
-                //broadcastGame();
                 //TODO: Caleb change this later
             	ChatboxData chatboxData = (ChatboxData) result.getData(ChatboxData.class);
             	gameIDModel gameID = chatboxData.getGameID();
-            	gameModel game = serverModel.getInstance().getGameByID(gameID);
-            	//broadcastGame(resultGson, game);
+            	gameModel gameChat = serverModel.getInstance().getGameByID(gameID);
+            	//broadcastGame(resultGson, gameChat);
 
                 broadcastOne(resultGson, conn);
                 break;

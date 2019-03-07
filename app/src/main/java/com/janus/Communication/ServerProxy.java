@@ -141,4 +141,21 @@ public class ServerProxy implements IServer {
         }
         return messageResult;
 	}
+	
+	public Results testSocket(UpdateChatboxRequest request) throws Exception {
+        Object[] paramValues = {Serializer.getInstance().serializeObject(request)};
+        String[] paramTypes = {"com.bignerdranch.android.shared.requestObjects.UpdateChatboxRequest"};
+        GenericCommand commandObj = new GenericCommand("server.handlers.commandHandler", "updateChatbox", paramTypes, paramValues);
+        //switch this one out with yours
+        String commandObjStr = Serializer.getInstance().serializeObject(commandObj);
+        //
+        client.send(commandObjStr);
+        messageResult = null;
+        client.setMessageResultToNull();
+        while (messageResult == null) {
+            messageResult = client.getResults();
+            Thread.sleep(100);
+        }
+        return messageResult;
+	}
 }

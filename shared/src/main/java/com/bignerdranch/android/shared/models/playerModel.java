@@ -37,7 +37,7 @@ public class playerModel {
         this.isHost = isHost;
         this.playerColor = playerColor;
     }
-
+    
     public boolean isHost() {
         return isHost;
     }
@@ -59,11 +59,21 @@ public class playerModel {
     public playerColorEnum getPlayerColor() {
         return playerColor;
     }
+    
+    public void setPlayerColor(playerColorEnum color) {
+    	this.playerColor = color;
+    }
 
     public void drawDestCards(){
 
     }
 
+    public void drawStartingTrainCardHand() {
+    	for (int i=0; i < 4; i++) {
+    		drawTrainCardFromDeck();
+    	}
+    }
+    
     public void drawTrainCardFromDeck(){
 
     }
@@ -72,6 +82,19 @@ public class playerModel {
         if(pos < 0 || pos > 4){
             throw new Exception("Invalid card position requested from face up train cards: " + pos);
         }
+    }
+    
+    public List<trainCardModel> getTrainCardHand(){
+    	return trainCardHand;
+    }
+    
+    public int[] getStats(){
+    	int[] stats = new int[4];
+    	stats[0] = this.points;
+    	stats[1] = this.locomotives;
+    	stats[2] = this.trainCardHand.size();
+    	stats[3] = this.claimedRoutes.size();
+    	return stats;
     }
 }
 
