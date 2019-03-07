@@ -10,4 +10,20 @@ public class cityModel {
     public String getName() {
         return name;
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        cityModel cityModel = (cityModel) o;
+
+        return getName().equals(cityModel.getName());
+    }
+
+    @Override
+    public int hashCode() {
+        return getName().hashCode();
+    }
+
 }

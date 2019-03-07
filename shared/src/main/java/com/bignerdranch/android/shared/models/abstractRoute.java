@@ -9,7 +9,7 @@ abstract public class abstractRoute {
     private cityModel city2;
     private int length;
 
-    public abstractRoute(cityModel city1, cityModel city2, int length){
+    public abstractRoute(cityModel city1, cityModel city2, int length) {
         this.city1 = city1;
         this.city2 = city2;
         this.length = length;
