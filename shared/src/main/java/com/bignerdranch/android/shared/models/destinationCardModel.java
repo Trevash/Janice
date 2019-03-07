@@ -11,4 +11,8 @@ public class destinationCardModel {
         this.city2 = city2;
         this.pointValue = pointValue;
     }
+
+    public String getFormattedDestinationCard() {
+        return city1.getName() + " - " + city2.getName() + ": " + Integer.toString(pointValue);
+    }
 }
