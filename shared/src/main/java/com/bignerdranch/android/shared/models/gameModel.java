@@ -173,4 +173,29 @@ public class gameModel {
     public List<abstractRoute> getRoutes() {
         return routes;
     }
+    
+    public playerModel getPlayerByID(usernameModel username) {
+    	for (playerModel player : this.players) {
+    		if(player.getUserName().equals(username)) {
+    			return player;
+    		}
+    	}
+    	return null;
+    }
+    
+    //Returns a list of int arrays
+    // stats[0] = numbers of each color train card held by the player [int array length 9]
+    // stats[1...n] = stats for player 1, player 2... player n [int array length 4]
+    public List<int[]> getStats(usernameModel username) {
+    	List<int[]> stats = new ArrayList<int[]>();
+
+    	List<trainCardModel> curPlayerHand = getPlayerByID(username).getTrainCardHand();
+    	int[] cardTypes = new int[9];
+    	for (int i = 0; i < curPlayerHand.size(); i++) {
+    		cardTypes[curPlayerHand.get(i).getColor().ordinal()] += 1;
+    		}
+    	stats.add(cardTypes);
+    	for (int i = 0; i < players.size(); i++) {stats.add(players.get(i).getStats());}
+    	return stats;
+    }
 }

@@ -37,7 +37,7 @@ public class playerModel {
         this.isHost = isHost;
         this.playerColor = playerColor;
     }
-
+    
     public boolean isHost() {
         return isHost;
     }
@@ -84,5 +84,17 @@ public class playerModel {
         }
     }
     
+    public List<trainCardModel> getTrainCardHand(){
+    	return trainCardHand;
+    }
+    
+    public int[] getStats(){
+    	int[] stats = new int[4];
+    	stats[0] = this.points;
+    	stats[1] = this.locomotives;
+    	stats[2] = this.trainCardHand.size();
+    	stats[3] = this.claimedRoutes.size();
+    	return stats;
+    }
 }
 
