@@ -21,17 +21,19 @@ import com.bignerdranch.android.shared.models.*;
 
 import org.w3c.dom.Text;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class ChatFragment extends Fragment implements ChatFragmentPresenter.View {
 
     private ChatFragmentPresenter presenter;
-    private LinearLayoutManager layoutManager;
-    private ChatListAdapter adapter;
 
     private RecyclerView mChatList;
+    private ChatListAdapter mChatAdapter;
     private EditText mChatMessage;
     private Button mSendButton;
+
+    private List<chatMessageModel> chats = new ArrayList<>();
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -45,9 +47,29 @@ public class ChatFragment extends Fragment implements ChatFragmentPresenter.View
         presenter = new ChatFragmentPresenter(this);
         presenter.setFragment();
 
+        /* For Testing with Dummy Information
+        usernameModel uModel;
+        usernameModel uModelOne;
 
+        try {
+            uModel = new usernameModel("Blastoise");
+            uModelOne = new usernameModel("Charazard");
+            chats.add(new chatMessageModel(uModel, "Hullo my friend!"));
+            chats.add(new chatMessageModel(uModelOne, "Hullo my Amigo that is super awesome and cool!"));
+        }
+        catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+        */
 
-        mChatMessage = (EditText) v.findViewById(R.id.message_EditText);
+        chats = presenter.getChats();
+
+        mChatList = v.findViewById(R.id.chat_RecyclerView);
+        mChatList.setLayoutManager(new LinearLayoutManager(getActivity()));
+        mChatAdapter = new ChatListAdapter(chats);
+        mChatList.setAdapter(mChatAdapter);
+
+        mChatMessage = v.findViewById(R.id.message_EditText);
         mChatMessage.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
@@ -61,7 +83,7 @@ public class ChatFragment extends Fragment implements ChatFragmentPresenter.View
             public void afterTextChanged(Editable s) {}
         });
 
-        mSendButton = (Button) v.findViewById(R.id.send_Button);
+        mSendButton = v.findViewById(R.id.send_Button);
         mSendButton.setEnabled(false);
         mSendButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -75,6 +97,21 @@ public class ChatFragment extends Fragment implements ChatFragmentPresenter.View
 
     public void updateSendButton(boolean isActive) {
         mSendButton.setEnabled(isActive);
+    }
+
+    public void updateUI() {
+        getActivity().runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+
+                //mChatAdapter.notifyItemRangeRemoved(0, chats.size());
+                chats = presenter.getChats();
+                //mChatAdapter.notifyItemRangeInserted(0, chats.size());
+
+                mChatAdapter.notifyItemRangeChanged(0, chats.size());
+                mChatAdapter.notifyDataSetChanged();
+            }
+        });
     }
 
     public class ChatListAdapter extends RecyclerView.Adapter<ChatListAdapter.ChatViewHolder> {
@@ -108,7 +145,7 @@ public class ChatFragment extends Fragment implements ChatFragmentPresenter.View
         public void onBindViewHolder(ChatViewHolder holder, int position) {
             chatMessageModel chat = chats.get(position);
 
-            holder.mUserName.setText(chat.getUsername().getValue());
+            holder.mUserName.setText(chat.getUsername().getValue() + ": ");
             holder.mMessage.setText(chat.getMessage());
         }
 
