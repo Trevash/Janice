@@ -2,6 +2,7 @@ package com.bignerdranch.android.shared.models;
 
 import com.bignerdranch.android.shared.exceptions.DuplicateException;
 import com.bignerdranch.android.shared.models.colors.cardColorEnum;
+import com.bignerdranch.android.shared.models.colors.playerColorEnum;
 import com.bignerdranch.android.shared.models.colors.routeColorEnum;
 
 import java.util.ArrayList;
@@ -14,6 +15,7 @@ public class gameModel {
     private boolean gameStarted;
     private List<playerModel> players = new ArrayList<>();
     private chatboxModel chatbox;
+    private int turnCounter;
 
     // private playerModel hostPlayer;
 
@@ -40,6 +42,7 @@ public class gameModel {
         players.add(hostPlayer);
         chatbox = new chatboxModel();
         this.setGameRoutesAndDecks();
+        this.turnCounter = 0;
     }
 
     private void setGameRoutesAndDecks() {
@@ -99,7 +102,10 @@ public class gameModel {
         if(players.size() >= 5) {
             throw new IllegalStateException("Max number of players reached!");
         }
-
+        //assigns player color
+        newPlayer.setPlayerColor(playerColorEnum.values()[players.size()]);
+        //draws new player's starting hand
+        newPlayer.drawStartingTrainCardHand();
         players.add(newPlayer);
     }
 
@@ -126,7 +132,13 @@ public class gameModel {
         }
 
         this.gameStarted = true;
-        //TODO:Alert all players that game has begun
+        
+        //color assigned in the addPlayer() function
+        //determine player order: order they joined (order in 'players' array)
+        //starting hand provided in the addPlayer() function
+        //each player chooses their destination cards in turn order?
+        
+        
     }
 
     public List<playerModel> getPlayers() {

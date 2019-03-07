@@ -91,9 +91,10 @@ public class serverFacade implements IServer {
             throw new InvalidAuthorizationException("Invalid Auth Token passed to startGame");
         }
 
-        serverModel.getInstance().startGame(request);
+        gameModel game = serverModel.getInstance().startGame(request);
 
-        return new Results("Start", true, new GameListData(serverModel.getInstance().getGames()));
+        //return new Results("Start", true, new GameListData(serverModel.getInstance().getGames()));
+        return new Results("Start", true, game);
     }
 
     @Override

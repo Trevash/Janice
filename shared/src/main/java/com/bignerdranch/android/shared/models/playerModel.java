@@ -59,11 +59,21 @@ public class playerModel {
     public playerColorEnum getPlayerColor() {
         return playerColor;
     }
+    
+    public void setPlayerColor(playerColorEnum color) {
+    	this.playerColor = color;
+    }
 
     public void drawDestCards(){
 
     }
 
+    public void drawStartingTrainCardHand() {
+    	for (int i=0; i < 4; i++) {
+    		drawTrainCardFromDeck();
+    	}
+    }
+    
     public void drawTrainCardFromDeck(){
 
     }
@@ -73,5 +83,6 @@ public class playerModel {
             throw new Exception("Invalid card position requested from face up train cards: " + pos);
         }
     }
+    
 }
 
