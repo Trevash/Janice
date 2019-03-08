@@ -16,7 +16,7 @@ public class playerModel {
     private List<trainCardModel> trainCardHand = new ArrayList<>();
 
     // destination hand
-    private List<destinationCardModel> destinationCardHand = new ArrayList<>();
+    private List<DestinationCardModel> destinationCardHand = new ArrayList<>();
 
     // claimed routes
     private List<abstractRoute> claimedRoutes = new ArrayList<>();

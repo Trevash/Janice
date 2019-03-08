@@ -2,7 +2,7 @@ package com.janus.Communication;
 
 import com.bignerdranch.android.shared.GenericCommand;
 import com.bignerdranch.android.shared.IServer;
-import com.bignerdranch.android.shared.constants;
+import com.bignerdranch.android.shared.Constants;
 import com.bignerdranch.android.shared.models.authTokenModel;
 import com.bignerdranch.android.shared.models.gameModel;
 import com.bignerdranch.android.shared.requestObjects.CreateGameRequest;
@@ -40,10 +40,10 @@ public class ServerProxy implements IServer {
         return scp;
     }
 
-    private String className = "server.handlers";
+    //private String className = "server.handlers";
 
     public void connectClient() throws InterruptedException, URISyntaxException {
-        String webSocketAddress = "ws://" + constants.IP_ADDRESS + ':' + constants.PORT;
+        String webSocketAddress = "ws://" + Constants.IP_ADDRESS + ":" + Constants.PORT;
         client = new TtRClient(new URI(webSocketAddress));
         client.connectBlocking();
     }

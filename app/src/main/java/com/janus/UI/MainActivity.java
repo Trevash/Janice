@@ -42,6 +42,7 @@ public class MainActivity extends AppCompatActivity
 
     public void onSignIn() {
         GameListFragment gameListFragment = new GameListFragment();
+        // TODO add in intent: need to pass in the game list to the fragment
         fm.beginTransaction()
                 .replace(R.id.fragment_container, gameListFragment)
                 .commit();
