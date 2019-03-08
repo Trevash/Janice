@@ -26,7 +26,7 @@ public class DestinationRoutesFragment extends Fragment implements DestinationRo
 
     private RecyclerView mRouteList;
 
-    private List<destinationCardModel> routes = new ArrayList<>();
+    private List<DestinationCardModel> routes = new ArrayList<>();
 
     public DestinationRoutesFragment() {}
 
@@ -62,7 +62,7 @@ public class DestinationRoutesFragment extends Fragment implements DestinationRo
     }
 
     public class RouteListAdapter extends RecyclerView.Adapter<DestinationRoutesFragment.RouteListAdapter.RouteViewHolder> {
-        List<destinationCardModel> destinationCards;
+        List<DestinationCardModel> destinationCards;
 
         private class RouteViewHolder extends RecyclerView.ViewHolder {
 
@@ -76,7 +76,7 @@ public class DestinationRoutesFragment extends Fragment implements DestinationRo
             }
         }
 
-        public RouteListAdapter(List<destinationCardModel> destinationCards) {
+        public RouteListAdapter(List<DestinationCardModel> destinationCards) {
             this.destinationCards = destinationCards;
         }
 
@@ -88,7 +88,7 @@ public class DestinationRoutesFragment extends Fragment implements DestinationRo
 
         @Override
         public void onBindViewHolder(DestinationRoutesFragment.RouteListAdapter.RouteViewHolder holder, int position) {
-            destinationCardModel destinationCard = destinationCards.get(position);
+            DestinationCardModel destinationCard = destinationCards.get(position);
 
             holder.mRouteInfo.setText(destinationCard.getFormattedDestinationCard());
         }
