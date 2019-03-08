@@ -5,8 +5,10 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 
 import com.janus.R;
 
@@ -20,19 +22,31 @@ public class MapFragment extends Fragment {
         void onClickGameStatus();
     }
 
+    private Button mDrawCardsButton;
+    private Button mClaimRouteButton;
+    private Button mDrawDestinationsButton;
+    private MenuItem mStatusMenuItem; //For future use
+    private Context mContext;
+
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater){
         super.onCreateOptionsMenu(menu, inflater);
         inflater.inflate(R.menu.fragment_map, menu);
 
-        /*mSearchMenuItem = menu.findItem(R.id.search_icon);
-        mFilterMenuItem = menu.findItem(R.id.filter_icon);
-        mSettingsMenuItem = menu.findItem(R.id.settings_icon);
+        //mStatusMenuItem = menu.findItem(R.id.statusAndChat);
 
-        mSearchMenuItem.setIcon(new IconDrawable(getActivity(), FontAwesomeIcons.fa_search).sizeDp(ICON_SIZE));
-        mFilterMenuItem.setIcon(new IconDrawable(getActivity(), FontAwesomeIcons.fa_filter).sizeDp(ICON_SIZE));
-        mSettingsMenuItem.setIcon(new IconDrawable(getActivity(), FontAwesomeIcons.fa_gear).sizeDp(ICON_SIZE));*/
+        //mSearchMenuItem.setIcon(new IconDrawable(getActivity(), FontAwesomeIcons.fa_search).sizeDp(ICON_SIZE));
+    }
 
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch(item.getItemId()){
+            case R.id.statusAndChat:
+                mContext.onClickGameStatus();
+                return true;
+            default:
+                return true;
+        }
     }
 
     @Override
@@ -43,7 +57,33 @@ public class MapFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_map, container, false);
+        View v = inflater.inflate(R.layout.fragment_map, container, false);
+        mContext = (Context) getActivity();
+
+        mDrawCardsButton = v.findViewById(R.id.drawCardsButton);
+        mDrawCardsButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mContext.onClickDrawCard();
+            }
+        });
+
+        mClaimRouteButton = v.findViewById(R.id.claimRouteButton);
+        mClaimRouteButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mContext.onClickClaimRoute();
+            }
+        });
+
+        mDrawDestinationsButton = v.findViewById(R.id.drawDestinationsButton);
+        mDrawCardsButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mContext.onClickDestinationSelect();
+            }
+        });
+
+        return v;
     }
 }

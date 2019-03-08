@@ -48,7 +48,7 @@ public class RouteFragment extends Fragment implements RouteFragmentPresenter.Vi
         private TextView mRouteCitiesView;
         private TextView mRouteLengthView;
         private TextView mRouteColorView;
-        private Button mClaimRouteButton;
+        private Button mClaimButton;
 
         public void bind(singleRouteModel r){
             mRouteCitiesView.setText(r.getCity1() + " - " + r.getCity2());
@@ -61,10 +61,10 @@ public class RouteFragment extends Fragment implements RouteFragmentPresenter.Vi
             mRouteCitiesView = itemView.findViewById(R.id.routeCitiesView);
             mRouteLengthView = itemView.findViewById(R.id.routeLengthView);
             mRouteColorView = itemView.findViewById(R.id.routeColorView);
-            mClaimRouteButton = itemView.findViewById(R.id.claimRouteButton);
+            mClaimButton = itemView.findViewById(R.id.claimButton);
 
             //This button could be eliminated by making the list elements clickable
-            mClaimRouteButton.setOnClickListener(new View.OnClickListener() {
+            mClaimButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     //presenter.claimRoute(routeID);

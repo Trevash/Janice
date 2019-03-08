@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:id="@+id/map_fragment"
@@ -7,7 +8,36 @@
     android:background="@drawable/americamap"
     tools:context=".UI.MapFragment">
 
+    <Button
+        android:id="@+id/drawCardsButton"
+        android:layout_width="140dp"
+        android:layout_height="75dp"
+        android:layout_marginStart="30dp"
+        android:layout_marginLeft="30dp"
+        android:layout_marginBottom="30dp"
+        android:text="Button"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
 
-    
+    <Button
+        android:id="@+id/claimRouteButton"
+        android:layout_width="140dp"
+        android:layout_height="75dp"
+        android:layout_marginStart="30dp"
+        android:layout_marginLeft="30dp"
+        android:layout_marginBottom="30dp"
+        android:text="Button"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/drawCardsButton" />
 
+    <Button
+        android:id="@+id/drawDestinationsButton"
+        android:layout_width="140dp"
+        android:layout_height="75dp"
+        android:layout_marginStart="30dp"
+        android:layout_marginLeft="30dp"
+        android:layout_marginBottom="30dp"
+        android:text="Button"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/claimRouteButton" />
 </android.support.constraint.ConstraintLayout>

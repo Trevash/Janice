@@ -82,9 +82,6 @@ public class LobbyFragment extends Fragment implements LobbyFragmentPresenter.Vi
         mPlayerRecyclerView.setAdapter(mPlayerAdapter);
 
         mStartGameButton = (Button) v.findViewById(R.id.startGameButton);
-        //If you are host, set the text to "Start Game"
-        //Else set to "Ready"
-        //mStartGameButton.setText("hello");
         mStartGameButton.setEnabled(false);
         if(isHost){
             mStartGameButton.setText("Start Game");
