@@ -21,12 +21,12 @@ public class GameActivity extends AppCompatActivity
 
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
 
-        Fragment fragment = fm.findFragmentById(R.id.fragment_container);
+        Fragment fragment = fm.findFragmentById(R.id.game_layout);
 
         if(fragment == null) {
             MapFragment gameFragment = new MapFragment();
             fm.beginTransaction()
-                    .add(R.id.fragment_container, gameFragment)
+                    .add(R.id.game_layout, gameFragment)
                     .commit();
         }
 
@@ -36,35 +36,35 @@ public class GameActivity extends AppCompatActivity
     public void onClickDrawCard() {
         DeckFragment deckFragment = new DeckFragment();
         fm.beginTransaction()
-                .replace(R.id.fragment_container, deckFragment)
+                .replace(R.id.game_layout, deckFragment)
                 .commit();
     }
 
     public void onFinishAction() {
         MapFragment gameFragment = new MapFragment();
         fm.beginTransaction()
-                .replace(R.id.fragment_container, gameFragment)
+                .replace(R.id.game_layout, gameFragment)
                 .commit();
     }
 
     public void onClickClaimRoute() {
         RouteFragment routeFragment = new RouteFragment();
         fm.beginTransaction()
-                .replace(R.id.fragment_container, routeFragment)
+                .replace(R.id.game_layout, routeFragment)
                 .commit();
     }
 
     public void onClickDestinationSelect() {
         DestinationSelectFragment destinationFragment = new DestinationSelectFragment();
         fm.beginTransaction()
-                .replace(R.id.fragment_container, destinationFragment)
+                .replace(R.id.game_layout, destinationFragment)
                 .commit();
     }
 
     public void onClickGameStatus() {
         StatusFragment statusFragment = new StatusFragment();
         fm.beginTransaction()
-                .replace(R.id.fragment_container, statusFragment)
+                .replace(R.id.game_layout, statusFragment)
                 .commit();
     }
 }
