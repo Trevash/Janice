@@ -14,18 +14,15 @@ import com.bignerdranch.android.shared.models.trainCardModel;
 import com.janus.Presenter.DeckFragmentPresenter;
 import com.janus.R;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-/**
- * A simple {@link Fragment} subclass.
- * Activities that contain this fragment must implement the
- * {@link DeckFragment.OnFragmentInteractionListener} interface
- * to handle interaction events.
- * Use the {@link DeckFragment#newInstance} factory method to
- * create an instance of this fragment.
- */
 public class DeckFragment extends Fragment implements DeckFragmentPresenter.View{
+
+    public interface Context {
+        void onFinishAction();
+    }
 
     private DeckFragmentPresenter presenter;
     private List<trainCardModel> deck;
@@ -37,27 +34,7 @@ public class DeckFragment extends Fragment implements DeckFragmentPresenter.View
     private ImageView mCard3View;
     private ImageView mCard4View;
     private ImageView mCard5View;
-    private Map<cardColorEnum, Integer> colorMap;
-
-    public DeckFragment() {
-        // Required empty public constructor
-    }
-
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment DeckFragment.
-     */
-    // TODO: Rename and change types and number of parameters
-    public static DeckFragment newInstance(String param1, String param2) {
-        DeckFragment fragment = new DeckFragment();
-        Bundle args = new Bundle();
-        fragment.setArguments(args);
-        return fragment;
-    }
+    private Map<cardColorEnum, Integer> colorMap = new HashMap<>();
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -152,20 +129,5 @@ public class DeckFragment extends Fragment implements DeckFragmentPresenter.View
         mCard4View.setImageResource(colorMap.get(faceUpCards.get(3).getColor()));
         mCard5View.setImageResource(colorMap.get(faceUpCards.get(4).getColor()));
 
-    }
-
-    /**
-     * This interface must be implemented by activities that contain this
-     * fragment to allow an interaction in this fragment to be communicated
-     * to the activity and potentially other fragments contained in that
-     * activity.
-     * <p>
-     * See the Android Training lesson <a href=
-     * "http://developer.android.com/training/basics/fragments/communicating.html"
-     * >Communicating with Other Fragments</a> for more information.
-     */
-    public interface OnFragmentInteractionListener {
-        // TODO: Update argument type and name
-        void onFragmentInteraction(Uri uri);
     }
 }

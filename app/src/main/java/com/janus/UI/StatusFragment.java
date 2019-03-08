@@ -18,6 +18,10 @@ import java.util.List;
 
 public class StatusFragment extends Fragment {
 
+    public interface Context {
+        void onFinishAction();
+    }
+
     private Toolbar toolbar;
     private TabLayout tabLayout;
     private ViewPager viewPager;
