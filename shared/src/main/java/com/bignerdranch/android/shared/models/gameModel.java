@@ -1,5 +1,6 @@
 package com.bignerdranch.android.shared.models;
 
+import com.bignerdranch.android.shared.Constants;
 import com.bignerdranch.android.shared.exceptions.DuplicateException;
 import com.bignerdranch.android.shared.models.colors.cardColorEnum;
 import com.bignerdranch.android.shared.models.colors.playerColorEnum;
@@ -28,7 +29,8 @@ public class gameModel {
         // Train
     private ArrayList<trainCardModel> trainCardDeck = new ArrayList<>();
         // Dest
-    private LinkedList<destinationCardModel> destinationCardDeck = new LinkedList<>();
+    // TODO change how this is implemented
+    private LinkedList<DestinationCardModel> destinationCardDeck = new LinkedList<>();
         // Face-up
     private List<trainCardModel> faceUpCards = new ArrayList<>();
         // Discard
@@ -47,24 +49,19 @@ public class gameModel {
 
     private void setGameRoutesAndDecks() {
 
-        //Create city models here
-        cityModel losAngelas = new cityModel("Los Angelas");
-        cityModel newYork = new cityModel("New York");
-
-        //Create default routes here
-        this.routes.add(new singleRouteModel(losAngelas, newYork, 5, routeColorEnum.WHITE));
-
         //Create dest cards deck here
-        this.destinationCardDeck.add(new destinationCardModel(losAngelas, newYork, 20));
+        this.destinationCardDeck.add(Constants.DestinationCards.LOS_ANGELES_NEW_YORK);
 
         //Create train card deck here (shuffle?)
-        this.trainCardDeck.add(new trainCardModel(cardColorEnum.WHITE));
-        this.trainCardDeck.add(new trainCardModel(cardColorEnum.BLUE));
-        this.trainCardDeck.add(new trainCardModel(cardColorEnum.RED));
-        this.trainCardDeck.add(new trainCardModel(cardColorEnum.GREEN));
-        this.trainCardDeck.add(new trainCardModel(cardColorEnum.BLACK));
-        this.trainCardDeck.add(new trainCardModel(cardColorEnum.YELLOW));
-
+        for(int i = 0; i < 12; i++) {
+            this.trainCardDeck.add(new trainCardModel(cardColorEnum.WHITE));
+            this.trainCardDeck.add(new trainCardModel(cardColorEnum.BLUE));
+            this.trainCardDeck.add(new trainCardModel(cardColorEnum.RED));
+            this.trainCardDeck.add(new trainCardModel(cardColorEnum.GREEN));
+            this.trainCardDeck.add(new trainCardModel(cardColorEnum.BLACK));
+            this.trainCardDeck.add(new trainCardModel(cardColorEnum.YELLOW));
+        }
+        shuffleTrainCards();
         //Draw 5 cards from deck, assign to the faceUp stuff
         this.faceUpCards.add(this.drawTrainCard());
         this.faceUpCards.add(this.drawTrainCard());
@@ -73,13 +70,27 @@ public class gameModel {
         this.faceUpCards.add(this.drawTrainCard());
     }
 
-    //Todo: Check for empty deck and other special cases
+    private void shuffleTrainCards() {
+        for(int i = 0; i < trainCardDeck.size(); i++) {
+            int j = (int)(Math.random() * trainCardDeck.size());
+            trainCardModel temp = trainCardDeck.get(i);
+            trainCardDeck.set(i, trainCardDeck.get(j));
+            trainCardDeck.set(j, temp);
+        }
+    }
+
+    //Todo: Check for empty deck and other special cases - recommend moving decks into their own classes
     private trainCardModel drawTrainCard() {
         int numCards = (trainCardDeck.size() - 1);
         trainCardModel card = this.trainCardDeck.get(numCards); //Get top card
         trainCardDeck.remove(numCards); //Eliminate top card from array
         return card;
     }
+
+    // TODO have way to draw destination cards: pass in an interface as a parameter,
+    // then call a method on said interface? something to think about
+    // I think that it may be a good idea to call a method in IServer for the actual action
+    // of drawing a destination card.
 
     // host is the first player in the list
     public playerModel getHostPlayer() {

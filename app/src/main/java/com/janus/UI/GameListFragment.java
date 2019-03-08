@@ -1,6 +1,8 @@
 package com.janus.UI;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -21,6 +23,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class GameListFragment extends Fragment implements GameListFragmentPresenter.View {
+
+    //public static Intent newIntent(List<gameModel> games) {
+    //    Intent intent = new Intent();
+    //    intent.putE
+    //}
 
     public interface Context {
         void onCreateGame();
@@ -44,12 +51,16 @@ public class GameListFragment extends Fragment implements GameListFragmentPresen
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View v = inflater.inflate(R.layout.fragment_game_list, container, false);
 
         presenter = new GameListFragmentPresenter(this);
         presenter.setFragment();
+
+        // could use the presenter to get the games list fragment
+
+        //presenter.updateUI(); // This should set the games - need to test before pushing
         games = ClientModel.getInstance().getServerGameList(); // TODO pass games in somehow
 
         mNumPlayers = (TextView) v.findViewById(R.id.num_players_text_view);

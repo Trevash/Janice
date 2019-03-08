@@ -14,20 +14,15 @@ public class gameModelTest {
 
     @Test
     public void addPlayer() throws Exception {
-        playerModel player1 = new playerModel(new usernameModel("player1"), true,
-                true);
-        playerModel player2 = new playerModel(new usernameModel("player2"), false,
-                false);
+        //playerModel player1 = new playerModel(new usernameModel("player1"), true, true);
+        //playerModel player2 = new playerModel(new usernameModel("player2"), false, false);
     }
 
     @Test
     public void addDuplicatePlayer() throws Exception {
-        playerModel player1 = new playerModel(new usernameModel("player1"), true,
-                true);
-        playerModel player2 = new playerModel(new usernameModel("player2"), false,
-                false);
-        playerModel duplicate = new playerModel(new usernameModel("player2"), true,
-                false);
+        //playerModel player1 = new playerModel(new usernameModel("player1"), true, true);
+        //playerModel player2 = new playerModel(new usernameModel("player2"), false, false);
+        //playerModel duplicate = new playerModel(new usernameModel("player2"), true, false);
         //gameModel gameModel = new gameModel()
     }
 
