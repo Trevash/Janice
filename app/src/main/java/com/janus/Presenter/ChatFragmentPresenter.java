@@ -6,6 +6,8 @@ import com.bignerdranch.android.shared.resultobjects.Results;
 import com.janus.ClientFacade;
 import com.janus.Communication.UpdateChatTask;
 
+import java.util.List;
+
 public class ChatFragmentPresenter implements ClientFacade.Presenter, UpdateChatTask.Caller {
 
     @Override
@@ -20,6 +22,7 @@ public class ChatFragmentPresenter implements ClientFacade.Presenter, UpdateChat
 
     public interface View {
         void updateSendButton(boolean isActive);
+        void updateUI();
         //void displayLoginError(String message);
         //void displayLoginSuccess();
     }
@@ -57,8 +60,12 @@ public class ChatFragmentPresenter implements ClientFacade.Presenter, UpdateChat
         facade.setPresenter(this);
     }
 
-    public void updateUI() {
+    public List<chatMessageModel> getChats() {
+        return facade.getChatbox().getChats();
+    }
 
+    public void updateUI() {
+        view.updateUI();
     }
 
 }
