@@ -82,7 +82,7 @@ public class LobbyFragment extends Fragment implements LobbyFragmentPresenter.Vi
         mPlayerRecyclerView.setAdapter(mPlayerAdapter);
 
         mStartGameButton = (Button) v.findViewById(R.id.startGameButton);
-        mStartGameButton.setEnabled(false);
+        mStartGameButton.setEnabled(true);
         if(isHost){
             mStartGameButton.setText("Start Game");
         } else {
@@ -186,13 +186,16 @@ public class LobbyFragment extends Fragment implements LobbyFragmentPresenter.Vi
         playerModel host = ClientModel.getInstance().getGame().getHostPlayer();
         usernameModel username = presenter.getUsername();
         isHost = username.getValue().equals(host.getUserName().getValue());
+        mStartGameButton.setEnabled(true);
         if (isHost) {
             mStartGameButton.setText("Start");
+            /*
             if(numOfPlayers >= 2 && numOfPlayers <= 5) {
                 mStartGameButton.setEnabled(true);
             } else {
                 mStartGameButton.setEnabled(false);
             }
+            */
         }
 
         gameIDModel id = ClientModel.getInstance().getGame().getGameID();
