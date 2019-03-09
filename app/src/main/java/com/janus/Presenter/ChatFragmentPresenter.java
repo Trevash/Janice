@@ -56,6 +56,10 @@ public class ChatFragmentPresenter implements ClientFacade.Presenter, UpdateChat
         updateChatTask.execute(request);
     }
 
+    public String getChatMessage(){
+        return this.chatMessage;
+    }
+
     public void setFragment() {
         facade.setPresenter(this);
     }

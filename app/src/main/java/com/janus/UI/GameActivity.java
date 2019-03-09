@@ -24,9 +24,9 @@ public class GameActivity extends AppCompatActivity
         Fragment fragment = fm.findFragmentById(R.id.game_layout);
 
         if(fragment == null) {
-            MapFragment gameFragment = new MapFragment();
+            MapFragment mapFragment = new MapFragment();
             fm.beginTransaction()
-                    .add(R.id.game_layout, gameFragment)
+                    .add(R.id.fragment_container, mapFragment)
                     .commit();
         }
 
@@ -66,5 +66,75 @@ public class GameActivity extends AppCompatActivity
         fm.beginTransaction()
                 .replace(R.id.game_layout, statusFragment)
                 .commit();
+    }
+
+    public void runDemo(){
+        try {
+            MapFragment mapFragment = new MapFragment();
+            ChatFragment chatFragment = new ChatFragment();
+            StatusFragment statusFragment = new StatusFragment();
+            fm.beginTransaction()
+                    .replace(R.id.fragment_container, mapFragment)
+                    .commit();
+            //Demonstrate the following with pauses so the human eyes can read toasts and follow along
+            flashStatusFragment(statusFragment, fm);
+            makeToast("Here's the Starting Status");
+
+            //● Add train cards for this player
+            makeToast("Drawing train cards");
+            waitForSomeSeconds();
+            //● Update the number of invisible (face down) cards in train card deck and the visible (face up) cards in the train card deck
+
+            makeToast("Updated number of train cards in deck and face up cards");
+            waitForSomeSeconds();
+            //● Update the number of train cards for opponent players
+            flashStatusFragment(statusFragment, fm);
+            makeToast("Updated number of train cards for opponents");
+
+            //● Add claimed route (for any player). Show this on the map.
+            //● Update player points
+            //● Update the number of train cars and cards for opponent players
+            flashStatusFragment(statusFragment, fm);
+            makeToast("Updated number of train cards and cars for opponents");
+
+            //● Add player destination cards for this player
+            //● Update the number of cards in destination card deck
+            //● Update the number of destination cards for opponent players
+            flashStatusFragment(statusFragment, fm);
+            makeToast("Updated number of dest. cards for opponents");
+            //● Remove player destination cards for this player
+            //● Update the number of destination cards for opponent players
+            flashStatusFragment(statusFragment, fm);
+            makeToast("Updated number of dest. cards for opponents");
+
+            //● Add chat message from any player
+            fm.beginTransaction()
+                    .replace(R.id.fragment_container, chatFragment)
+                    .commit();
+            chatFragment.sendDemoChatMessage("We are sending a chat message!");
+            makeToast("Sending chat message!");
+            waitForSomeSeconds();
+
+            //● Advance player turn (change the turn indicator so it indicates another player)
+
+            makeToast("Done!");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void flashStatusFragment(StatusFragment statusFragment, FragmentManager fm) throws InterruptedException {
+        fm.beginTransaction()
+                .replace(R.id.fragment_container, statusFragment)
+                .commit();
+        waitForSomeSeconds();
+    }
+
+    private void makeToast(String s) {
+        Toast.makeText(this, s, Toast.LENGTH_LONG);
+    }
+
+    private void waitForSomeSeconds() throws InterruptedException {
+        wait(5000);
     }
 }

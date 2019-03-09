@@ -37,53 +37,6 @@ public class ClientCommunicator {
         return cc;
     }
 
-    public static void main(String args[]){
-        try {
-            System.out.println("Starting ClientCommunicator main function");
-            ServerProxy server = ServerProxy.getInstance();
-            System.out.println("Beginning attempt to connect to Server");
-            server.connectClient();
-//            System.out.println("REGISTER FAIL");
-//            server.register(new RegisterRequest("illegal Username", "somePassword"));
-//            server.register(new RegisterRequest("legalUsername", "illegal Password"));
-//            System.out.println("");
-//            System.out.println("LOGIN FAIL");
-//            server.login(new LoginRequest("illegal Username", "somePassword"));
-//            server.login(new LoginRequest("legalUsername", "illegal Password"));
-//
-//            System.out.println("");
-            System.out.println("SUCCESSFUL REGISTER");
-            server.register(new RegisterRequest("legalUsername", "legalPassword"));
-//            authTokenModel curAuthToken = (authTokenModel) registerResult.getData(authTokenModel.class);
-////            System.out.println("");
-//            System.out.println("ANOTHER FAILED LOGIN");
-//            server.login(new LoginRequest("legal Username", "legalPassword"));
-//            server.login(new LoginRequest("legalUsername", "legal Password"));
-//
-//            System.out.println("");
-//            System.out.println("SUCCESSFUL LOGIN");
-//            server.login(new LoginRequest("legalUsername", "legalPassword"));
-
-            //Step 1: Create Game
-            server.createGame(new CreateGameRequest(ClientFacade.getInstance().getUser().getAuthToken()));
-
-            //Step 2: Send messages
-            gameIDModel gameID = ClientFacade.getInstance().getServerGameList().get(0).getGameID();
-            UpdateChatboxRequest request = new UpdateChatboxRequest(
-                    gameID,
-                    ClientFacade.getInstance().getUser().getAuthToken(),
-                    new chatMessageModel(
-                            new usernameModel("legalUsername"),
-                            "We are testing the chat!"
-                    )
-            );
-            server.updateChatbox(request);
-
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
-
     private String serverHost = Constants.IP_ADDRESS;
     private int serverPort = Constants.PORT;
 
