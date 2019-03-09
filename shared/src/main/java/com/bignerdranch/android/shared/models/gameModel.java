@@ -227,4 +227,5 @@ public class gameModel {
     	for (int i = 0; i < players.size(); i++) {stats.add(players.get(i).getStats());}
     	return stats;
     }
+    
 }

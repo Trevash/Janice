@@ -1,11 +1,14 @@
 package com.bignerdranch.android.shared;
 
+import com.bignerdranch.android.shared.interfaces.IDestinationCardDeck;
+import com.bignerdranch.android.shared.interfaces.IGameState;
 import com.bignerdranch.android.shared.models.abstractDoubleRoute;
 import com.bignerdranch.android.shared.models.abstractRoute;
 import com.bignerdranch.android.shared.models.doubleRouteModelFew;
 import com.bignerdranch.android.shared.models.doubleRouteModelMany;
 import com.bignerdranch.android.shared.models.gameModel;
 import com.bignerdranch.android.shared.models.singleRouteModel;
+import com.bignerdranch.android.shared.proxy.DestinationCardDeckProxy;
 import com.bignerdranch.android.shared.requestObjects.CreateGameRequest;
 import com.bignerdranch.android.shared.requestObjects.JoinGameRequest;
 import com.bignerdranch.android.shared.requestObjects.StartGameRequest;
@@ -14,6 +17,11 @@ import com.bignerdranch.android.shared.resultobjects.GameListData;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.internal.bind.ReflectiveTypeAdapterFactory;
+import com.janus.ClientInitialGameState;
+
+import server.serverClasses.DestinationCardDeck;
+import server.serverClasses.ServerInitialGameState;
+
 import com.bignerdranch.android.shared.resultobjects.Results;
 
 public class Serializer {
@@ -25,15 +33,30 @@ public class Serializer {
         return sr;
     }
     private static Gson parser = new Gson();
-    static RuntimeTypeAdapterFactory<abstractRoute> adapter = 
+    static RuntimeTypeAdapterFactory<abstractRoute> routeAdapter = 
     		RuntimeTypeAdapterFactory
     		.of(abstractRoute.class)
     		.registerSubtype(singleRouteModel.class)
     		.registerSubtype(abstractDoubleRoute.class)
     		.registerSubtype(doubleRouteModelFew.class)
     		.registerSubtype(doubleRouteModelMany.class);
-    private static Gson parser2 = new GsonBuilder().setPrettyPrinting().registerTypeAdapterFactory(adapter).create();
-
+    static RuntimeTypeAdapterFactory<IGameState> gameStateAdapter = 
+    		RuntimeTypeAdapterFactory
+    		.of(IGameState.class)
+    		.registerSubtype(ClientInitialGameState.class)
+    		.registerSubtype(ServerInitialGameState.class);
+    static RuntimeTypeAdapterFactory<IDestinationCardDeck> destinationCardAdapter =
+    		RuntimeTypeAdapterFactory
+    		.of(IDestinationCardDeck.class)
+    		.registerSubtype(DestinationCardDeck.class)
+    		.registerSubtype(DestinationCardDeckProxy.class);
+    
+    private static Gson parser2 = new GsonBuilder()
+    		.setPrettyPrinting()
+    		.registerTypeAdapterFactory(routeAdapter)
+    		.registerTypeAdapterFactory(gameStateAdapter)
+    		.registerTypeAdapterFactory(destinationCardAdapter)
+    		.create();
     
     public String serializeObject(Object obj){
         return parser2.toJson(obj);
@@ -64,17 +87,18 @@ public class Serializer {
     public GameListData deserializeGameListData(String str){
         return parser2.fromJson(str, GameListData.class);
     }
-//    public static void main(String args[]){
-//    	gameModel game = new gameModel("gameName", null);
-//    	String json1 = parser.toJson(game);
-//    	String json2 = parser2.toJson(game);
-//
-//    	System.out.println(json1);
-//    	System.out.println(json2);
-//    	//this will break, as expected
-//    	//System.out.println(parser.fromJson(json1, gameModel.class));
-//    	System.out.println(parser2.fromJson(json2, gameModel.class));
-//
-//    
-//    }
+    public static void main(String args[]){
+    	IGameState gameState = new ClientInitialGameState();
+    	gameModel game = new gameModel("gameName", null, gameState);
+    	String json1 = parser.toJson(game);
+    	String json2 = parser2.toJson(game);
+
+    	System.out.println(json1);
+    	System.out.println(json2);
+    	//this will break, as expected
+    	//System.out.println(parser.fromJson(json1, gameModel.class));
+    	System.out.println(parser2.fromJson(json2, gameModel.class));
+
+    
+    }
 }
