@@ -5,6 +5,7 @@ import com.bignerdranch.android.shared.exceptions.DuplicateException;
 import com.bignerdranch.android.shared.exceptions.GameNotFoundException;
 import com.bignerdranch.android.shared.exceptions.InvalidAuthorizationException;
 import com.bignerdranch.android.shared.exceptions.UserNotFoundException;
+import com.bignerdranch.android.shared.interfaces.ServerInitialGameState;
 import com.bignerdranch.android.shared.models.authTokenModel;
 import com.bignerdranch.android.shared.models.chatboxModel;
 import com.bignerdranch.android.shared.models.colors.playerColorEnum;
@@ -22,7 +23,6 @@ import com.bignerdranch.android.shared.requestObjects.RegisterRequest;
 import com.bignerdranch.android.shared.requestObjects.ReturnDestinationCardsRequest;
 import com.bignerdranch.android.shared.requestObjects.StartGameRequest;
 import com.bignerdranch.android.shared.requestObjects.UpdateChatboxRequest;
-import com.bignerdranch.android.shared.resultobjects.GameListData;
 import com.bignerdranch.android.shared.resultobjects.Results;
 
 public class serverFacade implements IServer {

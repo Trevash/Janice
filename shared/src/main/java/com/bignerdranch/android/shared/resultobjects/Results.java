@@ -28,10 +28,7 @@ public class Results {
     
     //Object should be the data object specific to the type
     public Object getData(Class<?> classType) {
-        Gson gson = new Gson();
-
-    	Object dataObject = gson.fromJson(JSONdata, classType); //possibly return classType not Object.class
-        return dataObject;
+    	return Serializer.getInstance().deserializeObject(JSONdata, classType); //possibly return classType not Object.class
     }
 
     public void setData(Object JSONdata) {

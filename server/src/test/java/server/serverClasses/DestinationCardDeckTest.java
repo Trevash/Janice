@@ -1,10 +1,10 @@
 package server.serverClasses;
 
+import com.bignerdranch.android.shared.interfaces.DestinationCardDeck;
 import com.bignerdranch.android.shared.models.DestinationCardModel;
 
 import org.junit.Test;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import static org.junit.Assert.*;

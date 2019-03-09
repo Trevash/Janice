@@ -17,10 +17,10 @@ import com.bignerdranch.android.shared.resultobjects.GameListData;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.internal.bind.ReflectiveTypeAdapterFactory;
-import com.janus.ClientInitialGameState;
+import com.bignerdranch.android.shared.interfaces.ClientInitialGameState;
 
-import server.serverClasses.DestinationCardDeck;
-import server.serverClasses.ServerInitialGameState;
+import com.bignerdranch.android.shared.interfaces.DestinationCardDeck;
+import com.bignerdranch.android.shared.interfaces.ServerInitialGameState;
 
 import com.bignerdranch.android.shared.resultobjects.Results;
 
@@ -66,6 +66,10 @@ public class Serializer {
 
     public Results deserializeResults(String str) {
         return parser2.fromJson(str, Results.class);
+    }
+
+    public Object deserializeObject(String object, Class<?> cName) {
+        return parser2.fromJson(object, cName);
     }
 
     public AuthData deserializeAuthData(String str) {

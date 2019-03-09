@@ -43,8 +43,7 @@ public class GenericCommand {
     }
 
     private Object getData(Class<?> className, String data) {
-        Gson parser = new Gson();
-        return parser.fromJson(data, className);
+        return Serializer.getInstance().deserializeObject(data, className);
     }
 
     public Results execute() {
