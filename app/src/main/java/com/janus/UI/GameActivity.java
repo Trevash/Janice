@@ -72,6 +72,13 @@ public class GameActivity extends AppCompatActivity
                 .commit();
     }
 
+    public void onMapFragmentSelected() {
+        MapFragment mapFragment = new MapFragment();
+        fm.beginTransaction()
+                .replace(R.id.game_layout, mapFragment)
+                .commit();
+    }
+
     public void onClickRunDemo(){
         try {
             MapFragment mapFragment = new MapFragment();

@@ -9,6 +9,9 @@ import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
@@ -25,12 +28,14 @@ public class StatusFragment extends Fragment implements StatusFragmentPresenter.
 
     public interface Context {
         void onFinishAction();
+        void onMapFragmentSelected();
     }
 
     private Toolbar toolbar;
     private TabLayout tabLayout;
     private ViewPager viewPager;
     private StatusFragmentPresenter presenter;
+    private Context context;
 
     private List<TextView> colorTextViews;
     private List<TextView> playerOneStatusTextViews;
@@ -42,14 +47,36 @@ public class StatusFragment extends Fragment implements StatusFragmentPresenter.
     public StatusFragment() {}
 
     @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater){
+        super.onCreateOptionsMenu(menu, inflater);
+        inflater.inflate(R.menu.fragment_status, menu);
+
+        //mStatusMenuItem = menu.findItem(R.id.statusAndChat);
+
+        //mSearchMenuItem.setIcon(new IconDrawable(getActivity(), FontAwesomeIcons.fa_search).sizeDp(ICON_SIZE));
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch(item.getItemId()){
+            case R.id.map_menu_item:
+                context.onMapFragmentSelected();
+                return true;
+            default:
+                return true;
+        }
+    }
+
+    @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setHasOptionsMenu(true);
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_status, container, false);
-
+        context = (Context) getActivity();
         presenter = new StatusFragmentPresenter(this);
 
         viewPager = v.findViewById(R.id.viewpager);
