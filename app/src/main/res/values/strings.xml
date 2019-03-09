@@ -15,7 +15,7 @@
     <string name="drawCardsButton">Draw Cards</string>
     <string name="claimRouteButton">Claim Route</string>
     <string name="drawDestinationsButton">Draw Destinations</string>
-
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="drawDestinationsPrompt2Routes">Select At Least 2 Routes To Keep</string>
+    <string name="drawDestinationsPrompt1Route">Select At Least 1 Route To Keep</string>
+    <string name="accept">Accept</string>
 </resources>

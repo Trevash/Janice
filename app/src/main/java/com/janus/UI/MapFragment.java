@@ -67,6 +67,7 @@ public class MapFragment extends Fragment implements MapFragmentPresenter.View{
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setHasOptionsMenu(true);
     }
 
     @Override

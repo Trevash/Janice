@@ -28,6 +28,10 @@ public class GameActivity extends AppCompatActivity
             fm.beginTransaction()
                     .add(R.id.game_layout, mapFragment)
                     .commit();
+            /*DestinationSelectFragment destinationFragment = new DestinationSelectFragment();
+            fm.beginTransaction()
+                    .add(R.id.game_layout, mapFragment)
+                    .commit();*/
         }
 
         Toast.makeText(this, "You started the game!", Toast.LENGTH_LONG).show();
