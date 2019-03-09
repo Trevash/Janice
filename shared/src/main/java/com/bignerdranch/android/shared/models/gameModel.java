@@ -116,7 +116,9 @@ public class gameModel {
         //assigns player color
         newPlayer.setPlayerColor(playerColorEnum.values()[players.size()]);
         //draws new player's starting hand
-        newPlayer.drawStartingTrainCardHand();
+        for(int i = 0; i<4; i++) {
+        	newPlayer.addTrainCardToHand(drawTrainCard());
+        }
         players.add(newPlayer);
     }
 

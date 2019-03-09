@@ -67,15 +67,9 @@ public class playerModel {
     public void drawDestCards(){
 
     }
-
-    public void drawStartingTrainCardHand() {
-    	for (int i=0; i < 4; i++) {
-    		drawTrainCardFromDeck();
-    	}
-    }
     
-    public void drawTrainCardFromDeck(){
-
+    public void addTrainCardToHand(trainCardModel card){
+    	trainCardHand.add(card);
     }
 
     public void drawFaceUpTrainCard(int pos) throws Exception {
