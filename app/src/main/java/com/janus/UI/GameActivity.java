@@ -26,7 +26,7 @@ public class GameActivity extends AppCompatActivity
         if(fragment == null) {
             MapFragment mapFragment = new MapFragment();
             fm.beginTransaction()
-                    .add(R.id.fragment_container, mapFragment)
+                    .add(R.id.game_layout, mapFragment)
                     .commit();
         }
 

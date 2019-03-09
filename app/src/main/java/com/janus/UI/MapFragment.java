@@ -174,7 +174,8 @@ public class MapFragment extends Fragment implements MapFragmentPresenter.View{
     }
 
     public void updateTurnIndicator(List<playerModel> updatedPlayers){
-        mPlayerAdapter = new PlayerAdapter((playerModel[]) updatedPlayers.toArray());
+        playerModel[] playerModels = new playerModel[updatedPlayers.size()];
+        mPlayerAdapter = new PlayerAdapter(updatedPlayers.toArray(playerModels));
         mTurnRecyclerView.setAdapter(mPlayerAdapter);
     }
 }
