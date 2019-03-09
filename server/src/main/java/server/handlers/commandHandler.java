@@ -9,9 +9,11 @@ import com.bignerdranch.android.shared.exceptions.UserNotFoundException;
 
 import server.serverClasses.serverFacade;
 import com.bignerdranch.android.shared.requestObjects.CreateGameRequest;
+import com.bignerdranch.android.shared.requestObjects.DrawDestinationCardsRequest;
 import com.bignerdranch.android.shared.requestObjects.JoinGameRequest;
 import com.bignerdranch.android.shared.requestObjects.LoginRequest;
 import com.bignerdranch.android.shared.requestObjects.RegisterRequest;
+import com.bignerdranch.android.shared.requestObjects.ReturnDestinationCardsRequest;
 import com.bignerdranch.android.shared.requestObjects.StartGameRequest;
 import com.bignerdranch.android.shared.requestObjects.UpdateChatboxRequest;
 import com.bignerdranch.android.shared.resultobjects.Results;
@@ -56,7 +58,7 @@ public class commandHandler extends handlerBase implements IServer {
         return serverFacade.getInstance().joinGame(request);
     }
 
-	public Results updateChatbox(UpdateChatboxRequest request) throws DuplicateException,
+	public Results updateChatbox(UpdateChatboxRequest request) throws
 			GameNotFoundException, InvalidAuthorizationException {
 		return serverFacade.getInstance().updateChatbox(request);
 	}
@@ -65,4 +67,12 @@ public class commandHandler extends handlerBase implements IServer {
 		return new Results("test", true, "It worked!");
 		
 	}
+
+    public Results drawDestinationCards(DrawDestinationCardsRequest request) {
+        return serverFacade.getInstance().drawDestinationCards(request);
+    }
+
+    public Results returnDestinationCard(ReturnDestinationCardsRequest request) {
+        return serverFacade.getInstance().returnDestinationCard(request);
+    }
 }

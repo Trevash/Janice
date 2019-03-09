@@ -6,9 +6,11 @@ import com.bignerdranch.android.shared.Constants;
 import com.bignerdranch.android.shared.models.authTokenModel;
 import com.bignerdranch.android.shared.models.gameModel;
 import com.bignerdranch.android.shared.requestObjects.CreateGameRequest;
+import com.bignerdranch.android.shared.requestObjects.DrawDestinationCardsRequest;
 import com.bignerdranch.android.shared.requestObjects.JoinGameRequest;
 import com.bignerdranch.android.shared.requestObjects.LoginRequest;
 import com.bignerdranch.android.shared.requestObjects.RegisterRequest;
+import com.bignerdranch.android.shared.requestObjects.ReturnDestinationCardsRequest;
 import com.bignerdranch.android.shared.requestObjects.StartGameRequest;
 import com.bignerdranch.android.shared.requestObjects.UpdateChatboxRequest;
 import com.bignerdranch.android.shared.resultobjects.Results;
@@ -158,4 +160,11 @@ public class ServerProxy implements IServer {
         }
         return messageResult;
 	}
+
+    public Results drawDestinationCards(DrawDestinationCardsRequest request) {
+        return null; // TODO
+    }
+    public Results returnDestinationCard(ReturnDestinationCardsRequest request) {
+        return null; // TODO
+    }
 }

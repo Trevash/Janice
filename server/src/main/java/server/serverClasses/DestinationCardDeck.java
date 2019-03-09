@@ -1,5 +1,6 @@
 package server.serverClasses;
 
+import com.bignerdranch.android.shared.interfaces.IDestinationCardDeck;
 import com.bignerdranch.android.shared.models.DestinationCardModel;
 
 import java.util.ArrayList;
@@ -10,7 +11,7 @@ import java.util.List;
 
 import static com.bignerdranch.android.shared.Constants.DestinationCards.*;
 
-public class DestinationCardDeck {
+public class DestinationCardDeck implements IDestinationCardDeck {
     // list of all the cards in the deck
     private static final DestinationCardModel[] FULL_DECK = new DestinationCardModel[] {
             ATLANTA_MONTREAL, ATLANTA_NEW_YORK, ATLANTA_SAN_FRANCISCO, BOSTON_MIAMI,

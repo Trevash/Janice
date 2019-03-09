@@ -2,9 +2,12 @@ package com.bignerdranch.android.shared.models;
 
 import com.bignerdranch.android.shared.Constants;
 import com.bignerdranch.android.shared.exceptions.DuplicateException;
+import com.bignerdranch.android.shared.interfaces.IDestinationCardDeck;
+import com.bignerdranch.android.shared.interfaces.IGameState;
 import com.bignerdranch.android.shared.models.colors.cardColorEnum;
 import com.bignerdranch.android.shared.models.colors.playerColorEnum;
 import com.bignerdranch.android.shared.models.colors.routeColorEnum;
+import com.bignerdranch.android.shared.proxy.DestinationCardDeckProxy;
 
 import java.util.ArrayList;
 import java.util.LinkedList;
@@ -18,6 +21,9 @@ public class gameModel {
     private chatboxModel chatbox;
     private int turnCounter;
 
+    // TODO create states
+    private IGameState state;
+
     // private playerModel hostPlayer;
 
     // MapPic
@@ -29,15 +35,17 @@ public class gameModel {
         // Train
     private ArrayList<trainCardModel> trainCardDeck = new ArrayList<>();
         // Dest
-    // TODO change how this is implemented
-    private LinkedList<DestinationCardModel> destinationCardDeck = new LinkedList<>();
+    // TODO change how this is implemented - idea: have an interface for this: interface is implemented
+    // by the deck, and also by a proxy which calls the server proxy: Is this workable?
+    //private LinkedList<DestinationCardModel> destinationCardDeck = new LinkedList<>();
+    private IDestinationCardDeck destinationCardDeck;
         // Face-up
     private List<trainCardModel> faceUpCards = new ArrayList<>();
         // Discard
     private LinkedList trainCardDiscard = new LinkedList();
 
 
-    public gameModel(String newGameName, playerModel hostPlayer) {
+    public gameModel(String newGameName, playerModel hostPlayer, IGameState state) {
         gameID = new gameIDModel();
         setGameName(newGameName);
         gameStarted = false;
@@ -45,12 +53,16 @@ public class gameModel {
         chatbox = new chatboxModel();
         this.setGameRoutesAndDecks();
         this.turnCounter = 0;
+
+        this.state = state;
+
+        destinationCardDeck = new DestinationCardDeckProxy();
     }
 
     private void setGameRoutesAndDecks() {
 
         //Create dest cards deck here
-        this.destinationCardDeck.add(Constants.DestinationCards.LOS_ANGELES_NEW_YORK);
+        //this.destinationCardDeck.add(Constants.DestinationCards.LOS_ANGELES_NEW_YORK);
 
         //Create train card deck here (shuffle?)
         for(int i = 0; i < 12; i++) {
@@ -85,6 +97,10 @@ public class gameModel {
         trainCardModel card = this.trainCardDeck.get(numCards); //Get top card
         trainCardDeck.remove(numCards); //Eliminate top card from array
         return card;
+    }
+
+    private List<DestinationCardModel> drawDestinationCards() {
+        return state.drawDestinationCards();
     }
 
     // TODO have way to draw destination cards: pass in an interface as a parameter,

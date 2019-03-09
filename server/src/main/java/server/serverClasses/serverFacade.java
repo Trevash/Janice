@@ -15,9 +15,11 @@ import com.bignerdranch.android.shared.models.userIDModel;
 import com.bignerdranch.android.shared.models.userModel;
 import com.bignerdranch.android.shared.models.usernameModel;
 import com.bignerdranch.android.shared.requestObjects.CreateGameRequest;
+import com.bignerdranch.android.shared.requestObjects.DrawDestinationCardsRequest;
 import com.bignerdranch.android.shared.requestObjects.JoinGameRequest;
 import com.bignerdranch.android.shared.requestObjects.LoginRequest;
 import com.bignerdranch.android.shared.requestObjects.RegisterRequest;
+import com.bignerdranch.android.shared.requestObjects.ReturnDestinationCardsRequest;
 import com.bignerdranch.android.shared.requestObjects.StartGameRequest;
 import com.bignerdranch.android.shared.requestObjects.UpdateChatboxRequest;
 import com.bignerdranch.android.shared.resultobjects.GameListData;
@@ -79,7 +81,7 @@ public class serverFacade implements IServer {
                 false, true, playerColorEnum.BLACK);
         // TODO decide on what the color should actually be
 
-        gameModel newGame = new gameModel(newGameName, hostPlayer);
+        gameModel newGame = new gameModel(newGameName, hostPlayer, new ServerInitialGameState());
         serverModel.getInstance().addGame(newGame);
         return new Results("Create", true, newGame);
     }
@@ -119,4 +121,14 @@ public class serverFacade implements IServer {
         chatboxModel chatbox = serverModel.getInstance().updateChatbox(request);
         return new Results("UpdateChat", true, chatbox);
 	}
+
+    public Results drawDestinationCards(DrawDestinationCardsRequest request) {
+        // TODO
+        return null;
+    }
+
+    public Results returnDestinationCard(ReturnDestinationCardsRequest request) {
+        // TODO
+        return null;
+    }
 }
