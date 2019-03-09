@@ -49,7 +49,11 @@ public class gameModel {
         gameID = new gameIDModel();
         setGameName(newGameName);
         gameStarted = false;
-        players.add(hostPlayer);
+        try {
+			addPlayer(hostPlayer);
+		} catch (DuplicateException e) {
+			e.printStackTrace();
+		}
         chatbox = new chatboxModel();
         this.setGameRoutesAndDecks();
         this.turnCounter = 0;
