@@ -12,6 +12,9 @@
     <string name="myRoutes">My Routes</string>
     <string name="claim">Claim</string>
     <string name="deckString">Train Card Deck:</string>
+    <string name="drawCardsButton">Draw Cards</string>
+    <string name="claimRouteButton">Claim Route</string>
+    <string name="drawDestinationsButton">Draw Destinations</string>
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>

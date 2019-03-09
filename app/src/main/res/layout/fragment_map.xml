@@ -15,7 +15,7 @@
         android:layout_marginStart="30dp"
         android:layout_marginLeft="30dp"
         android:layout_marginBottom="30dp"
-        android:text="Button"
+        android:text="@string/drawCardsButton"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
 
@@ -26,7 +26,7 @@
         android:layout_marginStart="30dp"
         android:layout_marginLeft="30dp"
         android:layout_marginBottom="30dp"
-        android:text="Button"
+        android:text="@string/claimRouteButton"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toEndOf="@+id/drawCardsButton" />
 
@@ -37,7 +37,17 @@
         android:layout_marginStart="30dp"
         android:layout_marginLeft="30dp"
         android:layout_marginBottom="30dp"
-        android:text="Button"
+        android:text="@string/drawDestinationsButton"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toEndOf="@+id/claimRouteButton" />
+
+    <android.support.v7.widget.RecyclerView
+        android:layout_width="187dp"
+        android:layout_height="203dp"
+        android:layout_marginEnd="20dp"
+        android:layout_marginRight="20dp"
+        android:layout_marginBottom="40dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:id="@+id/turnRecyclerView"/>
 </android.support.constraint.ConstraintLayout>
