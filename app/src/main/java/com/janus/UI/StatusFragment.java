@@ -1,5 +1,6 @@
 package com.janus.UI;
 
+import android.graphics.Color;
 import android.support.design.widget.TabLayout;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -10,8 +11,10 @@ import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.bignerdranch.android.shared.models.playerModel;
 import com.janus.Presenter.StatusFragmentPresenter;
 import com.janus.R;
 
@@ -60,6 +63,12 @@ public class StatusFragment extends Fragment implements StatusFragmentPresenter.
         return v;
     }
 
+    @Override
+    public void onViewCreated(View view, Bundle savedInstanceState) {
+        LinearLayout layout = view.findViewById(R.id.status_fragment);
+        layout.setBackgroundColor(Color.WHITE);
+    }
+
     private void setupViewPager(ViewPager viewPager) {
         ViewPagerAdapter adapter = new ViewPagerAdapter(getActivity().getSupportFragmentManager());
         adapter.addFragment(new ChatFragment(), "Chat");
@@ -98,7 +107,14 @@ public class StatusFragment extends Fragment implements StatusFragmentPresenter.
     }
 
     private void buildStats(View v) {
+        String currentPlayerName = presenter.getCurrentPlayer().getUserName().getValue();
+        List<playerModel> players = presenter.getPlayers();
         List<int[]> stats = presenter.getStats();
+
+        TextView mStatusName = v.findViewById(R.id.status_name);
+        mStatusName.setText(currentPlayerName);
+
+        colorTextViews = new ArrayList<>();
 
         colorTextViews.add((TextView)v.findViewById(R.id.num_red));
         colorTextViews.add((TextView)v.findViewById(R.id.num_blue));
@@ -113,7 +129,7 @@ public class StatusFragment extends Fragment implements StatusFragmentPresenter.
         int[] numTrainCardsPerColor = stats.get(0);
 
         for (int i = 0; i < numTrainCardsPerColor.length; i++) {
-            colorTextViews.get(i).setText(numTrainCardsPerColor[i]);
+            colorTextViews.get(i).setText(Integer.toString(numTrainCardsPerColor[i]));
         }
 
         playerOneStatusTextViews = new ArrayList<>();
@@ -122,8 +138,11 @@ public class StatusFragment extends Fragment implements StatusFragmentPresenter.
         playerOneStatusTextViews.add((TextView) v.findViewById(R.id.player_one_number_of_trains));
         playerOneStatusTextViews.add((TextView) v.findViewById(R.id.player_one_number_of_cards));
         playerOneStatusTextViews.add((TextView) v.findViewById(R.id.player_one_number_of_routes));
-        for (int i = 0; i < playerOneStatusTextViews.size(); i++) {
-            playerOneStatusTextViews.get(i).setText(stats.get(1)[i]);
+
+        playerOneStatusTextViews.get(0).setText(players.get(0).getUserName().getValue());
+
+        for (int i = 1; i < playerOneStatusTextViews.size(); i++) {
+            playerOneStatusTextViews.get(i).setText(Integer.toString(stats.get(1)[i-1]));
         }
 
         if (stats.size() > 2) {
@@ -133,8 +152,11 @@ public class StatusFragment extends Fragment implements StatusFragmentPresenter.
             playerTwoStatusTextViews.add((TextView) v.findViewById(R.id.player_two_number_of_trains));
             playerTwoStatusTextViews.add((TextView) v.findViewById(R.id.player_two_number_of_cards));
             playerTwoStatusTextViews.add((TextView) v.findViewById(R.id.player_two_number_of_routes));
-            for (int i = 0; i < playerTwoStatusTextViews.size(); i++) {
-                playerTwoStatusTextViews.get(i).setText(stats.get(2)[i]);
+
+            playerTwoStatusTextViews.get(0).setText(players.get(1).getUserName().getValue());
+
+            for (int i = 1; i < playerTwoStatusTextViews.size(); i++) {
+                playerTwoStatusTextViews.get(i).setText(Integer.toString(stats.get(2)[i-1]));
             }
         }
 
@@ -145,8 +167,11 @@ public class StatusFragment extends Fragment implements StatusFragmentPresenter.
             playerThreeStatusTextViews.add((TextView) v.findViewById(R.id.player_three_number_of_trains));
             playerThreeStatusTextViews.add((TextView) v.findViewById(R.id.player_three_number_of_cards));
             playerThreeStatusTextViews.add((TextView) v.findViewById(R.id.player_three_number_of_routes));
-            for (int i = 0; i < playerThreeStatusTextViews.size(); i++) {
-                playerThreeStatusTextViews.get(i).setText(stats.get(3)[i]);
+
+            playerThreeStatusTextViews.get(0).setText(players.get(2).getUserName().getValue());
+
+            for (int i = 1; i < playerThreeStatusTextViews.size(); i++) {
+                playerThreeStatusTextViews.get(i).setText(Integer.toString(stats.get(3)[i-1]));
             }
         }
 
@@ -157,8 +182,11 @@ public class StatusFragment extends Fragment implements StatusFragmentPresenter.
             playerFourStatusTextViews.add((TextView) v.findViewById(R.id.player_four_number_of_trains));
             playerFourStatusTextViews.add((TextView) v.findViewById(R.id.player_four_number_of_cards));
             playerFourStatusTextViews.add((TextView) v.findViewById(R.id.player_four_number_of_routes));
-            for (int i = 0; i < playerFourStatusTextViews.size(); i++) {
-                playerFourStatusTextViews.get(i).setText(stats.get(4)[i]);
+
+            playerFourStatusTextViews.get(0).setText(players.get(3).getUserName().getValue());
+
+            for (int i = 1; i < playerFourStatusTextViews.size(); i++) {
+                playerFourStatusTextViews.get(i).setText(Integer.toString(stats.get(4)[i-1]));
             }
         }
 
@@ -169,8 +197,11 @@ public class StatusFragment extends Fragment implements StatusFragmentPresenter.
             playerFiveStatusTextViews.add((TextView) v.findViewById(R.id.player_five_number_of_trains));
             playerFiveStatusTextViews.add((TextView) v.findViewById(R.id.player_five_number_of_cards));
             playerFiveStatusTextViews.add((TextView) v.findViewById(R.id.player_five_number_of_routes));
-            for (int i = 0; i < playerFiveStatusTextViews.size(); i++) {
-                playerFiveStatusTextViews.get(i).setText(stats.get(5)[i]);
+
+            playerOneStatusTextViews.get(0).setText(players.get(4).getUserName().getValue());
+
+            for (int i = 1; i < playerFiveStatusTextViews.size(); i++) {
+                playerFiveStatusTextViews.get(i).setText(Integer.toString(stats.get(5)[i-1]));
             }
         }
     }
