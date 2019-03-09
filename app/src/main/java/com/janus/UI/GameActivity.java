@@ -7,6 +7,9 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.widget.Toast;
 
+import com.bignerdranch.android.shared.models.gameModel;
+import com.bignerdranch.android.shared.models.playerModel;
+import com.janus.ClientFacade;
 import com.janus.R;
 
 public class GameActivity extends AppCompatActivity
@@ -83,46 +86,66 @@ public class GameActivity extends AppCompatActivity
         try {
             MapFragment mapFragment = new MapFragment();
             ChatFragment chatFragment = new ChatFragment();
+            DeckFragment deckFragment = new DeckFragment();
             StatusFragment statusFragment = new StatusFragment();
-            fm.beginTransaction()
-                    .replace(R.id.game_layout, mapFragment)
-                    .commit();
+            RouteFragment routeFragment = new RouteFragment();
+            gameModel curGame = ClientFacade.getInstance().getGame();
+            playerModel curPlayer = curGame.getHostPlayer();
+
             //Demonstrate the following with pauses so the human eyes can read toasts and follow along
-            flashStatusFragment(statusFragment, fm);
             makeToast("Here's the Starting Status");
+            flashStatusFragment(statusFragment, fm);
 
             //● Add train cards for this player
+            fm.beginTransaction()
+                    .replace(R.id.game_layout, deckFragment)
+                    .commit();
             makeToast("Drawing train cards");
-            waitForSomeSeconds();
+            curPlayer.addTrainCardToHand(curGame.drawTrainCardFromDeck());
+            curPlayer.addTrainCardToHand(curGame.drawFaceUpTrainCard(0));
+            curPlayer.addTrainCardToHand(curGame.drawFaceUpTrainCard(1));
             //● Update the number of invisible (face down) cards in train card deck and the visible (face up) cards in the train card deck
-
             makeToast("Updated number of train cards in deck and face up cards");
             waitForSomeSeconds();
             //● Update the number of train cards for opponent players
-            flashStatusFragment(statusFragment, fm);
             makeToast("Updated number of train cards for opponents");
+            flashStatusFragment(statusFragment, fm);
 
             //● Add claimed route (for any player). Show this on the map.
-            //● Update player points
-            //● Update the number of train cars and cards for opponent players
+            fm.beginTransaction()
+                    .replace(R.id.game_layout, routeFragment)
+                    .commit();
+            makeToast("Claiming a route");
+            waitForSomeSeconds();
+            //● Show this on the map.
+            fm.beginTransaction()
+                    .replace(R.id.game_layout, mapFragment)
+                    .commit();
+            makeToast("Showing claimed route on map");
+            waitForSomeSeconds();
+            //● Update player points, the number of train cars, and cards for opponent players
+            makeToast("Updated score, number of train cards, cars for opponents");
             flashStatusFragment(statusFragment, fm);
-            makeToast("Updated number of train cards and cars for opponents");
 
             //● Add player destination cards for this player
             //● Update the number of cards in destination card deck
+            fm.beginTransaction()
+                    .replace(R.id.game_layout, deckFragment)
+                    .commit();
+            makeToast("Drawing train cards");
+            waitForSomeSeconds();
             //● Update the number of destination cards for opponent players
-            flashStatusFragment(statusFragment, fm);
             makeToast("Updated number of dest. cards for opponents");
+            flashStatusFragment(statusFragment, fm);
             //● Remove player destination cards for this player
             //● Update the number of destination cards for opponent players
-            flashStatusFragment(statusFragment, fm);
             makeToast("Updated number of dest. cards for opponents");
+            flashStatusFragment(statusFragment, fm);
 
             //● Add chat message from any player
             fm.beginTransaction()
                     .replace(R.id.game_layout, chatFragment)
                     .commit();
-            chatFragment.sendDemoChatMessage("We are sending a chat message!");
             makeToast("Sending chat message!");
             waitForSomeSeconds();
 

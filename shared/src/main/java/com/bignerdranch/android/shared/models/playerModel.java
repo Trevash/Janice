@@ -71,12 +71,6 @@ public class playerModel {
     public void addTrainCardToHand(trainCardModel card){
     	trainCardHand.add(card);
     }
-
-    public void drawFaceUpTrainCard(int pos) throws Exception {
-        if(pos < 0 || pos > 4){
-            throw new Exception("Invalid card position requested from face up train cards: " + pos);
-        }
-    }
     
     public List<trainCardModel> getTrainCardHand(){
     	return trainCardHand;

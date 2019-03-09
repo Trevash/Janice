@@ -65,7 +65,7 @@ public class RouteFragmentPresenter implements ClientFacade.Presenter{
         view.updateRoutes(simplifiedList);
     }
 
-    void claimRoute(String routeID){
+    public void claimRoute(String routeID){
         //Create a claimRoute task?
         //Create claimRouteRequest?
         //claimRouteTask.execute(claimRouteRequest);

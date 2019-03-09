@@ -79,11 +79,11 @@ public class gameModel {
         }
         shuffleTrainCards();
         //Draw 5 cards from deck, assign to the faceUp stuff
-        this.faceUpCards.add(this.drawTrainCard());
-        this.faceUpCards.add(this.drawTrainCard());
-        this.faceUpCards.add(this.drawTrainCard());
-        this.faceUpCards.add(this.drawTrainCard());
-        this.faceUpCards.add(this.drawTrainCard());
+        this.faceUpCards.add(this.drawTrainCardFromDeck());
+        this.faceUpCards.add(this.drawTrainCardFromDeck());
+        this.faceUpCards.add(this.drawTrainCardFromDeck());
+        this.faceUpCards.add(this.drawTrainCardFromDeck());
+        this.faceUpCards.add(this.drawTrainCardFromDeck());
     }
 
     private void shuffleTrainCards() {
@@ -96,11 +96,22 @@ public class gameModel {
     }
 
     //Todo: Check for empty deck and other special cases - recommend moving decks into their own classes
-    private trainCardModel drawTrainCard() {
+    public trainCardModel drawTrainCardFromDeck() {
         int numCards = (trainCardDeck.size() - 1);
         trainCardModel card = this.trainCardDeck.get(numCards); //Get top card
         trainCardDeck.remove(numCards); //Eliminate top card from array
         return card;
+    }
+
+    public trainCardModel drawFaceUpTrainCard(int pos) throws Exception {
+        if(pos < 0 || pos > 4){
+            throw new Exception("Invalid card position requested from face up train cards: " + pos);
+        }
+
+        trainCardModel curCard = this.faceUpCards.get(pos);
+        this.faceUpCards.set(pos, drawTrainCardFromDeck());
+
+        return curCard;
     }
 
     private List<DestinationCardModel> drawDestinationCards() {
@@ -137,7 +148,7 @@ public class gameModel {
         newPlayer.setPlayerColor(playerColorEnum.values()[players.size()]);
         //draws new player's starting hand
         for(int i = 0; i<4; i++) {
-        	newPlayer.addTrainCardToHand(drawTrainCard());
+        	newPlayer.addTrainCardToHand(drawTrainCardFromDeck());
         }
         players.add(newPlayer);
     }
