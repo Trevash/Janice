@@ -1,5 +1,5 @@
 package com.bignerdranch.android.shared.models.colors;
 
 public enum cardColorEnum {
-    RED, ORANGE, YELLOW, BLUE, GREEN, PURPLE, BLACK, WHITE, LOCOMOTIVE;
+    RED, BLUE, GREEN, PURPLE, ORANGE, WHITE, BLACK, YELLOW, LOCOMOTIVE
 }
