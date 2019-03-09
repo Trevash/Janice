@@ -3,6 +3,7 @@ package com.janus.UI;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -29,12 +30,14 @@ public class MapFragment extends Fragment implements MapFragmentPresenter.View{
         void onClickClaimRoute();
         void onClickDestinationSelect();
         void onClickGameStatus();
+        void onClickRunDemo();
     }
 
     private MapFragmentPresenter presenter;
     private Button mDrawCardsButton;
     private Button mClaimRouteButton;
     private Button mDrawDestinationsButton;
+    private Button mRunDemoButton;
     private MenuItem mStatusMenuItem; //For future use
     private Context mContext;
     private RecyclerView mTurnRecyclerView;
@@ -95,6 +98,14 @@ public class MapFragment extends Fragment implements MapFragmentPresenter.View{
             @Override
             public void onClick(View v) {
                 mContext.onClickDestinationSelect();
+            }
+        });
+
+        mRunDemoButton = v.findViewById(R.id.demo_Button);
+        mRunDemoButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mContext.onClickRunDemo();
             }
         });
 

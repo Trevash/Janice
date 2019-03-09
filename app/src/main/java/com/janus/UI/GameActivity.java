@@ -68,7 +68,7 @@ public class GameActivity extends AppCompatActivity
                 .commit();
     }
 
-    public void runDemo(){
+    public void onClickRunDemo(){
         try {
             MapFragment mapFragment = new MapFragment();
             ChatFragment chatFragment = new ChatFragment();
