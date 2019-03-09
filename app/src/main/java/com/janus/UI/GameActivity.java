@@ -74,7 +74,7 @@ public class GameActivity extends AppCompatActivity
             ChatFragment chatFragment = new ChatFragment();
             StatusFragment statusFragment = new StatusFragment();
             fm.beginTransaction()
-                    .replace(R.id.fragment_container, mapFragment)
+                    .replace(R.id.game_layout, mapFragment)
                     .commit();
             //Demonstrate the following with pauses so the human eyes can read toasts and follow along
             flashStatusFragment(statusFragment, fm);
@@ -109,7 +109,7 @@ public class GameActivity extends AppCompatActivity
 
             //● Add chat message from any player
             fm.beginTransaction()
-                    .replace(R.id.fragment_container, chatFragment)
+                    .replace(R.id.game_layout, chatFragment)
                     .commit();
             chatFragment.sendDemoChatMessage("We are sending a chat message!");
             makeToast("Sending chat message!");
@@ -125,7 +125,7 @@ public class GameActivity extends AppCompatActivity
 
     private void flashStatusFragment(StatusFragment statusFragment, FragmentManager fm) throws InterruptedException {
         fm.beginTransaction()
-                .replace(R.id.fragment_container, statusFragment)
+                .replace(R.id.game_layout, statusFragment)
                 .commit();
         waitForSomeSeconds();
     }
