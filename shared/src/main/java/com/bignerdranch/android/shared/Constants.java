@@ -16,7 +16,7 @@ public class Constants {
     public static final int PORT = 8087;
 
     public static class Cities {
-        // TODO have someone check over this list for completion - also confirm the name of St Marie
+        // TODO have someone check over this list for completion
         public static final cityModel ATLANTA = new cityModel("Atlanta");
         public static final cityModel BOSTON = new cityModel("Boston");
         public static final cityModel CALGARY = new cityModel("Calgary");
@@ -48,7 +48,7 @@ public class Constants {
         public static final cityModel SANTA_FE = new cityModel("Santa Fe");
 
         public static final cityModel SAN_FRANCISCO = new cityModel("San Francisco");
-        public static final cityModel ST_MARIE = new cityModel("St. Marie");
+        public static final cityModel ST_MARIE = new cityModel("Sault St. Marie");
         public static final cityModel SEATTLE = new cityModel("Seattle");
         public static final cityModel TORONTO = new cityModel("Toronto");
         public static final cityModel VANCOUVER = new cityModel("Vancouver");
@@ -75,8 +75,6 @@ public class Constants {
         public static final DestinationCardModel HELENA_LOS_ANGELES = new DestinationCardModel(Cities.HELENA, Cities.LOS_ANGELES, 8);
         public static final DestinationCardModel DULUTH_HOUSTON = new DestinationCardModel(Cities.DULUTH, Cities.HOUSTON, 8);
         public static final DestinationCardModel NASHVILLE_ST_MARIE = new DestinationCardModel(Cities.NASHVILLE, Cities.ST_MARIE, 8);
-
-
 
         public static final DestinationCardModel ATLANTA_MONTREAL = new DestinationCardModel(Cities.ATLANTA, Cities.MONTREAL, 9);
         public static final DestinationCardModel OKLAHOMA_CITY_ST_MARIE = new DestinationCardModel(Cities.OKLAHOMA_CITY, Cities.ST_MARIE, 9);
