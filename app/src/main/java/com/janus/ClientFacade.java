@@ -3,6 +3,7 @@ package com.janus;
 import com.bignerdranch.android.shared.models.*;
 import com.bignerdranch.android.shared.resultobjects.GameListData;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class ClientFacade {
@@ -65,5 +66,9 @@ public class ClientFacade {
 
     public void setChatbox(chatboxModel chatbox) {
         model.setChatbox(chatbox);
+    }
+
+    public List<int[]> getStats() {
+        return model.getGame().getStats(getUser().getUserName());
     }
 }

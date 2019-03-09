@@ -47,6 +47,7 @@
                         android:background="#FF0000"/>
 
                     <TextView
+                        android:id="@+id/num_red"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text=" : 1 "
@@ -58,6 +59,7 @@
                         android:background="#0000FF" />
 
                     <TextView
+                        android:id="@+id/num_blue"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text=" : 1 "
@@ -69,6 +71,7 @@
                         android:background="#7CFC00" />
 
                     <TextView
+                        android:id="@+id/num_green"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text=" : 1 "
@@ -80,6 +83,7 @@
                         android:background="#800080" />
 
                     <TextView
+                        android:id="@+id/num_purple"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text=" : 1 "
@@ -91,6 +95,7 @@
                         android:background="#FFA500" />
 
                     <TextView
+                        android:id="@+id/num_orange"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text=" : 1 "
@@ -102,6 +107,7 @@
                         android:background="#FFFFFF" />
 
                     <TextView
+                        android:id="@+id/num_white"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text=" : 1 "
@@ -113,6 +119,7 @@
                         android:background="#000000" />
 
                     <TextView
+                        android:id="@+id/num_black"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text=" : 1 "
@@ -124,6 +131,7 @@
                         android:background="#FFFF00" />
 
                     <TextView
+                        android:id="@+id/num_yellow"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text=" : 1 "
@@ -135,6 +143,7 @@
                         android:background="#C0C0C0" />
 
                     <TextView
+                        android:id="@+id/num_rainbow"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text=" : 1 "
@@ -198,8 +207,7 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:paddingTop="20dp"
-                    android:textSize="14sp"
-                    android:text="Frederick" />
+                    android:textSize="14sp" />
 
                 <TextView
                     android:id="@+id/player_one_points"
@@ -207,8 +215,7 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:paddingTop="20dp"
-                    android:textSize="14sp"
-                    android:text="Frederick" />
+                    android:textSize="14sp" />
 
                 <TextView
                     android:id="@+id/player_one_number_of_trains"
@@ -216,8 +223,7 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:paddingTop="20dp"
-                    android:textSize="14sp"
-                    android:text="Frederick" />
+                    android:textSize="14sp" />
 
                 <TextView
                     android:id="@+id/player_one_number_of_cards"
@@ -225,8 +231,7 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:paddingTop="20dp"
-                    android:textSize="14sp"
-                    android:text="Frederick" />
+                    android:textSize="14sp" />
 
                 <TextView
                     android:id="@+id/player_one_number_of_routes"
@@ -234,8 +239,7 @@
                     android:layout_height="wrap_content"
                     android:textSize="14sp"
                     android:paddingTop="20dp"
-                    android:layout_gravity="center"
-                    android:text="Frederick" />
+                    android:layout_gravity="center" />
 
                 <TextView
                     android:id="@+id/player_two_name"
@@ -243,8 +247,7 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:paddingTop="20dp"
-                    android:textSize="14sp"
-                    android:text="Frederick" />
+                    android:textSize="14sp" />
 
                 <TextView
                     android:id="@+id/player_two_points"
@@ -252,8 +255,7 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:paddingTop="20dp"
-                    android:textSize="14sp"
-                    android:text="Frederick" />
+                    android:textSize="14sp" />
 
                 <TextView
                     android:id="@+id/player_two_number_of_trains"
@@ -261,8 +263,7 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:paddingTop="20dp"
-                    android:textSize="14sp"
-                    android:text="Frederick" />
+                    android:textSize="14sp" />
 
                 <TextView
                     android:id="@+id/player_two_number_of_cards"
@@ -270,8 +271,7 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:paddingTop="20dp"
-                    android:textSize="14sp"
-                    android:text="Frederick" />
+                    android:textSize="14sp" />
 
                 <TextView
                     android:id="@+id/player_two_number_of_routes"
@@ -279,8 +279,7 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:paddingTop="20dp"
-                    android:textSize="14sp"
-                    android:text="Frederick" />
+                    android:textSize="14sp" />
 
                 <TextView
                     android:id="@+id/player_three_name"
@@ -288,8 +287,7 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:paddingTop="20dp"
-                    android:textSize="14sp"
-                    android:text="Frederick" />
+                    android:textSize="14sp" />
 
                 <TextView
                     android:id="@+id/player_three_points"
@@ -297,8 +295,7 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:paddingTop="20dp"
-                    android:textSize="14sp"
-                    android:text="Frederick" />
+                    android:textSize="14sp" />
 
                 <TextView
                     android:id="@+id/player_three_number_of_trains"
@@ -306,8 +303,7 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:paddingTop="20dp"
-                    android:textSize="14sp"
-                    android:text="Frederick" />
+                    android:textSize="14sp" />
 
                 <TextView
                     android:id="@+id/player_three_number_of_cards"
@@ -315,8 +311,7 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:paddingTop="20dp"
-                    android:textSize="14sp"
-                    android:text="Frederick" />
+                    android:textSize="14sp" />
 
                 <TextView
                     android:id="@+id/player_three_number_of_routes"
@@ -324,8 +319,7 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:paddingTop="20dp"
-                    android:textSize="14sp"
-                    android:text="Frederick" />
+                    android:textSize="14sp" />
 
                 <TextView
                     android:id="@+id/player_four_name"
@@ -333,8 +327,7 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:paddingTop="20dp"
-                    android:textSize="14sp"
-                    android:text="Frederick" />
+                    android:textSize="14sp" />
 
                 <TextView
                     android:id="@+id/player_four_points"
@@ -342,8 +335,7 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:paddingTop="20dp"
-                    android:textSize="14sp"
-                    android:text="Frederick" />
+                    android:textSize="14sp" />
 
                 <TextView
                     android:id="@+id/player_four_number_of_trains"
@@ -351,8 +343,7 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:paddingTop="20dp"
-                    android:textSize="14sp"
-                    android:text="Frederick" />
+                    android:textSize="14sp" />
 
                 <TextView
                     android:id="@+id/player_four_number_of_cards"
@@ -360,8 +351,7 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:paddingTop="20dp"
-                    android:textSize="14sp"
-                    android:text="Frederick" />
+                    android:textSize="14sp" />
 
                 <TextView
                     android:id="@+id/player_four_number_of_routes"
@@ -369,8 +359,7 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:paddingTop="20dp"
-                    android:textSize="14sp"
-                    android:text="Frederick" />
+                    android:textSize="14sp" />
 
                 <TextView
                     android:id="@+id/player_five_name"
@@ -378,8 +367,7 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:paddingTop="20dp"
-                    android:textSize="14sp"
-                    android:text="Frederick" />
+                    android:textSize="14sp" />
 
                 <TextView
                     android:id="@+id/player_five_points"
@@ -387,8 +375,7 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:paddingTop="20dp"
-                    android:textSize="14sp"
-                    android:text="Frederick" />
+                    android:textSize="14sp" />
 
                 <TextView
                     android:id="@+id/player_five_number_of_trains"
@@ -396,8 +383,7 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:paddingTop="20dp"
-                    android:textSize="14sp"
-                    android:text="Frederick" />
+                    android:textSize="14sp" />
 
                 <TextView
                     android:id="@+id/player_five_number_of_cards"
@@ -405,8 +391,7 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:paddingTop="20dp"
-                    android:textSize="14sp"
-                    android:text="Frederick" />
+                    android:textSize="14sp" />
 
                 <TextView
                     android:id="@+id/player_five_number_of_routes"
@@ -414,8 +399,7 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:paddingTop="20dp"
-                    android:textSize="14sp"
-                    android:text="Frederick" />
+                    android:textSize="14sp" />
 
 
 
