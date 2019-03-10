@@ -11,6 +11,7 @@ import java.util.Hashtable;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 
 public class gameModel {
     private gameIDModel gameID;
@@ -44,7 +45,7 @@ public class gameModel {
         gameID = new gameIDModel();
         setGameName(newGameName);
         gameStarted = false;
-        mapPlayerIDToModel = new Hashtable<>();
+        mapPlayerIDToModel = new ConcurrentHashMap<>();
         this.setDecks();
 
         try {
