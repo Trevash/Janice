@@ -189,6 +189,8 @@ public class gameModel {
         //determine player order: order they joined (order in 'players' array)
         //starting hand provided in the addPlayer() function
         //each player chooses their destination cards in turn order?
+        
+        
     }
 
     public List<playerModel> getPlayers() {
