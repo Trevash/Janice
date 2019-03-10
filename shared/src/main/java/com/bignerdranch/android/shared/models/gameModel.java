@@ -7,6 +7,7 @@ import com.bignerdranch.android.shared.models.colors.playerColorEnum;
 import com.bignerdranch.android.shared.models.colors.routeColorEnum;
 
 import java.util.ArrayList;
+import java.util.Hashtable;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
@@ -43,8 +44,8 @@ public class gameModel {
         gameID = new gameIDModel();
         setGameName(newGameName);
         gameStarted = false;
+        mapPlayerIDToModel = new Hashtable<>();
         this.setDecks();
-        this.setRoutes();
         try {
 			addPlayer(hostPlayer);
 		} catch (DuplicateException e) {
@@ -248,6 +249,8 @@ public class gameModel {
         if(players.size() > 5){
             throw new IllegalStateException("Too many players to start game!");
         }
+
+        this.setRoutes();
 
         this.gameStarted = true;
         
