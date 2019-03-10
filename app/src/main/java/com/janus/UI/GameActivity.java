@@ -14,6 +14,7 @@ public class GameActivity extends AppCompatActivity
         DestinationSelectFragment.Context, StatusFragment.Context{
     private FragmentManager fm = getSupportFragmentManager();
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
