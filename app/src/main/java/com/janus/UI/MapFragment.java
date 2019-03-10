@@ -305,14 +305,14 @@ public class MapFragment extends Fragment implements MapFragmentPresenter.View{
                         float dotLocationY = (float) (((city1Y + 10) + (city2Y + 10)) / 2.0);
                         playerModel claimer = presenter.getPlayerByID(doubleRoute.getClaimer1());
                         paint.setColor(colorMap2.get(claimer.getPlayerColor()));
-                        canvas.drawCircle(dotLocationX, dotLocationY, 7, paint);
+                        canvas.drawCircle(dotLocationX, dotLocationY, 12, paint);
                     }
                     if(!doubleRoute.claimableRoute2()){
                         float dotLocationX = (float) (((city1X - 10) + (city2X - 10)) / 2.0);
                         float dotLocationY = (float) (((city1Y - 10) + (city2Y - 10)) / 2.0);
                         playerModel claimer = presenter.getPlayerByID(doubleRoute.getClaimer2());
                         paint.setColor(colorMap2.get(claimer.getPlayerColor()));
-                        canvas.drawCircle(dotLocationX, dotLocationY, 7, paint);
+                        canvas.drawCircle(dotLocationX, dotLocationY, 12, paint);
                     }
                 }
             }
