@@ -122,7 +122,7 @@ public class GameActivity extends AppCompatActivity
             case 2:
                 //● Update the number of train cards for opponent players
                 makeToast("Updated number of train cards for opponents");
-                showStatusFragment();
+                showStatusFragment(0);
                 task = new WaitTask(this);
                 task.execute(demoState);
                 break;
@@ -150,14 +150,14 @@ public class GameActivity extends AppCompatActivity
             case 5:
                 //● Update player points, the number of train cars, and cards for opponent players
                 makeToast("Updated score, number of train cards and train cars for opponents");
-                showStatusFragment();
+                showStatusFragment(0);
                 task = new WaitTask(this);
                 task.execute(demoState);
                 break;
             case 6:
                 //● Add player destination cards for this player
                 makeToast("Claiming Destination Cards");
-                showDestinationRoutesFragment();
+                showStatusFragment(1);
                 DestinationCardModel card1 = Constants.DestinationCards.ATLANTA_MONTREAL;
                 DestinationCardModel card2 = Constants.DestinationCards.ATLANTA_NEW_YORK;
                 curPlayer.DEMO_addDestinationCardToHand(card1);
@@ -168,13 +168,13 @@ public class GameActivity extends AppCompatActivity
             case 7:
                 //● Update the number of cards in destination card deck
                 makeToast("Updated number of destination cards for opponents");
-                showDestinationRoutesFragment();
+                showStatusFragment(1);
                 task = new WaitTask(this);
                 task.execute(demoState);
                 break;
             case 8:
                 makeToast("Removing Destination cards from player");
-                showDestinationRoutesFragment();
+                showStatusFragment(1);
                 curPlayer.DEMO_removeDestinationCardToHand(0);
                 curPlayer.DEMO_removeDestinationCardToHand(0);
                 task = new WaitTask(this);
@@ -182,13 +182,13 @@ public class GameActivity extends AppCompatActivity
                 break;
             case 9:
                 makeToast("Updated number of Destination cards for opponents");
-                showDestinationRoutesFragment();
+                showStatusFragment(1);
                 task = new WaitTask(this);
                 task.execute(demoState);
                 break;
             case 10:
                 makeToast("Sending Chat message");
-                showChatFragment();
+                showStatusFragment(0);
                 chatMessageModel message = new chatMessageModel(curPlayer.getUserName(), "Hey! I'm a ghost that hacked your chat function!");
                 curGame.updateChatbox(message);
                 task = new WaitTask(this);
@@ -208,14 +208,6 @@ public class GameActivity extends AppCompatActivity
                 makeToast("Demo done!");
                 break;
         }
-    }
-
-    public void showDestinationRoutesFragment() {
-    	StatusFragment fragment = new StatusFragment();
-    	fragment.setWhichFragmentToShow(1);
-        fm.beginTransaction()
-        .replace(R.id.game_layout, fragment)
-        .commit();
     }
 
     public void showDeckFragment() {
@@ -239,15 +231,9 @@ public class GameActivity extends AppCompatActivity
                 .commit();
     }
 
-    private void showStatusFragment() {
+    private void showStatusFragment(int i) {
         StatusFragment fragment = new StatusFragment();
-        fm.beginTransaction()
-                .replace(R.id.game_layout, fragment)
-                .commit();
-    }
-
-    private void showChatFragment() {
-        ChatFragment fragment = new ChatFragment();
+        fragment.setWhichFragmentToShow(i);
         fm.beginTransaction()
                 .replace(R.id.game_layout, fragment)
                 .commit();
@@ -256,7 +242,7 @@ public class GameActivity extends AppCompatActivity
     public void onClickRunDemo() {
         //Demonstrate the following with pauses so the human eyes can read toasts and follow along
         makeToast("Here's the Starting Status");
-        showStatusFragment();
+        showStatusFragment(0);
         task = new WaitTask(this);
         task.execute(0);
     }
