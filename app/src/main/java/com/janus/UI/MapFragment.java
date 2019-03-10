@@ -27,7 +27,9 @@ import com.bignerdranch.android.shared.Constants;
 import com.bignerdranch.android.shared.models.abstractDoubleRoute;
 import com.bignerdranch.android.shared.models.abstractRoute;
 import com.bignerdranch.android.shared.models.cityModel;
+import com.bignerdranch.android.shared.models.colors.playerColorEnum;
 import com.bignerdranch.android.shared.models.colors.routeColorEnum;
+import com.bignerdranch.android.shared.models.playerIDModel;
 import com.bignerdranch.android.shared.models.playerModel;
 import com.bignerdranch.android.shared.models.singleRouteModel;
 import com.janus.Presenter.MapFragmentPresenter;
@@ -61,6 +63,7 @@ public class MapFragment extends Fragment implements MapFragmentPresenter.View{
     private ArrayList<abstractRoute> mRoutes = new ArrayList<>();
     private ImageView mapImage;
     private Map<routeColorEnum, Integer> colorMap = new HashMap<>();
+    private Map<playerColorEnum, Integer> colorMap2 = new HashMap<>();
 
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater){
@@ -106,6 +109,12 @@ public class MapFragment extends Fragment implements MapFragmentPresenter.View{
         colorMap.put(routeColorEnum.RED, Color.RED);
         colorMap.put(routeColorEnum.WHITE, Color.WHITE);
         colorMap.put(routeColorEnum.YELLOW, Color.YELLOW);
+
+        colorMap2.put(playerColorEnum.BLUE, Color.BLUE);
+        colorMap2.put(playerColorEnum.BLACK, Color.BLACK);
+        colorMap2.put(playerColorEnum.GREEN, Color.GREEN);
+        colorMap2.put(playerColorEnum.RED, Color.RED);
+        colorMap2.put(playerColorEnum.YELLOW, Color.YELLOW);
 
         mapImage = v.findViewById(R.id.drawImageView);
         mapImage.setImageDrawable(new Drawings());
@@ -276,17 +285,35 @@ public class MapFragment extends Fragment implements MapFragmentPresenter.View{
                     singleRouteModel singleRoute = (singleRouteModel) route;
                     paint.setColor(colorMap.get(singleRoute.getTrainColor()));
                     canvas.drawLine(city1X, city1Y, city2X, city2Y, paint);
-                    /*if(!singleRoute.claimable()){
+                    if(!singleRoute.claimable()){
                         float dotLocationX = (float) ((city1X + city2X) / 2.0);
                         float dotLocationY = (float) ((city1Y + city2Y) / 2.0);
-                    }*/
+                        playerModel claimer = presenter.getPlayerByID(singleRoute.getClaimer());
+                        paint.setColor(colorMap2.get(claimer.getPlayerColor()));
+                        canvas.drawCircle(dotLocationX, dotLocationY, 7, paint);
+                    }
                 } else {
                     abstractDoubleRoute doubleRoute = (abstractDoubleRoute) route;
                     paint.setColor(colorMap.get(doubleRoute.getTrainColor1()));
-                    canvas.drawLine(city1X, city1Y, city2X, city2Y, paint);
+                    canvas.drawLine(city1X + 10, city1Y + 10,
+                            city2X + 10, city2Y + 10, paint);
                     paint.setColor(colorMap.get(doubleRoute.getTrainColor2()));
-                    canvas.drawLine(city1X - 20, city1Y - 20,
-                            city2X - 20, city2Y - 20, paint);
+                    canvas.drawLine(city1X - 10, city1Y - 10,
+                            city2X - 10, city2Y - 10, paint);
+                    if(!doubleRoute.claimableRoute1()){
+                        float dotLocationX = (float) (((city1X + 10) + (city2X + 10)) / 2.0);
+                        float dotLocationY = (float) (((city1Y + 10) + (city2Y + 10)) / 2.0);
+                        playerModel claimer = presenter.getPlayerByID(doubleRoute.getClaimer1());
+                        paint.setColor(colorMap2.get(claimer.getPlayerColor()));
+                        canvas.drawCircle(dotLocationX, dotLocationY, 7, paint);
+                    }
+                    if(!doubleRoute.claimableRoute2()){
+                        float dotLocationX = (float) (((city1X - 10) + (city2X - 10)) / 2.0);
+                        float dotLocationY = (float) (((city1Y - 10) + (city2Y - 10)) / 2.0);
+                        playerModel claimer = presenter.getPlayerByID(doubleRoute.getClaimer2());
+                        paint.setColor(colorMap2.get(claimer.getPlayerColor()));
+                        canvas.drawCircle(dotLocationX, dotLocationY, 7, paint);
+                    }
                 }
             }
             //canvas.drawCircle((296 * 2), (float) (328 * 1.7), 15, paint); //new SLC coordinates
