@@ -17,11 +17,6 @@ abstract public class abstractDoubleRoute extends abstractRoute{
         trainColor2 = color2;
     }
 
-
-    public playerIDModel getClaimer1() {
-        return claimer1;
-    }
-
     public routeColorEnum getTrainColor1() {
         return trainColor1;
     }
@@ -36,6 +31,10 @@ abstract public class abstractDoubleRoute extends abstractRoute{
 
     public void setTrainColor2(routeColorEnum trainColor2) {
         this.trainColor2 = trainColor2;
+    }
+
+    public playerIDModel getClaimer1() {
+        return claimer1;
     }
 
     public playerIDModel getClaimer2() {
