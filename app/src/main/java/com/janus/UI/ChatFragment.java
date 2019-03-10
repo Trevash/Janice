@@ -154,9 +154,4 @@ public class ChatFragment extends Fragment implements ChatFragmentPresenter.View
             return chats.size();
         }
     }
-
-    public void sendDemoChatMessage(String newMessage){
-        this.mChatMessage.setText(newMessage);
-        this.presenter.sendClicked();
-    }
 }
