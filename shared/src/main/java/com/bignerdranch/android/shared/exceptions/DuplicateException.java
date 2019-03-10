@@ -1,6 +1,6 @@
 package com.bignerdranch.android.shared.exceptions;
 
-public class DuplicateException extends Exception { // TODO what would be a good name for this?
+public class DuplicateException extends Exception {
     public DuplicateException(){}
     public DuplicateException(String message){
         super(message);

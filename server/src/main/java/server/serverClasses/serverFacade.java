@@ -123,12 +123,18 @@ public class serverFacade implements IServer {
 	}
 
     public Results drawDestinationCards(DrawDestinationCardsRequest request) {
-        // TODO
-        return null;
+
+        gameModel game = serverModel.getInstance().getGameByID(request.getGameID());
+        // call drawDestinationCards on the game: which should call it on the state: which will draw
+        // from the actual deck stored in it.
+        return new Results("DrawDestinationCards", true, game.drawDestinationCards());
     }
 
     public Results returnDestinationCard(ReturnDestinationCardsRequest request) {
-        // TODO
-        return null;
+        gameModel game = serverModel.getInstance().getGameByID(request.getGameID());
+        game.returnDestinationCards(request.getDestinationCards());
+
+        return new Results("ReturnDestinationCards", true, "return");
+        // currently does not return anything
     }
 }

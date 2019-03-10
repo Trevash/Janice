@@ -6,7 +6,7 @@ import java.util.UUID;
 public class gameIDModel {
     private String value;
 
-    gameIDModel() {
+    public gameIDModel() {
         value = UUID.randomUUID().toString();
     }
 

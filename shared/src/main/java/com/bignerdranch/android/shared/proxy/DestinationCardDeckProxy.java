@@ -4,6 +4,7 @@ import com.bignerdranch.android.shared.Constants;
 import com.bignerdranch.android.shared.IServer;
 import com.bignerdranch.android.shared.interfaces.IDestinationCardDeck;
 import com.bignerdranch.android.shared.models.DestinationCardModel;
+import com.bignerdranch.android.shared.models.gameIDModel;
 import com.bignerdranch.android.shared.requestObjects.DrawDestinationCardsRequest;
 import com.bignerdranch.android.shared.requestObjects.ReturnDestinationCardsRequest;
 
@@ -12,9 +13,13 @@ import java.util.List;
 
 public class DestinationCardDeckProxy implements IDestinationCardDeck {
 
-
-
     private IServer server;
+    private gameIDModel gameID;
+
+    public DestinationCardDeckProxy(IServer server, gameIDModel gameID) {
+        this.server = server;
+        this.gameID = gameID;
+    }
 
     @Override
     public List<DestinationCardModel> drawDestinationCards() {
@@ -28,8 +33,8 @@ public class DestinationCardDeckProxy implements IDestinationCardDeck {
     }
 
     @Override
-    public void returnDestinationCard(DestinationCardModel card) {
-        server.returnDestinationCard(new ReturnDestinationCardsRequest());
+    public void returnDestinationCards(List<DestinationCardModel> cards) {
+        server.returnDestinationCard(new ReturnDestinationCardsRequest(gameID, cards));
     }
 
     @Override

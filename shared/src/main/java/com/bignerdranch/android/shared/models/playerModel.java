@@ -63,10 +63,6 @@ public class playerModel {
     public void setPlayerColor(playerColorEnum color) {
     	this.playerColor = color;
     }
-
-    public void drawDestCards(){
-
-    }
     
     public void addTrainCardToHand(trainCardModel card){
     	trainCardHand.add(card);
@@ -84,5 +80,14 @@ public class playerModel {
     	stats[3] = this.claimedRoutes.size();
     	return stats;
     }
+
+    public void addDestinationCards(List<DestinationCardModel> cards) {
+        destinationCardHand.addAll(cards);
+    }
+
+    public List<DestinationCardModel> getDestinationCardHand() {
+        return destinationCardHand;
+    }
+
 }
 

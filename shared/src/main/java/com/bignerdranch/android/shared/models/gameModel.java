@@ -16,12 +16,12 @@ import java.util.List;
 public class gameModel {
     private gameIDModel gameID;
     private String gameName;
-    private boolean gameStarted;
+    private boolean gameStarted; // TODO can remove this - by adding another state to represent an unstarted game
     private List<playerModel> players = new ArrayList<>();
     private chatboxModel chatbox;
     private int turnCounter;
 
-    // TODO create states
+    // TODO create states - will want more for phase 3
     private IGameState state;
 
     // private playerModel hostPlayer;
@@ -35,10 +35,6 @@ public class gameModel {
         // Train
     private ArrayList<trainCardModel> trainCardDeck = new ArrayList<>();
         // Dest
-    // TODO change how this is implemented - idea: have an interface for this: interface is implemented
-    // by the deck, and also by a proxy which calls the server proxy: Is this workable?
-    //private LinkedList<DestinationCardModel> destinationCardDeck = new LinkedList<>();
-    private IDestinationCardDeck destinationCardDeck;
         // Face-up
     private List<trainCardModel> faceUpCards = new ArrayList<>();
         // Discard
@@ -59,8 +55,6 @@ public class gameModel {
         this.turnCounter = 0;
 
         this.state = state;
-
-        destinationCardDeck = new DestinationCardDeckProxy();
     }
 
     private void setGameRoutesAndDecks() {
@@ -68,14 +62,19 @@ public class gameModel {
         //Create dest cards deck here
         //this.destinationCardDeck.add(Constants.DestinationCards.LOS_ANGELES_NEW_YORK);
 
-        //Create train card deck here (shuffle?)
+        //Create train card deck here, then shuffles
         for(int i = 0; i < 12; i++) {
-            this.trainCardDeck.add(new trainCardModel(cardColorEnum.WHITE));
-            this.trainCardDeck.add(new trainCardModel(cardColorEnum.BLUE));
-            this.trainCardDeck.add(new trainCardModel(cardColorEnum.RED));
-            this.trainCardDeck.add(new trainCardModel(cardColorEnum.GREEN));
-            this.trainCardDeck.add(new trainCardModel(cardColorEnum.BLACK));
-            this.trainCardDeck.add(new trainCardModel(cardColorEnum.YELLOW));
+            this.trainCardDeck.add(Constants.TrainCards.BLUE);
+            this.trainCardDeck.add(Constants.TrainCards.ORANGE);
+            this.trainCardDeck.add(Constants.TrainCards.PURPLE);
+            this.trainCardDeck.add(Constants.TrainCards.WHITE);
+            this.trainCardDeck.add(Constants.TrainCards.BLACK);
+            this.trainCardDeck.add(Constants.TrainCards.GREEN);
+            this.trainCardDeck.add(Constants.TrainCards.RED);
+            this.trainCardDeck.add(Constants.TrainCards.YELLOW);
+        }
+        for(int i = 0; i < 14; i++) {
+            this.trainCardDeck.add(Constants.TrainCards.LOCOMOTIVE);
         }
         shuffleTrainCards();
         //Draw 5 cards from deck, assign to the faceUp stuff
@@ -102,7 +101,6 @@ public class gameModel {
         trainCardDeck.remove(numCards); //Eliminate top card from array
         return card;
     }
-
     public trainCardModel drawFaceUpTrainCard(int pos) throws Exception {
         if(pos < 0 || pos > 4){
             throw new Exception("Invalid card position requested from face up train cards: " + pos);
@@ -114,14 +112,18 @@ public class gameModel {
         return curCard;
     }
 
-    private List<DestinationCardModel> drawDestinationCards() {
+    // public or private
+    public List<DestinationCardModel> drawDestinationCards() {
+        // state draws the destination cards: if on the client side, it calls a method on the server proxy
+        // if on the server side, the state draws cards from the deck inside of it
         return state.drawDestinationCards();
     }
 
-    // TODO have way to draw destination cards: pass in an interface as a parameter,
-    // then call a method on said interface? something to think about
-    // I think that it may be a good idea to call a method in IServer for the actual action
-    // of drawing a destination card.
+    public void returnDestinationCards(List<DestinationCardModel> destinationCards) {
+        // similar to draw destination cards: clients call method on server, server returns to the deck
+        // inside of it.
+        state.returnDestinationCards(destinationCards);
+    }
 
     // host is the first player in the list
     public playerModel getHostPlayer() {
@@ -181,8 +183,6 @@ public class gameModel {
         //determine player order: order they joined (order in 'players' array)
         //starting hand provided in the addPlayer() function
         //each player chooses their destination cards in turn order?
-        
-        
     }
 
     public List<playerModel> getPlayers() {
@@ -231,7 +231,7 @@ public class gameModel {
     // stats[0] = numbers of each color train card held by the player [int array length 9]
     // stats[1...n] = stats for player 1, player 2... player n [int array length 4]
     public List<int[]> getStats(usernameModel username) {
-    	List<int[]> stats = new ArrayList<int[]>();
+    	List<int[]> stats = new ArrayList<>();
 
     	List<trainCardModel> curPlayerHand = getPlayerByID(username).getTrainCardHand();
     	int[] cardTypes = new int[9];

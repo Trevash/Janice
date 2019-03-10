@@ -24,6 +24,8 @@ public class DestinationSelectFragment extends Fragment implements DestinationFr
 
     //ToDo: Disable if it's not your turn, connect to server to get destination cards.
     //ToDo: Also identify whether this is your first time drawing destination cards
+    // TODO actually keep cards
+    // TODO Fix Bug: less than 3 cards drawn (Index out of bounds error in updateDestinationCards)
 
     private DestinationFragmentPresenter presenter;
     private Context mContext;
@@ -109,10 +111,12 @@ public class DestinationSelectFragment extends Fragment implements DestinationFr
 
         mAcceptButton = v.findViewById(R.id.acceptDestinations);
         mAcceptButton.setEnabled(false);
+        mAcceptButton.setText("Return Cards");
         mAcceptButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //presenter.selectDestinationCards(selectedDestinationCards);
+                // TODO does not appear to be keeping or returning any of the cards.
+                presenter.selectDestinationCards(selectedDestinationCards, availableDestinationCards);
                 mContext.onFinishAction();
             }
         });
@@ -122,12 +126,12 @@ public class DestinationSelectFragment extends Fragment implements DestinationFr
     }
 
     @Override
-    public void updateDestinationCards(/*destinationCards cards*/) {
-        //availableDestinationCards = cards;
-        //mPrompt.setText();
-        //mDestination1.setText(card.at(0).getCity1() + " - " + card.at(0).getCity2() + ": " + card.at(0).getLength();
-        //mDestination2.setText(card.at(1).getCity1() + " - " + card.at(1).getCity2() + ": " + card.at(1).getLength();
-        //mDestination3.setText(card.at(2).getCity1() + " - " + card.at(2).getCity2() + ": " + card.at(2).getLength();
+    public void updateDestinationCards(List<DestinationCardModel> destCards) {
+        availableDestinationCards = destCards;
+        mPrompt.setText("Select X Cards to Keep"); // Should show number of cards
+        mDestination1.setText(destCards.get(0).getFormattedDestinationCard());
+        mDestination2.setText(destCards.get(1).getFormattedDestinationCard());
+        mDestination3.setText(destCards.get(2).getFormattedDestinationCard());
     }
 
     public void updateButton(){
