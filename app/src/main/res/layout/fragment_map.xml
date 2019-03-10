@@ -8,6 +8,15 @@
     android:background="@drawable/americamap"
     tools:context=".UI.MapFragment">
 
+    <ImageView
+        android:id="@+id/drawImageView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        tools:layout_editor_absoluteY="0dp" />
+
     <Button
         android:id="@+id/drawCardsButton"
         android:layout_width="140dp"

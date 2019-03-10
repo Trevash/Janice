@@ -1,14 +1,17 @@
 package com.janus.Presenter;
 
+import com.bignerdranch.android.shared.models.abstractRoute;
 import com.bignerdranch.android.shared.models.playerModel;
 import com.janus.ClientFacade;
 import com.janus.ClientModel;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class MapFragmentPresenter implements ClientFacade.Presenter {
     public interface View {
         void updateTurnIndicator(List<playerModel> players);
+        void updateRoutes(List<abstractRoute> routes);
     }
     private MapFragmentPresenter.View view;
     private ClientFacade facade = ClientFacade.getInstance();
@@ -20,6 +23,7 @@ public class MapFragmentPresenter implements ClientFacade.Presenter {
 
     public void updateUI(){
         view.updateTurnIndicator(model.getGame().getPlayers());
+        view.updateRoutes(model.getGame().getRoutes());
     }
 
     public void setFragment() {
