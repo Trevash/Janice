@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
+import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
@@ -36,6 +37,10 @@ public class StatusFragment extends Fragment implements StatusFragmentPresenter.
     private ViewPager viewPager;
     private StatusFragmentPresenter presenter;
     private Context context;
+
+    private ChatFragment chatFragment;
+    private DestinationRoutesFragment destinationRoutesFragment;
+    private GameHistoryFragment gameHistoryFragment;
 
     private List<TextView> colorTextViews;
     private List<TextView> playerOneStatusTextViews;
@@ -74,6 +79,22 @@ public class StatusFragment extends Fragment implements StatusFragmentPresenter.
     }
 
     @Override
+    public void onResume() {
+        super.onResume();
+        switch (whichFragmentToShow) {
+            case 0:
+                chatFragment.updatePresenter();
+                break;
+            case 1:
+                destinationRoutesFragment.updatePresenter();
+                break;
+            case 2:
+                //gameHistoryFragment.updatePresenter();
+                break;
+        }
+    }
+
+    @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setHasOptionsMenu(true);
@@ -89,6 +110,33 @@ public class StatusFragment extends Fragment implements StatusFragmentPresenter.
         setupViewPager(viewPager);
         
         viewPager.setCurrentItem(whichFragmentToShow);
+        viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+            @Override
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+
+            }
+
+            @Override
+            public void onPageSelected(int position) {
+                switch (position) {
+                    case 0:
+                        chatFragment.updatePresenter();
+                        break;
+                    case 1:
+                        destinationRoutesFragment.updatePresenter();
+                        break;
+                    case 2:
+                        //gameHistoryFragment.updatePresenter();
+                        break;
+                }
+            }
+
+            @Override
+            public void onPageScrollStateChanged(int state) {
+
+            }
+        });
+
 
         tabLayout = v.findViewById(R.id.tabs);
         tabLayout.setupWithViewPager(viewPager);
@@ -105,14 +153,22 @@ public class StatusFragment extends Fragment implements StatusFragmentPresenter.
     }
 
     private void setupViewPager(ViewPager viewPager) {
+        //for (Fragment fragment : getActivity().getSupportFragmentManager().getFragments()) {
+        //    getActivity().getSupportFragmentManager().beginTransaction().remove(fragment).commit();
+        //}
+
         ViewPagerAdapter adapter = new ViewPagerAdapter(getActivity().getSupportFragmentManager());
-        adapter.addFragment(new ChatFragment(), "Chat");
-        adapter.addFragment(new DestinationRoutesFragment(), "Destinations");
-        adapter.addFragment(new GameHistoryFragment(), "History");
+        chatFragment = new ChatFragment();
+        destinationRoutesFragment = new DestinationRoutesFragment();
+        gameHistoryFragment = new GameHistoryFragment();
+        adapter.addFragment(chatFragment, "Chat");
+        adapter.addFragment(destinationRoutesFragment, "Destinations");
+        adapter.addFragment(gameHistoryFragment, "History");
         viewPager.setAdapter(adapter);
+        adapter.notifyDataSetChanged();
     }
 
-    class ViewPagerAdapter extends FragmentPagerAdapter {
+    class ViewPagerAdapter extends FragmentStatePagerAdapter {
         private final List<Fragment> mFragmentList = new ArrayList<>();
         private final List<String> mFragmentTitleList = new ArrayList<>();
 

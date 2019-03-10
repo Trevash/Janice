@@ -66,6 +66,7 @@ public class ClientFacade {
 
     public void setChatbox(chatboxModel chatbox) {
         model.setChatbox(chatbox);
+        currentPresenter.updateUI();
     }
 
     public List<int[]> getStats() {

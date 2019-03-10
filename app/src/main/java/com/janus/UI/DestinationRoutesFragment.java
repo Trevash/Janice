@@ -29,7 +29,9 @@ public class DestinationRoutesFragment extends Fragment implements DestinationRo
     private List<DestinationCardModel> routes = new ArrayList<>();
     // TODO we're losing the destination cards somehow: figure out where, and how, and fix it
 
-    public DestinationRoutesFragment() {}
+    public DestinationRoutesFragment() {
+        presenter = new DestinationRoutesFragmentPresenter(this);
+    }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -39,9 +41,6 @@ public class DestinationRoutesFragment extends Fragment implements DestinationRo
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_destination_routes, container, false);
-
-        presenter = new DestinationRoutesFragmentPresenter(this);
-        presenter.setFragment();
 
         /* For testing Dummy Data
         routes.add(new destinationCardModel(new cityModel("New York"), new cityModel("Salt Lake"), 10));
@@ -55,6 +54,10 @@ public class DestinationRoutesFragment extends Fragment implements DestinationRo
         mRouteList.setAdapter(adapter);
 
         return v;
+    }
+
+    public void updatePresenter() {
+        presenter.setFragment();
     }
 
     public void updateSendButton(boolean isActive) {

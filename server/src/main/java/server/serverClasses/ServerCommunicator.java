@@ -100,7 +100,7 @@ public class ServerCommunicator extends WebSocketServer {
             	ChatboxData chatboxData = (ChatboxData) result.getData(ChatboxData.class);
             	gameIDModel gameID = chatboxData.getGameID();
             	gameModel gameChat = serverModel.getInstance().getGameByID(gameID);
-            	//broadcastGame(resultGson, gameChat);
+            	broadcastGame(resultGson, gameChat);
 
                 broadcastOne(resultGson, conn);
                 break;

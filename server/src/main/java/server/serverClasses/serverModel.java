@@ -16,6 +16,7 @@ import com.bignerdranch.android.shared.requestObjects.UpdateChatboxRequest;
 import com.bignerdranch.android.shared.exceptions.DuplicateException;
 import com.bignerdranch.android.shared.exceptions.GameNotFoundException;
 import com.bignerdranch.android.shared.exceptions.UserNotFoundException;
+import com.bignerdranch.android.shared.resultobjects.ChatboxData;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -179,11 +180,12 @@ public class serverModel {
         throw new GameNotFoundException("Game not found to start!");
     }
     
-    public chatboxModel updateChatbox(UpdateChatboxRequest request) throws GameNotFoundException {
+    public ChatboxData updateChatbox(UpdateChatboxRequest request) throws GameNotFoundException {
         for (gameModel curGame : this.games) {
             if(curGame.getGameID().getValue().equals(request.getGameID().getValue())) {
                 curGame.updateChatbox(request.getMessage());
-                return curGame.getChatbox();
+                ChatboxData data = new ChatboxData(curGame.getChatbox(), curGame.getGameID());
+                return data;
             }
         }
         throw new GameNotFoundException("Update chat failed, game not found");    }

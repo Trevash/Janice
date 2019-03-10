@@ -9,6 +9,7 @@ import org.java_websocket.handshake.ServerHandshake;
 import com.bignerdranch.android.shared.models.chatboxModel;
 import com.bignerdranch.android.shared.models.userModel;
 import com.bignerdranch.android.shared.models.gameModel;
+import com.bignerdranch.android.shared.resultobjects.ChatboxData;
 import com.bignerdranch.android.shared.resultobjects.Results;
 import com.bignerdranch.android.shared.Serializer;
 import com.janus.ClientFacade;
@@ -58,7 +59,8 @@ public class TtRClient extends WebSocketClient{
                     facade.setGame((gameModel) result.getData(gameModel.class));
                 }
                 case "UpdateChat": {
-                    facade.setChatbox((chatboxModel) result.getData(chatboxModel.class));
+                    ChatboxData chatboxData = (ChatboxData) result.getData(ChatboxData.class);
+                    facade.setChatbox(chatboxData.getChatbox());
                 }
             }
             messageResult = result;

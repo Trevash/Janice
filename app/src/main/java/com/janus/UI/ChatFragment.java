@@ -35,6 +35,10 @@ public class ChatFragment extends Fragment implements ChatFragmentPresenter.View
 
     private List<chatMessageModel> chats = new ArrayList<>();
 
+    public ChatFragment() {
+        presenter = new ChatFragmentPresenter(this);
+    }
+
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -43,10 +47,6 @@ public class ChatFragment extends Fragment implements ChatFragmentPresenter.View
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_chat, container, false);
-
-        presenter = new ChatFragmentPresenter(this);
-        presenter.setFragment();
-
         /* For Testing with Dummy Information
         usernameModel uModel;
         usernameModel uModelOne;
@@ -95,6 +95,10 @@ public class ChatFragment extends Fragment implements ChatFragmentPresenter.View
         return v;
     }
 
+    public void updatePresenter() {
+        presenter.setFragment();
+    }
+
     public void updateSendButton(boolean isActive) {
         mSendButton.setEnabled(isActive);
     }
@@ -108,8 +112,8 @@ public class ChatFragment extends Fragment implements ChatFragmentPresenter.View
                 chats = presenter.getChats();
                 //mChatAdapter.notifyItemRangeInserted(0, chats.size());
 
-                mChatAdapter.notifyItemRangeChanged(0, chats.size());
-                mChatAdapter.notifyDataSetChanged();
+                mChatAdapter = new ChatFragment.ChatListAdapter(chats);
+                mChatList.setAdapter(mChatAdapter);
             }
         });
     }

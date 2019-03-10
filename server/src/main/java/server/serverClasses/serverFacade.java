@@ -23,6 +23,7 @@ import com.bignerdranch.android.shared.requestObjects.RegisterRequest;
 import com.bignerdranch.android.shared.requestObjects.ReturnDestinationCardsRequest;
 import com.bignerdranch.android.shared.requestObjects.StartGameRequest;
 import com.bignerdranch.android.shared.requestObjects.UpdateChatboxRequest;
+import com.bignerdranch.android.shared.resultobjects.ChatboxData;
 import com.bignerdranch.android.shared.resultobjects.Results;
 
 public class serverFacade implements IServer {
@@ -118,7 +119,7 @@ public class serverFacade implements IServer {
             throw new InvalidAuthorizationException("Invalid Auth Token passed to updateChatBox");
         }
         
-        chatboxModel chatbox = serverModel.getInstance().updateChatbox(request);
+        ChatboxData chatbox = serverModel.getInstance().updateChatbox(request);
         return new Results("UpdateChat", true, chatbox);
 	}
 
