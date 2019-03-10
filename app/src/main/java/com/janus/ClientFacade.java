@@ -69,10 +69,10 @@ public class ClientFacade {
     }
 
     public List<int[]> getStats() {
-        return model.getGame().getStats(getUser().getUserName());
+        return getGame().getStats(getUser().getUserName());
     }
 
     public List<playerModel> getPlayers() {
-        return model.getGame().getPlayers();
+        return getGame().getPlayers();
     }
 }

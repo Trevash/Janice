@@ -38,47 +38,56 @@ public class Constants {
 
     public static class Cities {
         // TODO have someone check over this list for completion
-        public static final cityModel ATLANTA = new cityModel("Atlanta");
-        public static final cityModel BOSTON = new cityModel("Boston");
-        public static final cityModel CALGARY = new cityModel("Calgary");
-        public static final cityModel CHICAGO = new cityModel("Chicago");
-        public static final cityModel DALLAS = new cityModel("Dallas");
+        public static final cityModel ATLANTA = new cityModel("Atlanta", 888, 502);
+        public static final cityModel BOSTON = new cityModel("Boston", 1080, 208);
+        public static final cityModel CALGARY = new cityModel("Calgary", 350, 56);
+        public static final cityModel CHARLESTON = new cityModel("Charleston", 994, 512);
+        public static final cityModel CHICAGO = new cityModel("Chicago", 774, 302);
+        public static final cityModel DALLAS = new cityModel("Dallas", 608, 564);
 
-        public static final cityModel DENVER = new cityModel("Denver");
-        public static final cityModel DULUTH = new cityModel("Duluth");
-        public static final cityModel EL_PASO = new cityModel("El Paso");
-        public static final cityModel HELENA = new cityModel("Helena");
-        public static final cityModel HOUSTON = new cityModel("Houston");
+        public static final cityModel DENVER = new cityModel("Denver", 444, 390);
+        public static final cityModel DULUTH = new cityModel("Duluth", 662, 234);
+        public static final cityModel EL_PASO = new cityModel("El Paso", 412, 590);
+        public static final cityModel HELENA = new cityModel("Helena", 386, 218);
+        public static final cityModel HOUSTON = new cityModel("Houston", 648, 648);
 
-        public static final cityModel KANSAS_CITY = new cityModel("Kansas City");
-        public static final cityModel LAS_VEGAS = new cityModel("Las Vegas");
-        public static final cityModel LITTLE_ROCK = new cityModel("Little Rock");
-        public static final cityModel LOS_ANGELES = new cityModel("Los Angeles");
-        public static final cityModel MIAMI = new cityModel("Miami");
+        public static final cityModel KANSAS_CITY = new cityModel("Kansas City", 630, 390);
+        public static final cityModel LAS_VEGAS = new cityModel("Las Vegas", 218, 450);
+        public static final cityModel LITTLE_ROCK = new cityModel("Little Rock", 706, 492);
+        public static final cityModel LOS_ANGELES = new cityModel("Los Angeles", 150, 516);
+        public static final cityModel MIAMI = new cityModel("Miami", 1000, 714);
 
-        public static final cityModel MONTREAL = new cityModel("Montreal");
-        public static final cityModel NASHVILLE = new cityModel("Nashville");
-        public static final cityModel NEW_ORLEANS = new cityModel("New Orleans");
-        public static final cityModel NEW_YORK_CITY = new cityModel("New York City");
-        public static final cityModel OKLAHOMA_CITY = new cityModel("Oklahoma City");
+        public static final cityModel MONTREAL = new cityModel("Montreal", 1004, 134);
+        public static final cityModel NASHVILLE = new cityModel("Nashville", 840, 452);
+        public static final cityModel NEW_ORLEANS = new cityModel("New Orleans", 766, 620);
+        public static final cityModel NEW_YORK_CITY = new cityModel("New York City", 1028, 250);
+        public static final cityModel OKLAHOMA_CITY = new cityModel("Oklahoma City", 588, 474);
+        public static final cityModel OMAHA = new cityModel("Omaha", 612, 326);
 
-        public static final cityModel PHOENIX  = new cityModel("Phoenix");
-        public static final cityModel PITTSBURGH = new cityModel("Pittsburgh");
-        public static final cityModel PORTLAND = new cityModel("Portland");
-        public static final cityModel SALT_LAKE_CITY = new cityModel("Salt Lake City");
-        public static final cityModel SANTA_FE = new cityModel("Santa Fe");
 
-        public static final cityModel SAN_FRANCISCO = new cityModel("San Francisco");
-        public static final cityModel ST_MARIE = new cityModel("Sault St. Marie");
-        public static final cityModel SEATTLE = new cityModel("Seattle");
-        public static final cityModel TORONTO = new cityModel("Toronto");
-        public static final cityModel VANCOUVER = new cityModel("Vancouver");
-        public static final cityModel WINNIPEG = new cityModel("Winnipeg");
+        public static final cityModel PHOENIX  = new cityModel("Phoenix", 276, 516);
+        public static final cityModel PITTSBURGH = new cityModel("Pittsburgh", 948, 308);
+        public static final cityModel PORTLAND = new cityModel("Portland", 134, 188);
+        public static final cityModel RALEIGH = new cityModel("Raleigh", 974, 430);
+        public static final cityModel SALT_LAKE_CITY = new cityModel("Salt Lake City", 296, 328);
+        public static final cityModel SANTA_FE = new cityModel("Santa Fe", 408, 496);
+
+        public static final cityModel SAN_FRANCISCO = new cityModel("San Francisco", 74, 368);
+        public static final cityModel ST_MARIE = new cityModel("Sault St. Marie", 802, 178);
+        public static final cityModel ST_LOUIS = new cityModel("St. Louis", 734, 390);
+        public static final cityModel SEATTLE = new cityModel("Seattle", 162, 132);
+        public static final cityModel TORONTO = new cityModel("Toronto", 932, 202);
+        public static final cityModel VANCOUVER = new cityModel("Vancouver", 200, 80);
+        public static final cityModel WASHINGTON = new cityModel("Washington", 1030, 370);
+        public static final cityModel WINNIPEG = new cityModel("Winnipeg", 550, 80);
 
         //San Francisco to Atlanta (17), Portland to Nashville (17)
         //Vancouver to Montréal (20), Los Angeles to Miami (20)
         //Los Angeles to New York City (21)
         //Seattle to New York (22)
+
+        // coordinates:
+
     }
 
     public static class DestinationCards {

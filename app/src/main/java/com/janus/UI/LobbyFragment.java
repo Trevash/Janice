@@ -198,9 +198,10 @@ public class LobbyFragment extends Fragment implements LobbyFragmentPresenter.Vi
             */
         }
 
-        gameIDModel id = ClientModel.getInstance().getGame().getGameID();
-
-        if(ClientModel.getInstance().getGameByID(id).isGameStarted()){
+        //gameIDModel id = ClientModel.getInstance().getGame().getGameID();
+        //  getGameByID sometimes returns null
+        //if(ClientModel.getInstance().getGameByID(id).isGameStarted()){
+        if(ClientModel.getInstance().getGame().isGameStarted()) {
             Intent intent = new Intent(getActivity(), GameActivity.class);
             startActivity(intent);
         }
