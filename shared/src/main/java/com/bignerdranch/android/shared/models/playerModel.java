@@ -80,7 +80,7 @@ public class playerModel {
     	stats[3] = this.claimedRoutes.size();
     	return stats;
     }
-    
+
     public void DEMO_addDestinationCardToHand(DestinationCardModel card) {
     	destinationCardHand.add(card);
     }
@@ -96,5 +96,11 @@ public class playerModel {
         return destinationCardHand;
     }
 
+
+    public void addToClaimedRoutes(abstractRoute claimedRoute) {
+        //TODO: Increment score according to the length of the route
+        this.points += 5;
+        claimedRoutes.add(claimedRoute);
+    }
 }
 

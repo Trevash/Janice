@@ -7,6 +7,9 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.widget.Toast;
 
+import com.bignerdranch.android.shared.exceptions.DuplicateException;
+import com.bignerdranch.android.shared.exceptions.RouteAlreadyClaimedException;
+import com.bignerdranch.android.shared.models.abstractRoute;
 import com.bignerdranch.android.shared.Constants;
 import com.bignerdranch.android.shared.models.DestinationCardModel;
 import com.bignerdranch.android.shared.models.chatMessageModel;
@@ -17,6 +20,8 @@ import com.bignerdranch.android.shared.models.colors.playerColorEnum;
 import com.janus.ClientFacade;
 import com.janus.Communication.WaitTask;
 import com.janus.R;
+
+import java.util.List;
 
 public class GameActivity extends AppCompatActivity
         implements MapFragment.Context, RouteFragment.Context, DeckFragment.Context,
@@ -125,7 +130,13 @@ public class GameActivity extends AppCompatActivity
                 //● Add claimed route (for any player). Show this on the map.
                 makeToast("Claiming a route");
                 showRouteFragment();
-                //TODO: Claim a route
+                List<abstractRoute> curRoutes = curGame.getRoutes();
+                try {
+                    curRoutes.get(0).claim(curPlayer.getId());
+                } catch (RouteAlreadyClaimedException e) {
+                    e.printStackTrace();
+                }
+                curPlayer.addToClaimedRoutes(curRoutes.get(0));
                 task = new WaitTask(this);
                 task.execute(demoState);
                 break;
@@ -151,7 +162,6 @@ public class GameActivity extends AppCompatActivity
                 DestinationCardModel card2 = Constants.DestinationCards.ATLANTA_NEW_YORK;
                 curPlayer.DEMO_addDestinationCardToHand(card1);
                 curPlayer.DEMO_addDestinationCardToHand(card2);
-                //TODO: Claim destination cards
                 task = new WaitTask(this);
                 task.execute(demoState);
                 break;
@@ -167,6 +177,8 @@ public class GameActivity extends AppCompatActivity
                 showDestinationRoutesFragment();
                 curPlayer.DEMO_removeDestinationCardToHand(0);
                 curPlayer.DEMO_removeDestinationCardToHand(0);
+                task = new WaitTask(this);
+                task.execute(demoState);
                 break;
             case 9:
                 makeToast("Updated number of Destination cards for opponents");
@@ -184,10 +196,14 @@ public class GameActivity extends AppCompatActivity
                 break;
             case 11:
                 makeToast("Incrementing turn order to iWillLose");
-                usernameModel username = new usernameModel("iWillLose");
+                usernameModel username = null;
+                try {
+                    username = new usernameModel("iWillLose");
+                } catch (DuplicateException e) {
+                    e.printStackTrace();
+                }
                 playerModel fakePlayer = new playerModel(username, true,true,playerColorEnum.YELLOW);
-                
-                //TODO: Make fake player
+
                 //TODO: increment turn order
                 task = new WaitTask(this);
                 task.execute(demoState);
@@ -204,7 +220,7 @@ public class GameActivity extends AppCompatActivity
         .replace(R.id.game_layout, fragment)
         .commit();
     }
-    
+
     public void showDeckFragment() {
         DeckFragment fragment = new DeckFragment();
         fm.beginTransaction()

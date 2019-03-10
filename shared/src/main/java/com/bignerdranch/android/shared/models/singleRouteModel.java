@@ -7,21 +7,21 @@ public class singleRouteModel extends abstractRoute{
     private routeColorEnum trainColor;
     private playerIDModel claimer = null;
 
-    public singleRouteModel(cityModel city1, cityModel city2, int length, routeColorEnum defaultColor){
+    public singleRouteModel(cityModel city1, cityModel city2, int length, routeColorEnum color){
         super(city1, city2, length);
-        this.trainColor = defaultColor;
+        this.trainColor = color;
     }
 
     public playerIDModel getClaimer() {
         return claimer;
     }
 
-    public void claim(playerIDModel claimer, routeColorEnum newColor) throws RouteAlreadyClaimedException {
+    @Override
+    public void claim(playerIDModel claimer) throws RouteAlreadyClaimedException {
         if(this.claimer != null){
             throw new RouteAlreadyClaimedException("Route from " + this.getCity1().getName() + " to " + this.getCity2().getName() + " already claimed!");
         }
         this.claimer = claimer;
-        this.trainColor = newColor;
     }
 
     public routeColorEnum getTrainColor() {

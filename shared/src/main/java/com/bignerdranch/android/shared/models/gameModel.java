@@ -28,7 +28,6 @@ public class gameModel {
 
     // MapPic
     // Map<City, coordinate)
-    // List<Route> routes
     private List<abstractRoute> routes = new ArrayList<>();
     // ChatBox
     // Decks
@@ -45,7 +44,8 @@ public class gameModel {
         gameID = new gameIDModel();
         setGameName(newGameName);
         gameStarted = false;
-        this.setGameRoutesAndDecks();
+        this.setDecks();
+        this.setRoutes();
         try {
 			addPlayer(hostPlayer);
 		} catch (DuplicateException e) {
@@ -57,7 +57,7 @@ public class gameModel {
         this.state = state;
     }
 
-    private void setGameRoutesAndDecks() {
+    private void setDecks() {
 
         //Create dest cards deck here
         //this.destinationCardDeck.add(Constants.DestinationCards.LOS_ANGELES_NEW_YORK);
@@ -83,6 +83,12 @@ public class gameModel {
         this.faceUpCards.add(this.drawTrainCardFromDeck());
         this.faceUpCards.add(this.drawTrainCardFromDeck());
         this.faceUpCards.add(this.drawTrainCardFromDeck());
+
+        //destinationCardDeck = new DestinationCardDeckProxy();
+    }
+
+    private void setRoutes() {
+        this.routes.add(new singleRouteModel(Constants.Cities.SALT_LAKE_CITY, Constants.Cities.LAS_VEGAS, 4, routeColorEnum.GRAY));
     }
 
     private void shuffleTrainCards() {

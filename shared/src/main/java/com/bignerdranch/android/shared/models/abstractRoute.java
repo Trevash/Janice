@@ -36,5 +36,5 @@ abstract public class abstractRoute {
         return city2;
     }
 
-    public void claim(playerIDModel claimer, routeColorEnum newColor) throws RouteAlreadyClaimedException{}
+    public void claim(playerIDModel claimer) throws RouteAlreadyClaimedException{}
 }
