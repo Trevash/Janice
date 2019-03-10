@@ -2,8 +2,8 @@ package com.bignerdranch.android.shared.models;
 
 public class cityModel {
     private String name;
-    private int xCoordinate;
-    private int yCoordinate;
+    private int xCoordinate; // off by ratio of a little under 2
+    private int yCoordinate; // off by ration of about 1.7
 
     public cityModel(String name, int x, int y){
         this.name = name;
@@ -13,6 +13,14 @@ public class cityModel {
 
     public String getName() {
         return name;
+    }
+
+    public int getxCoordinate() {
+        return xCoordinate;
+    }
+
+    public int getyCoordinate() {
+        return yCoordinate;
     }
 
     @Override

@@ -1,11 +1,9 @@
 package com.bignerdranch.android.shared.models;
 
-import com.bignerdranch.android.shared.exceptions.DuplicateException;
-
 public class usernameModel {
     private String value;
 
-    public usernameModel(String newValue) throws DuplicateException {
+    public usernameModel(String newValue) {
         if(newValue == null || newValue.length() == 0) {
             throw new IllegalArgumentException("No username received!");
         }
