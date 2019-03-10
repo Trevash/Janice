@@ -49,13 +49,13 @@ public class gameModel {
         gameID = new gameIDModel();
         setGameName(newGameName);
         gameStarted = false;
+        this.setGameRoutesAndDecks();
         try {
 			addPlayer(hostPlayer);
 		} catch (DuplicateException e) {
 			e.printStackTrace();
 		}
         chatbox = new chatboxModel();
-        this.setGameRoutesAndDecks();
         this.turnCounter = 0;
 
         this.state = state;
