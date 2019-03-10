@@ -90,8 +90,8 @@ public class gameModel {
     }
 
     private void setRoutes() {
-        this.routes.add(new singleRouteModel(Constants.Cities.SALT_LAKE_CITY, Constants.Cities.LAS_VEGAS, 4, routeColorEnum.GRAY));
-        
+        //this.routes.add(new singleRouteModel(Constants.Cities.SALT_LAKE_CITY, Constants.Cities.LAS_VEGAS, 4, routeColorEnum.GRAY));
+        routes.addAll(singleRouteModel.createSingleRoutes());
         if(players.size() > 3){
             this.setDoubleRoutesFew();
         }
