@@ -1,6 +1,7 @@
 package com.janus.Presenter;
 
 import com.bignerdranch.android.shared.models.abstractRoute;
+import com.bignerdranch.android.shared.models.playerIDModel;
 import com.bignerdranch.android.shared.models.playerModel;
 import com.janus.ClientFacade;
 import com.janus.ClientModel;
@@ -28,5 +29,9 @@ public class MapFragmentPresenter implements ClientFacade.Presenter {
 
     public void setFragment() {
         facade.setPresenter(this);
+    }
+
+    public playerModel getPlayerByID(playerIDModel pidModel){
+        return model.getGame().getPlayerModelFromID(pidModel);
     }
 }
