@@ -7,8 +7,13 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.widget.Toast;
 
+import com.bignerdranch.android.shared.Constants;
+import com.bignerdranch.android.shared.models.DestinationCardModel;
+import com.bignerdranch.android.shared.models.chatMessageModel;
 import com.bignerdranch.android.shared.models.gameModel;
 import com.bignerdranch.android.shared.models.playerModel;
+import com.bignerdranch.android.shared.models.usernameModel;
+import com.bignerdranch.android.shared.models.colors.playerColorEnum;
 import com.janus.ClientFacade;
 import com.janus.Communication.WaitTask;
 import com.janus.R;
@@ -128,7 +133,6 @@ public class GameActivity extends AppCompatActivity
                 //● Show this on the map.
                 makeToast("Showing claimed route on map");
                 showMapFragment();
-                //TODO: Show claimed route on map
                 task = new WaitTask(this);
                 task.execute(demoState);
                 break;
@@ -142,7 +146,11 @@ public class GameActivity extends AppCompatActivity
             case 6:
                 //● Add player destination cards for this player
                 makeToast("Claiming Destination Cards");
-                showDeckFragment();
+                showDestinationRoutesFragment();
+                DestinationCardModel card1 = Constants.DestinationCards.ATLANTA_MONTREAL;
+                DestinationCardModel card2 = Constants.DestinationCards.ATLANTA_NEW_YORK;
+                curPlayer.DEMO_addDestinationCardToHand(card1);
+                curPlayer.DEMO_addDestinationCardToHand(card2);
                 //TODO: Claim destination cards
                 task = new WaitTask(this);
                 task.execute(demoState);
@@ -150,30 +158,35 @@ public class GameActivity extends AppCompatActivity
             case 7:
                 //● Update the number of cards in destination card deck
                 makeToast("Updated number of destination cards for opponents");
-                showStatusFragment();
+                showDestinationRoutesFragment();
                 task = new WaitTask(this);
                 task.execute(demoState);
                 break;
             case 8:
                 makeToast("Removing Destination cards from player");
-                showDeckFragment();
-                //TODO: Remove Destination cards
+                showDestinationRoutesFragment();
+                curPlayer.DEMO_removeDestinationCardToHand(0);
+                curPlayer.DEMO_removeDestinationCardToHand(0);
                 break;
             case 9:
                 makeToast("Updated number of Destination cards for opponents");
-                showStatusFragment();
+                showDestinationRoutesFragment();
                 task = new WaitTask(this);
                 task.execute(demoState);
                 break;
             case 10:
                 makeToast("Sending Chat message");
                 showChatFragment();
-                //TODO: Send chat message
+                chatMessageModel message = new chatMessageModel(curPlayer.getUserName(), "Hey! I'm a ghost that hacked your chat function!");
+                curGame.updateChatbox(message);
                 task = new WaitTask(this);
                 task.execute(demoState);
                 break;
             case 11:
-                makeToast("Incrementing turn order");
+                makeToast("Incrementing turn order to iWillLose");
+                usernameModel username = new usernameModel("iWillLose");
+                playerModel fakePlayer = new playerModel(username, true,true,playerColorEnum.YELLOW);
+                
                 //TODO: Make fake player
                 //TODO: increment turn order
                 task = new WaitTask(this);
@@ -184,6 +197,14 @@ public class GameActivity extends AppCompatActivity
         }
     }
 
+    public void showDestinationRoutesFragment() {
+    	StatusFragment fragment = new StatusFragment();
+    	fragment.setWhichFragmentToShow(1);
+        fm.beginTransaction()
+        .replace(R.id.game_layout, fragment)
+        .commit();
+    }
+    
     public void showDeckFragment() {
         DeckFragment fragment = new DeckFragment();
         fm.beginTransaction()
