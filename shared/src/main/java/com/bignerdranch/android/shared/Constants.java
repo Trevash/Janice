@@ -81,12 +81,13 @@ public class Constants {
         public static final cityModel WASHINGTON = new cityModel("Washington", 1030, 370);
         public static final cityModel WINNIPEG = new cityModel("Winnipeg", 550, 80);
 
-        //San Francisco to Atlanta (17), Portland to Nashville (17)
-        //Vancouver to Montréal (20), Los Angeles to Miami (20)
-        //Los Angeles to New York City (21)
-        //Seattle to New York (22)
-
-        // coordinates:
+        public static final cityModel[] CITIES = {
+                ATLANTA, BOSTON, CALGARY, CHARLESTON, CHICAGO, DALLAS, DENVER, DULUTH, EL_PASO,
+                HELENA, HOUSTON, KANSAS_CITY, LAS_VEGAS, LITTLE_ROCK, LOS_ANGELES, MIAMI, MONTREAL,
+                NASHVILLE, NEW_ORLEANS, NEW_YORK_CITY, OKLAHOMA_CITY, OMAHA, PHOENIX, PITTSBURGH,
+                PORTLAND, RALEIGH, SALT_LAKE_CITY, SANTA_FE, SAN_FRANCISCO, ST_MARIE, ST_LOUIS,
+                SEATTLE, TORONTO, VANCOUVER, WASHINGTON, WINNIPEG
+        };
 
     }
 
