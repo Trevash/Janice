@@ -208,13 +208,16 @@ public class LobbyFragment extends Fragment implements LobbyFragmentPresenter.Vi
 
     @Override
     public void updateLobbyUI(gameModel gameModel) {
-
-        getActivity().runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                update();
-            }
-        });
+        if(getActivity() != null) {
+            getActivity().runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    update();
+                }
+            });
+        } else {
+            System.out.println("Error: Lobby fragment method updateLobbyUI was called with a null activity");
+        }
     }
 
     /**

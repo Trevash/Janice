@@ -1,6 +1,10 @@
 package com.janus.Presenter;
 
+import com.bignerdranch.android.shared.models.DestinationCardModel;
 import com.janus.ClientFacade;
+import com.janus.ClientModel;
+
+import java.util.List;
 
 public class DestinationRoutesFragmentPresenter implements ClientFacade.Presenter {
 
@@ -23,5 +27,11 @@ public class DestinationRoutesFragmentPresenter implements ClientFacade.Presente
 
     public void updateUI() {
 
+    }
+
+    public List<DestinationCardModel> getDestinationCards() {
+        return ClientModel.getInstance().getGame()
+                .getPlayerByID(ClientModel.getInstance().getUser().getUserName())
+                .getDestinationCardHand();
     }
 }

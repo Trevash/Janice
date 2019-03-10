@@ -63,10 +63,6 @@ public class playerModel {
     public void setPlayerColor(playerColorEnum color) {
     	this.playerColor = color;
     }
-
-    public void drawDestCards(){
-
-    }
     
     public void addTrainCardToHand(trainCardModel card){
     	trainCardHand.add(card);
@@ -91,5 +87,14 @@ public class playerModel {
     public void DEMO_removeDestinationCardToHand(int i) {
     	destinationCardHand.remove(i);
     }
+
+    public void addDestinationCards(List<DestinationCardModel> cards) {
+        destinationCardHand.addAll(cards);
+    }
+
+    public List<DestinationCardModel> getDestinationCardHand() {
+        return destinationCardHand;
+    }
+
 }
 

@@ -65,6 +65,13 @@ public class DestinationCardDeck implements IDestinationCardDeck {
         return drawnCards;
     }
 
+
+    public void returnDestinationCards(List<DestinationCardModel> cards) {
+        for(int i = 0; i < cards.size(); i++) {
+            returnDestinationCard(cards.get(i));
+        }
+    }
+
     public void returnDestinationCard(DestinationCardModel card) {
         deck.add(card);
     }

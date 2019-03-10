@@ -15,4 +15,9 @@ public class DestinationCardModel {
     public String getFormattedDestinationCard() {
         return city1.getName() + " - " + city2.getName() + ": " + Integer.toString(pointValue);
     }
+
+    @Override
+    public String toString() {
+        return city1.getName() + " - " + city2.getName() + ": " + Integer.toString(pointValue);
+    }
 }

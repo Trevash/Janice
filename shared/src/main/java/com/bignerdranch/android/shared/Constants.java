@@ -2,18 +2,39 @@ package com.bignerdranch.android.shared;
 
 import com.bignerdranch.android.shared.models.DestinationCardModel;
 import com.bignerdranch.android.shared.models.cityModel;
+import com.bignerdranch.android.shared.models.colors.cardColorEnum;
+import com.bignerdranch.android.shared.models.trainCardModel;
 
 /**
  * A class of constants that are intended for use throughout the project, including in the server
  */
 public class Constants {
     public static final String IP_ADDRESS =
-            "192.168.1.100"; // Jason's home IP address
-            //"10.24.199.58";
+            //"192.168.1.100"; // Jason's home IP address
+            "10.24.203.171";
             //"10.24.219.177";
             //"10.37.93.67"; // Regular IP address for group testing
             //"10.34.241.184"; // another IP address for group testing
     public static final int PORT = 8087;
+
+    //1 map depicting the United States
+    //240 Colored Train Cars (48 each in Blue, Red, Green, Yellow & Black)
+    //96 Train Cards (12 each in Red, Orange, Yellow, Green, Blue, Purple, Black & White)
+    //14 Locomotive Wild Cards (Multicolored)
+
+    public static class TrainCards {
+        // 12 of each color
+        public static final trainCardModel RED = new trainCardModel(cardColorEnum.RED);
+        public static final trainCardModel ORANGE = new trainCardModel(cardColorEnum.ORANGE);
+        public static final trainCardModel YELLOW = new trainCardModel(cardColorEnum.YELLOW);
+        public static final trainCardModel GREEN = new trainCardModel(cardColorEnum.GREEN);
+        public static final trainCardModel BLUE = new trainCardModel(cardColorEnum.BLUE);
+        public static final trainCardModel PURPLE = new trainCardModel(cardColorEnum.PURPLE);
+        public static final trainCardModel BLACK = new trainCardModel(cardColorEnum.BLACK);
+        public static final trainCardModel WHITE = new trainCardModel(cardColorEnum.WHITE);
+        // 14 locomotives
+        public static final trainCardModel LOCOMOTIVE = new trainCardModel(cardColorEnum.LOCOMOTIVE);
+    }
 
     public static class Cities {
         // TODO have someone check over this list for completion

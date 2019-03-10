@@ -27,6 +27,7 @@ public class DestinationRoutesFragment extends Fragment implements DestinationRo
     private RecyclerView mRouteList;
 
     private List<DestinationCardModel> routes = new ArrayList<>();
+    // TODO we're losing the destination cards somehow: figure out where, and how, and fix it
 
     public DestinationRoutesFragment() {}
 
@@ -46,13 +47,12 @@ public class DestinationRoutesFragment extends Fragment implements DestinationRo
         routes.add(new destinationCardModel(new cityModel("New York"), new cityModel("Salt Lake"), 10));
         routes.add(new destinationCardModel(new cityModel("Orlando"), new cityModel("Los Angelos"), 12));
         */
+        routes = presenter.getDestinationCards();
 
         mRouteList = v.findViewById(R.id.destination_RecyclerView);
         mRouteList.setLayoutManager(new LinearLayoutManager(getActivity()));
         adapter = new RouteListAdapter(routes);
         mRouteList.setAdapter(adapter);
-
-
 
         return v;
     }

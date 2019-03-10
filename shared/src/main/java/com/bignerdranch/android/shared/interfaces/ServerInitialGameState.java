@@ -16,8 +16,9 @@ public class ServerInitialGameState implements IGameState {
 
     @Override
     public void returnDestinationCards(List<DestinationCardModel> destinationCards) {
-        for(int i = 0; i < destinationCards.size(); i++) {
-            destinationCardDeck.returnDestinationCard(destinationCards.get(i));
-        }
+        //for(int i = 0; i < destinationCards.size(); i++) {
+        //    destinationCardDeck.returnDestinationCard(destinationCards.get(i));
+        //}
+        destinationCardDeck.returnDestinationCards(destinationCards);
     }
 }
