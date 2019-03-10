@@ -1,7 +1,7 @@
 package com.bignerdranch.android.shared.models;
 
+import com.bignerdranch.android.shared.Constants;
 import com.bignerdranch.android.shared.exceptions.RouteAlreadyClaimedException;
-import com.bignerdranch.android.shared.models.colors.routeColorEnum;
 
 abstract public class abstractRoute {
     private routeIDModel routeID;
@@ -37,4 +37,5 @@ abstract public class abstractRoute {
     }
 
     public void claim(playerIDModel claimer) throws RouteAlreadyClaimedException{}
+
 }
