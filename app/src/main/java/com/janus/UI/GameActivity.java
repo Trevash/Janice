@@ -197,11 +197,8 @@ public class GameActivity extends AppCompatActivity
             case 11:
                 makeToast("Incrementing turn order to iWillLose");
                 usernameModel username = null;
-                try {
-                    username = new usernameModel("iWillLose");
-                } catch (DuplicateException e) {
-                    e.printStackTrace();
-                }
+                username = new usernameModel("iWillLose");
+
                 playerModel fakePlayer = new playerModel(username, true,true,playerColorEnum.YELLOW);
 
                 //TODO: increment turn order

@@ -6,13 +6,15 @@ import java.util.ArrayList;
 import java.util.List;
 
 abstract public class abstractDoubleRoute extends abstractRoute{
-    protected routeColorEnum trainColor;
+    protected routeColorEnum trainColor1;
+    protected routeColorEnum trainColor2;
     protected playerIDModel claimer1 = null;
     protected playerIDModel claimer2 = null;
 
-    public abstractDoubleRoute(cityModel city1, cityModel city2, int length, routeColorEnum color) {
+    public abstractDoubleRoute(cityModel city1, cityModel city2, int length, routeColorEnum color1, routeColorEnum color2) {
         super(city1, city2, length);
-        trainColor = color;
+        trainColor1 = color1;
+        trainColor2 = color2;
     }
 
 
@@ -20,12 +22,20 @@ abstract public class abstractDoubleRoute extends abstractRoute{
         return claimer1;
     }
 
-    public routeColorEnum getTrainColor() {
-        return trainColor;
+    public routeColorEnum getTrainColor1() {
+        return trainColor1;
     }
 
-    public void setTrainColor(routeColorEnum trainColor) {
-        this.trainColor = trainColor;
+    public void setTrainColor1(routeColorEnum trainColor1) {
+        this.trainColor1 = trainColor1;
+    }
+
+    public routeColorEnum getTrainColor2() {
+        return trainColor2;
+    }
+
+    public void setTrainColor2(routeColorEnum trainColor2) {
+        this.trainColor2 = trainColor2;
     }
 
     public playerIDModel getClaimer2() {

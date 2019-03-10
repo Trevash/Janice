@@ -4,8 +4,9 @@ import com.bignerdranch.android.shared.exceptions.RouteAlreadyClaimedException;
 import com.bignerdranch.android.shared.models.colors.routeColorEnum;
 
 public class doubleRouteModelFew extends abstractDoubleRoute {
-    public doubleRouteModelFew(cityModel city1, cityModel city2, int length, routeColorEnum color) {
-        super(city1, city2, length, color);
+    public doubleRouteModelFew(cityModel city1, cityModel city2, int length,
+                               routeColorEnum color1, routeColorEnum color2) {
+        super(city1, city2, length, color1, color2);
     }
 
     @Override

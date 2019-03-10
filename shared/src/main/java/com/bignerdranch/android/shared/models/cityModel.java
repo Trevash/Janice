@@ -9,7 +9,7 @@ public class cityModel {
         this.name = name;
         xCoordinate = x;
         yCoordinate = y;
-    } // test
+    }
 
     public String getName() {
         return name;
