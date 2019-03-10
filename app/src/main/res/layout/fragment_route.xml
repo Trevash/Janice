@@ -15,7 +15,8 @@
             android:layout_height="wrap_content"
             android:text="@string/routesString"
             android:textSize="50sp"
-            android:gravity="center"/>
+            android:gravity="center"
+            android:layout_marginBottom="50dp"/>
 
         <android.support.v7.widget.RecyclerView
             xmlns:android="http://schemas.android.com/apk/res/android"
@@ -23,7 +24,6 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             tools:listitem="@layout/list_item_route" />
-
     </LinearLayout>
 
 </FrameLayout>

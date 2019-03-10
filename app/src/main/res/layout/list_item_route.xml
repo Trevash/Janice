@@ -12,7 +12,7 @@
         android:id="@+id/routeCitiesView"
         android:text=""
         android:layout_margin="10dp"
-        android:textSize="15sp"/>
+        android:textSize="20sp"/>
 
     <TextView
         android:layout_width="match_parent"
@@ -20,7 +20,7 @@
         android:id="@+id/routeLengthView"
         android:text=""
         android:layout_margin="10dp"
-        android:textSize="15sp"/>
+        android:textSize="20sp"/>
 
     <TextView
         android:layout_width="match_parent"
@@ -28,7 +28,7 @@
         android:id="@+id/routeColorView"
         android:text=""
         android:layout_margin="10dp"
-        android:textSize="15sp"/>
+        android:textSize="20sp"/>
 
     <Button
         android:id="@+id/claimButton"
@@ -37,7 +37,7 @@
         android:layout_weight="1"
         android:text="@string/claim"
         android:layout_margin="10dp"
-        android:textSize="15sp"
+        android:textSize="30sp"
         android:gravity="end"/>
 
 </LinearLayout>
