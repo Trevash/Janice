@@ -102,6 +102,7 @@ public class GameActivity extends AppCompatActivity
         this.demoState = demoState;
         gameModel curGame = ClientFacade.getInstance().getGame();
         playerModel curPlayer = curGame.getHostPlayer();
+        ClientFacade client = ClientFacade.getInstance();
         switch (demoState) {
             case 1:
                 //● Add train cards for this player
@@ -116,6 +117,7 @@ public class GameActivity extends AppCompatActivity
                 catch (Exception e) {
                     e.printStackTrace();
                 }
+                client.update();
                 task = new WaitTask(this);
                 task.execute(demoState);
                 break;
@@ -123,6 +125,7 @@ public class GameActivity extends AppCompatActivity
                 //● Update the number of train cards for opponent players
                 makeToast("Updated number of train cards for opponents");
                 showStatusFragment(0);
+                client.update();
                 task = new WaitTask(this);
                 task.execute(demoState);
                 break;
@@ -137,6 +140,7 @@ public class GameActivity extends AppCompatActivity
                     e.printStackTrace();
                 }
                 curPlayer.addToClaimedRoutes(curRoutes.get(0));
+                client.update();
                 task = new WaitTask(this);
                 task.execute(demoState);
                 break;
@@ -144,6 +148,7 @@ public class GameActivity extends AppCompatActivity
                 //● Show this on the map.
                 makeToast("Showing claimed route on map");
                 showMapFragment();
+                client.update();
                 task = new WaitTask(this);
                 task.execute(demoState);
                 break;
@@ -151,6 +156,7 @@ public class GameActivity extends AppCompatActivity
                 //● Update player points, the number of train cars, and cards for opponent players
                 makeToast("Updated score, number of train cards and train cars for opponents");
                 showStatusFragment(0);
+                client.update();
                 task = new WaitTask(this);
                 task.execute(demoState);
                 break;
@@ -162,6 +168,7 @@ public class GameActivity extends AppCompatActivity
                 DestinationCardModel card2 = Constants.DestinationCards.ATLANTA_NEW_YORK;
                 curPlayer.DEMO_addDestinationCardToHand(card1);
                 curPlayer.DEMO_addDestinationCardToHand(card2);
+                client.update();
                 task = new WaitTask(this);
                 task.execute(demoState);
                 break;
@@ -169,6 +176,7 @@ public class GameActivity extends AppCompatActivity
                 //● Update the number of cards in destination card deck
                 makeToast("Updated number of destination cards for opponents");
                 showStatusFragment(1);
+                client.update();
                 task = new WaitTask(this);
                 task.execute(demoState);
                 break;
@@ -177,12 +185,14 @@ public class GameActivity extends AppCompatActivity
                 showStatusFragment(1);
                 curPlayer.DEMO_removeDestinationCardToHand(0);
                 curPlayer.DEMO_removeDestinationCardToHand(0);
+                client.update();
                 task = new WaitTask(this);
                 task.execute(demoState);
                 break;
             case 9:
                 makeToast("Updated number of Destination cards for opponents");
                 showStatusFragment(1);
+                client.update();
                 task = new WaitTask(this);
                 task.execute(demoState);
                 break;
@@ -191,6 +201,7 @@ public class GameActivity extends AppCompatActivity
                 showStatusFragment(0);
                 chatMessageModel message = new chatMessageModel(curPlayer.getUserName(), "Hey! I'm a ghost that hacked your chat function!");
                 curGame.updateChatbox(message);
+                client.update();
                 task = new WaitTask(this);
                 task.execute(demoState);
                 break;
@@ -202,6 +213,7 @@ public class GameActivity extends AppCompatActivity
                 playerModel fakePlayer = new playerModel(username, true,true,playerColorEnum.YELLOW);
 
                 //TODO: increment turn order
+                client.update();
                 task = new WaitTask(this);
                 task.execute(demoState);
             default:

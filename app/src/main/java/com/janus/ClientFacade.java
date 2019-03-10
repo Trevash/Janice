@@ -25,7 +25,7 @@ public class ClientFacade {
         return facade;
     }
 
-    private void update() {
+    public void update() {
         currentPresenter.updateUI();
     }
 
