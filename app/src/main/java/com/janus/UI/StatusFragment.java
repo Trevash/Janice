@@ -43,8 +43,14 @@ public class StatusFragment extends Fragment implements StatusFragmentPresenter.
     private List<TextView> playerThreeStatusTextViews;
     private List<TextView> playerFourStatusTextViews;
     private List<TextView> playerFiveStatusTextViews;
+    
+    private int whichFragmentToShow = 0;
 
     public StatusFragment() {}
+    
+    public void setWhichFragmentToShow(int i) {
+    	whichFragmentToShow = i;
+    }
 
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater){
@@ -81,6 +87,8 @@ public class StatusFragment extends Fragment implements StatusFragmentPresenter.
 
         viewPager = v.findViewById(R.id.viewpager);
         setupViewPager(viewPager);
+        
+        viewPager.setCurrentItem(whichFragmentToShow);
 
         tabLayout = v.findViewById(R.id.tabs);
         tabLayout.setupWithViewPager(viewPager);

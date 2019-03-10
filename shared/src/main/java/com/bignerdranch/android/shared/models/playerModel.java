@@ -84,5 +84,12 @@ public class playerModel {
     	stats[3] = this.claimedRoutes.size();
     	return stats;
     }
+    
+    public void DEMO_addDestinationCardToHand(DestinationCardModel card) {
+    	destinationCardHand.add(card);
+    }
+    public void DEMO_removeDestinationCardToHand(int i) {
+    	destinationCardHand.remove(i);
+    }
 }
 
