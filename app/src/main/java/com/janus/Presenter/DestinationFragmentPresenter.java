@@ -35,7 +35,7 @@ public class DestinationFragmentPresenter implements ClientFacade.Presenter {
         returnCards.removeAll(selectedCards);
         gameModel game = ClientModel.getInstance().getGame();
         game.returnDestinationCards(returnCards);
-        game.getPlayerByID(ClientModel.getInstance().getUser().getUserName())
+        game.getPlayerByUsername(ClientModel.getInstance().getUser().getUserName())
                 .addDestinationCards(selectedCards);
     }
 }

@@ -2,16 +2,14 @@ package com.bignerdranch.android.shared.models;
 
 import com.bignerdranch.android.shared.Constants;
 import com.bignerdranch.android.shared.exceptions.DuplicateException;
-import com.bignerdranch.android.shared.interfaces.IDestinationCardDeck;
 import com.bignerdranch.android.shared.interfaces.IGameState;
-import com.bignerdranch.android.shared.models.colors.cardColorEnum;
 import com.bignerdranch.android.shared.models.colors.playerColorEnum;
 import com.bignerdranch.android.shared.models.colors.routeColorEnum;
-import com.bignerdranch.android.shared.proxy.DestinationCardDeckProxy;
 
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
 
 public class gameModel {
     private gameIDModel gameID;
@@ -20,6 +18,7 @@ public class gameModel {
     private List<playerModel> players = new ArrayList<>();
     private chatboxModel chatbox;
     private int turnCounter;
+    private Map<String, playerModel> mapPlayerIDToModel;
 
     // TODO create states - will want more for phase 3
     private IGameState state;
@@ -223,6 +222,7 @@ public class gameModel {
         for(int i = 0; i<4; i++) {
         	newPlayer.addTrainCardToHand(drawTrainCardFromDeck());
         }
+        mapPlayerIDToModel.put(newPlayer.getId().getValue(), newPlayer);
         players.add(newPlayer);
     }
 
@@ -291,7 +291,7 @@ public class gameModel {
         return routes;
     }
     
-    public playerModel getPlayerByID(usernameModel username) {
+    public playerModel getPlayerByUsername(usernameModel username) {
     	for (playerModel player : this.players) {
     		if(player.getUserName().equals(username)) {
     			return player;
@@ -306,7 +306,7 @@ public class gameModel {
     public List<int[]> getStats(usernameModel username) {
     	List<int[]> stats = new ArrayList<>();
 
-    	List<trainCardModel> curPlayerHand = getPlayerByID(username).getTrainCardHand();
+    	List<trainCardModel> curPlayerHand = getPlayerByUsername(username).getTrainCardHand();
     	int[] cardTypes = new int[9];
     	for (int i = 0; i < curPlayerHand.size(); i++) {
     		cardTypes[curPlayerHand.get(i).getColor().ordinal()] += 1;
@@ -315,5 +315,8 @@ public class gameModel {
     	for (int i = 0; i < players.size(); i++) {stats.add(players.get(i).getStats());}
     	return stats;
     }
-    
+
+    public playerModel getPlayerModelFromID(playerIDModel id) {
+        return mapPlayerIDToModel.get(id.getValue());
+    }
 }
