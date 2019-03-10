@@ -100,6 +100,7 @@ public class playerModel {
     public void addToClaimedRoutes(abstractRoute claimedRoute) {
         //TODO: Increment score according to the length of the route
         this.points += 5;
+        this.locomotives -= claimedRoute.getLength();
         claimedRoutes.add(claimedRoute);
     }
 }

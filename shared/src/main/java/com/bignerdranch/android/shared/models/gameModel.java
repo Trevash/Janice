@@ -7,7 +7,6 @@ import com.bignerdranch.android.shared.models.colors.playerColorEnum;
 import com.bignerdranch.android.shared.models.colors.routeColorEnum;
 
 import java.util.ArrayList;
-import java.util.Hashtable;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
@@ -44,8 +43,8 @@ public class gameModel {
         gameID = new gameIDModel();
         setGameName(newGameName);
         gameStarted = false;
-        mapPlayerIDToModel = new Hashtable<>();
         this.setDecks();
+
         try {
 			addPlayer(hostPlayer);
 		} catch (DuplicateException e) {
@@ -88,9 +87,8 @@ public class gameModel {
     }
 
     private void setRoutes() {
-        routes.addAll(singleRouteModel.createSingleRoutes());
         this.routes.add(new singleRouteModel(Constants.Cities.SALT_LAKE_CITY, Constants.Cities.LAS_VEGAS, 4, routeColorEnum.GRAY));
-
+        
         if(players.size() > 3){
             this.setDoubleRoutesFew();
         }
@@ -250,16 +248,13 @@ public class gameModel {
             throw new IllegalStateException("Too many players to start game!");
         }
 
-        this.setRoutes();
-
         this.gameStarted = true;
+        this.setRoutes();
         
         //color assigned in the addPlayer() function
         //determine player order: order they joined (order in 'players' array)
         //starting hand provided in the addPlayer() function
         //each player chooses their destination cards in turn order?
-        
-        
     }
 
     public List<playerModel> getPlayers() {
