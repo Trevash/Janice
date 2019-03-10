@@ -20,6 +20,8 @@ public class GameActivity extends AppCompatActivity
     private int demoState = 0;
     private WaitTask task;
 
+    // TODO figure out bug: sometimes a back button press returns player to game activity
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

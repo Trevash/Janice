@@ -2,9 +2,13 @@ package com.bignerdranch.android.shared.models;
 
 public class cityModel {
     private String name;
+    private int xCoordinate;
+    private int yCoordinate;
 
-    public cityModel(String name){
+    public cityModel(String name, int x, int y){
         this.name = name;
+        xCoordinate = x;
+        yCoordinate = y;
     }
 
     public String getName() {
