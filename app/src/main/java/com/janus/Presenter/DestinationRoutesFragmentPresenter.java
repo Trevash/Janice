@@ -31,7 +31,7 @@ public class DestinationRoutesFragmentPresenter implements ClientFacade.Presente
 
     public List<DestinationCardModel> getDestinationCards() {
         return ClientModel.getInstance().getGame()
-                .getPlayerByID(ClientModel.getInstance().getUser().getUserName())
+                .getPlayerByUsername(ClientModel.getInstance().getUser().getUserName())
                 .getDestinationCardHand();
     }
 }
