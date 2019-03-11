@@ -14,6 +14,7 @@ public class ClientFacade {
 
     private static ClientFacade facade;
     private Presenter currentPresenter;
+    private Presenter statusPresenter;
     private ClientModel model = ClientModel.getInstance();
 
     private ClientFacade() {}
@@ -27,10 +28,17 @@ public class ClientFacade {
 
     public void update() {
         currentPresenter.updateUI();
+        if (statusPresenter != null) {
+            statusPresenter.updateUI();
+        }
     }
 
     public void setPresenter(Presenter presenter) {
         this.currentPresenter = presenter;
+    }
+
+    public void setStatusPresenter(Presenter statusPresenter) {
+        this.statusPresenter = statusPresenter;
     }
 
     public userModel getUser() {
@@ -40,6 +48,9 @@ public class ClientFacade {
     public void setUser(userModel user) {
         model.setUser(user);
         currentPresenter.updateUI();
+        if (statusPresenter != null) {
+            statusPresenter.updateUI();
+        }
     }
 
     public List<gameModel> getServerGameList() {
@@ -49,6 +60,9 @@ public class ClientFacade {
     public void setServerGameList(GameListData games) {
         model.setServerGameList(games);
         currentPresenter.updateUI();
+        if (statusPresenter != null) {
+            statusPresenter.updateUI();
+        }
     }
 
     public gameModel getGame() {
@@ -58,6 +72,9 @@ public class ClientFacade {
     public void setGame(gameModel game) {
         model.setGame(game);
         currentPresenter.updateUI();
+        if (statusPresenter != null) {
+            statusPresenter.updateUI();
+        }
     }
 
     public chatboxModel getChatbox() {

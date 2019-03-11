@@ -321,10 +321,6 @@ public class gameModel {
 
         for (int i = 0; i < players.size(); i++) {
             stats.add(players.get(i).getStats());
-            //TODO: Remove if statement (only for demo)
-            if (players.get(i).getDestinationCardHand().size() > 0) {
-            	stats.get(1)[1] -= 2;
-            }
         }
         return stats;
     }
