@@ -17,7 +17,7 @@ public class WaitTask extends AsyncTask<Integer, Void, Integer> {
     @Override
     protected Integer doInBackground(Integer... demoState) {
         try {
-            Thread.sleep(8000);
+            Thread.sleep(5000);
         }
         catch (InterruptedException e) {
             e.printStackTrace();

@@ -111,6 +111,10 @@ public class GameActivity extends AppCompatActivity
                 //● Update the number of invisible (face down) cards in train card deck and the visible (face up) cards in the train card deck
                 makeToast("Drawing train cards, updating deck size and face-up trains");
                 showDeckFragment();
+                task = new WaitTask(this);
+                task.execute(demoState);
+                break;
+            case 2:
                 curPlayer.addTrainCardToHand(curGame.drawTrainCardFromDeck());
                 try {
                     curPlayer.addTrainCardToHand(curGame.drawFaceUpTrainCard(0));
@@ -123,7 +127,7 @@ public class GameActivity extends AppCompatActivity
                 task = new WaitTask(this);
                 task.execute(demoState);
                 break;
-            case 2:
+            case 3:
                 //● Update the number of train cards for opponent players
                 makeToast("Updated number of train cards for opponents");
                 showStatusFragment(0);
@@ -131,10 +135,14 @@ public class GameActivity extends AppCompatActivity
                 task = new WaitTask(this);
                 task.execute(demoState);
                 break;
-            case 3:
+            case 4:
                 //● Add claimed route (for any player). Show this on the map.
                 makeToast("Claiming a route");
                 showRouteFragment();
+                task = new WaitTask(this);
+                task.execute(demoState);
+                break;
+            case 5:
                 List<abstractRoute> curRoutes = curGame.getRoutes();
                 try {
                     curRoutes.get(0).claim(curPlayer.getId());
@@ -146,7 +154,7 @@ public class GameActivity extends AppCompatActivity
                 task = new WaitTask(this);
                 task.execute(demoState);
                 break;
-            case 4:
+            case 6:
                 //● Show this on the map.
                 makeToast("Showing claimed route on map");
                 showMapFragment();
@@ -154,7 +162,7 @@ public class GameActivity extends AppCompatActivity
                 task = new WaitTask(this);
                 task.execute(demoState);
                 break;
-            case 5:
+            case 7:
                 //● Update player points, the number of train cars, and cards for opponent players
                 makeToast("Updated score, number of train cards and train cars for opponents");
                 showStatusFragment(0);
@@ -162,10 +170,15 @@ public class GameActivity extends AppCompatActivity
                 task = new WaitTask(this);
                 task.execute(demoState);
                 break;
-            case 6:
+            case 8:
                 //● Add player destination cards for this player
                 makeToast("Claiming Destination Cards");
                 showStatusFragment(1);
+                task = new WaitTask(this);
+                task.execute(demoState);
+                break;
+            case 9:
+                makeToast("Updated number of destination cards for opponents");
                 DestinationCardModel card1 = Constants.DestinationCards.ATLANTA_MONTREAL;
                 DestinationCardModel card2 = Constants.DestinationCards.ATLANTA_NEW_YORK;
                 curPlayer.DEMO_addDestinationCardToHand(card1);
@@ -174,15 +187,7 @@ public class GameActivity extends AppCompatActivity
                 task = new WaitTask(this);
                 task.execute(demoState);
                 break;
-            case 7:
-                //● Update the number of cards in destination card deck
-                makeToast("Updated number of destination cards for opponents");
-                showStatusFragment(1);
-                client.update();
-                task = new WaitTask(this);
-                task.execute(demoState);
-                break;
-            case 8:
+            case 10:
                 makeToast("Removing Destination cards from player");
                 showStatusFragment(1);
                 curPlayer.DEMO_removeDestinationCardToHand(0);
@@ -191,14 +196,7 @@ public class GameActivity extends AppCompatActivity
                 task = new WaitTask(this);
                 task.execute(demoState);
                 break;
-            case 9:
-                makeToast("Updated number of Destination cards for opponents");
-                showStatusFragment(1);
-                client.update();
-                task = new WaitTask(this);
-                task.execute(demoState);
-                break;
-            case 10:
+            case 11:
                 makeToast("Sending Chat message");
                 showStatusFragment(0);
                 chatMessageModel message = new chatMessageModel(curPlayer.getUserName(), "Hey! I'm a ghost that hacked your chat function!");
@@ -211,8 +209,13 @@ public class GameActivity extends AppCompatActivity
                 task = new WaitTask(this);
                 task.execute(demoState);
                 break;
-            case 11:
+            case 12:
                 makeToast("Incrementing turn order to iWillLose");
+                showMapFragment();
+                task = new WaitTask(this);
+                task.execute(demoState);
+                break;
+            case 13:
                 curGame.incrementTurnCounter();
                 client.update();
                 task = new WaitTask(this);
