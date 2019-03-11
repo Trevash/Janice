@@ -17,7 +17,9 @@ import com.bignerdranch.android.shared.models.gameModel;
 import com.bignerdranch.android.shared.models.playerModel;
 import com.bignerdranch.android.shared.models.usernameModel;
 import com.bignerdranch.android.shared.models.colors.playerColorEnum;
+import com.bignerdranch.android.shared.requestObjects.UpdateChatboxRequest;
 import com.janus.ClientFacade;
+import com.janus.Communication.ServerProxy;
 import com.janus.Communication.WaitTask;
 import com.janus.R;
 
@@ -200,7 +202,7 @@ public class GameActivity extends AppCompatActivity
                 makeToast("Sending Chat message");
                 showStatusFragment(0);
                 chatMessageModel message = new chatMessageModel(curPlayer.getUserName(), "Hey! I'm a ghost that hacked your chat function!");
-                curGame.updateChatbox(message);
+                ServerProxy.getInstance().updateChatbox(new UpdateChatboxRequest(curGame.getGameID(), client.getUser().getAuthToken(), message));
                 client.update();
                 task = new WaitTask(this);
                 task.execute(demoState);
