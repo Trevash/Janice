@@ -256,6 +256,8 @@ public class GameActivity extends AppCompatActivity
         //Demonstrate the following with pauses so the human eyes can read toasts and follow along
         gameModel curGame = ClientFacade.getInstance().getGame();
         playerModel fakePlayer = new playerModel(new usernameModel("iWillLose"), true,true,playerColorEnum.YELLOW);
+        fakePlayer.DEMO_addDestinationCardToHand(Constants.DestinationCards.CHICAGO_LOS_ANGELES);
+        fakePlayer.DEMO_addDestinationCardToHand(Constants.DestinationCards.CHICAGO_SANTA_FE);
         try {
             curGame.addPlayer(fakePlayer);
         } catch (DuplicateException e) {

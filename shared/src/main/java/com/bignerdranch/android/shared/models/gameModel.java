@@ -19,7 +19,7 @@ public class gameModel {
     private boolean gameStarted; // TODO can remove this - by adding another state to represent an unstarted game
     private List<playerModel> players = new ArrayList<>();
     private chatboxModel chatbox;
-    private int turnCounter = 0;
+    private int turnCounter;
     private Map<String, playerModel> mapPlayerIDToModel;
 
     // TODO create states - will want more for phase 3
