@@ -118,7 +118,6 @@ public class GameActivity extends AppCompatActivity
                 curPlayer.addTrainCardToHand(curGame.drawTrainCardFromDeck());
                 try {
                     curPlayer.addTrainCardToHand(curGame.drawFaceUpTrainCard(0));
-                    curPlayer.addTrainCardToHand(curGame.drawFaceUpTrainCard(1));
                 }
                 catch (Exception e) {
                     e.printStackTrace();
