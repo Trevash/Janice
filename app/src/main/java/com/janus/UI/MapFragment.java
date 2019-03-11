@@ -144,7 +144,7 @@ public class MapFragment extends Fragment implements MapFragmentPresenter.View{
                 mContext.onClickDestinationSelect();
             }
         });
-        mDrawDestinationsButton.setEnabled(false);
+        mDrawDestinationsButton.setEnabled(true);
 
         mRunDemoButton = v.findViewById(R.id.demo_Button);
         mRunDemoButton.setOnClickListener(new View.OnClickListener() {
@@ -247,10 +247,10 @@ public class MapFragment extends Fragment implements MapFragmentPresenter.View{
         playerModel[] playerModels = new playerModel[updatedPlayers.size()];
         mPlayerAdapter = new PlayerAdapter(updatedPlayers.toArray(playerModels));
         mTurnRecyclerView.setAdapter(mPlayerAdapter);
-        mDrawDestinationsButton.setEnabled(false);
+        /*mDrawDestinationsButton.setEnabled(false);
         if(presenter.isCurrentPlayersTurn()){
             mDrawDestinationsButton.setEnabled(true);
-        }
+        }*/
     }
 
     public void updateRoutes(List<abstractRoute> updatedRoutes){
