@@ -312,11 +312,13 @@ public class StatusFragment extends Fragment implements StatusFragmentPresenter.
     }
 
     public void updateUI() {
-        getActivity().runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                buildStats(view);
-            }
-        });
+        if (getActivity() != null) {
+            getActivity().runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    buildStats(view);
+                }
+            });
+        }
     }
 }

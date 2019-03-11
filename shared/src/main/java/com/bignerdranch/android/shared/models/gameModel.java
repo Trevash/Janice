@@ -206,9 +206,9 @@ public class gameModel {
     }
 
     public void addPlayer(playerModel newPlayer) throws DuplicateException {
-        //if (gameStarted) {
-        //    throw new IllegalStateException("Game has already been started");
-        //}
+        if (gameStarted) {
+            throw new IllegalStateException("Game has already been started");
+        }
         for (playerModel curPlayer : this.players) {
             if (curPlayer.getUserName().getValue().equals(newPlayer.getUserName().getValue())) {
                 throw new DuplicateException("User is already a player in this game");
@@ -244,9 +244,9 @@ public class gameModel {
     }
 
     public void startGame() {
-        //if (players.size() < 2){
-        //    throw new IllegalStateException("Insufficient number of players to start game!");
-        //}
+        if (players.size() < 2){
+            throw new IllegalStateException("Insufficient number of players to start game!");
+        }
         if (players.size() > 5) {
             throw new IllegalStateException("Too many players to start game!");
         }
