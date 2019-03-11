@@ -315,6 +315,9 @@ public class gameModel {
         stats.add(cardTypes);
         for (int i = 0; i < players.size(); i++) {
             stats.add(players.get(i).getStats());
+            if (players.get(i).getDestinationCardHand().size() > 2) {
+            	stats.get(i+2)[3] -= players.get(i).getDestinationCardHand().size();
+            }
         }
         return stats;
     }
