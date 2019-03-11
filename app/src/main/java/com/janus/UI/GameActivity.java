@@ -138,10 +138,10 @@ public class GameActivity extends AppCompatActivity
                 List<abstractRoute> curRoutes = curGame.getRoutes();
                 try {
                     curRoutes.get(0).claim(curPlayer.getId());
-                } catch (RouteAlreadyClaimedException e) {
+                    curPlayer.addToClaimedRoutes(curRoutes.get(0));
+                } catch (Exception e) {
                     e.printStackTrace();
                 }
-                curPlayer.addToClaimedRoutes(curRoutes.get(0));
                 client.update();
                 task = new WaitTask(this);
                 task.execute(demoState);
