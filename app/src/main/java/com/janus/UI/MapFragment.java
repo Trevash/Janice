@@ -171,25 +171,30 @@ public class MapFragment extends Fragment implements MapFragmentPresenter.View{
             mPlayerNameView.setText(p.getUserName().getValue());
             switch (p.getPlayerColor()) {
                 case RED:
-                    mPlayerBox.setBackgroundColor(Color.RED);
+                    //mPlayerBox.setBackgroundColor(Color.RED);
+                    mPlayerBox.setBackgroundColor(getResources().getColor(R.color.translucentRed));
                     break;
                 case YELLOW:
-                    mPlayerBox.setBackgroundColor(Color.YELLOW);
+                    //mPlayerBox.setBackgroundColor(Color.YELLOW);
+                    mPlayerBox.setBackgroundColor(getResources().getColor(R.color.translucentYellow));
                     break;
                 case BLUE:
-                    mPlayerBox.setBackgroundColor(Color.BLUE);
+                    //mPlayerBox.setBackgroundColor(Color.BLUE);
+                    mPlayerBox.setBackgroundColor(getResources().getColor(R.color.translucentBlue));
                     break;
                 case GREEN:
-                    mPlayerBox.setBackgroundColor(Color.GREEN);
+                    //mPlayerBox.setBackgroundColor(Color.GREEN);
+                    mPlayerBox.setBackgroundColor(getResources().getColor(R.color.translucentGreen));
                     break;
                 case BLACK:
-                    mPlayerBox.setBackgroundColor(Color.BLACK);
+                    //mPlayerBox.setBackgroundColor(Color.BLACK);
+                    mPlayerBox.setBackgroundColor(getResources().getColor(R.color.translucentBlack));
                     mPlayerNameView.setTextColor(Color.WHITE);
                     break;
                 default:
                     break;
             }
-            //ToDo: If it's this player's turn, highlight the box
+            //if(p.)
         }
 
         public PlayerHolder(LayoutInflater inflater, ViewGroup parent){
@@ -236,30 +241,6 @@ public class MapFragment extends Fragment implements MapFragmentPresenter.View{
         mRoutes = new ArrayList<>(updatedRoutes);
         mapImage.setImageDrawable(new Drawings());
     }
-
-    /*public class CircleView extends View
-    {
-        private Paint paint;
-        private int x;
-        private int y;
-        private int r;
-
-        public CircleView(android.content.Context context, int xVal, int yVal, int radius)
-        {
-            super(context);
-            paint = new Paint();
-            paint.setColor(Color.RED);
-            x = xVal;
-            y = yVal;
-            r = radius;
-        }
-
-        @Override
-        protected void onDraw(Canvas canvas) {
-            super.onDraw(canvas);
-            canvas.drawCircle(x, y, r, paint);
-        }
-    }*/
 
     private class Drawings extends Drawable {
         @Override
