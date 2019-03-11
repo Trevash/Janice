@@ -77,7 +77,7 @@ public class playerModel {
     	stats[0] = this.points;
     	stats[1] = this.locomotives;
     	stats[2] = this.trainCardHand.size();
-    	stats[3] = this.claimedRoutes.size();
+    	stats[3] = this.destinationCardHand.size();
     	return stats;
     }
 
