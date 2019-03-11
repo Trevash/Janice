@@ -32,12 +32,12 @@ public class gameModel {
     private List<abstractRoute> routes = new ArrayList<>();
     // ChatBox
     // Decks
-        // Train
+    // Train
     private ArrayList<trainCardModel> trainCardDeck = new ArrayList<>();
-        // Dest
-        // Face-up
+    // Dest
+    // Face-up
     private List<trainCardModel> faceUpCards = new ArrayList<>();
-        // Discard
+    // Discard
     private LinkedList trainCardDiscard = new LinkedList();
 
 
@@ -49,10 +49,10 @@ public class gameModel {
         this.setDecks();
 
         try {
-			addPlayer(hostPlayer);
-		} catch (DuplicateException e) {
-			e.printStackTrace();
-		}
+            addPlayer(hostPlayer);
+        } catch (DuplicateException e) {
+            e.printStackTrace();
+        }
         chatbox = new chatboxModel();
         this.turnCounter = 0;
 
@@ -65,7 +65,7 @@ public class gameModel {
         //this.destinationCardDeck.add(Constants.DestinationCards.LOS_ANGELES_NEW_YORK);
 
         //Create train card deck here, then shuffles
-        for(int i = 0; i < 12; i++) {
+        for (int i = 0; i < 12; i++) {
             this.trainCardDeck.add(Constants.TrainCards.BLUE);
             this.trainCardDeck.add(Constants.TrainCards.ORANGE);
             this.trainCardDeck.add(Constants.TrainCards.PURPLE);
@@ -75,7 +75,7 @@ public class gameModel {
             this.trainCardDeck.add(Constants.TrainCards.RED);
             this.trainCardDeck.add(Constants.TrainCards.YELLOW);
         }
-        for(int i = 0; i < 14; i++) {
+        for (int i = 0; i < 14; i++) {
             this.trainCardDeck.add(Constants.TrainCards.LOCOMOTIVE);
         }
         shuffleTrainCards();
@@ -90,77 +90,75 @@ public class gameModel {
     }
 
     private void setRoutes() {
-        //this.routes.add(new singleRouteModel(Constants.Cities.SALT_LAKE_CITY, Constants.Cities.LAS_VEGAS, 4, routeColorEnum.GRAY));
         routes.addAll(singleRouteModel.createSingleRoutes());
-        if(players.size() > 3){
-            this.setDoubleRoutesFew();
-        }
-        else{
+        if (players.size() > 3) {
             this.setDoubleRoutesMany();
+        } else {
+            this.setDoubleRoutesFew();
         }
     }
 
     private void setDoubleRoutesFew() {
-        this.routes.add(new doubleRouteModelFew(Constants.Cities.VANCOUVER , Constants.Cities.SEATTLE , 1, routeColorEnum.GRAY , routeColorEnum.GRAY));
-        this.routes.add(new doubleRouteModelFew(Constants.Cities.PORTLAND , Constants.Cities.SEATTLE , 1, routeColorEnum.GRAY , routeColorEnum.GRAY ));
-        this.routes.add(new doubleRouteModelFew(Constants.Cities.PORTLAND , Constants.Cities.SAN_FRANCISCO , 5, routeColorEnum.GREEN , routeColorEnum.PURPLE ));
-        this.routes.add(new doubleRouteModelFew(Constants.Cities.SAN_FRANCISCO , Constants.Cities.LOS_ANGELES , 3, routeColorEnum.PURPLE , routeColorEnum.YELLOW ));
-        this.routes.add(new doubleRouteModelFew(Constants.Cities.SAN_FRANCISCO , Constants.Cities.SALT_LAKE_CITY, 5, routeColorEnum.ORANGE , routeColorEnum.WHITE ));
+        this.routes.add(new doubleRouteModelFew(Constants.Cities.VANCOUVER, Constants.Cities.SEATTLE, 1, routeColorEnum.GRAY, routeColorEnum.GRAY));
+        this.routes.add(new doubleRouteModelFew(Constants.Cities.PORTLAND, Constants.Cities.SEATTLE, 1, routeColorEnum.GRAY, routeColorEnum.GRAY));
+        this.routes.add(new doubleRouteModelFew(Constants.Cities.PORTLAND, Constants.Cities.SAN_FRANCISCO, 5, routeColorEnum.GREEN, routeColorEnum.PURPLE));
+        this.routes.add(new doubleRouteModelFew(Constants.Cities.SAN_FRANCISCO, Constants.Cities.LOS_ANGELES, 3, routeColorEnum.PURPLE, routeColorEnum.YELLOW));
+        this.routes.add(new doubleRouteModelFew(Constants.Cities.SAN_FRANCISCO, Constants.Cities.SALT_LAKE_CITY, 5, routeColorEnum.ORANGE, routeColorEnum.WHITE));
 
-        this.routes.add(new doubleRouteModelFew(Constants.Cities.SALT_LAKE_CITY , Constants.Cities.DENVER , 3, routeColorEnum.RED , routeColorEnum.YELLOW ));
-        this.routes.add(new doubleRouteModelFew(Constants.Cities.DENVER , Constants.Cities.KANSAS_CITY , 4, routeColorEnum.ORANGE , routeColorEnum.BLACK ));
-        this.routes.add(new doubleRouteModelFew(Constants.Cities.DULUTH , Constants.Cities.OMAHA , 2, routeColorEnum.GRAY , routeColorEnum.GRAY ));
-        this.routes.add(new doubleRouteModelFew(Constants.Cities.OMAHA , Constants.Cities.KANSAS_CITY , 1, routeColorEnum.GRAY , routeColorEnum.GRAY ));
-        this.routes.add(new doubleRouteModelFew(Constants.Cities.KANSAS_CITY , Constants.Cities.OKLAHOMA_CITY , 2, routeColorEnum.GRAY , routeColorEnum.GRAY ));
+        this.routes.add(new doubleRouteModelFew(Constants.Cities.SALT_LAKE_CITY, Constants.Cities.DENVER, 3, routeColorEnum.RED, routeColorEnum.YELLOW));
+        this.routes.add(new doubleRouteModelFew(Constants.Cities.DENVER, Constants.Cities.KANSAS_CITY, 4, routeColorEnum.ORANGE, routeColorEnum.BLACK));
+        this.routes.add(new doubleRouteModelFew(Constants.Cities.DULUTH, Constants.Cities.OMAHA, 2, routeColorEnum.GRAY, routeColorEnum.GRAY));
+        this.routes.add(new doubleRouteModelFew(Constants.Cities.OMAHA, Constants.Cities.KANSAS_CITY, 1, routeColorEnum.GRAY, routeColorEnum.GRAY));
+        this.routes.add(new doubleRouteModelFew(Constants.Cities.KANSAS_CITY, Constants.Cities.OKLAHOMA_CITY, 2, routeColorEnum.GRAY, routeColorEnum.GRAY));
 
-        this.routes.add(new doubleRouteModelFew(Constants.Cities.OKLAHOMA_CITY , Constants.Cities.DALLAS , 2, routeColorEnum.GRAY , routeColorEnum.GRAY ));
-        this.routes.add(new doubleRouteModelFew(Constants.Cities.DALLAS , Constants.Cities.HOUSTON , 1, routeColorEnum.GRAY , routeColorEnum.GRAY ));
-        this.routes.add(new doubleRouteModelFew(Constants.Cities.KANSAS_CITY , Constants.Cities.ST_LOUIS , 2, routeColorEnum.PURPLE , routeColorEnum.BLUE ));
-        this.routes.add(new doubleRouteModelFew(Constants.Cities.ST_LOUIS , Constants.Cities.CHICAGO , 2, routeColorEnum.GREEN , routeColorEnum.WHITE ));
-        this.routes.add(new doubleRouteModelFew(Constants.Cities.CHICAGO , Constants.Cities.PITTSBURGH , 3, routeColorEnum.ORANGE , routeColorEnum.BLACK ));
+        this.routes.add(new doubleRouteModelFew(Constants.Cities.OKLAHOMA_CITY, Constants.Cities.DALLAS, 2, routeColorEnum.GRAY, routeColorEnum.GRAY));
+        this.routes.add(new doubleRouteModelFew(Constants.Cities.DALLAS, Constants.Cities.HOUSTON, 1, routeColorEnum.GRAY, routeColorEnum.GRAY));
+        this.routes.add(new doubleRouteModelFew(Constants.Cities.KANSAS_CITY, Constants.Cities.ST_LOUIS, 2, routeColorEnum.PURPLE, routeColorEnum.BLUE));
+        this.routes.add(new doubleRouteModelFew(Constants.Cities.ST_LOUIS, Constants.Cities.CHICAGO, 2, routeColorEnum.GREEN, routeColorEnum.WHITE));
+        this.routes.add(new doubleRouteModelFew(Constants.Cities.CHICAGO, Constants.Cities.PITTSBURGH, 3, routeColorEnum.ORANGE, routeColorEnum.BLACK));
 
-        this.routes.add(new doubleRouteModelFew(Constants.Cities.PITTSBURGH , Constants.Cities.NEW_YORK_CITY , 2, routeColorEnum.GREEN , routeColorEnum.WHITE ));
-        this.routes.add(new doubleRouteModelFew(Constants.Cities.NEW_YORK_CITY , Constants.Cities.BOSTON , 2, routeColorEnum.YELLOW , routeColorEnum.RED ));
-        this.routes.add(new doubleRouteModelFew(Constants.Cities.BOSTON , Constants.Cities.MONTREAL , 2, routeColorEnum.GRAY , routeColorEnum.GRAY ));
-        this.routes.add(new doubleRouteModelFew(Constants.Cities.NEW_YORK_CITY , Constants.Cities.WASHINGTON , 2, routeColorEnum.ORANGE , routeColorEnum.BLACK ));
-        this.routes.add(new doubleRouteModelFew(Constants.Cities.WASHINGTON , Constants.Cities.RALEIGH , 2, routeColorEnum.GRAY , routeColorEnum.GRAY ));
+        this.routes.add(new doubleRouteModelFew(Constants.Cities.PITTSBURGH, Constants.Cities.NEW_YORK_CITY, 2, routeColorEnum.GREEN, routeColorEnum.WHITE));
+        this.routes.add(new doubleRouteModelFew(Constants.Cities.NEW_YORK_CITY, Constants.Cities.BOSTON, 2, routeColorEnum.YELLOW, routeColorEnum.RED));
+        this.routes.add(new doubleRouteModelFew(Constants.Cities.BOSTON, Constants.Cities.MONTREAL, 2, routeColorEnum.GRAY, routeColorEnum.GRAY));
+        this.routes.add(new doubleRouteModelFew(Constants.Cities.NEW_YORK_CITY, Constants.Cities.WASHINGTON, 2, routeColorEnum.ORANGE, routeColorEnum.BLACK));
+        this.routes.add(new doubleRouteModelFew(Constants.Cities.WASHINGTON, Constants.Cities.RALEIGH, 2, routeColorEnum.GRAY, routeColorEnum.GRAY));
 
-        this.routes.add(new doubleRouteModelFew(Constants.Cities.RALEIGH , Constants.Cities.ATLANTA , 2, routeColorEnum.GRAY , routeColorEnum.GRAY ));
-        this.routes.add(new doubleRouteModelFew(Constants.Cities.NEW_ORLEANS , Constants.Cities.ATLANTA , 4, routeColorEnum.YELLOW , routeColorEnum.ORANGE ));
+        this.routes.add(new doubleRouteModelFew(Constants.Cities.RALEIGH, Constants.Cities.ATLANTA, 2, routeColorEnum.GRAY, routeColorEnum.GRAY));
+        this.routes.add(new doubleRouteModelFew(Constants.Cities.NEW_ORLEANS, Constants.Cities.ATLANTA, 4, routeColorEnum.YELLOW, routeColorEnum.ORANGE));
     }
 
     private void setDoubleRoutesMany() {
-        this.routes.add(new doubleRouteModelMany(Constants.Cities.VANCOUVER , Constants.Cities.SEATTLE , 1, routeColorEnum.GRAY , routeColorEnum.GRAY));
-        this.routes.add(new doubleRouteModelMany(Constants.Cities.PORTLAND , Constants.Cities.SEATTLE , 1, routeColorEnum.GRAY , routeColorEnum.GRAY ));
-        this.routes.add(new doubleRouteModelMany(Constants.Cities.PORTLAND , Constants.Cities.SAN_FRANCISCO , 5, routeColorEnum.GREEN , routeColorEnum.PURPLE ));
-        this.routes.add(new doubleRouteModelMany(Constants.Cities.SAN_FRANCISCO , Constants.Cities.LOS_ANGELES , 3, routeColorEnum.PURPLE , routeColorEnum.YELLOW ));
-        this.routes.add(new doubleRouteModelMany(Constants.Cities.SAN_FRANCISCO , Constants.Cities.SALT_LAKE_CITY, 5, routeColorEnum.ORANGE , routeColorEnum.WHITE ));
+        this.routes.add(new doubleRouteModelMany(Constants.Cities.VANCOUVER, Constants.Cities.SEATTLE, 1, routeColorEnum.GRAY, routeColorEnum.GRAY));
+        this.routes.add(new doubleRouteModelMany(Constants.Cities.PORTLAND, Constants.Cities.SEATTLE, 1, routeColorEnum.GRAY, routeColorEnum.GRAY));
+        this.routes.add(new doubleRouteModelMany(Constants.Cities.PORTLAND, Constants.Cities.SAN_FRANCISCO, 5, routeColorEnum.GREEN, routeColorEnum.PURPLE));
+        this.routes.add(new doubleRouteModelMany(Constants.Cities.SAN_FRANCISCO, Constants.Cities.LOS_ANGELES, 3, routeColorEnum.PURPLE, routeColorEnum.YELLOW));
+        this.routes.add(new doubleRouteModelMany(Constants.Cities.SAN_FRANCISCO, Constants.Cities.SALT_LAKE_CITY, 5, routeColorEnum.ORANGE, routeColorEnum.WHITE));
 
-        this.routes.add(new doubleRouteModelMany(Constants.Cities.SALT_LAKE_CITY , Constants.Cities.DENVER , 3, routeColorEnum.RED , routeColorEnum.YELLOW ));
-        this.routes.add(new doubleRouteModelMany(Constants.Cities.DENVER , Constants.Cities.KANSAS_CITY , 4, routeColorEnum.ORANGE , routeColorEnum.BLACK ));
-        this.routes.add(new doubleRouteModelMany(Constants.Cities.DULUTH , Constants.Cities.OMAHA , 2, routeColorEnum.GRAY , routeColorEnum.GRAY ));
-        this.routes.add(new doubleRouteModelMany(Constants.Cities.OMAHA , Constants.Cities.KANSAS_CITY , 1, routeColorEnum.GRAY , routeColorEnum.GRAY ));
-        this.routes.add(new doubleRouteModelMany(Constants.Cities.KANSAS_CITY , Constants.Cities.OKLAHOMA_CITY , 2, routeColorEnum.GRAY , routeColorEnum.GRAY ));
+        this.routes.add(new doubleRouteModelMany(Constants.Cities.SALT_LAKE_CITY, Constants.Cities.DENVER, 3, routeColorEnum.RED, routeColorEnum.YELLOW));
+        this.routes.add(new doubleRouteModelMany(Constants.Cities.DENVER, Constants.Cities.KANSAS_CITY, 4, routeColorEnum.ORANGE, routeColorEnum.BLACK));
+        this.routes.add(new doubleRouteModelMany(Constants.Cities.DULUTH, Constants.Cities.OMAHA, 2, routeColorEnum.GRAY, routeColorEnum.GRAY));
+        this.routes.add(new doubleRouteModelMany(Constants.Cities.OMAHA, Constants.Cities.KANSAS_CITY, 1, routeColorEnum.GRAY, routeColorEnum.GRAY));
+        this.routes.add(new doubleRouteModelMany(Constants.Cities.KANSAS_CITY, Constants.Cities.OKLAHOMA_CITY, 2, routeColorEnum.GRAY, routeColorEnum.GRAY));
 
-        this.routes.add(new doubleRouteModelMany(Constants.Cities.OKLAHOMA_CITY , Constants.Cities.DALLAS , 2, routeColorEnum.GRAY , routeColorEnum.GRAY ));
-        this.routes.add(new doubleRouteModelMany(Constants.Cities.DALLAS , Constants.Cities.HOUSTON , 1, routeColorEnum.GRAY , routeColorEnum.GRAY ));
-        this.routes.add(new doubleRouteModelMany(Constants.Cities.KANSAS_CITY , Constants.Cities.ST_LOUIS , 2, routeColorEnum.PURPLE , routeColorEnum.BLUE ));
-        this.routes.add(new doubleRouteModelMany(Constants.Cities.ST_LOUIS , Constants.Cities.CHICAGO , 2, routeColorEnum.GREEN , routeColorEnum.WHITE ));
-        this.routes.add(new doubleRouteModelMany(Constants.Cities.CHICAGO , Constants.Cities.PITTSBURGH , 3, routeColorEnum.ORANGE , routeColorEnum.BLACK ));
+        this.routes.add(new doubleRouteModelMany(Constants.Cities.OKLAHOMA_CITY, Constants.Cities.DALLAS, 2, routeColorEnum.GRAY, routeColorEnum.GRAY));
+        this.routes.add(new doubleRouteModelMany(Constants.Cities.DALLAS, Constants.Cities.HOUSTON, 1, routeColorEnum.GRAY, routeColorEnum.GRAY));
+        this.routes.add(new doubleRouteModelMany(Constants.Cities.KANSAS_CITY, Constants.Cities.ST_LOUIS, 2, routeColorEnum.PURPLE, routeColorEnum.BLUE));
+        this.routes.add(new doubleRouteModelMany(Constants.Cities.ST_LOUIS, Constants.Cities.CHICAGO, 2, routeColorEnum.GREEN, routeColorEnum.WHITE));
+        this.routes.add(new doubleRouteModelMany(Constants.Cities.CHICAGO, Constants.Cities.PITTSBURGH, 3, routeColorEnum.ORANGE, routeColorEnum.BLACK));
 
-        this.routes.add(new doubleRouteModelMany(Constants.Cities.PITTSBURGH , Constants.Cities.NEW_YORK_CITY , 2, routeColorEnum.GREEN , routeColorEnum.WHITE ));
-        this.routes.add(new doubleRouteModelMany(Constants.Cities.NEW_YORK_CITY , Constants.Cities.BOSTON , 2, routeColorEnum.YELLOW , routeColorEnum.RED ));
-        this.routes.add(new doubleRouteModelMany(Constants.Cities.BOSTON , Constants.Cities.MONTREAL , 2, routeColorEnum.GRAY , routeColorEnum.GRAY ));
-        this.routes.add(new doubleRouteModelMany(Constants.Cities.NEW_YORK_CITY , Constants.Cities.WASHINGTON , 2, routeColorEnum.ORANGE , routeColorEnum.BLACK ));
-        this.routes.add(new doubleRouteModelMany(Constants.Cities.WASHINGTON , Constants.Cities.RALEIGH , 2, routeColorEnum.GRAY , routeColorEnum.GRAY ));
+        this.routes.add(new doubleRouteModelMany(Constants.Cities.PITTSBURGH, Constants.Cities.NEW_YORK_CITY, 2, routeColorEnum.GREEN, routeColorEnum.WHITE));
+        this.routes.add(new doubleRouteModelMany(Constants.Cities.NEW_YORK_CITY, Constants.Cities.BOSTON, 2, routeColorEnum.YELLOW, routeColorEnum.RED));
+        this.routes.add(new doubleRouteModelMany(Constants.Cities.BOSTON, Constants.Cities.MONTREAL, 2, routeColorEnum.GRAY, routeColorEnum.GRAY));
+        this.routes.add(new doubleRouteModelMany(Constants.Cities.NEW_YORK_CITY, Constants.Cities.WASHINGTON, 2, routeColorEnum.ORANGE, routeColorEnum.BLACK));
+        this.routes.add(new doubleRouteModelMany(Constants.Cities.WASHINGTON, Constants.Cities.RALEIGH, 2, routeColorEnum.GRAY, routeColorEnum.GRAY));
 
-        this.routes.add(new doubleRouteModelMany(Constants.Cities.RALEIGH , Constants.Cities.ATLANTA , 2, routeColorEnum.GRAY , routeColorEnum.GRAY ));
-        this.routes.add(new doubleRouteModelMany(Constants.Cities.NEW_ORLEANS , Constants.Cities.ATLANTA , 4, routeColorEnum.YELLOW , routeColorEnum.ORANGE ));
+        this.routes.add(new doubleRouteModelMany(Constants.Cities.RALEIGH, Constants.Cities.ATLANTA, 2, routeColorEnum.GRAY, routeColorEnum.GRAY));
+        this.routes.add(new doubleRouteModelMany(Constants.Cities.NEW_ORLEANS, Constants.Cities.ATLANTA, 4, routeColorEnum.YELLOW, routeColorEnum.ORANGE));
     }
 
     private void shuffleTrainCards() {
-        for(int i = 0; i < trainCardDeck.size(); i++) {
-            int j = (int)(Math.random() * trainCardDeck.size());
+        for (int i = 0; i < trainCardDeck.size(); i++) {
+            int j = (int) (Math.random() * trainCardDeck.size());
             trainCardModel temp = trainCardDeck.get(i);
             trainCardDeck.set(i, trainCardDeck.get(j));
             trainCardDeck.set(j, temp);
@@ -174,8 +172,9 @@ public class gameModel {
         trainCardDeck.remove(numCards); //Eliminate top card from array
         return card;
     }
+
     public trainCardModel drawFaceUpTrainCard(int pos) throws Exception {
-        if(pos < 0 || pos > 4){
+        if (pos < 0 || pos > 4) {
             throw new Exception("Invalid card position requested from face up train cards: " + pos);
         }
 
@@ -208,22 +207,22 @@ public class gameModel {
     }
 
     public void addPlayer(playerModel newPlayer) throws DuplicateException {
-        if(gameStarted) {
+        if (gameStarted) {
             throw new IllegalStateException("Game has already been started");
         }
         for (playerModel curPlayer : this.players) {
-            if(curPlayer.getUserName().getValue().equals(newPlayer.getUserName().getValue())){
+            if (curPlayer.getUserName().getValue().equals(newPlayer.getUserName().getValue())) {
                 throw new DuplicateException("User is already a player in this game");
             }
         }
-        if(players.size() >= 5) {
+        if (players.size() >= 5) {
             throw new IllegalStateException("Max number of players reached!");
         }
         //assigns player color
         newPlayer.setPlayerColor(playerColorEnum.values()[players.size()]);
         //draws new player's starting hand
-        for(int i = 0; i<4; i++) {
-        	newPlayer.addTrainCardToHand(drawTrainCardFromDeck());
+        for (int i = 0; i < 4; i++) {
+            newPlayer.addTrainCardToHand(drawTrainCardFromDeck());
         }
         mapPlayerIDToModel.put(newPlayer.getId().getValue(), newPlayer);
         players.add(newPlayer);
@@ -241,19 +240,21 @@ public class gameModel {
         this.gameName = gameName;
     }
 
-    public boolean isGameStarted(){return gameStarted;}
+    public boolean isGameStarted() {
+        return gameStarted;
+    }
 
     public void startGame() {
         //if (players.size() < 2){
         //    throw new IllegalStateException("Insufficient number of players to start game!");
         //}
-        if(players.size() > 5){
+        if (players.size() > 5) {
             throw new IllegalStateException("Too many players to start game!");
         }
 
         this.gameStarted = true;
         this.setRoutes();
-        
+
         //color assigned in the addPlayer() function
         //determine player order: order they joined (order in 'players' array)
         //starting hand provided in the addPlayer() function
@@ -265,13 +266,13 @@ public class gameModel {
     }
 
     public void updateChatbox(chatMessageModel message) {
-    	this.chatbox.addMessage(message);
+        this.chatbox.addMessage(message);
     }
-    
+
     public chatboxModel getChatbox() {
-    	return chatbox;
+        return chatbox;
     }
-    
+
     @Override
     public boolean equals(Object o) {
         if (o == null || o.getClass() != this.getClass()) {
@@ -292,30 +293,32 @@ public class gameModel {
     public List<abstractRoute> getRoutes() {
         return routes;
     }
-    
+
     public playerModel getPlayerByUsername(usernameModel username) {
-    	for (playerModel player : this.players) {
-    		if(player.getUserName().equals(username)) {
-    			return player;
-    		}
-    	}
-    	return null;
+        for (playerModel player : this.players) {
+            if (player.getUserName().equals(username)) {
+                return player;
+            }
+        }
+        return null;
     }
-    
+
     //Returns a list of int arrays
     // stats[0] = numbers of each color train card held by the player [int array length 9]
     // stats[1...n] = stats for player 1, player 2... player n [int array length 4]
     public List<int[]> getStats(usernameModel username) {
-    	List<int[]> stats = new ArrayList<>();
+        List<int[]> stats = new ArrayList<>();
 
-    	List<trainCardModel> curPlayerHand = getPlayerByUsername(username).getTrainCardHand();
-    	int[] cardTypes = new int[9];
-    	for (int i = 0; i < curPlayerHand.size(); i++) {
-    		cardTypes[curPlayerHand.get(i).getColor().ordinal()] += 1;
-    		}
-    	stats.add(cardTypes);
-    	for (int i = 0; i < players.size(); i++) {stats.add(players.get(i).getStats());}
-    	return stats;
+        List<trainCardModel> curPlayerHand = getPlayerByUsername(username).getTrainCardHand();
+        int[] cardTypes = new int[9];
+        for (int i = 0; i < curPlayerHand.size(); i++) {
+            cardTypes[curPlayerHand.get(i).getColor().ordinal()] += 1;
+        }
+        stats.add(cardTypes);
+        for (int i = 0; i < players.size(); i++) {
+            stats.add(players.get(i).getStats());
+        }
+        return stats;
     }
 
     public playerModel getPlayerModelFromID(playerIDModel id) {
