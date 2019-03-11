@@ -6,6 +6,7 @@ import com.bignerdranch.android.shared.exceptions.GameNotFoundException;
 import com.bignerdranch.android.shared.exceptions.InvalidAuthorizationException;
 import com.bignerdranch.android.shared.exceptions.UserNotFoundException;
 import com.bignerdranch.android.shared.interfaces.ServerInitialGameState;
+import com.bignerdranch.android.shared.models.DestinationCardListModel;
 import com.bignerdranch.android.shared.models.authTokenModel;
 import com.bignerdranch.android.shared.models.chatboxModel;
 import com.bignerdranch.android.shared.models.colors.playerColorEnum;
@@ -128,7 +129,8 @@ public class serverFacade implements IServer {
         gameModel game = serverModel.getInstance().getGameByID(request.getGameID());
         // call drawDestinationCards on the game: which should call it on the state: which will draw
         // from the actual deck stored in it.
-        return new Results("DrawDestinationCards", true, game.drawDestinationCards());
+        return new Results("DrawDestinationCards", true,
+                new DestinationCardListModel(game.drawDestinationCards()));
     }
 
     public Results returnDestinationCard(ReturnDestinationCardsRequest request) {

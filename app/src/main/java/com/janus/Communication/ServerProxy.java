@@ -162,9 +162,39 @@ public class ServerProxy implements IServer {
 	}
 
     public Results drawDestinationCards(DrawDestinationCardsRequest request) {
-        return null; // TODO
+        Object[] paramValues = {Serializer.getInstance().serializeObject(request)};
+        String[] paramTypes = {"com.bignerdranch.android.shared.requestObjects.DrawDestinationCardsRequest"};
+        GenericCommand commandObj = new GenericCommand("server.handlers.commandHandler", "drawDestinationCards", paramTypes, paramValues);
+        String commandObjStr = Serializer.getInstance().serializeObject(commandObj);
+        client.send(commandObjStr);
+        messageResult = null;
+        client.setMessageResultToNull();
+        while (messageResult == null) {
+            messageResult = client.getResults();
+            try {
+                Thread.sleep(100);
+            } catch (InterruptedException e) {
+                throw new RuntimeException(e);
+            }
+        }
+        return messageResult;
     }
     public Results returnDestinationCard(ReturnDestinationCardsRequest request) {
-        return null; // TODO
+        Object[] paramValues = {Serializer.getInstance().serializeObject(request)};
+        String[] paramTypes = {"com.bignerdranch.android.shared.requestObjects.ReturnDestinationCardsRequest"};
+        GenericCommand commandObj = new GenericCommand("server.handlers.commandHandler", "returnDestinationCard", paramTypes, paramValues);
+        String commandObjStr = Serializer.getInstance().serializeObject(commandObj);
+        client.send(commandObjStr);
+        messageResult = null;
+        client.setMessageResultToNull();
+        while (messageResult == null) {
+            messageResult = client.getResults();
+            try {
+                Thread.sleep(100);
+            } catch (InterruptedException e) {
+                throw new RuntimeException(e);
+            }
+        }
+        return messageResult;
     }
 }

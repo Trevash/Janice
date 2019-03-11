@@ -11,7 +11,7 @@ import java.util.List;
 
 public class ClientInitialGameState implements IGameState {
 
-    IDestinationCardDeck destinationCardDeck;// = new DestinationCardDeckProxy();
+    DestinationCardDeckProxy destinationCardDeck;// = new DestinationCardDeckProxy();
 
     public ClientInitialGameState(IServer server, gameIDModel gameID) {
         destinationCardDeck = new DestinationCardDeckProxy(server, gameID);
@@ -22,7 +22,7 @@ public class ClientInitialGameState implements IGameState {
     }
 
     public void returnDestinationCards(List<DestinationCardModel> destinationCards) {
-
+        destinationCardDeck.returnDestinationCards(destinationCards);
     }
 
     @Override
