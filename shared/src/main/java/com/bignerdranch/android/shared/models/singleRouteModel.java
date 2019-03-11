@@ -29,6 +29,10 @@ public class singleRouteModel extends abstractRoute {
         this.claimer = claimer;
     }
 
+    public String toString(){
+        return getCity1().getName() + " - " + getCity2().getName();
+    }
+
     public routeColorEnum getTrainColor() {
         return trainColor;
     }

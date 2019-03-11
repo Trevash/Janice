@@ -204,7 +204,6 @@ public class MapFragment extends Fragment implements MapFragmentPresenter.View{
                 default:
                     break;
             }
-            //if(p.)
         }
 
         public PlayerHolder(LayoutInflater inflater, ViewGroup parent){
