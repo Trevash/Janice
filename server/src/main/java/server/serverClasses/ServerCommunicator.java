@@ -104,9 +104,6 @@ public class ServerCommunicator extends WebSocketServer {
 
                 //broadcastOne(resultGson, conn);
                 break;
-            case "ReturnDestinationCards":
-            	gameModel game = (gameModel) result.getData(gameModel.class);
-            	broadcastGame(resultGson, game);
             	
             case "ERROR":
                 broadcastOne(resultGson, conn);
