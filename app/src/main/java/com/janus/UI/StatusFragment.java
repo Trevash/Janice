@@ -37,6 +37,7 @@ public class StatusFragment extends Fragment implements StatusFragmentPresenter.
     private ViewPager viewPager;
     private StatusFragmentPresenter presenter;
     private Context context;
+    private View view;
 
     private ChatFragment chatFragment;
     private DestinationRoutesFragment destinationRoutesFragment;
@@ -107,6 +108,7 @@ public class StatusFragment extends Fragment implements StatusFragmentPresenter.
         View v = inflater.inflate(R.layout.fragment_status, container, false);
         context = (Context) getActivity();
         presenter = new StatusFragmentPresenter(this);
+        presenter.setStatusPresenter();
 
         viewPager = v.findViewById(R.id.viewpager);
         setupViewPager(viewPager);
@@ -142,6 +144,8 @@ public class StatusFragment extends Fragment implements StatusFragmentPresenter.
 
         tabLayout = v.findViewById(R.id.tabs);
         tabLayout.setupWithViewPager(viewPager);
+
+        this.view = v;
 
         buildStats(v);
 
@@ -303,5 +307,14 @@ public class StatusFragment extends Fragment implements StatusFragmentPresenter.
                 playerFiveStatusTextViews.get(i).setText(Integer.toString(stats.get(6)[i-1]));
             }
         }
+    }
+
+    public void updateUI() {
+        getActivity().runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                buildStats(view);
+            }
+        });
     }
 }
