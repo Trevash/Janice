@@ -19,7 +19,7 @@ public class gameModel {
     private boolean gameStarted; // TODO can remove this - by adding another state to represent an unstarted game
     private List<playerModel> players = new ArrayList<>();
     private chatboxModel chatbox;
-    private int turnCounter;
+    private int turnCounter = 0;
     private Map<String, playerModel> mapPlayerIDToModel;
 
     // TODO create states - will want more for phase 3
@@ -323,5 +323,18 @@ public class gameModel {
 
     public playerModel getPlayerModelFromID(playerIDModel id) {
         return mapPlayerIDToModel.get(id.getValue());
+    }
+
+    public void incrementTurnCounter(){
+        turnCounter += 1;
+        if (turnCounter >= this.players.size())
+            turnCounter = 0;
+    }
+
+    public boolean isPlayersTurn(playerIDModel testPlayer){
+        if(players.get(turnCounter).getId().getValue().equals(testPlayer.getValue())){
+            return true;
+        }
+        return false;
     }
 }

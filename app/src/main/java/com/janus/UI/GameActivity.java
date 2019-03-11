@@ -202,7 +202,11 @@ public class GameActivity extends AppCompatActivity
                 makeToast("Sending Chat message");
                 showStatusFragment(0);
                 chatMessageModel message = new chatMessageModel(curPlayer.getUserName(), "Hey! I'm a ghost that hacked your chat function!");
-                ServerProxy.getInstance().updateChatbox(new UpdateChatboxRequest(curGame.getGameID(), client.getUser().getAuthToken(), message));
+                try {
+                    ServerProxy.getInstance().updateChatbox(new UpdateChatboxRequest(curGame.getGameID(), client.getUser().getAuthToken(), message));
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
                 client.update();
                 task = new WaitTask(this);
                 task.execute(demoState);
@@ -213,6 +217,11 @@ public class GameActivity extends AppCompatActivity
                 username = new usernameModel("iWillLose");
 
                 playerModel fakePlayer = new playerModel(username, true,true,playerColorEnum.YELLOW);
+                try {
+                    curGame.addPlayer(fakePlayer);
+                } catch (DuplicateException e) {
+                    e.printStackTrace();
+                }
 
                 //TODO: increment turn order
                 client.update();
