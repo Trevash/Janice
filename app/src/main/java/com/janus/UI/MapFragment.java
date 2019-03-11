@@ -171,23 +171,33 @@ public class MapFragment extends Fragment implements MapFragmentPresenter.View{
             mPlayerNameView.setText(p.getUserName().getValue());
             switch (p.getPlayerColor()) {
                 case RED:
-                    //mPlayerBox.setBackgroundColor(Color.RED);
+                    if(presenter.isPlayersTurn(p.getId())){
+                        mPlayerBox.setBackgroundColor(Color.RED);
+                    }
                     mPlayerBox.setBackgroundColor(getResources().getColor(R.color.translucentRed));
                     break;
                 case YELLOW:
-                    //mPlayerBox.setBackgroundColor(Color.YELLOW);
+                    if(presenter.isPlayersTurn(p.getId())){
+                        mPlayerBox.setBackgroundColor(Color.YELLOW);
+                    }
                     mPlayerBox.setBackgroundColor(getResources().getColor(R.color.translucentYellow));
                     break;
                 case BLUE:
-                    //mPlayerBox.setBackgroundColor(Color.BLUE);
+                    if(presenter.isPlayersTurn(p.getId())){
+                        mPlayerBox.setBackgroundColor(Color.BLUE);
+                    }
                     mPlayerBox.setBackgroundColor(getResources().getColor(R.color.translucentBlue));
                     break;
                 case GREEN:
-                    //mPlayerBox.setBackgroundColor(Color.GREEN);
+                    if(presenter.isPlayersTurn(p.getId())){
+                        mPlayerBox.setBackgroundColor(Color.GREEN);
+                    }
                     mPlayerBox.setBackgroundColor(getResources().getColor(R.color.translucentGreen));
                     break;
                 case BLACK:
-                    //mPlayerBox.setBackgroundColor(Color.BLACK);
+                    if(presenter.isPlayersTurn(p.getId())){
+                        mPlayerBox.setBackgroundColor(Color.BLACK);
+                    }
                     mPlayerBox.setBackgroundColor(getResources().getColor(R.color.translucentBlack));
                     mPlayerNameView.setTextColor(Color.WHITE);
                     break;

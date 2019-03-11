@@ -34,4 +34,8 @@ public class MapFragmentPresenter implements ClientFacade.Presenter {
     public playerModel getPlayerByID(playerIDModel pidModel){
         return model.getGame().getPlayerModelFromID(pidModel);
     }
+
+    public boolean isPlayersTurn(playerIDModel pidModel){
+        return model.getGame().isPlayersTurn(pidModel);
+    }
 }
