@@ -30,5 +30,5 @@ dependencies {
     implementation project(':shared')
     implementation project(path: ':shared')
     implementation 'com.android.support:recyclerview-v7:27.1.1'
-    implementation project(':Java-WebSocket-master')
+    implementation files('libs/Java-WebSocket-1.4.0-with-dependencies.jar')
 }
