@@ -10,6 +10,7 @@ public interface IGameState {
 
     public List<DestinationCardModel> drawDestinationCards();
     public void returnDestinationCards(List<DestinationCardModel> destinationCards);
+    public int size();
 
     /**
      *

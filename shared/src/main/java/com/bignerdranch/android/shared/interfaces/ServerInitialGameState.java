@@ -27,4 +27,9 @@ public class ServerInitialGameState implements IGameState {
     public IGameState toClientState(IServer server, gameIDModel id) {
         return new ClientInitialGameState(server, id);
     }
+
+
+    public int size() {
+        return destinationCardDeck.size();
+    }
 }

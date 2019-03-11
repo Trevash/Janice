@@ -3,31 +3,29 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="horizontal"
-    android:padding="8dp">
+    android:orientation="horizontal">
 
     <TextView
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/routeCitiesView"
         android:text=""
-        android:layout_margin="10dp"
         android:textSize="20sp"/>
 
     <TextView
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/routeLengthView"
         android:text=""
-        android:layout_margin="10dp"
+        android:layout_marginLeft="30dp"
         android:textSize="20sp"/>
 
     <TextView
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/routeColorView"
         android:text=""
-        android:layout_margin="10dp"
+        android:layout_marginLeft="30dp"
         android:textSize="20sp"/>
 
     <Button
@@ -36,8 +34,7 @@
         android:layout_height="wrap_content"
         android:layout_weight="1"
         android:text="@string/claim"
-        android:layout_margin="10dp"
-        android:textSize="30sp"
-        android:gravity="end"/>
+        android:textSize="20sp"
+        android:layout_marginLeft="30dp"/>
 
 </LinearLayout>

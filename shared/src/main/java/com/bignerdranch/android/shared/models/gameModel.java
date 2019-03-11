@@ -206,9 +206,9 @@ public class gameModel {
     }
 
     public void addPlayer(playerModel newPlayer) throws DuplicateException {
-        if (gameStarted) {
-            throw new IllegalStateException("Game has already been started");
-        }
+        //if (gameStarted) {
+        //    throw new IllegalStateException("Game has already been started");
+        //}
         for (playerModel curPlayer : this.players) {
             if (curPlayer.getUserName().getValue().equals(newPlayer.getUserName().getValue())) {
                 throw new DuplicateException("User is already a player in this game");
@@ -317,8 +317,18 @@ public class gameModel {
             cardTypes[curPlayerHand.get(i).getColor().ordinal()] += 1;
         }
         stats.add(cardTypes);
+
+        int[] totals = new int[2];
+        totals[0] = trainCardDeck.size();
+        totals[1] = state.size();
+        stats.add(totals);
+
         for (int i = 0; i < players.size(); i++) {
             stats.add(players.get(i).getStats());
+            //TODO: Remove if statement (only for demo)
+            if (players.get(i).getDestinationCardHand().size() > 0) {
+            	stats.get(1)[1] -= 2;
+            }
         }
         return stats;
     }

@@ -2,6 +2,7 @@ package com.janus.UI;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -13,6 +14,7 @@ import com.bignerdranch.android.shared.models.singleRouteModel;
 import com.janus.Presenter.RouteFragmentPresenter;
 import com.janus.R;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class RouteFragment extends Fragment implements RouteFragmentPresenter.View{
@@ -38,6 +40,12 @@ public class RouteFragment extends Fragment implements RouteFragmentPresenter.Vi
         presenter.setFragment();
 
         mRouteRecyclerView = v.findViewById(R.id.routeRecyclerView);
+        mRouteRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+
+        List<singleRouteModel> routes = new ArrayList<>();
+        mRouteAdapter = new RouteAdapter(routes);
+        mRouteRecyclerView.setAdapter(mRouteAdapter);
+
         presenter.updateUI();
 
         return v;
@@ -51,8 +59,8 @@ public class RouteFragment extends Fragment implements RouteFragmentPresenter.Vi
         private Button mClaimButton;
 
         public void bind(singleRouteModel r){
-            mRouteCitiesView.setText(r.getCity1() + " - " + r.getCity2());
-            mRouteLengthView.setText(r.getLength());
+            mRouteCitiesView.setText(r.toString());
+            mRouteLengthView.setText(Integer.toString(r.getLength()));
             mRouteColorView.setText(r.getTrainColor().toString());
         }
 

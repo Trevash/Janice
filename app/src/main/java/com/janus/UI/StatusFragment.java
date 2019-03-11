@@ -43,6 +43,8 @@ public class StatusFragment extends Fragment implements StatusFragmentPresenter.
     private GameHistoryFragment gameHistoryFragment;
 
     private List<TextView> colorTextViews;
+    private TextView mTotalTrainCards;
+    private TextView mTotalDestinationCards;
     private List<TextView> playerOneStatusTextViews;
     private List<TextView> playerTwoStatusTextViews;
     private List<TextView> playerThreeStatusTextViews;
@@ -221,8 +223,14 @@ public class StatusFragment extends Fragment implements StatusFragmentPresenter.
         int[] numTrainCardsPerColor = stats.get(0);
 
         for (int i = 0; i < numTrainCardsPerColor.length; i++) {
-            colorTextViews.get(i).setText(Integer.toString(numTrainCardsPerColor[i]));
+            colorTextViews.get(i).setText(": " +Integer.toString(numTrainCardsPerColor[i]));
         }
+
+        int[] totals = stats.get(1);
+        mTotalTrainCards = v.findViewById(R.id.total_cards);
+        mTotalTrainCards.setText(Integer.toString(totals[0]));
+        mTotalDestinationCards = v.findViewById(R.id.total_destination_cards);
+        mTotalDestinationCards.setText(Integer.toString(totals[1]));
 
         playerOneStatusTextViews = new ArrayList<>();
         playerOneStatusTextViews.add((TextView) v.findViewById(R.id.player_one_name));
@@ -234,11 +242,11 @@ public class StatusFragment extends Fragment implements StatusFragmentPresenter.
         playerOneStatusTextViews.get(0).setText(players.get(0).getUserName().getValue());
 
         for (int i = 1; i < playerOneStatusTextViews.size(); i++) {
-            playerOneStatusTextViews.get(i).setText(Integer.toString(stats.get(1)[i-1]));
+            playerOneStatusTextViews.get(i).setText(Integer.toString(stats.get(2)[i-1]));
         }
 
         // stats[0] is integer number of cards of each type
-        if (stats.size() > 2) {
+        if (stats.size() > 3) {
             playerTwoStatusTextViews = new ArrayList<>();
             playerTwoStatusTextViews.add((TextView) v.findViewById(R.id.player_two_name));
             playerTwoStatusTextViews.add((TextView) v.findViewById(R.id.player_two_points));
@@ -249,11 +257,11 @@ public class StatusFragment extends Fragment implements StatusFragmentPresenter.
             playerTwoStatusTextViews.get(0).setText(players.get(1).getUserName().getValue());
 
             for (int i = 1; i < playerTwoStatusTextViews.size(); i++) {
-                playerTwoStatusTextViews.get(i).setText(Integer.toString(stats.get(2)[i-1]));
+                playerTwoStatusTextViews.get(i).setText(Integer.toString(stats.get(3)[i-1]));
             }
         }
 
-        if (stats.size() > 3) {
+        if (stats.size() > 4) {
             playerThreeStatusTextViews = new ArrayList<>();
             playerThreeStatusTextViews.add((TextView) v.findViewById(R.id.player_three_name));
             playerThreeStatusTextViews.add((TextView) v.findViewById(R.id.player_three_points));
@@ -264,11 +272,11 @@ public class StatusFragment extends Fragment implements StatusFragmentPresenter.
             playerThreeStatusTextViews.get(0).setText(players.get(2).getUserName().getValue());
 
             for (int i = 1; i < playerThreeStatusTextViews.size(); i++) {
-                playerThreeStatusTextViews.get(i).setText(Integer.toString(stats.get(3)[i-1]));
+                playerThreeStatusTextViews.get(i).setText(Integer.toString(stats.get(4)[i-1]));
             }
         }
 
-        if (stats.size() > 4) {
+        if (stats.size() > 5) {
             playerFourStatusTextViews = new ArrayList<>();
             playerFourStatusTextViews.add((TextView) v.findViewById(R.id.player_four_name));
             playerFourStatusTextViews.add((TextView) v.findViewById(R.id.player_four_points));
@@ -279,11 +287,11 @@ public class StatusFragment extends Fragment implements StatusFragmentPresenter.
             playerFourStatusTextViews.get(0).setText(players.get(3).getUserName().getValue());
 
             for (int i = 1; i < playerFourStatusTextViews.size(); i++) {
-                playerFourStatusTextViews.get(i).setText(Integer.toString(stats.get(4)[i-1]));
+                playerFourStatusTextViews.get(i).setText(Integer.toString(stats.get(5)[i-1]));
             }
         }
 
-        if (stats.size() > 5) {
+        if (stats.size() > 6) {
             playerFiveStatusTextViews = new ArrayList<>();
             playerFiveStatusTextViews.add((TextView) v.findViewById(R.id.player_five_name));
             playerFiveStatusTextViews.add((TextView) v.findViewById(R.id.player_five_points));
@@ -294,7 +302,7 @@ public class StatusFragment extends Fragment implements StatusFragmentPresenter.
             playerOneStatusTextViews.get(0).setText(players.get(4).getUserName().getValue());
 
             for (int i = 1; i < playerFiveStatusTextViews.size(); i++) {
-                playerFiveStatusTextViews.get(i).setText(Integer.toString(stats.get(5)[i-1]));
+                playerFiveStatusTextViews.get(i).setText(Integer.toString(stats.get(6)[i-1]));
             }
         }
     }

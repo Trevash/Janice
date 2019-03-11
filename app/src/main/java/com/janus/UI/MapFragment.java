@@ -171,40 +171,39 @@ public class MapFragment extends Fragment implements MapFragmentPresenter.View{
             mPlayerNameView.setText(p.getUserName().getValue());
             switch (p.getPlayerColor()) {
                 case RED:
+                    mPlayerBox.setBackgroundColor(getResources().getColor(R.color.translucentRed));
                     if(presenter.isPlayersTurn(p.getId())){
                         mPlayerBox.setBackgroundColor(Color.RED);
                     }
-                    mPlayerBox.setBackgroundColor(getResources().getColor(R.color.translucentRed));
                     break;
                 case YELLOW:
+                    mPlayerBox.setBackgroundColor(getResources().getColor(R.color.translucentYellow));
                     if(presenter.isPlayersTurn(p.getId())){
                         mPlayerBox.setBackgroundColor(Color.YELLOW);
                     }
-                    mPlayerBox.setBackgroundColor(getResources().getColor(R.color.translucentYellow));
                     break;
                 case BLUE:
+                    mPlayerBox.setBackgroundColor(getResources().getColor(R.color.translucentBlue));
                     if(presenter.isPlayersTurn(p.getId())){
                         mPlayerBox.setBackgroundColor(Color.BLUE);
                     }
-                    mPlayerBox.setBackgroundColor(getResources().getColor(R.color.translucentBlue));
                     break;
                 case GREEN:
+                    mPlayerBox.setBackgroundColor(getResources().getColor(R.color.translucentGreen));
                     if(presenter.isPlayersTurn(p.getId())){
                         mPlayerBox.setBackgroundColor(Color.GREEN);
                     }
-                    mPlayerBox.setBackgroundColor(getResources().getColor(R.color.translucentGreen));
                     break;
                 case BLACK:
+                    mPlayerBox.setBackgroundColor(getResources().getColor(R.color.translucentBlack));
                     if(presenter.isPlayersTurn(p.getId())){
                         mPlayerBox.setBackgroundColor(Color.BLACK);
                     }
-                    mPlayerBox.setBackgroundColor(getResources().getColor(R.color.translucentBlack));
                     mPlayerNameView.setTextColor(Color.WHITE);
                     break;
                 default:
                     break;
             }
-            //if(p.)
         }
 
         public PlayerHolder(LayoutInflater inflater, ViewGroup parent){
@@ -257,14 +256,14 @@ public class MapFragment extends Fragment implements MapFragmentPresenter.View{
         public void draw(Canvas canvas) {
             Paint paint = new Paint();
             paint.setColor(Color.WHITE);
-            for(int i = 0; i < Constants.Cities.CITIES.length; i++) {
+            for(int i = 0; i < Constants.Cities.CITIES.length; i++) { //Draw Cities
                 cityModel currentCity = Constants.Cities.CITIES[i];
                 float xVal = currentCity.getxCoordinate() * 2;
                 float yVal = (float) (currentCity.getyCoordinate() * 1.7);
                 canvas.drawCircle(xVal, yVal, 15, paint);
             }
-            paint.setStrokeWidth(13);
-            for(int i = 0; i < mRoutes.size(); i++){
+            paint.setStrokeWidth(7);
+            for(int i = 0; i < mRoutes.size(); i++){ //Draw Routes
                 abstractRoute route = mRoutes.get(i);
                 cityModel city1 = route.getCity1();
                 cityModel city2 = route.getCity2();
@@ -272,18 +271,18 @@ public class MapFragment extends Fragment implements MapFragmentPresenter.View{
                 float city1Y = (float) (city1.getyCoordinate() * 1.7);
                 float city2X = city2.getxCoordinate() * 2;
                 float city2Y = (float) (city2.getyCoordinate() * 1.7);
-                if(route.getClass() == singleRouteModel.class){
+                if(route.getClass() == singleRouteModel.class){  //Single Routes
                     singleRouteModel singleRoute = (singleRouteModel) route;
                     paint.setColor(colorMap.get(singleRoute.getTrainColor()));
                     canvas.drawLine(city1X, city1Y, city2X, city2Y, paint);
-                    if(!singleRoute.claimable()){
+                    if(!singleRoute.claimable()){ //Draw claim circle
                         float dotLocationX = (float) ((city1X + city2X) / 2.0);
                         float dotLocationY = (float) ((city1Y + city2Y) / 2.0);
                         playerModel claimer = presenter.getPlayerByID(singleRoute.getClaimer());
                         paint.setColor(colorMap2.get(claimer.getPlayerColor()));
-                        canvas.drawCircle(dotLocationX, dotLocationY, 7, paint);
+                        canvas.drawCircle(dotLocationX, dotLocationY, 13, paint);
                     }
-                } else {
+                } else { //Double routes
                     abstractDoubleRoute doubleRoute = (abstractDoubleRoute) route;
                     paint.setColor(colorMap.get(doubleRoute.getTrainColor1()));
                     canvas.drawLine(city1X + 10, city1Y + 10,
@@ -291,19 +290,19 @@ public class MapFragment extends Fragment implements MapFragmentPresenter.View{
                     paint.setColor(colorMap.get(doubleRoute.getTrainColor2()));
                     canvas.drawLine(city1X - 10, city1Y - 10,
                             city2X - 10, city2Y - 10, paint);
-                    if(!doubleRoute.claimableRoute1()){
+                    if(!doubleRoute.claimableRoute1()){ //Draw claim circle
                         float dotLocationX = (float) (((city1X + 10) + (city2X + 10)) / 2.0);
                         float dotLocationY = (float) (((city1Y + 10) + (city2Y + 10)) / 2.0);
                         playerModel claimer = presenter.getPlayerByID(doubleRoute.getClaimer1());
                         paint.setColor(colorMap2.get(claimer.getPlayerColor()));
-                        canvas.drawCircle(dotLocationX, dotLocationY, 12, paint);
+                        canvas.drawCircle(dotLocationX, dotLocationY, 13, paint);
                     }
-                    if(!doubleRoute.claimableRoute2()){
+                    if(!doubleRoute.claimableRoute2()){ //Draw claim circle
                         float dotLocationX = (float) (((city1X - 10) + (city2X - 10)) / 2.0);
                         float dotLocationY = (float) (((city1Y - 10) + (city2Y - 10)) / 2.0);
                         playerModel claimer = presenter.getPlayerByID(doubleRoute.getClaimer2());
                         paint.setColor(colorMap2.get(claimer.getPlayerColor()));
-                        canvas.drawCircle(dotLocationX, dotLocationY, 12, paint);
+                        canvas.drawCircle(dotLocationX, dotLocationY, 13, paint);
                     }
                 }
             }

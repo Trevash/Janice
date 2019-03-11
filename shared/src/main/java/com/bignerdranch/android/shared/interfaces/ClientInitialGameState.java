@@ -25,6 +25,10 @@ public class ClientInitialGameState implements IGameState {
         destinationCardDeck.returnDestinationCards(destinationCards);
     }
 
+    public int size() {
+        return destinationCardDeck.size();
+    }
+
     @Override
     public IGameState toClientState(IServer server, gameIDModel id) {
         return this;
