@@ -3,6 +3,7 @@ package com.janus.Presenter;
 import com.bignerdranch.android.shared.models.abstractRoute;
 import com.bignerdranch.android.shared.models.playerIDModel;
 import com.bignerdranch.android.shared.models.playerModel;
+import com.bignerdranch.android.shared.models.usernameModel;
 import com.janus.ClientFacade;
 import com.janus.ClientModel;
 
@@ -37,5 +38,10 @@ public class MapFragmentPresenter implements ClientFacade.Presenter {
 
     public boolean isPlayersTurn(playerIDModel pidModel){
         return model.getGame().isPlayersTurn(pidModel);
+    }
+
+    public boolean isCurrentPlayersTurn(){
+        usernameModel username = model.getUser().getUserName();
+        return isPlayersTurn(model.getGame().getPlayerByUsername(username).getId());
     }
 }

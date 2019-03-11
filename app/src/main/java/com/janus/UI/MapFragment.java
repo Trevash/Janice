@@ -126,6 +126,7 @@ public class MapFragment extends Fragment implements MapFragmentPresenter.View{
                 mContext.onClickDrawCard();
             }
         });
+        mDrawCardsButton.setEnabled(false);
 
         mClaimRouteButton = v.findViewById(R.id.claimRouteButton);
         mClaimRouteButton.setOnClickListener(new View.OnClickListener() {
@@ -134,6 +135,7 @@ public class MapFragment extends Fragment implements MapFragmentPresenter.View{
                 mContext.onClickClaimRoute();
             }
         });
+        mClaimRouteButton.setEnabled(false);
 
         mDrawDestinationsButton = v.findViewById(R.id.drawDestinationsButton);
         mDrawDestinationsButton.setOnClickListener(new View.OnClickListener() {
@@ -142,6 +144,7 @@ public class MapFragment extends Fragment implements MapFragmentPresenter.View{
                 mContext.onClickDestinationSelect();
             }
         });
+        mDrawDestinationsButton.setEnabled(false);
 
         mRunDemoButton = v.findViewById(R.id.demo_Button);
         mRunDemoButton.setOnClickListener(new View.OnClickListener() {
@@ -171,34 +174,34 @@ public class MapFragment extends Fragment implements MapFragmentPresenter.View{
             mPlayerNameView.setText(p.getUserName().getValue());
             switch (p.getPlayerColor()) {
                 case RED:
+                    mPlayerBox.setBackgroundColor(getResources().getColor(R.color.translucentRed));
                     if(presenter.isPlayersTurn(p.getId())){
                         mPlayerBox.setBackgroundColor(Color.RED);
                     }
-                    mPlayerBox.setBackgroundColor(getResources().getColor(R.color.translucentRed));
                     break;
                 case YELLOW:
+                    mPlayerBox.setBackgroundColor(getResources().getColor(R.color.translucentYellow));
                     if(presenter.isPlayersTurn(p.getId())){
                         mPlayerBox.setBackgroundColor(Color.YELLOW);
                     }
-                    mPlayerBox.setBackgroundColor(getResources().getColor(R.color.translucentYellow));
                     break;
                 case BLUE:
+                    mPlayerBox.setBackgroundColor(getResources().getColor(R.color.translucentBlue));
                     if(presenter.isPlayersTurn(p.getId())){
                         mPlayerBox.setBackgroundColor(Color.BLUE);
                     }
-                    mPlayerBox.setBackgroundColor(getResources().getColor(R.color.translucentBlue));
                     break;
                 case GREEN:
+                    mPlayerBox.setBackgroundColor(getResources().getColor(R.color.translucentGreen));
                     if(presenter.isPlayersTurn(p.getId())){
                         mPlayerBox.setBackgroundColor(Color.GREEN);
                     }
-                    mPlayerBox.setBackgroundColor(getResources().getColor(R.color.translucentGreen));
                     break;
                 case BLACK:
+                    mPlayerBox.setBackgroundColor(getResources().getColor(R.color.translucentBlack));
                     if(presenter.isPlayersTurn(p.getId())){
                         mPlayerBox.setBackgroundColor(Color.BLACK);
                     }
-                    mPlayerBox.setBackgroundColor(getResources().getColor(R.color.translucentBlack));
                     mPlayerNameView.setTextColor(Color.WHITE);
                     break;
                 default:
@@ -244,6 +247,10 @@ public class MapFragment extends Fragment implements MapFragmentPresenter.View{
         playerModel[] playerModels = new playerModel[updatedPlayers.size()];
         mPlayerAdapter = new PlayerAdapter(updatedPlayers.toArray(playerModels));
         mTurnRecyclerView.setAdapter(mPlayerAdapter);
+        mDrawDestinationsButton.setEnabled(false);
+        if(presenter.isCurrentPlayersTurn()){
+            mDrawDestinationsButton.setEnabled(true);
+        }
     }
 
     public void updateRoutes(List<abstractRoute> updatedRoutes){

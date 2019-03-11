@@ -58,6 +58,9 @@ public class TtRClient extends WebSocketClient{
                 case "Start": {
                     facade.setGame((gameModel) result.getData(gameModel.class));
                 }
+                case "ReturnDestinationCards": {
+                	facade.setGame((gameModel) result.getData(gameModel.class));
+                }
                 case "UpdateChat": {
                     ChatboxData chatboxData = (ChatboxData) result.getData(ChatboxData.class);
                     facade.setChatbox(chatboxData.getChatbox());

@@ -243,9 +243,9 @@ public class gameModel {
     }
 
     public void startGame() {
-        //if (players.size() < 2){
-        //    throw new IllegalStateException("Insufficient number of players to start game!");
-        //}
+        if (players.size() < 2){
+            throw new IllegalStateException("Insufficient number of players to start game!");
+        }
         if (players.size() > 5) {
             throw new IllegalStateException("Too many players to start game!");
         }
@@ -313,11 +313,14 @@ public class gameModel {
             cardTypes[curPlayerHand.get(i).getColor().ordinal()] += 1;
         }
         stats.add(cardTypes);
+
+        int[] totals = new int[2];
+        totals[0] = trainCardDeck.size();
+        totals[1] = state.size();
+        stats.add(totals);
+
         for (int i = 0; i < players.size(); i++) {
             stats.add(players.get(i).getStats());
-            if (players.get(i).getDestinationCardHand().size() > 2) {
-            	stats.get(i+2)[3] -= players.get(i).getDestinationCardHand().size();
-            }
         }
         return stats;
     }

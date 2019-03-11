@@ -102,8 +102,9 @@ public class ServerCommunicator extends WebSocketServer {
             	gameModel gameChat = serverModel.getInstance().getGameByID(gameID);
             	broadcastGame(resultGson, gameChat);
 
-                broadcastOne(resultGson, conn);
+                //broadcastOne(resultGson, conn);
                 break;
+            	
             case "ERROR":
                 broadcastOne(resultGson, conn);
                 break;
