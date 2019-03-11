@@ -265,14 +265,14 @@ public class MapFragment extends Fragment implements MapFragmentPresenter.View{
         @Override
         public void draw(Canvas canvas) {
             Paint paint = new Paint();
-            paint.setColor(Color.RED);
+            paint.setColor(Color.WHITE);
             for(int i = 0; i < Constants.Cities.CITIES.length; i++) {
                 cityModel currentCity = Constants.Cities.CITIES[i];
                 float xVal = currentCity.getxCoordinate() * 2;
                 float yVal = (float) (currentCity.getyCoordinate() * 1.7);
                 canvas.drawCircle(xVal, yVal, 15, paint);
             }
-            paint.setStrokeWidth(10);
+            paint.setStrokeWidth(13);
             for(int i = 0; i < mRoutes.size(); i++){
                 abstractRoute route = mRoutes.get(i);
                 cityModel city1 = route.getCity1();
