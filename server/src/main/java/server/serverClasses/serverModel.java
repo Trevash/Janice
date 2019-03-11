@@ -172,7 +172,8 @@ public class serverModel {
 
     public gameModel startGame(StartGameRequest request) throws GameNotFoundException {
         for (gameModel curGame : this.games) {
-            if(curGame.getGameID().getValue().equals(request.getModel().getGameID().getValue())) {
+            //if(curGame.getGameID().getValue().equals(request.getModel().getGameID().getValue())) {
+            if(curGame.getGameID().equals(request.getGameID()) ) {
                 curGame.startGame();
                 return curGame;
             }
@@ -184,8 +185,9 @@ public class serverModel {
         for (gameModel curGame : this.games) {
             if(curGame.getGameID().getValue().equals(request.getGameID().getValue())) {
                 curGame.updateChatbox(request.getMessage());
-                ChatboxData data = new ChatboxData(curGame.getChatbox(), curGame.getGameID());
-                return data;
+                return new ChatboxData(curGame.getChatbox(), curGame.getGameID());
+                //ChatboxData data = new ChatboxData(curGame.getChatbox(), curGame.getGameID());
+                //return data;
             }
         }
         throw new GameNotFoundException("Update chat failed, game not found");    }

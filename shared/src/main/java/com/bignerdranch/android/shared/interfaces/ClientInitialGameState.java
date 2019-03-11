@@ -25,4 +25,8 @@ public class ClientInitialGameState implements IGameState {
 
     }
 
+    @Override
+    public IGameState toClientState(IServer server, gameIDModel id) {
+        return this;
+    }
 }

@@ -157,6 +157,7 @@ public class StatusFragment extends Fragment implements StatusFragmentPresenter.
         //    getActivity().getSupportFragmentManager().beginTransaction().remove(fragment).commit();
         //}
 
+        // TODO currently has a warning saying that this can produce a null-pointer exception - may want to fix
         ViewPagerAdapter adapter = new ViewPagerAdapter(getActivity().getSupportFragmentManager());
         chatFragment = new ChatFragment();
         destinationRoutesFragment = new DestinationRoutesFragment();
@@ -236,6 +237,7 @@ public class StatusFragment extends Fragment implements StatusFragmentPresenter.
             playerOneStatusTextViews.get(i).setText(Integer.toString(stats.get(1)[i-1]));
         }
 
+        // stats[0] is integer number of cards of each type
         if (stats.size() > 2) {
             playerTwoStatusTextViews = new ArrayList<>();
             playerTwoStatusTextViews.add((TextView) v.findViewById(R.id.player_two_name));

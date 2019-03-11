@@ -1,6 +1,8 @@
 package com.bignerdranch.android.shared.interfaces;
 
+import com.bignerdranch.android.shared.IServer;
 import com.bignerdranch.android.shared.models.DestinationCardModel;
+import com.bignerdranch.android.shared.models.gameIDModel;
 
 import java.util.List;
 
@@ -20,5 +22,9 @@ public class ServerInitialGameState implements IGameState {
         //    destinationCardDeck.returnDestinationCard(destinationCards.get(i));
         //}
         destinationCardDeck.returnDestinationCards(destinationCards);
+    }
+
+    public IGameState toClientState(IServer server, gameIDModel id) {
+        return new ClientInitialGameState(server, id);
     }
 }

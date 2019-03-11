@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 import com.bignerdranch.android.shared.models.*;
 import com.bignerdranch.android.shared.resultobjects.GameListData;
+import com.janus.Communication.ServerProxy;
 
 public class ClientModel {
 
@@ -31,6 +32,7 @@ public class ClientModel {
     }
 
     public void setGame(gameModel game) {
+        game.setClientMode(ServerProxy.getInstance());
         this.game = game;
     }
 

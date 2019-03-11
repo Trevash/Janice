@@ -1,6 +1,7 @@
 package com.bignerdranch.android.shared.models;
 
 import com.bignerdranch.android.shared.Constants;
+import com.bignerdranch.android.shared.IServer;
 import com.bignerdranch.android.shared.exceptions.DuplicateException;
 import com.bignerdranch.android.shared.interfaces.IGameState;
 import com.bignerdranch.android.shared.models.colors.playerColorEnum;
@@ -255,6 +256,9 @@ public class gameModel {
         this.gameStarted = true;
         this.setRoutes();
 
+        // TODO have each player draw destinationCards - have drawn destination cards,
+        // TODO and each player starts in the draw destination card fragment
+
         //color assigned in the addPlayer() function
         //determine player order: order they joined (order in 'players' array)
         //starting hand provided in the addPlayer() function
@@ -323,5 +327,9 @@ public class gameModel {
 
     public playerModel getPlayerModelFromID(playerIDModel id) {
         return mapPlayerIDToModel.get(id.getValue());
+    }
+
+    public void setClientMode(IServer serverProxy) {
+        this.state = state.toClientState(serverProxy, this.gameID);
     }
 }
