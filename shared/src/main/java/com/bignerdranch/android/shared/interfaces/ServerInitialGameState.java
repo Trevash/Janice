@@ -21,4 +21,9 @@ public class ServerInitialGameState implements IGameState {
         //}
         destinationCardDeck.returnDestinationCards(destinationCards);
     }
+
+
+    public int size() {
+        return destinationCardDeck.size();
+    }
 }

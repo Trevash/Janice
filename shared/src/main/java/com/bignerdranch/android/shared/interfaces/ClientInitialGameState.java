@@ -25,4 +25,8 @@ public class ClientInitialGameState implements IGameState {
 
     }
 
+    public int size() {
+        return destinationCardDeck.size();
+    }
+
 }
