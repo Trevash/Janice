@@ -6,13 +6,17 @@ import com.janus.ClientFacade;
 
 import java.util.List;
 
-public class StatusFragmentPresenter {
+public class StatusFragmentPresenter implements ClientFacade.Presenter {
 
     private View view;
     private ClientFacade facade = ClientFacade.getInstance();
 
     public interface View {
+        void updateUI();
+    }
 
+    public void updateUI() {
+        view.updateUI();
     }
 
     public StatusFragmentPresenter(View v) {
@@ -29,5 +33,9 @@ public class StatusFragmentPresenter {
 
     public userModel getCurrentPlayer() {
         return facade.getUser();
+    }
+
+    public void setStatusPresenter() {
+        facade.setStatusPresenter(this);
     }
 }
