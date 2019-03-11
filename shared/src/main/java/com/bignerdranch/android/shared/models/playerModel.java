@@ -97,9 +97,30 @@ public class playerModel {
     }
 
 
-    public void addToClaimedRoutes(abstractRoute claimedRoute) {
-        //TODO: Increment score according to the length of the route
-        this.points += 5;
+    public void addToClaimedRoutes(abstractRoute claimedRoute) throws Exception {
+        switch (claimedRoute.getLength()) {
+            case 1:
+                this.points += 1;
+                break;
+            case 2:
+                this.points += 2;
+                break;
+            case 3:
+                this.points += 4;
+                break;
+            case 4:
+                this.points += 7;
+                break;
+            case 5:
+                this.points += 10;
+                break;
+            case 6:
+                this.points += 15;
+                break;
+            default:
+                throw new Exception("Invalid length of route!");
+        }
+
         this.locomotives -= claimedRoute.getLength();
         claimedRoutes.add(claimedRoute);
     }
