@@ -169,9 +169,7 @@ public class gameModel {
     //Todo: Check for empty deck and other special cases - recommend moving decks into their own classes
     public trainCardModel drawTrainCardFromDeck() {
         int numCards = (trainCardDeck.size() - 1);
-        trainCardModel card = this.trainCardDeck.get(numCards); //Get top card
-        trainCardDeck.remove(numCards); //Eliminate top card from array
-        return card;
+        return trainCardDeck.remove(numCards); //Eliminate top card from array
     }
 
     public trainCardModel drawFaceUpTrainCard(int pos) throws Exception {
@@ -331,5 +329,18 @@ public class gameModel {
 
     public void setClientMode(IServer serverProxy) {
         this.state = state.toClientState(serverProxy, this.gameID);
+    }
+
+    public void incrementTurnCounter(){
+        turnCounter += 1;
+        if (turnCounter >= this.players.size())
+            turnCounter = 0;
+    }
+
+    public boolean isPlayersTurn(playerIDModel testPlayer){
+        if(players.get(turnCounter).getId().getValue().equals(testPlayer.getValue())){
+            return true;
+        }
+        return false;
     }
 }

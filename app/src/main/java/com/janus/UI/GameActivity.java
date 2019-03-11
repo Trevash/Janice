@@ -213,14 +213,11 @@ public class GameActivity extends AppCompatActivity
                 break;
             case 11:
                 makeToast("Incrementing turn order to iWillLose");
-                usernameModel username = new usernameModel("iWillLose");
-
-                playerModel fakePlayer = new playerModel(username, true,true,playerColorEnum.YELLOW);
-
-                //TODO: increment turn order
+                curGame.incrementTurnCounter();
                 client.update();
                 task = new WaitTask(this);
                 task.execute(demoState);
+                break;
             default:
                 makeToast("Demo done!");
                 break;
@@ -258,6 +255,16 @@ public class GameActivity extends AppCompatActivity
 
     public void onClickRunDemo() {
         //Demonstrate the following with pauses so the human eyes can read toasts and follow along
+        gameModel curGame = ClientFacade.getInstance().getGame();
+        playerModel fakePlayer = new playerModel(new usernameModel("iWillLose"), true,true,playerColorEnum.YELLOW);
+        fakePlayer.DEMO_addDestinationCardToHand(Constants.DestinationCards.CHICAGO_LOS_ANGELES);
+        fakePlayer.DEMO_addDestinationCardToHand(Constants.DestinationCards.CHICAGO_SANTA_FE);
+        try {
+            curGame.addPlayer(fakePlayer);
+        } catch (DuplicateException e) {
+            e.printStackTrace();
+        }
+
         makeToast("Here's the Starting Status");
         showStatusFragment(0);
         task = new WaitTask(this);
