@@ -228,7 +228,7 @@ public class StatusFragment extends Fragment implements StatusFragmentPresenter.
         playerOneStatusTextViews.add((TextView) v.findViewById(R.id.player_one_points));
         playerOneStatusTextViews.add((TextView) v.findViewById(R.id.player_one_number_of_trains));
         playerOneStatusTextViews.add((TextView) v.findViewById(R.id.player_one_number_of_cards));
-        playerOneStatusTextViews.add((TextView) v.findViewById(R.id.player_one_number_of_routes));
+        playerOneStatusTextViews.add((TextView) v.findViewById(R.id.player_one_number_of_destination_cards));
 
         playerOneStatusTextViews.get(0).setText(players.get(0).getUserName().getValue());
 
@@ -242,7 +242,7 @@ public class StatusFragment extends Fragment implements StatusFragmentPresenter.
             playerTwoStatusTextViews.add((TextView) v.findViewById(R.id.player_two_points));
             playerTwoStatusTextViews.add((TextView) v.findViewById(R.id.player_two_number_of_trains));
             playerTwoStatusTextViews.add((TextView) v.findViewById(R.id.player_two_number_of_cards));
-            playerTwoStatusTextViews.add((TextView) v.findViewById(R.id.player_two_number_of_routes));
+            playerTwoStatusTextViews.add((TextView) v.findViewById(R.id.player_two_number_of_destination_cards));
 
             playerTwoStatusTextViews.get(0).setText(players.get(1).getUserName().getValue());
 
@@ -257,7 +257,7 @@ public class StatusFragment extends Fragment implements StatusFragmentPresenter.
             playerThreeStatusTextViews.add((TextView) v.findViewById(R.id.player_three_points));
             playerThreeStatusTextViews.add((TextView) v.findViewById(R.id.player_three_number_of_trains));
             playerThreeStatusTextViews.add((TextView) v.findViewById(R.id.player_three_number_of_cards));
-            playerThreeStatusTextViews.add((TextView) v.findViewById(R.id.player_three_number_of_routes));
+            playerThreeStatusTextViews.add((TextView) v.findViewById(R.id.player_three_number_of_destination_cards));
 
             playerThreeStatusTextViews.get(0).setText(players.get(2).getUserName().getValue());
 
@@ -272,7 +272,7 @@ public class StatusFragment extends Fragment implements StatusFragmentPresenter.
             playerFourStatusTextViews.add((TextView) v.findViewById(R.id.player_four_points));
             playerFourStatusTextViews.add((TextView) v.findViewById(R.id.player_four_number_of_trains));
             playerFourStatusTextViews.add((TextView) v.findViewById(R.id.player_four_number_of_cards));
-            playerFourStatusTextViews.add((TextView) v.findViewById(R.id.player_four_number_of_routes));
+            playerFourStatusTextViews.add((TextView) v.findViewById(R.id.player_four_number_of_destination_cards));
 
             playerFourStatusTextViews.get(0).setText(players.get(3).getUserName().getValue());
 
@@ -287,7 +287,7 @@ public class StatusFragment extends Fragment implements StatusFragmentPresenter.
             playerFiveStatusTextViews.add((TextView) v.findViewById(R.id.player_five_points));
             playerFiveStatusTextViews.add((TextView) v.findViewById(R.id.player_five_number_of_trains));
             playerFiveStatusTextViews.add((TextView) v.findViewById(R.id.player_five_number_of_cards));
-            playerFiveStatusTextViews.add((TextView) v.findViewById(R.id.player_five_number_of_routes));
+            playerFiveStatusTextViews.add((TextView) v.findViewById(R.id.player_five_number_of_destination_cards));
 
             playerOneStatusTextViews.get(0).setText(players.get(4).getUserName().getValue());
 
