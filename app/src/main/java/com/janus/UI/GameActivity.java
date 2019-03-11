@@ -217,6 +217,7 @@ public class GameActivity extends AppCompatActivity
                 client.update();
                 task = new WaitTask(this);
                 task.execute(demoState);
+                break;
             default:
                 makeToast("Demo done!");
                 break;

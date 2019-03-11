@@ -168,9 +168,7 @@ public class gameModel {
     //Todo: Check for empty deck and other special cases - recommend moving decks into their own classes
     public trainCardModel drawTrainCardFromDeck() {
         int numCards = (trainCardDeck.size() - 1);
-        trainCardModel card = this.trainCardDeck.get(numCards); //Get top card
-        trainCardDeck.remove(numCards); //Eliminate top card from array
-        return card;
+        return trainCardDeck.remove(numCards); //Eliminate top card from array
     }
 
     public trainCardModel drawFaceUpTrainCard(int pos) throws Exception {
