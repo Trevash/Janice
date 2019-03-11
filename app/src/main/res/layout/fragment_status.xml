@@ -199,7 +199,7 @@
                     android:textSize="20sp"
                     android:layout_columnWeight="1"
                     android:layout_gravity="center"
-                    android:text="Number of Routes" />
+                    android:text="Number of Destination Cards" />
 
                 <TextView
                     android:id="@+id/player_one_name"
@@ -234,7 +234,7 @@
                     android:textSize="14sp" />
 
                 <TextView
-                    android:id="@+id/player_one_number_of_routes"
+                    android:id="@+id/player_one_number_of_destination_cards"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textSize="14sp"
@@ -274,7 +274,7 @@
                     android:textSize="14sp" />
 
                 <TextView
-                    android:id="@+id/player_two_number_of_routes"
+                    android:id="@+id/player_two_number_of_destination_cards"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
@@ -314,7 +314,7 @@
                     android:textSize="14sp" />
 
                 <TextView
-                    android:id="@+id/player_three_number_of_routes"
+                    android:id="@+id/player_three_number_of_destination_cards"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
@@ -354,7 +354,7 @@
                     android:textSize="14sp" />
 
                 <TextView
-                    android:id="@+id/player_four_number_of_routes"
+                    android:id="@+id/player_four_number_of_destination_cards"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
@@ -394,7 +394,7 @@
                     android:textSize="14sp" />
 
                 <TextView
-                    android:id="@+id/player_five_number_of_routes"
+                    android:id="@+id/player_five_number_of_destination_cards"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
