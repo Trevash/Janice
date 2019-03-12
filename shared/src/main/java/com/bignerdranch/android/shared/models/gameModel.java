@@ -166,7 +166,7 @@ public class gameModel {
         }
     }
 
-    //Todo: Check for empty deck and other special cases - recommend moving decks into their own classes
+    // Todo: Check for empty deck and other special cases - recommend moving decks into their own classes
     public trainCardModel drawTrainCardFromDeck() {
         int numCards = (trainCardDeck.size() - 1);
         return trainCardDeck.remove(numCards); //Eliminate top card from array
@@ -320,7 +320,7 @@ public class gameModel {
 
         int[] totals = new int[2];
         totals[0] = trainCardDeck.size();
-        totals[1] = state.size();
+        totals[1] = state.destinationCardDeckSize();
         stats.add(totals);
 
         for (int i = 0; i < players.size(); i++) {
@@ -344,9 +344,6 @@ public class gameModel {
     }
 
     public boolean isPlayersTurn(playerIDModel testPlayer){
-        if(players.get(turnCounter).getId().getValue().equals(testPlayer.getValue())){
-            return true;
-        }
-        return false;
+        return players.get(turnCounter).getId().equals(testPlayer);
     }
 }

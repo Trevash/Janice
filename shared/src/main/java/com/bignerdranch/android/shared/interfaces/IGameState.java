@@ -8,11 +8,23 @@ import java.util.List;
 
 public interface IGameState {
 
+    /**
+     *
+     * @return
+     */
     public List<DestinationCardModel> drawDestinationCards();
     public void returnDestinationCards(List<DestinationCardModel> destinationCards);
-    public int size();
 
     /**
+     * returns the number of cards in the destination card deck
+     * @return
+     */
+    public int destinationCardDeckSize();
+
+    /**
+     *
+     * Precondition: IServer != null, gameIDModel is the game id of the game for this state.
+     * Postcondition: the returned IGameState is the client's equivalent state of the implementing state
      *
      * @param serverProxy a reference to the server (in this case, a server proxy) so that the game
      *                    state can interact with the server

@@ -11,7 +11,9 @@ import com.bignerdranch.android.shared.models.trainCardModel;
 public class Constants {
     public static final String IP_ADDRESS =
             //"192.168.1.100"; // Jason's home IP address
-            "10.24.203.171";
+            //"192.168.254.216";
+            "192.168.253.133";
+            //"10.24.203.171";
             //"10.34.237.205";
             //"10.37.93.67"; // Regular IP address for group testing
             //"10.34.241.184"; // another IP address for group testing

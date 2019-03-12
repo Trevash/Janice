@@ -29,7 +29,7 @@ public class ServerInitialGameState implements IGameState {
     }
 
 
-    public int size() {
+    public int destinationCardDeckSize() {
         return destinationCardDeck.size();
     }
 }

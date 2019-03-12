@@ -138,6 +138,6 @@ public class serverFacade implements IServer {
         game.returnDestinationCards(request.getDestinationCards());
 
         return new Results("ReturnDestinationCards", true, "return");
-        // currently does not return anything
+        // currently does not return anything - will need to update everyone's games
     }
 }
