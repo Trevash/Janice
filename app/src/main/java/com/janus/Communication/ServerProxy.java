@@ -197,4 +197,6 @@ public class ServerProxy implements IServer {
         }
         return messageResult;
     }
+
+    // TODO add in a private method that is a generalized method of each command - idea is to reduce code redundancy and to ease future commands
 }

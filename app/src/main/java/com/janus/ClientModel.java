@@ -9,7 +9,6 @@ import com.janus.Communication.ServerProxy;
 
 public class ClientModel {
 
-    // TODO answer: What implements CurrentView?
 
     private gameModel game;
     private List<gameModel> serverGameList = new ArrayList<>();
