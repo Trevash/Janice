@@ -8,19 +8,52 @@ import java.util.List;
 
 import static com.bignerdranch.android.shared.Constants.Cities.*;
 
+/**
+ * singleRouteModel is the only concrete class to directly inherit from abstractRoute
+ */
+
 public class singleRouteModel extends abstractRoute {
+    /**
+     * Private member variables include required color of train cards and the player ID of the player who claims it
+     */
     private routeColorEnum trainColor;
     private playerIDModel claimer = null;
 
+    /**
+     * Only additional parameter to this class's constructor is the color of the route
+     */
     public singleRouteModel(cityModel city1, cityModel city2, int length, routeColorEnum color) {
         super(city1, city2, length);
         this.trainColor = color;
     }
 
+    /**
+     * Additional getter functions:
+     * - getClaimer returns the playerID of the player who claimed it (or null)
+     * - getTrainColor returns the enum color value
+     * - claimable checks if this route is already claimed
+     * - isClaimedBy takes a playerIDmodel and checks if that ID matches the one of this routes claimer
+     */
     public playerIDModel getClaimer() {
         return claimer;
     }
+    public routeColorEnum getTrainColor() {
+        return trainColor;
+    }
+    public boolean claimable() {
+        return this.claimer == null;
+    }
+    public boolean isClaimedBy(playerIDModel pm) {
+        if (claimer == null) {
+            return false;
+        } else return pm.getValue().equals(claimer.getValue());
+    }
 
+    /**
+     * A single route can only be claimed by a single player, accordingly the first player who claims it prevents anyone from claiming it again
+     * This function throws a custom exception if it is already claimed, RouteAlreadyClaimedException
+     * Overrides the claim function of abstractRoute
+     */
     @Override
     public void claim(playerIDModel claimer) throws RouteAlreadyClaimedException {
         if (this.claimer != null) {
@@ -29,28 +62,16 @@ public class singleRouteModel extends abstractRoute {
         this.claimer = claimer;
     }
 
+    /**
+     * This function is used for displaying the route info on the UI
+     */
     public String toString(){
         return getCity1().getName() + " - " + getCity2().getName();
     }
 
-    public routeColorEnum getTrainColor() {
-        return trainColor;
-    }
-
-    public void setTrainColor(routeColorEnum newColor) {
-        this.trainColor = newColor;
-    }
-
-    public boolean claimable() {
-        return this.claimer == null;
-    }
-
-    public boolean isClaimedBy(playerIDModel pm) {
-        if (claimer == null) {
-            return false;
-        } else return pm.getValue().equals(claimer.getValue());
-    }
-
+    /**
+     * This function is called when a game is created in order to make all necessary singleRoutes for that game
+     */
     public static List<abstractRoute> createSingleRoutes() {
         List<abstractRoute> routes = new ArrayList<>();
         routes.add(new singleRouteModel(SALT_LAKE_CITY, LAS_VEGAS, 4, routeColorEnum.GRAY));

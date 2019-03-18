@@ -198,23 +198,27 @@ public class GameActivity extends AppCompatActivity
             case 11:
                 makeToast("Sending Chat message");
                 showStatusFragment(0);
+                client.update();
+                task = new WaitTask(this);
+                task.execute(demoState);
+                break;
+            case 12:
                 chatMessageModel message = new chatMessageModel(curPlayer.getUserName(), "Hey! I'm a ghost that hacked your chat function!");
                 try {
                     ServerProxy.getInstance().updateChatbox(new UpdateChatboxRequest(curGame.getGameID(), client.getUser().getAuthToken(), message));
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
-                client.update();
                 task = new WaitTask(this);
                 task.execute(demoState);
                 break;
-            case 12:
+            case 13:
                 makeToast("Incrementing turn order to iWillLose");
                 showMapFragment();
                 task = new WaitTask(this);
                 task.execute(demoState);
                 break;
-            case 13:
+            case 14:
                 curGame.incrementTurnCounter();
                 client.update();
                 task = new WaitTask(this);

@@ -85,7 +85,7 @@ public class playerModel {
     	destinationCardHand.add(card);
     }
     public void DEMO_removeDestinationCardToHand(int i) {
-    	destinationCardHand.remove(i);
+        destinationCardHand.remove(i);
     }
 
     public void addDestinationCards(List<DestinationCardModel> cards) {
