@@ -2,6 +2,7 @@ package com.janus.UI;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -9,6 +10,8 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.bignerdranch.android.shared.models.playerModel;
+import com.janus.ClientModel;
+import com.janus.Presenter.GameResultsPresenter;
 import com.janus.R;
 
 import java.util.ArrayList;
@@ -24,6 +27,7 @@ public class GameResultsFragment  extends Fragment{
 
     private List<playerModel> players = new ArrayList<>();
     private PlayerAdapter adapter;
+    private GameResultsPresenter presenter;
 
     public GameResultsFragment() {
         // Required empty public constructor
@@ -38,7 +42,20 @@ public class GameResultsFragment  extends Fragment{
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_game_results, container, false);
 
+        presenter = new GameResultsPresenter();
 
+        players = presenter.getPlayers();
+
+        mWinner = v.findViewById(R.id.winner_TextView);
+        mWinner.setText(presenter.getWinner().getUserName().getValue());
+
+        mLongestPath = v.findViewById(R.id.longest_path_TextView);
+        mLongestPath.setText(presenter.getLongestRoute().getUserName().getValue());
+
+        mPlayerList = v.findViewById(R.id.results_player_list_RecyclerView);
+        mPlayerList.setLayoutManager(new LinearLayoutManager(getActivity()));
+        adapter = new PlayerAdapter(players);
+        mPlayerList.setAdapter(adapter);
 
         return v;
     }
