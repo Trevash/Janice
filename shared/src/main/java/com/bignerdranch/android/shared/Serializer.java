@@ -22,11 +22,10 @@ import com.bignerdranch.android.shared.resultobjects.AuthData;
 import com.bignerdranch.android.shared.resultobjects.GameListData;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import com.google.gson.internal.bind.ReflectiveTypeAdapterFactory;
-import com.bignerdranch.android.shared.interfaces.ClientInitialGameState;
+import com.bignerdranch.android.shared.gameStates.ClientInitialGameState;
 
-import com.bignerdranch.android.shared.interfaces.DestinationCardDeck;
-import com.bignerdranch.android.shared.interfaces.ServerInitialGameState;
+import com.bignerdranch.android.shared.models.DestinationCardDeck;
+import com.bignerdranch.android.shared.gameStates.ServerInitialGameState;
 
 import com.bignerdranch.android.shared.resultobjects.Results;
 

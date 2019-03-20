@@ -1,4 +1,4 @@
-package com.bignerdranch.android.shared.interfaces;
+package com.bignerdranch.android.shared.models;
 
 import com.bignerdranch.android.shared.interfaces.IDestinationCardDeck;
 import com.bignerdranch.android.shared.models.DestinationCardModel;

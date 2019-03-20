@@ -1,4 +1,4 @@
-package com.bignerdranch.android.shared.interfaces;
+package com.bignerdranch.android.shared.gameStates;
 
 import com.bignerdranch.android.shared.IServer;
 import com.bignerdranch.android.shared.interfaces.IDestinationCardDeck;
@@ -13,7 +13,7 @@ import java.util.List;
  * The state representing the client side at the beginning of the game.<!-- --> See IGameState for
  * more specific information
  */
-public class ClientInitialGameState implements IGameState {
+public class ClientInitialGameState extends AbstractClientGameState implements IGameState {
     // note: some of the information for this class is written in IGameState, specifically the
     // overridden methods
 
@@ -55,5 +55,21 @@ public class ClientInitialGameState implements IGameState {
     @Override
     public IGameState toClientState(IServer server, gameIDModel id) {
         return this;
+    }
+
+    @Override
+    public boolean canDrawTrainCards() {
+        return false;
+    }
+
+    @Override
+    public boolean canDrawDestCards() {
+        // TODO
+        return true;
+    }
+
+    @Override
+    public boolean canClaimRoute() {
+        return false;
     }
 }

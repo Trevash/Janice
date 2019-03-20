@@ -93,4 +93,16 @@ public class ClientFacade {
     public List<playerModel> getPlayers() {
         return getGame().getPlayers();
     }
+
+    public boolean userCanDrawTrainCards() {
+        return getGame().canDrawTrainCards();
+    }
+
+    public boolean userCanDrawDestCards() {
+        return getGame().canDrawDestCards();
+    }
+
+    public boolean userCanClaimRoute() {
+        return getGame().canClaimRoute();
+    }
 }

@@ -3,6 +3,7 @@ package com.bignerdranch.android.shared.models;
 import com.bignerdranch.android.shared.Constants;
 import com.bignerdranch.android.shared.IServer;
 import com.bignerdranch.android.shared.exceptions.DuplicateException;
+import com.bignerdranch.android.shared.gameStates.AbstractClientGameState;
 import com.bignerdranch.android.shared.interfaces.IGameState;
 import com.bignerdranch.android.shared.models.colors.playerColorEnum;
 import com.bignerdranch.android.shared.models.colors.routeColorEnum;
@@ -288,4 +289,29 @@ public class gameModel {
     public boolean isPlayersTurn(playerIDModel testPlayer){
         return players.get(turnCounter).getId().equals(testPlayer);
     }
+
+    public boolean canDrawDestCards() {
+        if(state instanceof AbstractClientGameState) {
+            return ((AbstractClientGameState) state).canDrawDestCards();
+        } else {
+            throw new IllegalStateException("canDrawDestCard operation currently a ClientSide only op");
+        }
+    }
+
+    public boolean canDrawTrainCards() {
+        if(state instanceof AbstractClientGameState) {
+            return ((AbstractClientGameState) state).canDrawTrainCards();
+        } else {
+            throw new IllegalStateException("canDrawTrainCard operation currently a ClientSide only op");
+        }
+    }
+
+    public boolean canClaimRoute() {
+        if(state instanceof AbstractClientGameState) {
+            return ((AbstractClientGameState) state).canClaimRoute();
+        } else {
+            throw new IllegalStateException("canClaimRoute operation currently a ClientSide only op");
+        }
+    }
+
 }
