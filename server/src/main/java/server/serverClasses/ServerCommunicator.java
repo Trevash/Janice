@@ -96,15 +96,15 @@ public class ServerCommunicator extends WebSocketServer {
                 updateAllUserGameList();
                 break;
             case "UpdateChat":
-                //TODO: Caleb change this later
             	ChatboxData chatboxData = (ChatboxData) result.getData(ChatboxData.class);
             	gameIDModel gameID = chatboxData.getGameID();
             	gameModel gameChat = serverModel.getInstance().getGameByID(gameID);
             	broadcastGame(resultGson, gameChat);
-
-                //broadcastOne(resultGson, conn);
                 break;
-            	
+            case "DrawDestinationCards":
+            	broadcastOne(resultGson, conn);
+            case "ReturnDestinationCards":
+            	System.out.println("returning cards... not implemented yet");
             case "ERROR":
                 broadcastOne(resultGson, conn);
                 break;
