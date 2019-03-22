@@ -134,9 +134,9 @@ public class serverFacade implements IServer {
 
     public Results returnDestinationCard(ReturnDestinationCardsRequest request) {
         gameModel game = serverModel.getInstance().getGameByID(request.getGameID());
-        game.returnDestinationCards(request.getDestinationCards());
-
-        return new Results("ReturnDestinationCards", true, "return");
+        game.returnRejectedDestinationCards(request.getRejectedCards());
+        game.updateCurrentPlayerDestinationCards(request.getSelectedCards());
+        return new Results("ReturnDestinationCards", true, game);
         // currently does not return anything - will need to update everyone's games
     }
 }
