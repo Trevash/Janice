@@ -1,6 +1,7 @@
 package com.bignerdranch.android.shared.interfaces;
 
 import com.bignerdranch.android.shared.IServer;
+import com.bignerdranch.android.shared.gameStates.AbstractClientGameState;
 import com.bignerdranch.android.shared.models.DestinationCardModel;
 import com.bignerdranch.android.shared.models.gameIDModel;
 
@@ -58,7 +59,7 @@ public interface IGameState {
      * @param id the id of the game that this state is associated with
      * @return the client version of this game state (itself if a client version)
      */
-    public IGameState toClientState(IServer serverProxy, gameIDModel id);
+    public AbstractClientGameState toClientState(IServer serverProxy, gameIDModel id);
 
     // TODO may want to add a way to send the gameModel from the client to the server - currently don't work
 

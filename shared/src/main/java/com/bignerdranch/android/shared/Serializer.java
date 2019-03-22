@@ -100,27 +100,27 @@ public class Serializer {
     public static void main(String args[]){
     	IGameState gameState = new ClientInitialGameState(new IServer() {
             @Override
-            public Results login(LoginRequest request) throws Exception {
+            public Results login(LoginRequest request) {
                 return null;
             }
             @Override
-            public Results register(RegisterRequest request) throws Exception {
+            public Results register(RegisterRequest request) {
                 return null;
             }
             @Override
-            public Results createGame(CreateGameRequest request) throws Exception {
+            public Results createGame(CreateGameRequest request) {
                 return null;
             }
             @Override
-            public Results startGame(StartGameRequest request) throws Exception {
+            public Results startGame(StartGameRequest request)  {
                 return null;
             }
             @Override
-            public Results joinGame(JoinGameRequest request) throws Exception {
+            public Results joinGame(JoinGameRequest request)  {
                 return null;
             }
             @Override
-            public Results updateChatbox(UpdateChatboxRequest request) throws Exception {
+            public Results updateChatbox(UpdateChatboxRequest request) {
                 return null;
             }
             @Override

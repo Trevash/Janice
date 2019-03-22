@@ -6,7 +6,7 @@ import com.bignerdranch.android.shared.exceptions.GameNotFoundException;
 import com.bignerdranch.android.shared.exceptions.InvalidAuthorizationException;
 import com.bignerdranch.android.shared.exceptions.UserNotFoundException;
 import com.bignerdranch.android.shared.gameStates.ServerInitialGameState;
-import com.bignerdranch.android.shared.models.DestinationCardListModel;
+import com.bignerdranch.android.shared.resultobjects.DestinationCardListModel;
 import com.bignerdranch.android.shared.models.authTokenModel;
 import com.bignerdranch.android.shared.models.colors.playerColorEnum;
 import com.bignerdranch.android.shared.models.gameModel;

@@ -111,6 +111,7 @@ public class ServerCommunicator extends WebSocketServer {
             default:
                 System.out.println("Invalid type passed to onMessage from Result: " + result.getType());
         }
+        // TODO what is this doing? It does make for a default-case
         List<WebSocket> temp = new ArrayList<>();
         temp.add(conn);
         broadcast(resultGson, temp);

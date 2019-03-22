@@ -1,16 +1,14 @@
 package com.bignerdranch.android.shared.proxy;
 
-import com.bignerdranch.android.shared.Constants;
 import com.bignerdranch.android.shared.IServer;
 import com.bignerdranch.android.shared.interfaces.IDestinationCardDeck;
-import com.bignerdranch.android.shared.models.DestinationCardListModel;
+import com.bignerdranch.android.shared.resultobjects.DestinationCardListModel;
 import com.bignerdranch.android.shared.models.DestinationCardModel;
 import com.bignerdranch.android.shared.models.gameIDModel;
 import com.bignerdranch.android.shared.requestObjects.DrawDestinationCardsRequest;
 import com.bignerdranch.android.shared.requestObjects.ReturnDestinationCardsRequest;
 import com.bignerdranch.android.shared.resultobjects.Results;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class DestinationCardDeckProxy implements IDestinationCardDeck {

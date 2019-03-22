@@ -1,4 +1,6 @@
-package com.bignerdranch.android.shared.models;
+package com.bignerdranch.android.shared.resultobjects;
+
+import com.bignerdranch.android.shared.models.DestinationCardModel;
 
 import java.util.List;
 
