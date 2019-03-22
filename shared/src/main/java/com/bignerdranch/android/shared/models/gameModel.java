@@ -135,12 +135,18 @@ public class gameModel {
         return state.drawDestinationCards();
     }
 
-    public void returnDestinationCards(List<DestinationCardModel> destinationCards) {
+    public void returnRejectedDestinationCards(List<DestinationCardModel> rejectedCards) {
         // similar to draw destination cards: clients call method on server, server returns to the deck
         // inside of it.
-        state.returnDestinationCards(destinationCards);
+        state.returnDestinationCards(rejectedCards);
     }
 
+    public void updateCurrentPlayerDestinationCards(List<DestinationCardModel> selectedCards) {
+    	playerModel curPlayer = players.get(turnCounter);
+    	curPlayer.addDestinationCards(selectedCards);
+    	//TODO: increment turn order, update game history
+    }
+    
     // host is the first player in the list
     public playerModel getHostPlayer() {
         return players.get(0);
