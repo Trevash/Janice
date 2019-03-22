@@ -115,7 +115,6 @@ public class DestinationSelectFragment extends Fragment implements DestinationFr
         mAcceptButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // TODO does not appear to be keeping or returning any of the cards.
                 presenter.selectDestinationCards(selectedDestinationCards, availableDestinationCards);
                 mContext.onFinishAction();
             }
