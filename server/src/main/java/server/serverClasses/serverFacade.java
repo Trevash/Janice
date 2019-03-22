@@ -4,17 +4,25 @@ import com.bignerdranch.android.shared.IServer;
 import com.bignerdranch.android.shared.exceptions.DuplicateException;
 import com.bignerdranch.android.shared.exceptions.GameNotFoundException;
 import com.bignerdranch.android.shared.exceptions.InvalidAuthorizationException;
+import com.bignerdranch.android.shared.exceptions.RouteAlreadyClaimedException;
+import com.bignerdranch.android.shared.exceptions.RouteNotFoundException;
 import com.bignerdranch.android.shared.exceptions.UserNotFoundException;
 import com.bignerdranch.android.shared.gameStates.ServerInitialGameState;
+import com.bignerdranch.android.shared.models.abstractRoute;
+import com.bignerdranch.android.shared.models.abstractRoute;
 import com.bignerdranch.android.shared.resultobjects.DestinationCardListModel;
+import com.bignerdranch.android.shared.models.abstractRoute;
+import com.bignerdranch.android.shared.models.abstractRoute;
 import com.bignerdranch.android.shared.models.authTokenModel;
 import com.bignerdranch.android.shared.models.colors.playerColorEnum;
+import com.bignerdranch.android.shared.models.gameIDModel;
 import com.bignerdranch.android.shared.models.gameModel;
 import com.bignerdranch.android.shared.models.passwordModel;
 import com.bignerdranch.android.shared.models.playerModel;
 import com.bignerdranch.android.shared.models.userIDModel;
 import com.bignerdranch.android.shared.models.userModel;
 import com.bignerdranch.android.shared.models.usernameModel;
+import com.bignerdranch.android.shared.requestObjects.ClaimRouteRequest;
 import com.bignerdranch.android.shared.requestObjects.CreateGameRequest;
 import com.bignerdranch.android.shared.requestObjects.DrawDestinationCardsRequest;
 import com.bignerdranch.android.shared.requestObjects.JoinGameRequest;
@@ -24,7 +32,12 @@ import com.bignerdranch.android.shared.requestObjects.ReturnDestinationCardsRequ
 import com.bignerdranch.android.shared.requestObjects.StartGameRequest;
 import com.bignerdranch.android.shared.requestObjects.UpdateChatboxRequest;
 import com.bignerdranch.android.shared.resultobjects.ChatboxData;
+import com.bignerdranch.android.shared.resultobjects.ClaimRouteData;
 import com.bignerdranch.android.shared.resultobjects.Results;
+
+import org.omg.CORBA.DynAnyPackage.Invalid;
+
+import java.util.List;
 
 public class serverFacade implements IServer {
     private static serverFacade sf = null;
@@ -112,7 +125,18 @@ public class serverFacade implements IServer {
         return new Results("Join", true, game);
     }
 
-	@Override
+    @Override
+    public Results claimRoute(ClaimRouteRequest request) throws InvalidAuthorizationException, RouteNotFoundException, RouteAlreadyClaimedException {
+        if(!serverModel.getInstance().authTokenExists(request.getAuth())){
+            throw new InvalidAuthorizationException("Invalid Auth Token passed to ClaimRoute!");
+        }
+
+        ClaimRouteData result = serverModel.getInstance().claimRoute(request);
+
+        return new Results("ClaimRoute", true, result);
+    }
+
+    @Override
 	public Results updateChatbox(UpdateChatboxRequest request) throws InvalidAuthorizationException, 
 			GameNotFoundException {
         if (!serverModel.getInstance().authTokenExists(request.getAuth())) {

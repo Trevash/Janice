@@ -24,7 +24,7 @@ public abstract class AbstractClientGameState implements IGameState {
      * @return the client version of this game state (itself if a client version)
      */
     @Override
-    public AbstractClientGameState toClientState(IServer serverProxy, gameIDModel id) { // TODO add in the player/userID?
+    public IGameState toClientState(IServer serverProxy, gameIDModel id) { // TODO add in the player/userID?
         return this;
     }
 }

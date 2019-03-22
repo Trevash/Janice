@@ -1,15 +1,23 @@
 package server.serverClasses;
 
+import com.bignerdranch.android.shared.Serializer;
 import com.bignerdranch.android.shared.exceptions.InvalidAuthorizationException;
+import com.bignerdranch.android.shared.exceptions.RouteAlreadyClaimedException;
+import com.bignerdranch.android.shared.exceptions.RouteNotFoundException;
+import com.bignerdranch.android.shared.models.abstractRoute;
 import com.bignerdranch.android.shared.models.authTokenModel;
 import com.bignerdranch.android.shared.models.chatboxModel;
 import com.bignerdranch.android.shared.models.colors.playerColorEnum;
+import com.bignerdranch.android.shared.models.doubleRouteModelFew;
+import com.bignerdranch.android.shared.models.doubleRouteModelMany;
 import com.bignerdranch.android.shared.models.gameIDModel;
 import com.bignerdranch.android.shared.models.gameModel;
 import com.bignerdranch.android.shared.models.playerIDModel;
 import com.bignerdranch.android.shared.models.playerModel;
+import com.bignerdranch.android.shared.models.singleRouteModel;
 import com.bignerdranch.android.shared.models.userIDModel;
 import com.bignerdranch.android.shared.models.userModel;
+import com.bignerdranch.android.shared.requestObjects.ClaimRouteRequest;
 import com.bignerdranch.android.shared.requestObjects.JoinGameRequest;
 import com.bignerdranch.android.shared.requestObjects.StartGameRequest;
 import com.bignerdranch.android.shared.requestObjects.UpdateChatboxRequest;
@@ -17,6 +25,8 @@ import com.bignerdranch.android.shared.exceptions.DuplicateException;
 import com.bignerdranch.android.shared.exceptions.GameNotFoundException;
 import com.bignerdranch.android.shared.exceptions.UserNotFoundException;
 import com.bignerdranch.android.shared.resultobjects.ChatboxData;
+import com.bignerdranch.android.shared.resultobjects.ClaimRouteData;
+import com.bignerdranch.android.shared.resultobjects.Results;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -33,6 +43,26 @@ public class serverModel {
             sm = new serverModel();
         }
         return sm;
+    }
+
+    public ClaimRouteData claimRoute(ClaimRouteRequest request) throws RouteNotFoundException, RouteAlreadyClaimedException {
+        gameModel curGame = this.getGameByID(request.getGameID());
+        abstractRoute curRoute = curGame.getRouteById(request.getRoute().getRouteID());
+
+        if(curRoute instanceof singleRouteModel){
+            curRoute.claim(request.getPlayerID());
+        }
+        else if(curRoute instanceof doubleRouteModelFew){
+            curRoute.claim(request.getPlayerID());
+        }
+        else if(curRoute instanceof doubleRouteModelMany){
+            curRoute.claim(request.getPlayerID(), request.getColor());
+        }
+        else{
+            throw new RouteNotFoundException("Route of invalid class type passed to server!");
+        }
+
+        return new ClaimRouteData(curGame.getGameID(), curGame.getRoutes());
     }
 
     public void addUser(userModel newUser){
@@ -190,5 +220,8 @@ public class serverModel {
                 //return data;
             }
         }
-        throw new GameNotFoundException("Update chat failed, game not found");    }
+        throw new GameNotFoundException("Update chat failed, game not found");
+    }
+
+
 }
