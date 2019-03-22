@@ -108,6 +108,7 @@ public class ServerCommunicator extends WebSocketServer {
                 ClaimRouteData derezedData = (ClaimRouteData) result.getData(ClaimRouteData.class);
                 broadcastGame(resultGson, serverModel.getInstance().getGameByID(derezedData.getGameID()));
                 broadcast(resultGson);
+                //TODO: Increment turn order, update status of all clients game models
                 break;
             case "DrawDestinationCards":
             	broadcastOne(resultGson, conn);
