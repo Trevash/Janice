@@ -33,7 +33,7 @@ public class LobbyFragmentPresenter implements ClientFacade.Presenter {
 
     public void startGameClicked() {
         try {
-            sp.startGame(new StartGameRequest(facade.getGame(), facade.getUser().getAuthToken()));
+            sp.startGame(new StartGameRequest(facade.getGame().getGameID(), facade.getUser().getAuthToken()));
         } catch(Exception e){
             e.printStackTrace();
         }

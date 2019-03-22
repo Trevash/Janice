@@ -27,7 +27,7 @@ public class ServerInitialGameState implements IGameState {
         destinationCardDeck.returnDestinationCards(destinationCards);
     }
 
-    public IGameState toClientState(IServer server, gameIDModel id) {
+    public AbstractClientGameState toClientState(IServer server, gameIDModel id) {
         return new ClientInitialGameState(server, id);
     }
 

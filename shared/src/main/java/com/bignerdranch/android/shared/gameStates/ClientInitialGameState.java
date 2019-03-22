@@ -45,16 +45,12 @@ public class ClientInitialGameState extends AbstractClientGameState implements I
     @Override
     public void returnDestinationCards(List<DestinationCardModel> destinationCards) {
         destinationCardDeck.returnDestinationCards(destinationCards);
+        // TODO move implementation into Abstract Client Game State
     }
 
     @Override
     public int destinationCardDeckSize() {
         return destinationCardDeck.size();
-    }
-
-    @Override
-    public IGameState toClientState(IServer server, gameIDModel id) {
-        return this;
     }
 
     @Override
@@ -64,7 +60,7 @@ public class ClientInitialGameState extends AbstractClientGameState implements I
 
     @Override
     public boolean canDrawDestCards() {
-        // TODO
+        // TODO if drawn cards, probably want to move to inactive state until server indicates otherwise
         return true;
     }
 
