@@ -65,6 +65,8 @@ public class MapFragment extends Fragment implements MapFragmentPresenter.View{
     private Map<routeColorEnum, Integer> colorMap = new HashMap<>();
     private Map<playerColorEnum, Integer> colorMap2 = new HashMap<>();
 
+    private List<playerModel> tempPlayers = new ArrayList<>();
+
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater){
         super.onCreateOptionsMenu(menu, inflater);
@@ -243,14 +245,26 @@ public class MapFragment extends Fragment implements MapFragmentPresenter.View{
         }
     }
 
-    public void updateTurnIndicator(List<playerModel> updatedPlayers){
-        playerModel[] playerModels = new playerModel[updatedPlayers.size()];
-        mPlayerAdapter = new PlayerAdapter(updatedPlayers.toArray(playerModels));
-        mTurnRecyclerView.setAdapter(mPlayerAdapter);
+    public void updateTurnIndicator(List<playerModel> updatedPlayers) {
+        tempPlayers = updatedPlayers;
+
+        getActivity().runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                updateTurnIndicatorMainThread();
+            }
+        });
         /*mDrawDestinationsButton.setEnabled(false);
         if(presenter.isCurrentPlayersTurn()){
             mDrawDestinationsButton.setEnabled(true);
         }*/
+    }
+
+    private void updateTurnIndicatorMainThread() {
+        playerModel[] playerModels = new playerModel[tempPlayers.size()];
+        playerModels = tempPlayers.toArray(playerModels);
+        mPlayerAdapter = new PlayerAdapter(playerModels);
+        mTurnRecyclerView.setAdapter(mPlayerAdapter);
     }
 
     public void updateRoutes(List<abstractRoute> updatedRoutes){

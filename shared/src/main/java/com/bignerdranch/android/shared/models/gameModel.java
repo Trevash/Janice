@@ -23,6 +23,7 @@ public class gameModel {
     private chatboxModel chatbox;
     private int turnCounter;
     private Map<String, playerModel> mapPlayerIDToModel;
+    private chatboxModel gameHistory;
 
     // TODO create states - will want more for phase 3
     private IGameState state;
@@ -56,6 +57,7 @@ public class gameModel {
             e.printStackTrace();
         }
         chatbox = new chatboxModel();
+        gameHistory = new chatboxModel();
         this.turnCounter = 0;
 
         this.state = state;
@@ -312,6 +314,10 @@ public class gameModel {
         } else {
             throw new IllegalStateException("canClaimRoute operation currently a ClientSide only op");
         }
+    }
+    
+    public void updateGameHistory(chatMessageModel entry) {
+    	this.gameHistory.addMessage(entry);
     }
 
 }
