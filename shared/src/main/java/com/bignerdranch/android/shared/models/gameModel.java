@@ -329,6 +329,10 @@ public class gameModel {
     	this.gameHistory.addMessage(entry);
     }
 
+    public chatboxModel getGameHistory() {
+        return this.gameHistory;
+    }
+
     public abstractRoute getRouteById(routeIDModel routeID) throws RouteNotFoundException {
         for (abstractRoute route : routes) {
             if(route.getRouteID().getValue().equals(routeID.getValue())){
