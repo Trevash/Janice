@@ -77,6 +77,10 @@ public class ClientFacade {
         }
     }
 
+    public void setTurnCounter(int turnCounter) {
+        model.setTurnCounter(turnCounter);
+    }
+
     public chatboxModel getChatbox() {
         return model.getChatbox();
     }
@@ -84,6 +88,10 @@ public class ClientFacade {
     public void setChatbox(chatboxModel chatbox) {
         model.setChatbox(chatbox);
         currentPresenter.updateUI();
+    }
+
+    public void setHistory(chatboxModel gameHistory) {
+        model.setGameHistory(gameHistory);
     }
 
     public chatboxModel getHistory() {

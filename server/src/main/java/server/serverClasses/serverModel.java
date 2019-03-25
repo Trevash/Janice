@@ -45,7 +45,7 @@ public class serverModel {
         return sm;
     }
 
-    public ClaimRouteData claimRoute(ClaimRouteRequest request) throws RouteNotFoundException, RouteAlreadyClaimedException {
+    public ClaimRouteData claimRoute(ClaimRouteRequest request) throws RouteNotFoundException, RouteAlreadyClaimedException, UserNotFoundException {
         gameModel curGame = this.getGameByID(request.getGameID());
         abstractRoute curRoute = curGame.getRouteById(request.getRoute().getRouteID());
 
@@ -62,7 +62,7 @@ public class serverModel {
             throw new RouteNotFoundException("Route of invalid class type passed to server!");
         }
 
-        return new ClaimRouteData(curGame.getGameID(), curGame.getRoutes());
+        return new ClaimRouteData(curGame.getGameID(), curGame.getRoutes(), curRoute, getUser(request.getAuth()).getUserName());
     }
 
     public void addUser(userModel newUser){

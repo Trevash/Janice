@@ -75,7 +75,7 @@ public class commandHandler extends handlerBase implements IServer {
 		
 	}
 
-	public Results claimRoute(ClaimRouteRequest request) throws InvalidAuthorizationException, RouteNotFoundException, RouteAlreadyClaimedException {
+	public Results claimRoute(ClaimRouteRequest request) throws InvalidAuthorizationException, RouteNotFoundException, RouteAlreadyClaimedException, UserNotFoundException {
         return serverFacade.getInstance().claimRoute(request);
     }
 

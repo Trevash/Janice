@@ -126,7 +126,7 @@ public class serverFacade implements IServer {
     }
 
     @Override
-    public Results claimRoute(ClaimRouteRequest request) throws InvalidAuthorizationException, RouteNotFoundException, RouteAlreadyClaimedException {
+    public Results claimRoute(ClaimRouteRequest request) throws InvalidAuthorizationException, RouteNotFoundException, RouteAlreadyClaimedException, UserNotFoundException {
         if(!serverModel.getInstance().authTokenExists(request.getAuth())){
             throw new InvalidAuthorizationException("Invalid Auth Token passed to ClaimRoute!");
         }

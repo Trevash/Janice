@@ -341,4 +341,16 @@ public class gameModel {
         }
         throw new RouteNotFoundException("Route at id " + routeID.getValue() + " not found in game " + this.getGameID().getValue());
     }
+
+    public int getTurnCounter() {
+        return turnCounter;
+    }
+
+    public void setGameHistory(chatboxModel gameHistory) {
+        this.gameHistory = gameHistory;
+    }
+
+    public void setTurnCounter(int turnCounter) {
+        this.turnCounter = turnCounter;
+    }
 }
