@@ -42,8 +42,8 @@ public class ClientInitialGameState extends AbstractClientGameState implements I
     }
 
     @Override
-    public void returnDestinationCards(List<DestinationCardModel> destinationCards) {
-        destinationCardDeck.returnDestinationCards(destinationCards);
+    public void returnDestinationCards(List<DestinationCardModel> selectedCards, List<DestinationCardModel> rejectedCards) {
+        destinationCardDeck.returnDestinationCards(selectedCards, rejectedCards);
     }
 
     @Override

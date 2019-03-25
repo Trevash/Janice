@@ -134,10 +134,10 @@ public class gameModel {
         return state.drawDestinationCards();
     }
 
-    public void returnRejectedDestinationCards(List<DestinationCardModel> rejectedCards) {
+    public void returnRejectedDestinationCards(List<DestinationCardModel> selectedCards, List<DestinationCardModel> rejectedCards) {
         // similar to draw destination cards: clients call method on server, server returns to the deck
         // inside of it.
-        state.returnDestinationCards(rejectedCards);
+        state.returnDestinationCards(selectedCards, rejectedCards);
     }
 
     public void updateCurrentPlayerDestinationCards(List<DestinationCardModel> selectedCards) {

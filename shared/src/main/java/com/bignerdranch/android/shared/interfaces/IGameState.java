@@ -32,9 +32,9 @@ public interface IGameState {
      * Postcondition: the size of the destination card deck is increased by the number of returned
      * destination cards
      *
-     * @param destinationCards the cards that are to be returned
+     * @param rejectedCards the cards that are to be returned
      */
-    public void returnDestinationCards(List<DestinationCardModel> destinationCards);
+    public void returnDestinationCards(List<DestinationCardModel> selectedCards, List<DestinationCardModel> rejectedCards);
 
     /**
      * returns the number of cards in the destination card deck.<!-- -->
