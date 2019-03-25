@@ -66,9 +66,9 @@ public class DestinationCardDeck implements IDestinationCardDeck {
     }
 
 
-    public void returnDestinationCards(List<DestinationCardModel> cards) {
-        for(int i = 0; i < cards.size(); i++) {
-            returnDestinationCard(cards.get(i));
+    public void returnDestinationCards(List<DestinationCardModel> selectedCards, List<DestinationCardModel> rejectedCards) {
+        for(int i = 0; i < rejectedCards.size(); i++) {
+            returnDestinationCard(rejectedCards.get(i));
         }
     }
 
