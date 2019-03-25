@@ -35,10 +35,10 @@ public class DestinationCardDeckProxy implements IDestinationCardDeck {
     }
 
     @Override
-    public void returnDestinationCards(List<DestinationCardModel> cards) {
-        Results results = server.returnDestinationCard(new ReturnDestinationCardsRequest(gameID, cards));
+    public void returnDestinationCards(List<DestinationCardModel> selectedCards, List<DestinationCardModel> rejectedCards) {
+        Results results = server.returnDestinationCard(new ReturnDestinationCardsRequest(gameID, selectedCards, rejectedCards));
         // TODO what should occur when results contains an error message/exception?
-        size -= cards.size();
+        size -= selectedCards.size();
     }
 
     @Override

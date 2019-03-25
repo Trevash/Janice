@@ -10,6 +10,7 @@ import com.bignerdranch.android.shared.models.gameIDModel;
 import com.bignerdranch.android.shared.models.gameModel;
 import com.bignerdranch.android.shared.models.singleRouteModel;
 import com.bignerdranch.android.shared.proxy.DestinationCardDeckProxy;
+import com.bignerdranch.android.shared.requestObjects.ClaimRouteRequest;
 import com.bignerdranch.android.shared.requestObjects.CreateGameRequest;
 import com.bignerdranch.android.shared.requestObjects.DrawDestinationCardsRequest;
 import com.bignerdranch.android.shared.requestObjects.JoinGameRequest;
@@ -119,6 +120,12 @@ public class Serializer {
             public Results joinGame(JoinGameRequest request)  {
                 return null;
             }
+
+            @Override
+            public Results claimRoute(ClaimRouteRequest request) throws Exception {
+                return null;
+            }
+
             @Override
             public Results updateChatbox(UpdateChatboxRequest request) {
                 return null;

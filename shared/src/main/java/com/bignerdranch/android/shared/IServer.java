@@ -1,7 +1,7 @@
 package com.bignerdranch.android.shared;
 
-import com.bignerdranch.android.shared.models.authTokenModel;
-import com.bignerdranch.android.shared.models.gameModel;
+import com.bignerdranch.android.shared.models.gameIDModel;
+import com.bignerdranch.android.shared.requestObjects.ClaimRouteRequest;
 import com.bignerdranch.android.shared.requestObjects.CreateGameRequest;
 import com.bignerdranch.android.shared.requestObjects.DrawDestinationCardsRequest;
 import com.bignerdranch.android.shared.requestObjects.JoinGameRequest;
@@ -15,13 +15,14 @@ import com.bignerdranch.android.shared.resultobjects.Results;
 public interface IServer {
     // TODO update the Exceptions thrown to be more specific
 
-    public Results login(LoginRequest request) throws Exception;
-    public Results register(RegisterRequest request) throws Exception;
-    public Results createGame(CreateGameRequest request) throws Exception;
-    public Results startGame(StartGameRequest request) throws Exception;
-    public Results joinGame(JoinGameRequest request) throws Exception;
-    public Results updateChatbox(UpdateChatboxRequest request) throws Exception;
+    Results login(LoginRequest request) throws Exception;
+    Results register(RegisterRequest request) throws Exception;
+    Results createGame(CreateGameRequest request) throws Exception;
+    Results startGame(StartGameRequest request) throws Exception;
+    Results joinGame(JoinGameRequest request) throws Exception;
+    Results claimRoute(ClaimRouteRequest request) throws Exception;
+    Results updateChatbox(UpdateChatboxRequest request) throws Exception;
 
-    public Results drawDestinationCards(DrawDestinationCardsRequest request);
-    public Results returnDestinationCard(ReturnDestinationCardsRequest request);
+    Results drawDestinationCards(DrawDestinationCardsRequest request);
+    Results returnDestinationCard(ReturnDestinationCardsRequest request);
 }

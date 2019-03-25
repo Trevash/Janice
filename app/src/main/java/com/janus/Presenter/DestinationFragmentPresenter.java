@@ -2,14 +2,18 @@ package com.janus.Presenter;
 
 
 import com.bignerdranch.android.shared.models.DestinationCardModel;
+import com.bignerdranch.android.shared.models.gameIDModel;
 import com.bignerdranch.android.shared.models.gameModel;
+import com.bignerdranch.android.shared.requestObjects.ReturnDestinationCardsRequest;
+import com.bignerdranch.android.shared.resultobjects.Results;
 import com.janus.ClientFacade;
 import com.janus.ClientModel;
+import com.janus.Communication.ReturnDestinationCardsTask;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class DestinationFragmentPresenter implements ClientFacade.Presenter {
+public class DestinationFragmentPresenter implements ClientFacade.Presenter, ReturnDestinationCardsTask.Caller {
     public interface View {
         void updateDestinationCards(List<DestinationCardModel> cards);
     }
@@ -31,11 +35,21 @@ public class DestinationFragmentPresenter implements ClientFacade.Presenter {
 
     public void selectDestinationCards(List<DestinationCardModel> selectedCards,
                                        List<DestinationCardModel> availableCards) {
-        List<DestinationCardModel> returnCards = new ArrayList<>(availableCards);
-        returnCards.removeAll(selectedCards);
-        gameModel game = ClientModel.getInstance().getGame();
-        game.returnDestinationCards(returnCards);
-        game.getPlayerByUsername(ClientModel.getInstance().getUser().getUserName())
-                .addDestinationCards(selectedCards);
+        List<DestinationCardModel> rejectedCards = new ArrayList<>(availableCards);
+        rejectedCards.removeAll(selectedCards);
+        gameIDModel gameID = model.getGame().getGameID();
+        ReturnDestinationCardsRequest request = new ReturnDestinationCardsRequest(gameID, selectedCards, rejectedCards);
+        ReturnDestinationCardsTask task = new ReturnDestinationCardsTask(this);
+        task.execute(request);
+    }
+
+    @Override
+    public void onError(String s) {
+
+    }
+
+    @Override
+    public void onCreateComplete(Results r) {
+
     }
 }

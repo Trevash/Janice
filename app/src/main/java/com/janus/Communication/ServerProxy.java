@@ -4,7 +4,9 @@ import com.bignerdranch.android.shared.GenericCommand;
 import com.bignerdranch.android.shared.IServer;
 import com.bignerdranch.android.shared.Constants;
 import com.bignerdranch.android.shared.models.authTokenModel;
+import com.bignerdranch.android.shared.models.gameIDModel;
 import com.bignerdranch.android.shared.models.gameModel;
+import com.bignerdranch.android.shared.requestObjects.ClaimRouteRequest;
 import com.bignerdranch.android.shared.requestObjects.CreateGameRequest;
 import com.bignerdranch.android.shared.requestObjects.DrawDestinationCardsRequest;
 import com.bignerdranch.android.shared.requestObjects.JoinGameRequest;
@@ -13,6 +15,7 @@ import com.bignerdranch.android.shared.requestObjects.RegisterRequest;
 import com.bignerdranch.android.shared.requestObjects.ReturnDestinationCardsRequest;
 import com.bignerdranch.android.shared.requestObjects.StartGameRequest;
 import com.bignerdranch.android.shared.requestObjects.UpdateChatboxRequest;
+import com.bignerdranch.android.shared.requestObjects.UpdateGameStatusRequest;
 import com.bignerdranch.android.shared.resultobjects.Results;
 import com.bignerdranch.android.shared.Serializer;
 import org.java_websocket.client.WebSocketClient;
@@ -129,7 +132,24 @@ public class ServerProxy implements IServer {
         return messageResult;
     }
 
-	public Results updateChatbox(UpdateChatboxRequest request) throws Exception {
+    @Override
+    public Results claimRoute(ClaimRouteRequest request) throws Exception {
+        Object[] paramValues = {Serializer.getInstance().serializeObject(request)};
+        String[] paramTypes = {"com.bignerdranch.android.shared.requestObjects.ClaimRouteRequest"};
+        GenericCommand commandObj = new GenericCommand("server.handlers.commandHandler", "claimRoute", paramTypes, paramValues);
+        String commandObjStr = Serializer.getInstance().serializeObject(commandObj);
+        client.send(commandObjStr);
+        messageResult = null;
+        client.setMessageResultToNull();
+        while (messageResult == null) {
+            messageResult = client.getResults();
+            Thread.sleep(100);
+        }
+
+        return messageResult;
+    }
+
+    public Results updateChatbox(UpdateChatboxRequest request) throws Exception {
         Object[] paramValues = {Serializer.getInstance().serializeObject(request)};
         String[] paramTypes = {"com.bignerdranch.android.shared.requestObjects.UpdateChatboxRequest"};
         GenericCommand commandObj = new GenericCommand("server.handlers.commandHandler", "updateChatbox", paramTypes, paramValues);
@@ -143,8 +163,8 @@ public class ServerProxy implements IServer {
         }
         return messageResult;
 	}
-	
-	public Results testSocket(UpdateChatboxRequest request) throws Exception {
+
+    public Results testSocket(UpdateChatboxRequest request) throws Exception {
         Object[] paramValues = {Serializer.getInstance().serializeObject(request)};
         String[] paramTypes = {"com.bignerdranch.android.shared.requestObjects.UpdateChatboxRequest"};
         GenericCommand commandObj = new GenericCommand("server.handlers.commandHandler", "updateChatbox", paramTypes, paramValues);
@@ -195,6 +215,7 @@ public class ServerProxy implements IServer {
                 throw new RuntimeException(e);
             }
         }
+
         return messageResult;
     }
 

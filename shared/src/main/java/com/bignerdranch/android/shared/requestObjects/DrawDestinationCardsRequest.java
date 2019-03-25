@@ -4,7 +4,7 @@ import com.bignerdranch.android.shared.models.gameIDModel;
 
 public class DrawDestinationCardsRequest {
 
-    gameIDModel id;
+    private gameIDModel id;
 
     public DrawDestinationCardsRequest(gameIDModel gameID) {
         id = gameID;

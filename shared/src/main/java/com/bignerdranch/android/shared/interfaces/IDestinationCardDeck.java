@@ -8,7 +8,7 @@ public interface IDestinationCardDeck {
 
     public List<DestinationCardModel> drawDestinationCards();
 
-    public void returnDestinationCards(List<DestinationCardModel> card);
+    public void returnDestinationCards(List<DestinationCardModel> selectedCards, List<DestinationCardModel> rejectedCards);
 
     public int size();
 }

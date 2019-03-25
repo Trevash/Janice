@@ -1,5 +1,7 @@
 package com.bignerdranch.android.shared.models;
 
+import com.bignerdranch.android.shared.exceptions.RouteAlreadyClaimedException;
+import com.bignerdranch.android.shared.exceptions.RouteNotFoundException;
 import com.bignerdranch.android.shared.models.colors.routeColorEnum;
 
 import java.util.ArrayList;
@@ -22,8 +24,8 @@ abstract public class abstractDoubleRoute extends abstractRoute{
     /**
      * Adds two routeColorEnums to the constructor
      */
-    public abstractDoubleRoute(cityModel city1, cityModel city2, int length, routeColorEnum color1, routeColorEnum color2) {
-        super(city1, city2, length);
+    public abstractDoubleRoute(cityModel city1, cityModel city2, int length, routeColorEnum color1, routeColorEnum color2, routeIDModel routeID) {
+        super(city1, city2, length, routeID);
         trainColor1 = color1;
         trainColor2 = color2;
     }
@@ -57,4 +59,6 @@ abstract public class abstractDoubleRoute extends abstractRoute{
     public boolean claimableRoute2() {
         return this.claimer2 == null;
     }
+
+    public abstract void claim(playerIDModel claimer, routeColorEnum color) throws RouteAlreadyClaimedException, RouteNotFoundException;
 }

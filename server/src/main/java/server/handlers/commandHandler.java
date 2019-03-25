@@ -5,9 +5,16 @@ import com.bignerdranch.android.shared.IServer;
 import com.bignerdranch.android.shared.exceptions.DuplicateException;
 import com.bignerdranch.android.shared.exceptions.GameNotFoundException;
 import com.bignerdranch.android.shared.exceptions.InvalidAuthorizationException;
+import com.bignerdranch.android.shared.exceptions.RouteAlreadyClaimedException;
+import com.bignerdranch.android.shared.exceptions.RouteNotFoundException;
 import com.bignerdranch.android.shared.exceptions.UserNotFoundException;
 
+import server.serverClasses.ServerCommunicator;
 import server.serverClasses.serverFacade;
+import server.serverClasses.serverModel;
+
+import com.bignerdranch.android.shared.models.gameModel;
+import com.bignerdranch.android.shared.requestObjects.ClaimRouteRequest;
 import com.bignerdranch.android.shared.requestObjects.CreateGameRequest;
 import com.bignerdranch.android.shared.requestObjects.DrawDestinationCardsRequest;
 import com.bignerdranch.android.shared.requestObjects.JoinGameRequest;
@@ -67,6 +74,10 @@ public class commandHandler extends handlerBase implements IServer {
 		return new Results("test", true, "It worked!");
 		
 	}
+
+	public Results claimRoute(ClaimRouteRequest request) throws InvalidAuthorizationException, RouteNotFoundException, RouteAlreadyClaimedException {
+        return serverFacade.getInstance().claimRoute(request);
+    }
 
     public Results drawDestinationCards(DrawDestinationCardsRequest request) {
         return serverFacade.getInstance().drawDestinationCards(request);

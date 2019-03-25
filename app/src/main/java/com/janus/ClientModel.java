@@ -84,4 +84,8 @@ public class ClientModel {
     public void setChatbox(chatboxModel chatbox) {
         this.chatbox = chatbox;
     }
+
+    public chatboxModel getHistory() {
+        return game.getGameHistory();
+    }
 }

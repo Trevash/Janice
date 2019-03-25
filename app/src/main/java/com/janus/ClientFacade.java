@@ -86,6 +86,10 @@ public class ClientFacade {
         currentPresenter.updateUI();
     }
 
+    public chatboxModel getHistory() {
+        return model.getHistory();
+    }
+
     public List<int[]> getStats() {
         return getGame().getStats(getUser().getUserName());
     }

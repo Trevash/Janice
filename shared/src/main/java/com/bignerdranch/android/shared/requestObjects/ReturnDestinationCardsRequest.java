@@ -7,19 +7,30 @@ import java.util.List;
 
 public class ReturnDestinationCardsRequest {
     private gameIDModel id;
-    private List<DestinationCardModel> destinationCards;
+    private List<DestinationCardModel> selectedCards;
+    private List<DestinationCardModel> rejectedCards;
 
-    public ReturnDestinationCardsRequest(gameIDModel gameID, List<DestinationCardModel> destinationCards) {
+    public gameIDModel getId() {
+        return id;
+    }
+
+    public List<DestinationCardModel> getRejectedCards() {
+        return rejectedCards;
+    }
+
+    public ReturnDestinationCardsRequest(gameIDModel gameID, List<DestinationCardModel> selectedCards,
+                                         List<DestinationCardModel> rejectedCards) {
         id = gameID;
-        this.destinationCards = destinationCards;
+        this.selectedCards = selectedCards;
+        this.rejectedCards = rejectedCards;
     }
 
     public gameIDModel getGameID() {
         return id;
     }
 
-    public List<DestinationCardModel> getDestinationCards() {
-        return destinationCards;
+    public List<DestinationCardModel> getSelectedCards() {
+        return selectedCards;
     }
     
 }

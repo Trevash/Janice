@@ -3,13 +3,12 @@ package com.bignerdranch.android.shared.models;
 import com.bignerdranch.android.shared.Constants;
 import com.bignerdranch.android.shared.IServer;
 import com.bignerdranch.android.shared.exceptions.DuplicateException;
+import com.bignerdranch.android.shared.exceptions.RouteNotFoundException;
 import com.bignerdranch.android.shared.gameStates.AbstractClientGameState;
 import com.bignerdranch.android.shared.interfaces.IGameState;
 import com.bignerdranch.android.shared.models.colors.playerColorEnum;
-import com.bignerdranch.android.shared.models.colors.routeColorEnum;
 
 import java.util.ArrayList;
-import java.util.Hashtable;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
@@ -93,7 +92,7 @@ public class gameModel {
         //destinationCardDeck = new DestinationCardDeckProxy();
     }
 
-    private void setRoutes() {
+    private void createRoutes() {
         routes.addAll(singleRouteModel.createSingleRoutes());
         if (players.size() > 3) {
             routes.addAll(doubleRouteModelMany.createDoubleRoutesMany());
@@ -152,6 +151,10 @@ public class gameModel {
         return players.get(0);
     }
 
+    public void setRoutes(List<abstractRoute> routes){
+        this.routes = routes;
+    }
+
     public gameIDModel getGameID() {
         return gameID;
     }
@@ -203,7 +206,7 @@ public class gameModel {
         }
 
         this.gameStarted = true;
-        this.setRoutes();
+        this.createRoutes();
 
         // TODO have each player draw destinationCards - have drawn destination cards,
         // TODO and each player starts in the draw destination card fragment
@@ -326,4 +329,16 @@ public class gameModel {
     	this.gameHistory.addMessage(entry);
     }
 
+    public chatboxModel getGameHistory() {
+        return this.gameHistory;
+    }
+
+    public abstractRoute getRouteById(routeIDModel routeID) throws RouteNotFoundException {
+        for (abstractRoute route : routes) {
+            if(route.getRouteID().getValue().equals(routeID.getValue())){
+                return route;
+            }
+        }
+        throw new RouteNotFoundException("Route at id " + routeID.getValue() + " not found in game " + this.getGameID().getValue());
+    }
 }
