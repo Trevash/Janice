@@ -5,7 +5,7 @@ import com.janus.ClientFacade;
 
 import java.util.List;
 
-public class GameHistoryPresenter {
+public class GameHistoryPresenter implements ClientFacade.Presenter {
 
     public interface View {
         void updateUI();
@@ -21,6 +21,10 @@ public class GameHistoryPresenter {
 
     public List<chatMessageModel> getHistory() {
         return facade.getHistory().getChats();
+    }
+
+    public void setFragment() {
+        facade.setPresenter(this);
     }
 
     public void updateUI() {
