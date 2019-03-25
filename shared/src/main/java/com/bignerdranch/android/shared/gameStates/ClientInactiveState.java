@@ -1,6 +1,8 @@
 package com.bignerdranch.android.shared.gameStates;
 
+import com.bignerdranch.android.shared.IServer;
 import com.bignerdranch.android.shared.models.DestinationCardModel;
+import com.bignerdranch.android.shared.models.gameIDModel;
 
 import java.util.List;
 
@@ -8,6 +10,11 @@ import java.util.List;
  * state representing the state that it is not the client's turn
  */
 public class ClientInactiveState extends AbstractClientGameState {
+
+    public ClientInactiveState(IServer server, gameIDModel gameID) {
+        super(server, gameID);
+    }
+
     @Override
     public boolean canDrawTrainCards() {
         return false;
@@ -54,16 +61,4 @@ public class ClientInactiveState extends AbstractClientGameState {
         throw new IllegalStateException("Cannot return destination cards outside of your turn");
     }
 
-    /**
-     * returns the number of cards in the destination card deck.<!-- -->
-     * Precondition: the state has a valid reference to the game's destination card deck.<!-- -->
-     * Postcondition: the return value contains the number of cards currently in the destination card
-     * deck.<!-- -->
-     *
-     * @return the size of the destination card deck
-     */
-    @Override
-    public int destinationCardDeckSize() {
-        return 0; // TODO move destination card deck functionality to the abstract class
-    }
 }

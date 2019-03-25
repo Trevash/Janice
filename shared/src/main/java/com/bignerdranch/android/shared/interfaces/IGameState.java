@@ -62,5 +62,6 @@ public interface IGameState {
     public AbstractClientGameState toClientState(IServer serverProxy, gameIDModel id);
 
     // TODO may want to add a way to send the gameModel from the client to the server - currently don't work
+    // TODO do we want a method that gives out the number of returnable destination cards?
 
 }

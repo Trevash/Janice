@@ -1,6 +1,7 @@
 package com.bignerdranch.android.shared.gameStates;
 
 import com.bignerdranch.android.shared.IServer;
+import com.bignerdranch.android.shared.interfaces.IDestinationCardDeck;
 import com.bignerdranch.android.shared.interfaces.IGameState;
 import com.bignerdranch.android.shared.models.DestinationCardModel;
 import com.bignerdranch.android.shared.models.gameIDModel;
@@ -8,6 +9,16 @@ import com.bignerdranch.android.shared.models.gameIDModel;
 import java.util.List;
 
 public class ServerInGameState implements IGameState {
+
+    private IDestinationCardDeck destinationCardDeck;
+
+    /**
+     *
+     * @param destinationCardDeck the destination card deck that was used previously
+     */
+    public ServerInGameState(IDestinationCardDeck destinationCardDeck) {
+        this.destinationCardDeck = destinationCardDeck;
+    }
 
     /**
      * Draws up to 3 destination cards, as specified by the rules of the game.<!-- -->
@@ -19,7 +30,7 @@ public class ServerInGameState implements IGameState {
      */
     @Override
     public List<DestinationCardModel> drawDestinationCards() {
-        return null; // TODO implement state
+        return destinationCardDeck.drawDestinationCards();
     }
 
     /**
@@ -36,7 +47,8 @@ public class ServerInGameState implements IGameState {
      */
     @Override
     public void returnDestinationCards(List<DestinationCardModel> destinationCards) {
-
+        destinationCardDeck.returnDestinationCards(destinationCards);
+        // TODO this may need to be changed, since the way we're doing this is about to change
     }
 
     /**
@@ -49,7 +61,7 @@ public class ServerInGameState implements IGameState {
      */
     @Override
     public int destinationCardDeckSize() {
-        return 0;
+        return destinationCardDeck.size();
     }
 
     /**

@@ -17,11 +17,11 @@ public class ClientInitialGameState extends AbstractClientGameState implements I
     // note: some of the information for this class is written in IGameState, specifically the
     // overridden methods
 
-    /**
+    /*
      * A proxy deck that has the ability to send messages to the server, which is used to interact
      * with the actual Destination Card deck on the server.
      */
-    private DestinationCardDeckProxy destinationCardDeck;
+    //private DestinationCardDeckProxy destinationCardDeck;
 
     /**
      * Constructs a ClientIntialGameState object that can interact with the provided server for the
@@ -34,23 +34,28 @@ public class ClientInitialGameState extends AbstractClientGameState implements I
      * @param gameID the game ID of the game for this state object.
      */
     public ClientInitialGameState(IServer server, gameIDModel gameID) {
-        destinationCardDeck = new DestinationCardDeckProxy(server, gameID);
+        super(server, gameID);
+        //destinationCardDeck = new DestinationCardDeckProxy(server, gameID);
     }
 
+    /*
     @Override
     public List<DestinationCardModel> drawDestinationCards() {
         return destinationCardDeck.drawDestinationCards();
     }
 
-    @Override
-    public void returnDestinationCards(List<DestinationCardModel> destinationCards) {
-        destinationCardDeck.returnDestinationCards(destinationCards);
-        // TODO move implementation into Abstract Client Game State
-    }
+
 
     @Override
     public int destinationCardDeckSize() {
         return destinationCardDeck.size();
+    }
+    */
+
+    @Override
+    public void returnDestinationCards(List<DestinationCardModel> destinationCards) {
+        // add in check for num of destination cards?
+        getDestinationCardDeck().returnDestinationCards(destinationCards);
     }
 
     @Override
