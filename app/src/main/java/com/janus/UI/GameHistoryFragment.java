@@ -46,8 +46,13 @@ public class GameHistoryFragment extends Fragment implements GameHistoryPresente
         mHistoryList = v.findViewById(R.id.history_RecyclerView);
         mHistoryList.setLayoutManager(new LinearLayoutManager(getActivity()));
         adapter = new GameHistoryAdapter(history);
+        mHistoryList.setAdapter(adapter);
 
         return v;
+    }
+
+    public void updatePresenter() {
+        presenter.setFragment();
     }
 
     public void updateUI() {

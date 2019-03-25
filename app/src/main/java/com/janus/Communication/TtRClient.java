@@ -11,6 +11,7 @@ import com.bignerdranch.android.shared.models.userModel;
 import com.bignerdranch.android.shared.models.gameModel;
 import com.bignerdranch.android.shared.resultobjects.ChatboxData;
 import com.bignerdranch.android.shared.resultobjects.ClaimRouteData;
+import com.bignerdranch.android.shared.resultobjects.GameStatusData;
 import com.bignerdranch.android.shared.resultobjects.Results;
 import com.bignerdranch.android.shared.Serializer;
 import com.janus.ClientFacade;
@@ -75,7 +76,9 @@ public class TtRClient extends WebSocketClient{
                     break;
                 }
                 case "UpdateGameStatus": {
-                    facade.setGame((gameModel) result.getData(gameModel.class));
+                    GameStatusData data = (GameStatusData) result.getData(GameStatusData.class);
+                    facade.setHistory(data.getGameHistory());
+                    facade.setTurnCounter(data.getTurnCounter());
                     break;
                 }
             }

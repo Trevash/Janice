@@ -8,6 +8,8 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.view.ViewPager;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -16,8 +18,10 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.bignerdranch.android.shared.models.gameModel;
 import com.bignerdranch.android.shared.models.playerModel;
 import com.janus.Presenter.StatusFragmentPresenter;
 import com.janus.R;
@@ -32,26 +36,29 @@ public class StatusFragment extends Fragment implements StatusFragmentPresenter.
         void onMapFragmentSelected();
     }
 
-    private Toolbar toolbar;
     private TabLayout tabLayout;
     private ViewPager viewPager;
     private StatusFragmentPresenter presenter;
     private Context context;
     private View view;
+    private StatusListAdapter adapter;
+    private List<playerModel> players = new ArrayList<>();
 
     private ChatFragment chatFragment;
     private DestinationRoutesFragment destinationRoutesFragment;
     private GameHistoryFragment gameHistoryFragment;
 
     private List<TextView> colorTextViews;
-    private TextView mTotalTrainCards;
-    private TextView mTotalDestinationCards;
     private List<TextView> playerOneStatusTextViews;
     private List<TextView> playerTwoStatusTextViews;
     private List<TextView> playerThreeStatusTextViews;
     private List<TextView> playerFourStatusTextViews;
     private List<TextView> playerFiveStatusTextViews;
-    
+
+    private TextView mTotalTrainCards;
+    private TextView mTotalDestinationCards;
+    private RecyclerView mStatusList;
+
     private int whichFragmentToShow = 0;
 
     public StatusFragment() {}
@@ -109,6 +116,7 @@ public class StatusFragment extends Fragment implements StatusFragmentPresenter.
         context = (Context) getActivity();
         presenter = new StatusFragmentPresenter(this);
         presenter.setStatusPresenter();
+        this.players = presenter.getPlayers();
 
         viewPager = v.findViewById(R.id.viewpager);
         setupViewPager(viewPager);
@@ -130,7 +138,7 @@ public class StatusFragment extends Fragment implements StatusFragmentPresenter.
                         destinationRoutesFragment.updatePresenter();
                         break;
                     case 2:
-                        //gameHistoryFragment.updatePresenter();
+                        gameHistoryFragment.updatePresenter();
                         break;
                 }
             }
@@ -141,13 +149,18 @@ public class StatusFragment extends Fragment implements StatusFragmentPresenter.
             }
         });
 
-
         tabLayout = v.findViewById(R.id.tabs);
         tabLayout.setupWithViewPager(viewPager);
 
+        mStatusList = v.findViewById(R.id.status_list_RecyclerView);
+        mStatusList.setLayoutManager(new LinearLayoutManager(getActivity()));
+
+        adapter = new StatusListAdapter(players);
+        mStatusList.setAdapter(adapter);
+
         this.view = v;
 
-        buildStats(v);
+        //buildStats(v);
 
         return v;
     }
@@ -204,7 +217,7 @@ public class StatusFragment extends Fragment implements StatusFragmentPresenter.
         }
     }
 
-    private void buildStats(View v) {
+    /*private void buildStats(View v) {
         String currentPlayerName = presenter.getCurrentPlayer().getUserName().getValue();
         List<playerModel> players = presenter.getPlayers();
         List<int[]> stats = presenter.getStats();
@@ -309,6 +322,17 @@ public class StatusFragment extends Fragment implements StatusFragmentPresenter.
                 playerFiveStatusTextViews.get(i).setText(Integer.toString(stats.get(6)[i-1]));
             }
         }
+    }*/
+
+    private void buildPlayerStats(int playerPosition, StatusListAdapter.StatusViewHolder holder) {
+        playerModel playerInfo = presenter.getPlayers().get(playerPosition);
+        int[] playerStats = presenter.getStats().get(playerPosition + 2);
+
+        holder.mPlayerName.setText(playerInfo.getUserName().getValue());
+        holder.mPlayerPoints.setText(Integer.toString(playerStats[0]));
+        holder.mNumTrains.setText(Integer.toString(playerStats[1]));
+        holder.mNumCards.setText(Integer.toString(playerStats[2]));
+        holder.mNumDestinationCards.setText(Integer.toString(playerStats[3]));
     }
 
     public void updateUI() {
@@ -316,9 +340,62 @@ public class StatusFragment extends Fragment implements StatusFragmentPresenter.
             getActivity().runOnUiThread(new Runnable() {
                 @Override
                 public void run() {
-                    buildStats(view);
+                    //buildStats(view);
+
+                    players = presenter.getPlayers();
+                    adapter = new StatusListAdapter(players);
+                    mStatusList.setAdapter(adapter);
                 }
             });
+        }
+    }
+
+    public class StatusListAdapter extends RecyclerView.Adapter<StatusListAdapter.StatusViewHolder> {
+
+        List<playerModel> players;
+
+        private class StatusViewHolder extends RecyclerView.ViewHolder {
+
+            public TextView mPlayerName;
+            public TextView mPlayerPoints;
+            public TextView mNumTrains;
+            public TextView mNumCards;
+            public TextView mNumDestinationCards;
+
+            public LinearLayout layout;
+
+            public StatusViewHolder(LinearLayout r) {
+                super(r);
+                layout = r;
+
+                mPlayerName = r.findViewById(R.id.player_TextView);
+                mPlayerPoints = r.findViewById(R.id.points_TextView);
+                mNumTrains = r.findViewById(R.id.num_trains_TextView);
+                mNumCards = r.findViewById(R.id.num_cards_TextView);
+                mNumDestinationCards = r.findViewById(R.id.num_destination_cards_TextView);
+            }
+        }
+
+        public StatusListAdapter(List<playerModel> players) {
+
+            this.players = players;
+        }
+
+        @Override
+        public StatusListAdapter.StatusViewHolder onCreateViewHolder(ViewGroup parent, int position) {
+            LinearLayout r = (LinearLayout) LayoutInflater.from(parent.getContext()).inflate(R.layout.status_list_child, parent, false);
+            StatusFragment.StatusListAdapter.StatusViewHolder viewHolder = new StatusFragment.StatusListAdapter.StatusViewHolder(r);
+            return viewHolder;
+        }
+
+        @Override
+        public void onBindViewHolder(StatusListAdapter.StatusViewHolder holder, int position) {
+            buildPlayerStats(position, holder);
+        }
+
+        @Override
+        public int getItemCount() {
+            return players.size();
         }
     }
 }

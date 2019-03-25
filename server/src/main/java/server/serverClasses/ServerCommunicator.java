@@ -8,6 +8,7 @@ import com.bignerdranch.android.shared.requestObjects.StartGameRequest;
 import com.bignerdranch.android.shared.resultobjects.ChatboxData;
 import com.bignerdranch.android.shared.resultobjects.ClaimRouteData;
 import com.bignerdranch.android.shared.resultobjects.GameListData;
+import com.bignerdranch.android.shared.resultobjects.GameStatusData;
 import com.bignerdranch.android.shared.resultobjects.Results;
 import com.bignerdranch.android.shared.Serializer;
 import com.bignerdranch.android.shared.models.*;
@@ -104,11 +105,10 @@ public class ServerCommunicator extends WebSocketServer {
             	broadcastGame(resultGson, gameChat);
                 break;
             case "ClaimRoute":
-                gameModel curGame = (gameModel) result.getData(gameModel.class);
-                ClaimRouteData derezedData = (ClaimRouteData) result.getData(ClaimRouteData.class);
-                broadcastGame(resultGson, serverModel.getInstance().getGameByID(derezedData.getGameID()));
+                ClaimRouteData claimRouteData = (ClaimRouteData) result.getData(ClaimRouteData.class);
+                broadcastGame(resultGson, serverModel.getInstance().getGameByID(claimRouteData.getGameID()));
+                updateGameStatus(claimRouteData.getGameID(), claimRouteData.getUsername(), "Route from " + claimRouteData.getCurRoute().getCity1().getName() + " to " + claimRouteData.getCurRoute().getCity2().getName() + " claimed by " + claimRouteData.getUsername().getValue());
                 broadcast(resultGson);
-                //TODO: Increment turn order, update status of all clients game models
                 break;
             case "DrawDestinationCards":
             	broadcastOne(resultGson, conn);
@@ -160,13 +160,14 @@ public class ServerCommunicator extends WebSocketServer {
     	}
     	
     	broadcast(resultGson, temp);
-
-    	
     }
 
-    public void broadcastGameStatus(gameIDModel gameID, String s) {
+    public void updateGameStatus(gameIDModel gameID, usernameModel username,String historyUpdate) {
         gameModel curGame = serverModel.getInstance().getGameByID(gameID);
-        Results result = new Results("UpdateGameStatus", true, Serializer.getInstance().serializeObject(curGame));
+        curGame.incrementTurnCounter();
+        curGame.updateGameHistory(new chatMessageModel(username, historyUpdate));
+        GameStatusData data = new GameStatusData(curGame.getTurnCounter(), curGame.getGameHistory());
+        Results result = new Results("UpdateGameStatus", true, Serializer.getInstance().serializeObject(data));
         this.broadcastGame(Serializer.getInstance().serializeObject(result), curGame);
     }
 }

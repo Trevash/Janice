@@ -62,7 +62,7 @@ public class ChatFragment extends Fragment implements ChatFragmentPresenter.View
         }
         */
 
-        chats = presenter.getChats();
+        //chats = presenter.getChats();
 
         mChatList = v.findViewById(R.id.chat_RecyclerView);
         mChatList.setLayoutManager(new LinearLayoutManager(getActivity()));

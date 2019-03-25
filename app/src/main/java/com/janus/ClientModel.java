@@ -88,4 +88,12 @@ public class ClientModel {
     public chatboxModel getHistory() {
         return game.getGameHistory();
     }
+
+    public void setGameHistory(chatboxModel gameHistory) {
+        this.game.setGameHistory(gameHistory);
+    }
+
+    public void setTurnCounter(int turnCounter) {
+        this.game.setTurnCounter(turnCounter);
+    }
 }
