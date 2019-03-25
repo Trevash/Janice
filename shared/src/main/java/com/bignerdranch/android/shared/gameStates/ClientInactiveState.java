@@ -44,21 +44,6 @@ public class ClientInactiveState extends AbstractClientGameState {
         throw new IllegalStateException("Cannot draw destination cards outside of your turn");
     }
 
-    /**
-     * Returns all of the destination cards in the provided list to the game's destination card deck,
-     * as specified in the rules of the game.<!-- -->
-     * Precondition: the state has a valid reference to the game's destination card deck.<!-- -->
-     * Precondition: the destination cards in the list were cards previously drawn by a player
-     * Precondition: the destination cards that are being returned have been removed from the player
-     * Postcondition: the returned cards are returned to the bottom of the destination card deck
-     * Postcondition: the size of the destination card deck is increased by the number of returned
-     * destination cards
-     *
-     * @param destinationCards the cards that are to be returned
-     */
-    @Override
-    public void returnDestinationCards(List<DestinationCardModel> destinationCards) {
-        throw new IllegalStateException("Cannot return destination cards outside of your turn");
-    }
+
 
 }

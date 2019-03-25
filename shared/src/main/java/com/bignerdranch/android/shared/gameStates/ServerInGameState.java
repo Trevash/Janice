@@ -17,6 +17,9 @@ public class ServerInGameState implements IGameState {
      * @param destinationCardDeck the destination card deck that was used previously
      */
     public ServerInGameState(IDestinationCardDeck destinationCardDeck) {
+        if(destinationCardDeck == null) {
+            throw new IllegalArgumentException("The destination card deck cannot be null");
+        }
         this.destinationCardDeck = destinationCardDeck;
     }
 
@@ -43,11 +46,12 @@ public class ServerInGameState implements IGameState {
      * Postcondition: the size of the destination card deck is increased by the number of returned
      * destination cards
      *
-     * @param destinationCards the cards that are to be returned
+     * @param selectedCards
+     * @param rejectedCards
      */
     @Override
-    public void returnDestinationCards(List<DestinationCardModel> destinationCards) {
-        destinationCardDeck.returnDestinationCards(destinationCards);
+    public void returnDestinationCards(List<DestinationCardModel> selectedCards, List<DestinationCardModel> rejectedCards) {
+        destinationCardDeck.returnDestinationCards(selectedCards, rejectedCards);
         // TODO this may need to be changed, since the way we're doing this is about to change
     }
 

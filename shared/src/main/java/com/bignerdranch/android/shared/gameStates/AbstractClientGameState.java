@@ -69,13 +69,12 @@ public abstract class AbstractClientGameState implements IGameState {
     }
 
     @Override
-    public void returnDestinationCards(List<DestinationCardModel> destinationCards) {
+    public void returnDestinationCards(List<DestinationCardModel> selectedCards, List<DestinationCardModel> rejectedCards) {
         if(canDrawDestCards()) {
-            destinationCardDeck.returnDestinationCards(destinationCards);
+            destinationCardDeck.returnDestinationCards(selectedCards, rejectedCards);
         } else {
             throw new IllegalStateException("Cannot draw/return destination cards in this state");
         }
-        // TODO move implementation into Abstract Client Game State
     }
 
     @Override
