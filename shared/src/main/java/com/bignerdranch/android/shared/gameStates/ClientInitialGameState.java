@@ -22,6 +22,12 @@ public class ClientInitialGameState extends AbstractClientGameState implements I
      */
     //private DestinationCardDeckProxy destinationCardDeck;
 
+
+    //public ClientInitialGameState(IServer server, gameIDModel gameID) {
+      //  super(server, gameID);
+        //destinationCardDeck = new DestinationCardDeckProxy(server, gameID);
+    //}
+
     /**
      * Constructs a ClientIntialGameState object that can interact with the provided server for the
      * provided gameID.<!-- -->
@@ -31,10 +37,10 @@ public class ClientInitialGameState extends AbstractClientGameState implements I
      * @param server An Iserver, typically a serverProxy, that can be used to interact with the
      *               server's version of the game.
      * @param gameID the game ID of the game for this state object.
+     * @param destCardDeckSize the size of the destination card deck
      */
-    public ClientInitialGameState(IServer server, gameIDModel gameID) {
-        super(server, gameID);
-        //destinationCardDeck = new DestinationCardDeckProxy(server, gameID);
+    public ClientInitialGameState(IServer server, gameIDModel gameID, int destCardDeckSize) {
+        super(server, gameID, destCardDeckSize);
     }
 
     /*
@@ -59,6 +65,7 @@ public class ClientInitialGameState extends AbstractClientGameState implements I
     public void returnDestinationCards(List<DestinationCardModel> selectedCards, List<DestinationCardModel> rejectedCards) {
         // add in check for num of destination cards?
         getDestinationCardDeck().returnDestinationCards(selectedCards, rejectedCards);
+        // TODO move to inactive state? or maybe to a specialized inactive state? need to forbid drawing dest. cards
     }
 
     @Override
@@ -68,7 +75,6 @@ public class ClientInitialGameState extends AbstractClientGameState implements I
 
     @Override
     public boolean canDrawDestCards() {
-        // TODO if drawn cards, probably want to move to inactive state until server indicates otherwise
         return true;
     }
 

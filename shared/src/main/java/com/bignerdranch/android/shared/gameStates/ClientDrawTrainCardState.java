@@ -15,8 +15,8 @@ public class ClientDrawTrainCardState extends AbstractClientGameState {
      *               server's version of the game.
      * @param gameID the game ID of the game for this state object.
      */
-    public ClientDrawTrainCardState(IServer server, gameIDModel gameID) {
-        super(server, gameID);
+    public ClientDrawTrainCardState(IServer server, gameIDModel gameID, int destCardDeckSize) {
+        super(server, gameID, destCardDeckSize);
     }
 
     @Override

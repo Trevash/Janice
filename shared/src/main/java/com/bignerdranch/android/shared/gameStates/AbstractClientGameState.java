@@ -16,6 +16,12 @@ public abstract class AbstractClientGameState implements IGameState {
      */
     private DestinationCardDeckProxy destinationCardDeck;
 
+
+    public AbstractClientGameState(IServer server, gameIDModel gameID) {
+        // should be used when going from client state to client state - if at all
+        destinationCardDeck = new DestinationCardDeckProxy(server, gameID, 30);
+    }
+
     /**
      * Constructs a AbstractClientGameState object that can interact with the provided server for the
      * provided gameID.<!-- -->
@@ -25,9 +31,12 @@ public abstract class AbstractClientGameState implements IGameState {
      * @param server An Iserver, typically a serverProxy, that can be used to interact with the
      *               server's version of the game.
      * @param gameID the game ID of the game for this state object.
+     * @param destCardDeckSize the number of cards in the destination card deck
      */
-    public AbstractClientGameState(IServer server, gameIDModel gameID) {
-        destinationCardDeck = new DestinationCardDeckProxy(server, gameID);
+    public AbstractClientGameState(IServer server, gameIDModel gameID, int destCardDeckSize) {
+        // should be used when going from Server state to client state
+        destinationCardDeck = new DestinationCardDeckProxy(server, gameID, destCardDeckSize);
+        //destinationCardDeck.updateSize(destCardDeckSize);
     }
 
 

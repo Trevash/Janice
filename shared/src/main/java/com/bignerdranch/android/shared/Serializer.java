@@ -122,7 +122,7 @@ public class Serializer {
             }
 
             @Override
-            public Results claimRoute(ClaimRouteRequest request) throws Exception {
+            public Results claimRoute(ClaimRouteRequest request) {
                 return null;
             }
 
@@ -138,7 +138,7 @@ public class Serializer {
             public Results returnDestinationCard(ReturnDestinationCardsRequest request) {
                 return null;
             }
-        }, new gameIDModel());
+        }, new gameIDModel(), 30);
     	gameModel game = new gameModel("gameName", null, gameState);
     	String json1 = parser.toJson(game);
     	String json2 = parser2.toJson(game);

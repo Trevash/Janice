@@ -16,8 +16,8 @@ public class ClientActivePlayerState extends AbstractClientGameState {
      *               server's version of the game.
      * @param gameID the game ID of the game for this state object.
      */
-    public ClientActivePlayerState(IServer server, gameIDModel gameID) {
-        super(server, gameID);
+    public ClientActivePlayerState(IServer server, gameIDModel gameID, int destCardDeckSize) {
+        super(server, gameID, destCardDeckSize);
     }
 
     @Override

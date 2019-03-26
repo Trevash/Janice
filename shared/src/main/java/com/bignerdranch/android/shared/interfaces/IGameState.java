@@ -13,6 +13,18 @@ import java.util.List;
  */
 public interface IGameState {
 
+    // TODO problem: how do I switch the state from within the state, when it can't directly access the game?
+    // ideas: have a method that indicates when it is time to switch the state
+    
+    // have a method called after every state method that indicates what the new state is to be -
+    // not ideal, but I think that this is the best that I will come up with
+
+    // In like manner, there could be an interface that the game implements, which allows the state
+    // to update the game
+    // generally the best method, but con: states/games would need to be packaged before being sent over
+
+    // How does GSON react to looped references - solution: use the word transient
+
     /**
      * Draws up to 3 destination cards, as specified by the rules of the game.<!-- -->
      * Precondition: the state has a valid reference to the game's destination card deck.<!-- -->

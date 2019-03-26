@@ -13,13 +13,14 @@ import java.util.List;
 
 public class DestinationCardDeckProxy implements IDestinationCardDeck {
 
-    private IServer server;
+    private transient IServer server; // transient means that this won't get serialized
     private gameIDModel gameID;
-    int size = 30;
+    private int size;
 
-    public DestinationCardDeckProxy(IServer server, gameIDModel gameID) {
+    public DestinationCardDeckProxy(IServer server, gameIDModel gameID, int size) {
         this.server = server;
         this.gameID = gameID;
+        this.size = size;
     }
 
     @Override
@@ -43,11 +44,10 @@ public class DestinationCardDeckProxy implements IDestinationCardDeck {
 
     @Override
     public int size() {
-        return size; // TODO this will be a difficult thing to implement
+        return size;
     }
 
     public void updateSize(int providedSize) {
-        // TODO may want to log when the sizes are not equal
         size = providedSize;
     }
 }

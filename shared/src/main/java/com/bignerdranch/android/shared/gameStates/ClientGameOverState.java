@@ -6,8 +6,8 @@ import com.bignerdranch.android.shared.models.gameIDModel;
 public class ClientGameOverState extends AbstractClientGameState {
 
 
-    public ClientGameOverState(IServer server, gameIDModel gameID) {
-        super(server, gameID);
+    public ClientGameOverState(IServer server, gameIDModel gameID, int destCardDeckSize) {
+        super(server, gameID, destCardDeckSize);
     }
 
     @Override

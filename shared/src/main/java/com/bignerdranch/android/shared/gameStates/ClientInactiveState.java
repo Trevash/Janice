@@ -11,8 +11,8 @@ import java.util.List;
  */
 public class ClientInactiveState extends AbstractClientGameState {
 
-    public ClientInactiveState(IServer server, gameIDModel gameID) {
-        super(server, gameID);
+    public ClientInactiveState(IServer server, gameIDModel gameID, int destCardDeckSize) {
+        super(server, gameID, destCardDeckSize);
     }
 
     @Override

@@ -52,7 +52,6 @@ public class ServerInGameState implements IGameState {
     @Override
     public void returnDestinationCards(List<DestinationCardModel> selectedCards, List<DestinationCardModel> rejectedCards) {
         destinationCardDeck.returnDestinationCards(selectedCards, rejectedCards);
-        // TODO this may need to be changed, since the way we're doing this is about to change
     }
 
     /**
