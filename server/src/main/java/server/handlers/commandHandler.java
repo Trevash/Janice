@@ -17,6 +17,7 @@ import com.bignerdranch.android.shared.models.gameModel;
 import com.bignerdranch.android.shared.requestObjects.ClaimRouteRequest;
 import com.bignerdranch.android.shared.requestObjects.CreateGameRequest;
 import com.bignerdranch.android.shared.requestObjects.DrawDestinationCardsRequest;
+import com.bignerdranch.android.shared.requestObjects.DrawTrainCardRequest;
 import com.bignerdranch.android.shared.requestObjects.JoinGameRequest;
 import com.bignerdranch.android.shared.requestObjects.LoginRequest;
 import com.bignerdranch.android.shared.requestObjects.RegisterRequest;
@@ -85,5 +86,13 @@ public class commandHandler extends handlerBase implements IServer {
 
     public Results returnDestinationCard(ReturnDestinationCardsRequest request) {
         return serverFacade.getInstance().returnDestinationCard(request);
+    }
+
+    public Results drawFirstTrainCard(DrawTrainCardRequest request) throws Exception {
+        return serverFacade.getInstance().drawFirstTrainCard(request);
+    }
+
+    public Results drawSecondTrainCard(DrawTrainCardRequest request) throws Exception {
+        return serverFacade.getInstance().drawSecondTrainCard(request);
     }
 }

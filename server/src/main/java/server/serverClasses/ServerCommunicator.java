@@ -3,10 +3,12 @@ package server.serverClasses;
 import com.bignerdranch.android.shared.GenericCommand;
 import com.bignerdranch.android.shared.Constants;
 import com.bignerdranch.android.shared.requestObjects.CreateGameRequest;
+import com.bignerdranch.android.shared.requestObjects.DrawTrainCardRequest;
 import com.bignerdranch.android.shared.requestObjects.JoinGameRequest;
 import com.bignerdranch.android.shared.requestObjects.StartGameRequest;
 import com.bignerdranch.android.shared.resultobjects.ChatboxData;
 import com.bignerdranch.android.shared.resultobjects.ClaimRouteData;
+import com.bignerdranch.android.shared.resultobjects.DrawTrainCardData;
 import com.bignerdranch.android.shared.resultobjects.GameListData;
 import com.bignerdranch.android.shared.resultobjects.GameStatusData;
 import com.bignerdranch.android.shared.resultobjects.Results;
@@ -108,13 +110,20 @@ public class ServerCommunicator extends WebSocketServer {
                 ClaimRouteData claimRouteData = (ClaimRouteData) result.getData(ClaimRouteData.class);
                 broadcastGame(resultGson, serverModel.getInstance().getGameByID(claimRouteData.getGameID()));
                 updateGameStatus(claimRouteData.getGameID(), claimRouteData.getUsername(), "Route from " + claimRouteData.getCurRoute().getCity1().getName() + " to " + claimRouteData.getCurRoute().getCity2().getName() + " claimed by " + claimRouteData.getUsername().getValue());
-                broadcast(resultGson);
                 break;
             case "DrawDestinationCards":
             	broadcastOne(resultGson, conn);
             case "ReturnDestinationCards":
             	gameModel game = (gameModel) result.getData(gameModel.class);
             	broadcastGame(resultGson, game);
+            case "DrawFirstTrainCard":
+                broadcastOne(resultGson, conn);
+                break;
+            case "DrawSecondTrainCard":
+                DrawTrainCardData data = (DrawTrainCardData) result.getData(DrawTrainCardData.class);
+                broadcastGame(resultGson, serverModel.getInstance().getGameByID(data.getGameID()));
+                updateGameStatus(data.getGameID(), data.getUsername(), data.getUsername().getValue() + " drew train cards");
+                break;
             case "ERROR":
                 broadcastOne(resultGson, conn);
                 break;
@@ -162,7 +171,7 @@ public class ServerCommunicator extends WebSocketServer {
     	broadcast(resultGson, temp);
     }
 
-    public void updateGameStatus(gameIDModel gameID, usernameModel username,String historyUpdate) {
+    public void updateGameStatus(gameIDModel gameID, usernameModel username, String historyUpdate) {
         gameModel curGame = serverModel.getInstance().getGameByID(gameID);
         curGame.incrementTurnCounter();
         curGame.updateGameHistory(new chatMessageModel(username, historyUpdate));
