@@ -24,6 +24,7 @@ public class DeckFragment extends Fragment implements DeckFragmentPresenter.View
     }
 
     private DeckFragmentPresenter presenter;
+    private Context mContext;
     private List<trainCardModel> deck;
     private List<trainCardModel> faceUpCards;
     private TextView mDeckSizeView;
@@ -46,6 +47,7 @@ public class DeckFragment extends Fragment implements DeckFragmentPresenter.View
         View v = inflater.inflate(R.layout.fragment_deck, container, false);
         presenter = new DeckFragmentPresenter(this);
         presenter.setFragment();
+        mContext = (Context) getActivity();
 
         mDeckSizeView = v.findViewById(R.id.deckSizeView);
         mFaceDownDeckView = v.findViewById(R.id.faceDownDeckView);
@@ -59,42 +61,48 @@ public class DeckFragment extends Fragment implements DeckFragmentPresenter.View
         mFaceDownDeckView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //presenter.drawCard(top of deck);
+                presenter.drawCard(0);
+                mContext.onFinishAction();
             }
         });
 
         mCard1View.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //presenter.drawCard(cardID);
+                presenter.drawCard(1);
+                mContext.onFinishAction();
             }
         });
 
         mCard2View.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //presenter.drawCard(cardID);
+                presenter.drawCard(2);
+                mContext.onFinishAction();
             }
         });
 
         mCard3View.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //presenter.drawCard(cardID);
+                presenter.drawCard(3);
+                mContext.onFinishAction();
             }
         });
 
         mCard4View.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //presenter.drawCard(cardID);
+                presenter.drawCard(4);
+                mContext.onFinishAction();
             }
         });
 
         mCard5View.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //presenter.drawCard(cardID);
+                presenter.drawCard(5);
+                mContext.onFinishAction();
             }
         });
 
@@ -119,14 +127,23 @@ public class DeckFragment extends Fragment implements DeckFragmentPresenter.View
     }
 
     public void updateFaceUpCards(List<trainCardModel> updatedTrainCards){
-        //Assumes precondition that there are 5 faceup cards
 
         faceUpCards = updatedTrainCards;
-        mCard1View.setImageResource(colorMap.get(faceUpCards.get(0).getColor()));
-        mCard2View.setImageResource(colorMap.get(faceUpCards.get(1).getColor()));
-        mCard3View.setImageResource(colorMap.get(faceUpCards.get(2).getColor()));
-        mCard4View.setImageResource(colorMap.get(faceUpCards.get(3).getColor()));
-        mCard5View.setImageResource(colorMap.get(faceUpCards.get(4).getColor()));
+        if(faceUpCards.size() >= 1) { //These checks are for when cards are running out
+            mCard1View.setImageResource(colorMap.get(faceUpCards.get(0).getColor()));
+        }
+        if(faceUpCards.size() >= 2) {
+            mCard2View.setImageResource(colorMap.get(faceUpCards.get(1).getColor()));
+        }
+        if(faceUpCards.size() >= 3) {
+            mCard3View.setImageResource(colorMap.get(faceUpCards.get(2).getColor()));
+        }
+        if(faceUpCards.size() >= 4) {
+            mCard4View.setImageResource(colorMap.get(faceUpCards.get(3).getColor()));
+        }
+        if(faceUpCards.size() >= 5) {
+            mCard5View.setImageResource(colorMap.get(faceUpCards.get(4).getColor()));
+        }
 
     }
 }

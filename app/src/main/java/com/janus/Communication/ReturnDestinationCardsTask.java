@@ -8,7 +8,6 @@ import com.bignerdranch.android.shared.resultobjects.Results;
 public class ReturnDestinationCardsTask extends AsyncTask<ReturnDestinationCardsRequest, Void, Results> {
     public interface Caller {
         void onError(String s);
-        void onCreateComplete(Results r);
     }
 
     private com.janus.Communication.ReturnDestinationCardsTask.Caller caller;

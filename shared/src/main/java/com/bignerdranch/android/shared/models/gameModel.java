@@ -198,7 +198,7 @@ public class gameModel {
     }
 
     public void startGame() {
-        if (players.size() < 2){
+        if (players.size() < 1){
             throw new IllegalStateException("Insufficient number of players to start game!");
         }
         if (players.size() > 5) {
