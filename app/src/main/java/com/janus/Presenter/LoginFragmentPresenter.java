@@ -26,9 +26,17 @@ public class LoginFragmentPresenter implements LoginTask.Caller, ClientFacade.Pr
         checkButtons();
     }
 
+    public String getUsername() {
+        return this.username;
+    }
+
     public void updatePassword(String password) {
         this.password = password;
         checkButtons();
+    }
+
+    public String getPassword() {
+        return this.password;
     }
 
     public void loginClicked() {

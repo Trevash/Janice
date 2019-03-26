@@ -15,7 +15,7 @@ public class ClientModel {
     private userModel user;
     private authTokenModel auth;
     private static ClientModel model;
-    private chatboxModel chatbox;
+    private chatboxModel chatbox = new chatboxModel();
 
     private ClientModel() {}
 
