@@ -35,6 +35,10 @@ public class GameListFragmentPresenter implements JoinGameTask.Caller, CreateGam
         view.updateGameListButtons(true);
     }
 
+    public gameModel getGameSelected() {
+        return gameSelected;
+    }
+
     public void joinGameClicked() {
         view.updateGameListButtons(false);
         JoinGameRequest request = new JoinGameRequest(gameSelected, facade.getUser().getAuthToken());

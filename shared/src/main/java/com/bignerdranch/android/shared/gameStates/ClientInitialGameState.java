@@ -16,11 +16,11 @@ public class ClientInitialGameState extends AbstractClientGameState implements I
     // note: some of the information for this class is written in IGameState, specifically the
     // overridden methods
 
-    /**
+    /*
      * A proxy deck that has the ability to send messages to the server, which is used to interact
      * with the actual Destination Card deck on the server.
      */
-    private DestinationCardDeckProxy destinationCardDeck;
+    //private DestinationCardDeckProxy destinationCardDeck;
 
     /**
      * Constructs a ClientIntialGameState object that can interact with the provided server for the
@@ -33,9 +33,11 @@ public class ClientInitialGameState extends AbstractClientGameState implements I
      * @param gameID the game ID of the game for this state object.
      */
     public ClientInitialGameState(IServer server, gameIDModel gameID) {
-        destinationCardDeck = new DestinationCardDeckProxy(server, gameID);
+        super(server, gameID);
+        //destinationCardDeck = new DestinationCardDeckProxy(server, gameID);
     }
 
+    /*
     @Override
     public List<DestinationCardModel> drawDestinationCards() {
         return destinationCardDeck.drawDestinationCards();
@@ -46,14 +48,17 @@ public class ClientInitialGameState extends AbstractClientGameState implements I
         destinationCardDeck.returnDestinationCards(selectedCards, rejectedCards);
     }
 
+
     @Override
     public int destinationCardDeckSize() {
         return destinationCardDeck.size();
     }
+    */
 
     @Override
-    public IGameState toClientState(IServer server, gameIDModel id) {
-        return this;
+    public void returnDestinationCards(List<DestinationCardModel> selectedCards, List<DestinationCardModel> rejectedCards) {
+        // add in check for num of destination cards?
+        getDestinationCardDeck().returnDestinationCards(selectedCards, rejectedCards);
     }
 
     @Override
@@ -63,7 +68,7 @@ public class ClientInitialGameState extends AbstractClientGameState implements I
 
     @Override
     public boolean canDrawDestCards() {
-        // TODO
+        // TODO if drawn cards, probably want to move to inactive state until server indicates otherwise
         return true;
     }
 
