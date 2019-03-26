@@ -41,6 +41,10 @@ public class ClientFacade {
         this.statusPresenter = statusPresenter;
     }
 
+    public void removeStatusPresenter() {
+        statusPresenter = null;
+    }
+
     public userModel getUser() {
         return model.getUser();
     }

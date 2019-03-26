@@ -38,4 +38,8 @@ public class StatusFragmentPresenter implements ClientFacade.Presenter {
     public void setStatusPresenter() {
         facade.setStatusPresenter(this);
     }
+
+    public void removeStatusPresenter() {
+        facade.removeStatusPresenter();
+    }
 }
