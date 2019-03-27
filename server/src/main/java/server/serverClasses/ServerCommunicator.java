@@ -12,6 +12,7 @@ import com.bignerdranch.android.shared.resultobjects.DrawTrainCardData;
 import com.bignerdranch.android.shared.resultobjects.GameListData;
 import com.bignerdranch.android.shared.resultobjects.GameStatusData;
 import com.bignerdranch.android.shared.resultobjects.Results;
+import com.bignerdranch.android.shared.resultobjects.ReturnDestinationCardData;
 import com.bignerdranch.android.shared.Serializer;
 import com.bignerdranch.android.shared.models.*;
 import com.sun.net.httpserver.HttpServer;
@@ -114,8 +115,12 @@ public class ServerCommunicator extends WebSocketServer {
             case "DrawDestinationCards":
             	broadcastOne(resultGson, conn);
             case "ReturnDestinationCards":
-            	gameModel game = (gameModel) result.getData(gameModel.class);
-            	broadcastGame(resultGson, game);
+            	//gameModel game = (gameModel) result.getData(gameModel.class);
+            	//broadcastGame(resultGson, game);
+            	ReturnDestinationCardData returnDestdata = (ReturnDestinationCardData) result.getData(ReturnDestinationCardData.class);
+                //broadcastGame(resultGson, serverModel.getInstance().getGameByID(returnDestdata.getGameID()));
+                //broadcastOne(resultGson, conn);
+            	updateGameStatus(returnDestdata.getGameID(), returnDestdata.getUsername(), "drew " + Integer.toString(returnDestdata.getSelectedCards().size()) + " destination cards");
             case "DrawFirstTrainCard":
                 broadcastOne(resultGson, conn);
                 break;

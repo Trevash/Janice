@@ -12,7 +12,7 @@ public class ClaimRouteData {
     private gameIDModel gameID;
     private usernameModel username;
 
-    public ClaimRouteData(gameIDModel gameID, List<abstractRoute> routes, abstractRoute curRoute, usernameModel username){
+    public ClaimRouteData(gameIDModel gameID, List<abstractRoute> routes, abstractRoute curRoute, usernameModel username) {
         this.gameID = gameID;
         this.routes = routes;
         this.curRoute = curRoute;

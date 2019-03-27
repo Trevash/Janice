@@ -34,6 +34,7 @@ import com.bignerdranch.android.shared.resultobjects.ChatboxData;
 import com.bignerdranch.android.shared.resultobjects.ClaimRouteData;
 import com.bignerdranch.android.shared.resultobjects.DrawTrainCardData;
 import com.bignerdranch.android.shared.resultobjects.Results;
+import com.bignerdranch.android.shared.resultobjects.ReturnDestinationCardData;
 
 import org.omg.CORBA.DynAnyPackage.Invalid;
 
@@ -163,7 +164,9 @@ public class serverFacade implements IServer {
         gameModel game = serverModel.getInstance().getGameByID(request.getGameID());
         game.returnRejectedDestinationCards(request.getSelectedCards(), request.getRejectedCards());
         game.updateCurrentPlayerDestinationCards(request.getSelectedCards());
-        return new Results("ReturnDestinationCards", true, game);
+        usernameModel name = game.getPlayers().get(game.getTurnCounter()).getUserName();
+        ReturnDestinationCardData result = new ReturnDestinationCardData(game.getGameID(),name, request.getSelectedCards());
+        return new Results("ReturnDestinationCards", true, result);
         // currently does not return anything - will need to update everyone's games
     }
 
