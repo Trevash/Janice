@@ -20,4 +20,14 @@ public class DestinationCardModel {
     public String toString() {
         return city1.getName() + " - " + city2.getName() + ": " + Integer.toString(pointValue);
     }
+    
+    public cityModel getCity1(){
+    	return city1;
+    }
+    public cityModel getCity2(){
+    	return city2;
+    }
+    public int getPointValue() {
+    	return pointValue;
+    }
 }
