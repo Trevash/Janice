@@ -55,6 +55,7 @@ public class StatusFragment extends Fragment implements StatusFragmentPresenter.
     private List<TextView> playerFourStatusTextViews;
     private List<TextView> playerFiveStatusTextViews;
 
+    private TextView mNameTextView;
     private TextView mTotalTrainCards;
     private TextView mTotalDestinationCards;
     private RecyclerView mStatusList;
@@ -91,6 +92,7 @@ public class StatusFragment extends Fragment implements StatusFragmentPresenter.
     @Override
     public void onResume() {
         super.onResume();
+        presenter.setStatusPresenter();
         switch (whichFragmentToShow) {
             case 0:
                 chatFragment.updatePresenter();
@@ -99,9 +101,16 @@ public class StatusFragment extends Fragment implements StatusFragmentPresenter.
                 destinationRoutesFragment.updatePresenter();
                 break;
             case 2:
-                //gameHistoryFragment.updatePresenter();
+                gameHistoryFragment.updatePresenter();
                 break;
         }
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+
+        presenter.removeStatusPresenter();
     }
 
     @Override
@@ -152,6 +161,9 @@ public class StatusFragment extends Fragment implements StatusFragmentPresenter.
         tabLayout = v.findViewById(R.id.tabs);
         tabLayout.setupWithViewPager(viewPager);
 
+        mNameTextView = v.findViewById(R.id.status_name);
+        mNameTextView.setText(presenter.getCurrentPlayer().getUserName().getValue());
+
         mStatusList = v.findViewById(R.id.status_list_RecyclerView);
         mStatusList.setLayoutManager(new LinearLayoutManager(getActivity()));
 
@@ -160,7 +172,7 @@ public class StatusFragment extends Fragment implements StatusFragmentPresenter.
 
         this.view = v;
 
-        //buildStats(v);
+        buildStats(v);
 
         return v;
     }
@@ -217,30 +229,25 @@ public class StatusFragment extends Fragment implements StatusFragmentPresenter.
         }
     }
 
-    /*private void buildStats(View v) {
-        String currentPlayerName = presenter.getCurrentPlayer().getUserName().getValue();
-        List<playerModel> players = presenter.getPlayers();
+    private void buildStats(View v) {
         List<int[]> stats = presenter.getStats();
-
-        TextView mStatusName = v.findViewById(R.id.status_name);
-        mStatusName.setText(currentPlayerName);
 
         colorTextViews = new ArrayList<>();
 
-        colorTextViews.add((TextView)v.findViewById(R.id.num_red));
-        colorTextViews.add((TextView)v.findViewById(R.id.num_blue));
-        colorTextViews.add((TextView)v.findViewById(R.id.num_green));
-        colorTextViews.add((TextView)v.findViewById(R.id.num_purple));
-        colorTextViews.add((TextView)v.findViewById(R.id.num_orange));
-        colorTextViews.add((TextView)v.findViewById(R.id.num_white));
-        colorTextViews.add((TextView)v.findViewById(R.id.num_black));
-        colorTextViews.add((TextView)v.findViewById(R.id.num_yellow));
-        colorTextViews.add((TextView)v.findViewById(R.id.num_rainbow));
+        colorTextViews.add((TextView) v.findViewById(R.id.num_red));
+        colorTextViews.add((TextView) v.findViewById(R.id.num_blue));
+        colorTextViews.add((TextView) v.findViewById(R.id.num_green));
+        colorTextViews.add((TextView) v.findViewById(R.id.num_purple));
+        colorTextViews.add((TextView) v.findViewById(R.id.num_orange));
+        colorTextViews.add((TextView) v.findViewById(R.id.num_white));
+        colorTextViews.add((TextView) v.findViewById(R.id.num_black));
+        colorTextViews.add((TextView) v.findViewById(R.id.num_yellow));
+        colorTextViews.add((TextView) v.findViewById(R.id.num_rainbow));
 
         int[] numTrainCardsPerColor = stats.get(0);
 
         for (int i = 0; i < numTrainCardsPerColor.length; i++) {
-            colorTextViews.get(i).setText(": " +Integer.toString(numTrainCardsPerColor[i]));
+            colorTextViews.get(i).setText(": " + Integer.toString(numTrainCardsPerColor[i]));
         }
 
         int[] totals = stats.get(1);
@@ -248,81 +255,7 @@ public class StatusFragment extends Fragment implements StatusFragmentPresenter.
         mTotalTrainCards.setText(Integer.toString(totals[0]));
         mTotalDestinationCards = v.findViewById(R.id.total_destination_cards);
         mTotalDestinationCards.setText(Integer.toString(totals[1]));
-
-        playerOneStatusTextViews = new ArrayList<>();
-        playerOneStatusTextViews.add((TextView) v.findViewById(R.id.player_one_name));
-        playerOneStatusTextViews.add((TextView) v.findViewById(R.id.player_one_points));
-        playerOneStatusTextViews.add((TextView) v.findViewById(R.id.player_one_number_of_trains));
-        playerOneStatusTextViews.add((TextView) v.findViewById(R.id.player_one_number_of_cards));
-        playerOneStatusTextViews.add((TextView) v.findViewById(R.id.player_one_number_of_destination_cards));
-
-        playerOneStatusTextViews.get(0).setText(players.get(0).getUserName().getValue());
-
-        for (int i = 1; i < playerOneStatusTextViews.size(); i++) {
-            playerOneStatusTextViews.get(i).setText(Integer.toString(stats.get(2)[i-1]));
-        }
-
-        // stats[0] is integer number of cards of each type
-        if (stats.size() > 3) {
-            playerTwoStatusTextViews = new ArrayList<>();
-            playerTwoStatusTextViews.add((TextView) v.findViewById(R.id.player_two_name));
-            playerTwoStatusTextViews.add((TextView) v.findViewById(R.id.player_two_points));
-            playerTwoStatusTextViews.add((TextView) v.findViewById(R.id.player_two_number_of_trains));
-            playerTwoStatusTextViews.add((TextView) v.findViewById(R.id.player_two_number_of_cards));
-            playerTwoStatusTextViews.add((TextView) v.findViewById(R.id.player_two_number_of_destination_cards));
-
-            playerTwoStatusTextViews.get(0).setText(players.get(1).getUserName().getValue());
-
-            for (int i = 1; i < playerTwoStatusTextViews.size(); i++) {
-                playerTwoStatusTextViews.get(i).setText(Integer.toString(stats.get(3)[i-1]));
-            }
-        }
-
-        if (stats.size() > 4) {
-            playerThreeStatusTextViews = new ArrayList<>();
-            playerThreeStatusTextViews.add((TextView) v.findViewById(R.id.player_three_name));
-            playerThreeStatusTextViews.add((TextView) v.findViewById(R.id.player_three_points));
-            playerThreeStatusTextViews.add((TextView) v.findViewById(R.id.player_three_number_of_trains));
-            playerThreeStatusTextViews.add((TextView) v.findViewById(R.id.player_three_number_of_cards));
-            playerThreeStatusTextViews.add((TextView) v.findViewById(R.id.player_three_number_of_destination_cards));
-
-            playerThreeStatusTextViews.get(0).setText(players.get(2).getUserName().getValue());
-
-            for (int i = 1; i < playerThreeStatusTextViews.size(); i++) {
-                playerThreeStatusTextViews.get(i).setText(Integer.toString(stats.get(4)[i-1]));
-            }
-        }
-
-        if (stats.size() > 5) {
-            playerFourStatusTextViews = new ArrayList<>();
-            playerFourStatusTextViews.add((TextView) v.findViewById(R.id.player_four_name));
-            playerFourStatusTextViews.add((TextView) v.findViewById(R.id.player_four_points));
-            playerFourStatusTextViews.add((TextView) v.findViewById(R.id.player_four_number_of_trains));
-            playerFourStatusTextViews.add((TextView) v.findViewById(R.id.player_four_number_of_cards));
-            playerFourStatusTextViews.add((TextView) v.findViewById(R.id.player_four_number_of_destination_cards));
-
-            playerFourStatusTextViews.get(0).setText(players.get(3).getUserName().getValue());
-
-            for (int i = 1; i < playerFourStatusTextViews.size(); i++) {
-                playerFourStatusTextViews.get(i).setText(Integer.toString(stats.get(5)[i-1]));
-            }
-        }
-
-        if (stats.size() > 6) {
-            playerFiveStatusTextViews = new ArrayList<>();
-            playerFiveStatusTextViews.add((TextView) v.findViewById(R.id.player_five_name));
-            playerFiveStatusTextViews.add((TextView) v.findViewById(R.id.player_five_points));
-            playerFiveStatusTextViews.add((TextView) v.findViewById(R.id.player_five_number_of_trains));
-            playerFiveStatusTextViews.add((TextView) v.findViewById(R.id.player_five_number_of_cards));
-            playerFiveStatusTextViews.add((TextView) v.findViewById(R.id.player_five_number_of_destination_cards));
-
-            playerOneStatusTextViews.get(0).setText(players.get(4).getUserName().getValue());
-
-            for (int i = 1; i < playerFiveStatusTextViews.size(); i++) {
-                playerFiveStatusTextViews.get(i).setText(Integer.toString(stats.get(6)[i-1]));
-            }
-        }
-    }*/
+    }
 
     private void buildPlayerStats(int playerPosition, StatusListAdapter.StatusViewHolder holder) {
         playerModel playerInfo = presenter.getPlayers().get(playerPosition);
@@ -345,6 +278,8 @@ public class StatusFragment extends Fragment implements StatusFragmentPresenter.
                     players = presenter.getPlayers();
                     adapter = new StatusListAdapter(players);
                     mStatusList.setAdapter(adapter);
+
+                    buildStats(view);
                 }
             });
         }
@@ -377,7 +312,6 @@ public class StatusFragment extends Fragment implements StatusFragmentPresenter.
         }
 
         public StatusListAdapter(List<playerModel> players) {
-
             this.players = players;
         }
 

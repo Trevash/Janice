@@ -128,7 +128,8 @@ public class MapFragment extends Fragment implements MapFragmentPresenter.View{
                 mContext.onClickDrawCard();
             }
         });
-        mDrawCardsButton.setEnabled(false);
+        //mDrawCardsButton.setEnabled(false);
+        mDrawCardsButton.setEnabled(true);
 
         mClaimRouteButton = v.findViewById(R.id.claimRouteButton);
         mClaimRouteButton.setOnClickListener(new View.OnClickListener() {
@@ -137,7 +138,8 @@ public class MapFragment extends Fragment implements MapFragmentPresenter.View{
                 mContext.onClickClaimRoute();
             }
         });
-        mClaimRouteButton.setEnabled(false);
+        //mClaimRouteButton.setEnabled(false);
+        mClaimRouteButton.setEnabled(true);
 
         mDrawDestinationsButton = v.findViewById(R.id.drawDestinationsButton);
         mDrawDestinationsButton.setOnClickListener(new View.OnClickListener() {

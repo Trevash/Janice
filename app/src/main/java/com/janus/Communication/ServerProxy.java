@@ -3,23 +3,18 @@ package com.janus.Communication;
 import com.bignerdranch.android.shared.GenericCommand;
 import com.bignerdranch.android.shared.IServer;
 import com.bignerdranch.android.shared.Constants;
-import com.bignerdranch.android.shared.models.authTokenModel;
-import com.bignerdranch.android.shared.models.gameIDModel;
-import com.bignerdranch.android.shared.models.gameModel;
 import com.bignerdranch.android.shared.requestObjects.ClaimRouteRequest;
 import com.bignerdranch.android.shared.requestObjects.CreateGameRequest;
 import com.bignerdranch.android.shared.requestObjects.DrawDestinationCardsRequest;
+import com.bignerdranch.android.shared.requestObjects.DrawTrainCardRequest;
 import com.bignerdranch.android.shared.requestObjects.JoinGameRequest;
 import com.bignerdranch.android.shared.requestObjects.LoginRequest;
 import com.bignerdranch.android.shared.requestObjects.RegisterRequest;
 import com.bignerdranch.android.shared.requestObjects.ReturnDestinationCardsRequest;
 import com.bignerdranch.android.shared.requestObjects.StartGameRequest;
 import com.bignerdranch.android.shared.requestObjects.UpdateChatboxRequest;
-import com.bignerdranch.android.shared.requestObjects.UpdateGameStatusRequest;
 import com.bignerdranch.android.shared.resultobjects.Results;
 import com.bignerdranch.android.shared.Serializer;
-import org.java_websocket.client.WebSocketClient;
-import org.java_websocket.handshake.ServerHandshake;
 
 import java.net.URI;
 import java.net.URISyntaxException;
@@ -203,6 +198,46 @@ public class ServerProxy implements IServer {
         Object[] paramValues = {Serializer.getInstance().serializeObject(request)};
         String[] paramTypes = {"com.bignerdranch.android.shared.requestObjects.ReturnDestinationCardsRequest"};
         GenericCommand commandObj = new GenericCommand("server.handlers.commandHandler", "returnDestinationCard", paramTypes, paramValues);
+        String commandObjStr = Serializer.getInstance().serializeObject(commandObj);
+        client.send(commandObjStr);
+        messageResult = null;
+        client.setMessageResultToNull();
+        while (messageResult == null) {
+            messageResult = client.getResults();
+            try {
+                Thread.sleep(100);
+            } catch (InterruptedException e) {
+                throw new RuntimeException(e);
+            }
+        }
+
+        return messageResult;
+    }
+
+    public Results drawFirstTrainCard(DrawTrainCardRequest request) {
+        Object[] paramValues = {Serializer.getInstance().serializeObject(request)};
+        String[] paramTypes = {"com.bignerdranch.android.shared.requestObjects.DrawTrainCardRequest"};
+        GenericCommand commandObj = new GenericCommand("server.handlers.commandHandler", "drawFirstTrainCard", paramTypes, paramValues);
+        String commandObjStr = Serializer.getInstance().serializeObject(commandObj);
+        client.send(commandObjStr);
+        messageResult = null;
+        client.setMessageResultToNull();
+        while (messageResult == null) {
+            messageResult = client.getResults();
+            try {
+                Thread.sleep(100);
+            } catch (InterruptedException e) {
+                throw new RuntimeException(e);
+            }
+        }
+
+        return messageResult;
+    }
+
+    public Results drawSecondTrainCard(DrawTrainCardRequest request) {
+        Object[] paramValues = {Serializer.getInstance().serializeObject(request)};
+        String[] paramTypes = {"com.bignerdranch.android.shared.requestObjects.DrawTrainCardRequest"};
+        GenericCommand commandObj = new GenericCommand("server.handlers.commandHandler", "drawSecondTrainCard", paramTypes, paramValues);
         String commandObjStr = Serializer.getInstance().serializeObject(commandObj);
         client.send(commandObjStr);
         messageResult = null;

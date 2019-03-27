@@ -47,9 +47,4 @@ public class DestinationFragmentPresenter implements ClientFacade.Presenter, Ret
     public void onError(String s) {
 
     }
-
-    @Override
-    public void onCreateComplete(Results r) {
-
-    }
 }

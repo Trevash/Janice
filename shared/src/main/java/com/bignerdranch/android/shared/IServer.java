@@ -4,6 +4,7 @@ import com.bignerdranch.android.shared.models.gameIDModel;
 import com.bignerdranch.android.shared.requestObjects.ClaimRouteRequest;
 import com.bignerdranch.android.shared.requestObjects.CreateGameRequest;
 import com.bignerdranch.android.shared.requestObjects.DrawDestinationCardsRequest;
+import com.bignerdranch.android.shared.requestObjects.DrawTrainCardRequest;
 import com.bignerdranch.android.shared.requestObjects.JoinGameRequest;
 import com.bignerdranch.android.shared.requestObjects.LoginRequest;
 import com.bignerdranch.android.shared.requestObjects.RegisterRequest;
@@ -22,6 +23,8 @@ public interface IServer {
     Results joinGame(JoinGameRequest request) throws Exception;
     Results claimRoute(ClaimRouteRequest request) throws Exception;
     Results updateChatbox(UpdateChatboxRequest request) throws Exception;
+    Results drawFirstTrainCard(DrawTrainCardRequest request) throws Exception;
+    Results drawSecondTrainCard(DrawTrainCardRequest request) throws Exception;
 
     Results drawDestinationCards(DrawDestinationCardsRequest request);
     Results returnDestinationCard(ReturnDestinationCardsRequest request);

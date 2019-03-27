@@ -11,6 +11,7 @@ import com.bignerdranch.android.shared.models.userModel;
 import com.bignerdranch.android.shared.models.gameModel;
 import com.bignerdranch.android.shared.resultobjects.ChatboxData;
 import com.bignerdranch.android.shared.resultobjects.ClaimRouteData;
+import com.bignerdranch.android.shared.resultobjects.DrawTrainCardData;
 import com.bignerdranch.android.shared.resultobjects.GameStatusData;
 import com.bignerdranch.android.shared.resultobjects.Results;
 import com.bignerdranch.android.shared.Serializer;
@@ -63,7 +64,9 @@ public class TtRClient extends WebSocketClient{
                     break;
                 }
                 case "Start": {
-                    facade.setGame((gameModel) result.getData(gameModel.class));
+                    gameModel curGame= (gameModel) result.getData(gameModel.class);
+                    curGame.setTrainCardDeck(null);
+                    facade.setGame(curGame);
                     break;
                 }
                 case "ReturnDestinationCards": {
@@ -79,6 +82,16 @@ public class TtRClient extends WebSocketClient{
                     GameStatusData data = (GameStatusData) result.getData(GameStatusData.class);
                     facade.setHistory(data.getGameHistory());
                     facade.setTurnCounter(data.getTurnCounter());
+                    break;
+                }
+                case "DrawFirstTrainCard": {
+                    DrawTrainCardData data = (DrawTrainCardData) result.getData(DrawTrainCardData.class);
+                    facade.getGame().addTrainCardToPlayersHand(data.getReturnCard(), data.getUsername());
+                    break;
+                }
+                case "DrawSecondTrainCard": {
+                    DrawTrainCardData data = (DrawTrainCardData) result.getData(DrawTrainCardData.class);
+                    facade.getGame().addTrainCardToPlayersHand(data.getReturnCard(), data.getUsername());
                     break;
                 }
             }

@@ -7,6 +7,7 @@ import com.bignerdranch.android.shared.exceptions.RouteNotFoundException;
 import com.bignerdranch.android.shared.gameStates.AbstractClientGameState;
 import com.bignerdranch.android.shared.gameStates.ServerInitialGameState;
 import com.bignerdranch.android.shared.interfaces.IGameState;
+import com.bignerdranch.android.shared.models.colors.cardColorEnum;
 import com.bignerdranch.android.shared.models.colors.playerColorEnum;
 
 import java.util.ArrayList;
@@ -218,7 +219,7 @@ public class gameModel {
     }
 
     public void startGame() {
-        if (players.size() < 2){
+        if (players.size() < 1){
             throw new IllegalStateException("Insufficient number of players to start game!");
         }
         if (players.size() > 5) {
@@ -388,5 +389,17 @@ public class gameModel {
 
     public void setTurnCounter(int turnCounter) {
         this.turnCounter = turnCounter;
+    }
+
+    public void setTrainCardDeck(ArrayList<trainCardModel> newDeck) {
+        this.trainCardDeck = newDeck;
+    }
+
+    public cardColorEnum getFaceUpTrainCardColor(int i) {
+        return this.faceUpCards.get(i).getColor();
+    }
+
+    public void addTrainCardToPlayersHand(trainCardModel returnCard, usernameModel username) {
+        getPlayerByUsername(username).addTrainCardToHand(returnCard);
     }
 }

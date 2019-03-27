@@ -1,5 +1,6 @@
 package com.bignerdranch.android.shared.models;
 
+import com.bignerdranch.android.shared.models.colors.cardColorEnum;
 import com.bignerdranch.android.shared.models.colors.playerColorEnum;
 
 import java.util.ArrayList;
@@ -121,8 +122,34 @@ public class playerModel {
                 throw new Exception("Invalid length of route!");
         }
 
+        this.payCostOfRoute(claimedRoute);
+
         this.locomotives -= claimedRoute.getLength();
         claimedRoutes.add(claimedRoute);
+    }
+
+    public void payCostOfRoute(abstractRoute claimedRoute) {
+        //Get claimed route color
+        String claimedRouteColor = ((singleRouteModel) claimedRoute).getTrainColor().toString();
+
+        //Make tracker for number of cards to be paid
+        int costTracker = claimedRoute.getLength();
+
+        //Iterate through list first time for colored cards
+        for (int i = 0; i < trainCardHand.size() && costTracker > 0; i++) {
+            if(trainCardHand.get(i).getColor().toString().equals(claimedRouteColor)){
+                trainCardHand.remove(i);
+                costTracker--;
+            }
+        }
+
+        //Iterate through list second time for necessary locomotive cards
+        for (int i = 0; i < trainCardHand.size() && costTracker > 0; i++) {
+            if(trainCardHand.get(i).getColor() == cardColorEnum.LOCOMOTIVE){
+                trainCardHand.remove(i);
+                costTracker--;
+            }
+        }
     }
 }
 

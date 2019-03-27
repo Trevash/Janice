@@ -1,6 +1,7 @@
 package server.serverClasses;
 
 import com.bignerdranch.android.shared.IServer;
+import com.bignerdranch.android.shared.exceptions.CannotDrawTrainCardException;
 import com.bignerdranch.android.shared.exceptions.DuplicateException;
 import com.bignerdranch.android.shared.exceptions.GameNotFoundException;
 import com.bignerdranch.android.shared.exceptions.InvalidAuthorizationException;
@@ -8,14 +9,12 @@ import com.bignerdranch.android.shared.exceptions.RouteAlreadyClaimedException;
 import com.bignerdranch.android.shared.exceptions.RouteNotFoundException;
 import com.bignerdranch.android.shared.exceptions.UserNotFoundException;
 import com.bignerdranch.android.shared.gameStates.ServerInitialGameState;
-import com.bignerdranch.android.shared.models.abstractRoute;
-import com.bignerdranch.android.shared.models.abstractRoute;
+import com.bignerdranch.android.shared.models.colors.cardColorEnum;
+import com.bignerdranch.android.shared.models.trainCardModel;
+import com.bignerdranch.android.shared.requestObjects.DrawTrainCardRequest;
 import com.bignerdranch.android.shared.resultobjects.DestinationCardListModel;
-import com.bignerdranch.android.shared.models.abstractRoute;
-import com.bignerdranch.android.shared.models.abstractRoute;
 import com.bignerdranch.android.shared.models.authTokenModel;
 import com.bignerdranch.android.shared.models.colors.playerColorEnum;
-import com.bignerdranch.android.shared.models.gameIDModel;
 import com.bignerdranch.android.shared.models.gameModel;
 import com.bignerdranch.android.shared.models.passwordModel;
 import com.bignerdranch.android.shared.models.playerModel;
@@ -33,6 +32,7 @@ import com.bignerdranch.android.shared.requestObjects.StartGameRequest;
 import com.bignerdranch.android.shared.requestObjects.UpdateChatboxRequest;
 import com.bignerdranch.android.shared.resultobjects.ChatboxData;
 import com.bignerdranch.android.shared.resultobjects.ClaimRouteData;
+import com.bignerdranch.android.shared.resultobjects.DrawTrainCardData;
 import com.bignerdranch.android.shared.resultobjects.Results;
 
 import org.omg.CORBA.DynAnyPackage.Invalid;
@@ -148,6 +148,7 @@ public class serverFacade implements IServer {
         return new Results("UpdateChat", true, chatbox);
 	}
 
+    @Override
     public Results drawDestinationCards(DrawDestinationCardsRequest request) {
 
         gameModel game = serverModel.getInstance().getGameByID(request.getGameID());
@@ -157,11 +158,54 @@ public class serverFacade implements IServer {
                 new DestinationCardListModel(game.drawDestinationCards()));
     }
 
+    @Override
     public Results returnDestinationCard(ReturnDestinationCardsRequest request) {
         gameModel game = serverModel.getInstance().getGameByID(request.getGameID());
         game.returnRejectedDestinationCards(request.getSelectedCards(), request.getRejectedCards());
         game.updateCurrentPlayerDestinationCards(request.getSelectedCards());
         return new Results("ReturnDestinationCards", true, game);
         // currently does not return anything - will need to update everyone's games
+    }
+
+    @Override
+    public Results drawFirstTrainCard(DrawTrainCardRequest request) throws Exception {
+        if (!serverModel.getInstance().authTokenExists(request.getAuthtoken())) {
+            throw new InvalidAuthorizationException("Invalid Auth Token passed to updateChatBox");
+        }
+
+        gameModel curGame = serverModel.getInstance().getGameByID(request.getGameID());
+        if(request.getIndex() == 0){
+            return new Results("DrawFirstTrainCard", true, new DrawTrainCardData(request.getGameID(), curGame.drawTrainCardFromDeck(), serverModel.getInstance().getUser(request.getAuthtoken()).getUserName()));
+        }
+        else {
+            trainCardModel returnCard = curGame.drawFaceUpTrainCard(request.getIndex() - 1);
+            if (returnCard.getColor() == cardColorEnum.LOCOMOTIVE){
+                return new Results("DrawSecondTrainCard", true, new DrawTrainCardData(request.getGameID(), returnCard, serverModel.getInstance().getUser(request.getAuthtoken()).getUserName()));
+            }
+            else {
+                return new Results("DrawFirstTrainCard", true, new DrawTrainCardData(request.getGameID(), returnCard, serverModel.getInstance().getUser(request.getAuthtoken()).getUserName()));
+            }
+        }
+    }
+
+    @Override
+    public Results drawSecondTrainCard(DrawTrainCardRequest request) throws Exception {
+        if (!serverModel.getInstance().authTokenExists(request.getAuthtoken())) {
+            throw new InvalidAuthorizationException("Invalid Auth Token passed to updateChatBox");
+        }
+
+        gameModel curGame = serverModel.getInstance().getGameByID(request.getGameID());
+        if(request.getIndex() == 0){
+            return new Results("DrawSecondTrainCard", true, new DrawTrainCardData(request.getGameID(), curGame.drawTrainCardFromDeck(), serverModel.getInstance().getUser(request.getAuthtoken()).getUserName()));
+        }
+        else {
+            cardColorEnum curCardColor = curGame.getFaceUpTrainCardColor(request.getIndex() - 1);
+            if (curCardColor == cardColorEnum.LOCOMOTIVE){
+                throw new CannotDrawTrainCardException("Your second train card cannot be a faceup locomotive!");
+            }
+            else {
+                return new Results("DrawSecondTrainCard", true, new DrawTrainCardData(request.getGameID(), curGame.drawFaceUpTrainCard(request.getIndex() - 1), serverModel.getInstance().getUser(request.getAuthtoken()).getUserName()));
+            }
+        }
     }
 }
