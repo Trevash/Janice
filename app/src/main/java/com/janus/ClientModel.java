@@ -31,7 +31,7 @@ public class ClientModel {
     }
 
     public void setGame(gameModel game) {
-        game.setClientMode(ServerProxy.getInstance());
+        game.setClientMode(ServerProxy.getInstance(), game.getTurnCounter());
         this.game = game;
     }
 

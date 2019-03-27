@@ -4,6 +4,7 @@ import com.bignerdranch.android.shared.IServer;
 import com.bignerdranch.android.shared.interfaces.IGameState;
 import com.bignerdranch.android.shared.models.DestinationCardModel;
 import com.bignerdranch.android.shared.models.gameIDModel;
+import com.bignerdranch.android.shared.models.gameModel;
 import com.bignerdranch.android.shared.proxy.DestinationCardDeckProxy;
 
 import java.util.List;
@@ -21,6 +22,7 @@ public class ClientInitialGameState extends AbstractClientGameState implements I
      * with the actual Destination Card deck on the server.
      */
     //private DestinationCardDeckProxy destinationCardDeck;
+    private List<DestinationCardModel> drawnCards;
 
 
     //public ClientInitialGameState(IServer server, gameIDModel gameID) {
@@ -36,11 +38,11 @@ public class ClientInitialGameState extends AbstractClientGameState implements I
      *
      * @param server An Iserver, typically a serverProxy, that can be used to interact with the
      *               server's version of the game.
-     * @param gameID the game ID of the game for this state object.
+     * @param game the game for this state object.
      * @param destCardDeckSize the size of the destination card deck
      */
-    public ClientInitialGameState(IServer server, gameIDModel gameID, int destCardDeckSize) {
-        super(server, gameID, destCardDeckSize);
+    public ClientInitialGameState(IServer server, gameModel game, int destCardDeckSize) {
+        super(server, game, destCardDeckSize);
     }
 
     /*
@@ -62,10 +64,19 @@ public class ClientInitialGameState extends AbstractClientGameState implements I
     */
 
     @Override
+    public List<DestinationCardModel> drawDestinationCards() {
+        if(drawnCards == null) {
+            drawnCards = super.drawDestinationCards();
+        }
+        return drawnCards;
+    }
+
+    @Override
     public void returnDestinationCards(List<DestinationCardModel> selectedCards, List<DestinationCardModel> rejectedCards) {
         // add in check for num of destination cards?
         getDestinationCardDeck().returnDestinationCards(selectedCards, rejectedCards);
-        // TODO move to inactive state? or maybe to a specialized inactive state? need to forbid drawing dest. cards
+        //super.advanceTurn();
+        super.updateGameState(new ClientInactiveState(this));
     }
 
     @Override

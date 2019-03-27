@@ -98,6 +98,7 @@ public class Serializer {
         return parser2.fromJson(str, GameListData.class);
     }
 
+    /*
     public static void main(String args[]){
     	IGameState gameState = new ClientInitialGameState(new IServer() {
             @Override
@@ -138,7 +139,7 @@ public class Serializer {
             public Results returnDestinationCard(ReturnDestinationCardsRequest request) {
                 return null;
             }
-        }, new gameIDModel(), 30);
+        }, new gameModel(), 30);
     	gameModel game = new gameModel("gameName", null, gameState);
     	String json1 = parser.toJson(game);
     	String json2 = parser2.toJson(game);
@@ -149,6 +150,5 @@ public class Serializer {
     	//System.out.println(parser.fromJson(json1, gameModel.class));
     	System.out.println(parser2.fromJson(json2, gameModel.class));
 
-    
-    }
+    } // */
 }

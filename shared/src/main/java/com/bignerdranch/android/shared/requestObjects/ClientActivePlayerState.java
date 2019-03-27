@@ -3,6 +3,7 @@ package com.bignerdranch.android.shared.requestObjects;
 import com.bignerdranch.android.shared.IServer;
 import com.bignerdranch.android.shared.gameStates.AbstractClientGameState;
 import com.bignerdranch.android.shared.models.gameIDModel;
+import com.bignerdranch.android.shared.models.gameModel;
 
 public class ClientActivePlayerState extends AbstractClientGameState {
 
@@ -14,10 +15,10 @@ public class ClientActivePlayerState extends AbstractClientGameState {
      *
      * @param server An Iserver, typically a serverProxy, that can be used to interact with the
      *               server's version of the game.
-     * @param gameID the game ID of the game for this state object.
+     * @param game the game for this state object.
      */
-    public ClientActivePlayerState(IServer server, gameIDModel gameID, int destCardDeckSize) {
-        super(server, gameID, destCardDeckSize);
+    public ClientActivePlayerState(IServer server, gameModel game, int destCardDeckSize) {
+        super(server, game, destCardDeckSize);
     }
 
     @Override

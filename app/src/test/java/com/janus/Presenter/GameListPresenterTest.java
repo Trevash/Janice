@@ -63,7 +63,7 @@ public class GameListPresenterTest {
     @Test
     public void testSelectGame() {
         playerModel player = new playerModel(new usernameModel("Bob"), true, true, playerColorEnum.BLUE);
-        gameModel model = new gameModel("Cool game", player, null);
+        gameModel model = new gameModel("Cool game", player);
         assertFalse(mock.getButtonsActive());
         presenter.selectGame(model);
         assertEquals(presenter.getGameSelected().getGameName(), "Cool game");

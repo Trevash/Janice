@@ -5,6 +5,7 @@ import com.bignerdranch.android.shared.IServer;
 import com.bignerdranch.android.shared.exceptions.DuplicateException;
 import com.bignerdranch.android.shared.exceptions.RouteNotFoundException;
 import com.bignerdranch.android.shared.gameStates.AbstractClientGameState;
+import com.bignerdranch.android.shared.gameStates.ServerInitialGameState;
 import com.bignerdranch.android.shared.interfaces.IGameState;
 import com.bignerdranch.android.shared.models.colors.playerColorEnum;
 
@@ -42,7 +43,7 @@ public class gameModel {
     // Discard
     private LinkedList trainCardDiscard = new LinkedList();
 
-
+    /*
     public gameModel(String newGameName, playerModel hostPlayer, IGameState state) {
         gameID = new gameIDModel();
         setGameName(newGameName);
@@ -60,6 +61,25 @@ public class gameModel {
         this.turnCounter = 0;
 
         this.state = state;
+    } // */
+
+    public gameModel(String newGameName, playerModel hostPlayer) {
+        gameID = new gameIDModel();
+        setGameName(newGameName);
+        gameStarted = false;
+        mapPlayerIDToModel = new ConcurrentHashMap<>();
+        this.setDecks();
+
+        try {
+            addPlayer(hostPlayer);
+        } catch (DuplicateException e) {
+            e.printStackTrace();
+        }
+        chatbox = new chatboxModel();
+        gameHistory = new chatboxModel();
+        this.turnCounter = 0;
+
+        this.state = new ServerInitialGameState(this);
     }
 
     private void setDecks() {
@@ -287,8 +307,20 @@ public class gameModel {
         return mapPlayerIDToModel.get(id.getValue());
     }
 
-    public void setClientMode(IServer serverProxy) {
-        this.state = state.toClientState(serverProxy, this.gameID);
+    /**
+     *
+     * @param serverProxy the server proxy that the client is using
+     * @param playerNum the player number of the client in this game
+     */
+    public void setClientMode(IServer serverProxy, int playerNum) {
+        this.state = state.toClientState(serverProxy, this, playerNum);
+    }
+
+    // method to update the state: is there a way to make method accessible only from the state?
+    // such as by having this call directly from the state
+    public void setState(IGameState newState) {
+        // note: this should only be called by the state
+        this.state = newState;
     }
 
     public void incrementTurnCounter(){
@@ -299,6 +331,10 @@ public class gameModel {
 
     public boolean isPlayersTurn(playerIDModel testPlayer){
         return players.get(turnCounter).getId().equals(testPlayer);
+    }
+
+    public boolean isPlayersTurn(int playerNum) {
+        return turnCounter == playerNum;
     }
 
     public boolean canDrawDestCards() {

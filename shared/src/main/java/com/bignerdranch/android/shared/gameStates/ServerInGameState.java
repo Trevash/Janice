@@ -4,19 +4,17 @@ import com.bignerdranch.android.shared.IServer;
 import com.bignerdranch.android.shared.interfaces.IDestinationCardDeck;
 import com.bignerdranch.android.shared.interfaces.IGameState;
 import com.bignerdranch.android.shared.models.DestinationCardModel;
-import com.bignerdranch.android.shared.models.gameIDModel;
+import com.bignerdranch.android.shared.models.gameModel;
+import com.bignerdranch.android.shared.requestObjects.ClientActivePlayerState;
 
 import java.util.List;
 
-public class ServerInGameState implements IGameState {
+public class ServerInGameState extends AbstractGameState implements IGameState {
 
     private IDestinationCardDeck destinationCardDeck;
 
-    /**
-     *
-     * @param destinationCardDeck the destination card deck that was used previously
-     */
-    public ServerInGameState(IDestinationCardDeck destinationCardDeck) {
+    public ServerInGameState(AbstractGameState prevState, IDestinationCardDeck destinationCardDeck) {
+        super(prevState);
         if(destinationCardDeck == null) {
             throw new IllegalArgumentException("The destination card deck cannot be null");
         }
@@ -52,6 +50,7 @@ public class ServerInGameState implements IGameState {
     @Override
     public void returnDestinationCards(List<DestinationCardModel> selectedCards, List<DestinationCardModel> rejectedCards) {
         destinationCardDeck.returnDestinationCards(selectedCards, rejectedCards);
+        super.advanceTurn();
     }
 
     /**
@@ -77,11 +76,17 @@ public class ServerInGameState implements IGameState {
      *
      * @param serverProxy a reference to the server (in this case, a server proxy) so that the game's
      *                    state can interact with the server
-     * @param id          the id of the game that this state is associated with
+     * @param game  the game that this state is associated with
+     * @param playerNum
      * @return the client version of this game state (itself if a client version)
      */
     @Override
-    public AbstractClientGameState toClientState(IServer serverProxy, gameIDModel id) {
-        return null;
+    public AbstractClientGameState toClientState(IServer serverProxy, gameModel game, int playerNum) {
+        if(game.isPlayersTurn(playerNum)) {
+            // active player state
+            return new ClientActivePlayerState(serverProxy, game, destinationCardDeckSize());
+        } else {
+            return new ClientInactiveState(serverProxy, game, destinationCardDeckSize());
+        }
     }
 }

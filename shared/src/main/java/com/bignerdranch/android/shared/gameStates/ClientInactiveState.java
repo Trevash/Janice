@@ -3,6 +3,7 @@ package com.bignerdranch.android.shared.gameStates;
 import com.bignerdranch.android.shared.IServer;
 import com.bignerdranch.android.shared.models.DestinationCardModel;
 import com.bignerdranch.android.shared.models.gameIDModel;
+import com.bignerdranch.android.shared.models.gameModel;
 
 import java.util.List;
 
@@ -11,8 +12,12 @@ import java.util.List;
  */
 public class ClientInactiveState extends AbstractClientGameState {
 
-    public ClientInactiveState(IServer server, gameIDModel gameID, int destCardDeckSize) {
-        super(server, gameID, destCardDeckSize);
+    public ClientInactiveState(IServer server, gameModel game, int destCardDeckSize) {
+        super(server, game, destCardDeckSize);
+    }
+
+    public ClientInactiveState(AbstractClientGameState state) {
+        super(state);
     }
 
     @Override

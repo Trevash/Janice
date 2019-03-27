@@ -1,8 +1,6 @@
 package com.bignerdranch.android.shared.gameStates;
 
-import com.bignerdranch.android.shared.IServer;
 import com.bignerdranch.android.shared.models.DestinationCardModel;
-import com.bignerdranch.android.shared.models.gameIDModel;
 
 import java.util.List;
 
@@ -11,10 +9,9 @@ public class ClientChooseDestCardState extends AbstractClientGameState {
 
     private List<DestinationCardModel> drawnCards;
 
-    public ClientChooseDestCardState(IServer server, gameIDModel gameID, List<DestinationCardModel> drawnCards) {
-        super(server, gameID);
+    public ClientChooseDestCardState(AbstractClientGameState prevState, List<DestinationCardModel> drawnCards) {
+        super(prevState);
         this.drawnCards = drawnCards;
-
     }
 
     @Override
@@ -36,4 +33,10 @@ public class ClientChooseDestCardState extends AbstractClientGameState {
     public List<DestinationCardModel> drawDestinationCards() {
         return drawnCards; // Don't want to draw new cards here
     }
+
+    //@Override
+    //public void returnDestinationCards(List<DestinationCardModel> selectedCards, List<DestinationCardModel> rejectedCards) {
+    //    super.returnDestinationCards(selectedCards, rejectedCards);
+        // DO we need to advance the turn counter here? Should be advanced by the server
+    //}
 }

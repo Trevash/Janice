@@ -12,9 +12,10 @@ public class ServerLastRoundState extends ServerInGameState {
 
     /**
      * @param destinationCardDeck the destination card deck that was used by the previous state
+     * @param prevState the previous server-side state of the game
      */
-    public ServerLastRoundState(IDestinationCardDeck destinationCardDeck) {
-        super(destinationCardDeck);
+    public ServerLastRoundState(ServerInGameState prevState, IDestinationCardDeck destinationCardDeck) {
+        super(prevState, destinationCardDeck);
     }
 
     // need a method to remove the game from the server

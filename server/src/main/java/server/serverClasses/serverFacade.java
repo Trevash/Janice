@@ -95,9 +95,10 @@ public class serverFacade implements IServer {
                 false, true, playerColorEnum.BLACK);
         // TODO decide on what the color should actually be
 
-        gameModel newGame = new gameModel(newGameName, hostPlayer, new ServerInitialGameState());
+        gameModel newGame = new gameModel(newGameName, hostPlayer);
         serverModel.getInstance().addGame(newGame);
         return new Results("Create", true, newGame);
+        //return null;
     }
 
     @Override

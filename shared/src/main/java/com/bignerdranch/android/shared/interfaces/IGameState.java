@@ -2,7 +2,7 @@ package com.bignerdranch.android.shared.interfaces;
 
 import com.bignerdranch.android.shared.IServer;
 import com.bignerdranch.android.shared.models.DestinationCardModel;
-import com.bignerdranch.android.shared.models.gameIDModel;
+import com.bignerdranch.android.shared.models.gameModel;
 
 import java.util.List;
 
@@ -67,10 +67,11 @@ public interface IGameState {
      *
      * @param serverProxy a reference to the server (in this case, a server proxy) so that the game's
      *                    state can interact with the server
-     * @param id the id of the game that this state is associated with
+     * @param game
+     * @param playerNum
      * @return the client version of this game state (itself if a client version)
      */
-    public IGameState toClientState(IServer serverProxy, gameIDModel id);
+    public IGameState toClientState(IServer serverProxy, gameModel game, int playerNum);
 
     // TODO may want to add a way to send the gameModel from the client to the server - currently don't work
     // TODO do we want a method that gives out the number of returnable destination cards?
