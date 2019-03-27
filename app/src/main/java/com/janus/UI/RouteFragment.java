@@ -26,6 +26,7 @@ public class RouteFragment extends Fragment implements RouteFragmentPresenter.Vi
     private RouteFragmentPresenter presenter;
     private RecyclerView mRouteRecyclerView;
     private RouteAdapter mRouteAdapter;
+    private Context mContext;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -38,6 +39,7 @@ public class RouteFragment extends Fragment implements RouteFragmentPresenter.Vi
         View v = inflater.inflate(R.layout.fragment_route, container, false);
         presenter = new RouteFragmentPresenter(this);
         presenter.setFragment();
+        mContext = (Context) getActivity();
 
         mRouteRecyclerView = v.findViewById(R.id.routeRecyclerView);
         mRouteRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
@@ -57,11 +59,13 @@ public class RouteFragment extends Fragment implements RouteFragmentPresenter.Vi
         private TextView mRouteLengthView;
         private TextView mRouteColorView;
         private Button mClaimButton;
+        private singleRouteModel mRoute;
 
         public void bind(singleRouteModel r){
             mRouteCitiesView.setText(r.toString());
             mRouteLengthView.setText(Integer.toString(r.getLength()));
             mRouteColorView.setText(r.getTrainColor().toString());
+            mRoute = r;
         }
 
         public RouteHolder(LayoutInflater inflater, ViewGroup parent){
@@ -75,7 +79,8 @@ public class RouteFragment extends Fragment implements RouteFragmentPresenter.Vi
             mClaimButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    //presenter.claimRoute(routeID);
+                    presenter.claimRoute(mRoute);
+                    mContext.onFinishAction();
                 }
             });
         }

@@ -165,7 +165,7 @@ public class RouteFragmentPresenter implements ClaimRouteTask.Caller, ClientFaca
                 facade.getGame().getGameID(),
                 facade.getGame().getPlayerByUsername(facade.getUser().getUserName()).getId(),
                 route.getTrainColor(),
-                route
+                route.getRouteID()
         );
         task.execute(request);
     }
