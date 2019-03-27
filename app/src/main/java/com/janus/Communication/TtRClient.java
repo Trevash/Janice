@@ -64,9 +64,7 @@ public class TtRClient extends WebSocketClient{
                     break;
                 }
                 case "Start": {
-                    gameModel curGame= (gameModel) result.getData(gameModel.class);
-                    curGame.setTrainCardDeck(null);
-                    facade.setGame(curGame);
+                    facade.setGame((gameModel) result.getData(gameModel.class));
                     break;
                 }
                 case "ReturnDestinationCards": {
