@@ -8,7 +8,6 @@ import com.bignerdranch.android.shared.exceptions.InvalidAuthorizationException;
 import com.bignerdranch.android.shared.exceptions.RouteAlreadyClaimedException;
 import com.bignerdranch.android.shared.exceptions.RouteNotFoundException;
 import com.bignerdranch.android.shared.exceptions.UserNotFoundException;
-import com.bignerdranch.android.shared.gameStates.ServerInitialGameState;
 import com.bignerdranch.android.shared.models.colors.cardColorEnum;
 import com.bignerdranch.android.shared.models.trainCardModel;
 import com.bignerdranch.android.shared.requestObjects.DrawTrainCardRequest;
@@ -35,10 +34,6 @@ import com.bignerdranch.android.shared.resultobjects.ClaimRouteData;
 import com.bignerdranch.android.shared.resultobjects.DrawTrainCardData;
 import com.bignerdranch.android.shared.resultobjects.Results;
 import com.bignerdranch.android.shared.resultobjects.ReturnDestinationCardData;
-
-import org.omg.CORBA.DynAnyPackage.Invalid;
-
-import java.util.List;
 
 public class serverFacade implements IServer {
     private static serverFacade sf = null;
@@ -162,8 +157,10 @@ public class serverFacade implements IServer {
     @Override
     public Results returnDestinationCard(ReturnDestinationCardsRequest request) {
         gameModel game = serverModel.getInstance().getGameByID(request.getGameID());
-        game.returnRejectedDestinationCards(request.getSelectedCards(), request.getRejectedCards());
         game.updateCurrentPlayerDestinationCards(request.getSelectedCards());
+        // the turn gets updated when the cards are returned, so the current player needs to be updated
+        // before the cards are actually returned
+        game.returnRejectedDestinationCards(request.getSelectedCards(), request.getRejectedCards());
         usernameModel name = game.getPlayers().get(game.getTurnCounter()).getUserName();
         ReturnDestinationCardData result = new ReturnDestinationCardData(game.getGameID(),name, request.getSelectedCards());
         return new Results("ReturnDestinationCards", true, result);

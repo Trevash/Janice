@@ -43,7 +43,8 @@ public class TrainCardBank {
     }
 
     /**
-     * method to shuffle the train cards that are currently in the train card deck
+     * method to shuffle the train cards that are currently in the train card deck.<--- ></--->
+     * This method does not add take the discard pile and put it into the train card deck
      */
     private void shuffleTrainCards() {
         for (int i = 0; i < trainCardDeck.size(); i++) {
@@ -54,7 +55,16 @@ public class TrainCardBank {
         }
     }
 
-    
+    /**
+     * moves the discard pile into the deck, then shuffles the deck
+     */
+    private void discardToDeck() {
+        trainCardDeck.addAll(trainCardDiscard);
+        trainCardDiscard = new ArrayList<>(); // quick, easy way to empty a list
+        shuffleTrainCards();
+    }
+
+
     public trainCardModel drawTrainCardFromDeck() {
         if(trainCardDeck.isEmpty()) {
             if(trainCardDiscard.isEmpty()) {
@@ -62,15 +72,17 @@ public class TrainCardBank {
                 throw new IllegalStateException("There are no train cards in the deck or discard to draw");
             }
             // shuffle discard, move into train card deck
-            trainCardDeck.addAll(trainCardDiscard);
-            trainCardDiscard = new ArrayList<>(); // quick, easy way to empty a list
-            shuffleTrainCards();
+            discardToDeck();
         }
         return trainCardDeck.remove(trainCardDeck.size() - 1); // eliminate and return the top
     }
 
     public boolean canDrawTrainCardFromDeck() {
         return !trainCardDeck.isEmpty() || !trainCardDiscard.isEmpty();
+    }
+
+    public void discardTrainCards(List<trainCardModel> discardedCards) {
+        trainCardDiscard.addAll(discardedCards);
     }
 
 }
