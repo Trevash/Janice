@@ -56,7 +56,7 @@ public class ClientInitialGameState extends AbstractClientGameState implements I
 
 
     @Override
-    public int destinationCardDeckSize() {
+    public int getDestinationCardDeckSize() {
         return destinationCardDeck.size();
     }
     */

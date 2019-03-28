@@ -110,6 +110,10 @@ public class ClientFacade {
         return getGame().getPlayers();
     }
 
+    public void setNumTrainCards(int numTrainCards) {
+        getGame().setNumTrainCards(numTrainCards);
+    }
+
     public boolean userCanDrawTrainCards() {
         return getGame().canDrawTrainCards();
     }

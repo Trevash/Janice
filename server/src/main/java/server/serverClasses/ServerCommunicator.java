@@ -185,7 +185,7 @@ public class ServerCommunicator extends WebSocketServer {
         // states increment the turn counter automatically - and not everything that causes an update
         // will necessarily require incrementing the turn counter. ex: drawing first train card
         curGame.updateGameHistory(new chatMessageModel(username, historyUpdate));
-        GameStatusData data = new GameStatusData(curGame.getTurnCounter(), curGame.getGameHistory());
+        GameStatusData data = new GameStatusData(curGame.getTurnCounter(), curGame.getGameHistory(), curGame.getNumTrainCards(), curGame.getNumDestinationCards());
         Results result = new Results("UpdateGameStatus", true, Serializer.getInstance().serializeObject(data));
         this.broadcastGame(Serializer.getInstance().serializeObject(result), curGame);
     }

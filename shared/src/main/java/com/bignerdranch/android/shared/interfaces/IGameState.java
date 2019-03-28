@@ -43,7 +43,7 @@ public interface IGameState {
      * deck.<!-- -->
      * @return the size of the destination card deck
      */
-    public int destinationCardDeckSize();
+    public int getDestinationCardDeckSize();
 
     /**
      * Returns a client-side equivalent of the current state, which has the ability to interact with

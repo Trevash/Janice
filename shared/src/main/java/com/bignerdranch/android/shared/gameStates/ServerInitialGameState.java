@@ -43,11 +43,11 @@ public class ServerInitialGameState extends AbstractGameState implements IGameSt
     }
 
     public AbstractClientGameState toClientState(IServer server, gameModel game, int playerNum) {
-        return new ClientInitialGameState(server, game, destinationCardDeckSize());
+        return new ClientInitialGameState(server, game, getDestinationCardDeckSize());
     }
 
 
-    public int destinationCardDeckSize() {
+    public int getDestinationCardDeckSize() {
         return destinationCardDeck.size();
     }
 

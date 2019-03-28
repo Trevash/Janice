@@ -14,10 +14,12 @@ public class DeckFragmentPresenter implements ClientFacade.Presenter, DrawTrainC
     public interface View {
         void updateDeck(List<trainCardModel> cards);
         void updateFaceUpCards(List<trainCardModel> cards);
+        void returnToMap();
     }
     private View view;
     private ClientFacade facade = ClientFacade.getInstance();
     private ClientModel model = ClientModel.getInstance();
+    private int cardCounter = 0;
 
     public DeckFragmentPresenter(View view) {
         this.view = view;
@@ -35,6 +37,14 @@ public class DeckFragmentPresenter implements ClientFacade.Presenter, DrawTrainC
         DrawTrainCardRequest request =
                 new DrawTrainCardRequest(model.getAuth(), index, currentPlayerID, model.getGame().getGameID());
         task.execute(request);
+        /*if(!model.getGame().isPlayersTurn(currentPlayerID)){
+            view.returnToMap();
+        }*/
+        cardCounter++;   //This is for testing purposes only
+        if(cardCounter == 2){
+            cardCounter = 0;
+            view.returnToMap();
+        }
     }
 
     public void setFragment() {

@@ -123,7 +123,7 @@ public class serverFacade implements IServer {
     }
 
     @Override
-    public Results claimRoute(ClaimRouteRequest request) throws InvalidAuthorizationException, RouteNotFoundException, RouteAlreadyClaimedException, UserNotFoundException {
+    public Results claimRoute(ClaimRouteRequest request) throws Exception {
         if(!serverModel.getInstance().authTokenExists(request.getAuth())){
             throw new InvalidAuthorizationException("Invalid Auth Token passed to ClaimRoute!");
         }
@@ -169,43 +169,11 @@ public class serverFacade implements IServer {
 
     @Override
     public Results drawFirstTrainCard(DrawTrainCardRequest request) throws Exception {
-        if (!serverModel.getInstance().authTokenExists(request.getAuthtoken())) {
-            throw new InvalidAuthorizationException("Invalid Auth Token passed to updateChatBox");
-        }
-
-        gameModel curGame = serverModel.getInstance().getGameByID(request.getGameID());
-        if(request.getIndex() == 0){
-            return new Results("DrawFirstTrainCard", true, new DrawTrainCardData(request.getGameID(), curGame.drawTrainCardFromDeck(), serverModel.getInstance().getUser(request.getAuthtoken()).getUserName()));
-        }
-        else {
-            trainCardModel returnCard = curGame.drawFaceUpTrainCard(request.getIndex() - 1);
-            if (returnCard.getColor() == cardColorEnum.LOCOMOTIVE){
-                return new Results("DrawSecondTrainCard", true, new DrawTrainCardData(request.getGameID(), returnCard, serverModel.getInstance().getUser(request.getAuthtoken()).getUserName()));
-            }
-            else {
-                return new Results("DrawFirstTrainCard", true, new DrawTrainCardData(request.getGameID(), returnCard, serverModel.getInstance().getUser(request.getAuthtoken()).getUserName()));
-            }
-        }
+        return serverModel.getInstance().drawFirstTrainCard(request);
     }
 
     @Override
     public Results drawSecondTrainCard(DrawTrainCardRequest request) throws Exception {
-        if (!serverModel.getInstance().authTokenExists(request.getAuthtoken())) {
-            throw new InvalidAuthorizationException("Invalid Auth Token passed to updateChatBox");
-        }
-
-        gameModel curGame = serverModel.getInstance().getGameByID(request.getGameID());
-        if(request.getIndex() == 0){
-            return new Results("DrawSecondTrainCard", true, new DrawTrainCardData(request.getGameID(), curGame.drawTrainCardFromDeck(), serverModel.getInstance().getUser(request.getAuthtoken()).getUserName()));
-        }
-        else {
-            cardColorEnum curCardColor = curGame.getFaceUpTrainCardColor(request.getIndex() - 1);
-            if (curCardColor == cardColorEnum.LOCOMOTIVE){
-                throw new CannotDrawTrainCardException("Your second train card cannot be a faceup locomotive!");
-            }
-            else {
-                return new Results("DrawSecondTrainCard", true, new DrawTrainCardData(request.getGameID(), curGame.drawFaceUpTrainCard(request.getIndex() - 1), serverModel.getInstance().getUser(request.getAuthtoken()).getUserName()));
-            }
-        }
+        return serverModel.getInstance().drawSecondTrainCard(request);
     }
 }

@@ -39,6 +39,8 @@ public class gameModel {
     private TrainCardBank trainCardBank; //
 
     private ArrayList<trainCardModel> trainCardDeck = new ArrayList<>();
+    private int numTrainCardDeck;
+    // Dest
     // Face-up
     private List<trainCardModel> faceUpCards = new ArrayList<>();
     // Discard
@@ -109,6 +111,8 @@ public class gameModel {
         this.faceUpCards.add(this.drawTrainCardFromDeck());
         this.faceUpCards.add(this.drawTrainCardFromDeck());
         this.faceUpCards.add(this.drawTrainCardFromDeck());
+
+        this.numTrainCardDeck = trainCardDeck.size();
 
         //destinationCardDeck = new DestinationCardDeckProxy();
     }
@@ -294,8 +298,8 @@ public class gameModel {
         stats.add(cardTypes);
 
         int[] totals = new int[2];
-        totals[0] = trainCardDeck.size();
-        totals[1] = state.destinationCardDeckSize();
+        totals[0] = numTrainCardDeck;
+        totals[1] = state.getDestinationCardDeckSize();
         stats.add(totals);
 
         for (int i = 0; i < players.size(); i++) {
@@ -390,15 +394,27 @@ public class gameModel {
         this.turnCounter = turnCounter;
     }
 
-    public void setTrainCardDeck(ArrayList<trainCardModel> newDeck) {
-        this.trainCardDeck = newDeck;
-    }
-
     public cardColorEnum getFaceUpTrainCardColor(int i) {
         return this.faceUpCards.get(i).getColor();
     }
 
     public void addTrainCardToPlayersHand(trainCardModel returnCard, usernameModel username) {
         getPlayerByUsername(username).addTrainCardToHand(returnCard);
+    }
+
+    public int getNumTrainCards() {
+        return this.trainCardDeck.size();
+    }
+
+    public int getNumDestinationCards() {
+        return this.state.getDestinationCardDeckSize();
+    }
+
+    public void setNumTrainCards(int numTrainCards) {
+        this.numTrainCardDeck = numTrainCards;
+    }
+
+    public void addToTrainDiscards(LinkedList discards) {
+        this.trainCardDiscard.addAll(discards);
     }
 }
