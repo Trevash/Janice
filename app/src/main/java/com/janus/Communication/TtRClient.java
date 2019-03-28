@@ -58,6 +58,7 @@ public class TtRClient extends WebSocketClient{
                     facade.getGame().addToTrainDiscards(data.getDiscards());
                     facade.getGame().getPlayerModelFromID(data.getPlayerID()).setTrainCardHand(data.getHand());
                     facade.getGame().getPlayerModelFromID(data.getPlayerID()).setPoints(data.getPoints());
+                    facade.update();
                     break;
                 }
                 case "Join": {

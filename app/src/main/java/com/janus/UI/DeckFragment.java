@@ -91,7 +91,6 @@ public class DeckFragment extends Fragment implements DeckFragmentPresenter.View
             @Override
             public void onClick(View v) {
                 presenter.drawCard(0);
-                mContext.onFinishAction();
             }
         });
 
@@ -99,7 +98,6 @@ public class DeckFragment extends Fragment implements DeckFragmentPresenter.View
             @Override
             public void onClick(View v) {
                 presenter.drawCard(1);
-                mContext.onFinishAction();
             }
         });
 
@@ -107,7 +105,6 @@ public class DeckFragment extends Fragment implements DeckFragmentPresenter.View
             @Override
             public void onClick(View v) {
                 presenter.drawCard(2);
-                mContext.onFinishAction();
             }
         });
 
@@ -115,7 +112,6 @@ public class DeckFragment extends Fragment implements DeckFragmentPresenter.View
             @Override
             public void onClick(View v) {
                 presenter.drawCard(3);
-                mContext.onFinishAction();
             }
         });
 
@@ -123,7 +119,6 @@ public class DeckFragment extends Fragment implements DeckFragmentPresenter.View
             @Override
             public void onClick(View v) {
                 presenter.drawCard(4);
-                mContext.onFinishAction();
             }
         });
 
@@ -131,7 +126,6 @@ public class DeckFragment extends Fragment implements DeckFragmentPresenter.View
             @Override
             public void onClick(View v) {
                 presenter.drawCard(5);
-                mContext.onFinishAction();
             }
         });
 
@@ -174,5 +168,9 @@ public class DeckFragment extends Fragment implements DeckFragmentPresenter.View
             mCard5View.setImageResource(colorMap.get(faceUpCards.get(4).getColor()));
         }
 
+    }
+
+    public void returnToMap(){
+        mContext.onFinishAction();
     }
 }
