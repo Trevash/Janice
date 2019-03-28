@@ -2,6 +2,7 @@ package com.bignerdranch.android.shared.models;
 
 import com.bignerdranch.android.shared.models.colors.cardColorEnum;
 import com.bignerdranch.android.shared.models.colors.playerColorEnum;
+import com.bignerdranch.android.shared.models.colors.routeColorEnum;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -106,7 +107,7 @@ public class playerModel {
     }
 
 
-    public LinkedList addToClaimedRoutes(abstractRoute claimedRoute) throws Exception {
+    public LinkedList addToClaimedRoutes(abstractRoute claimedRoute, routeColorEnum color) throws Exception {
         switch (claimedRoute.getLength()) {
             case 1:
                 this.points += 1;
@@ -133,12 +134,12 @@ public class playerModel {
         this.locomotives -= claimedRoute.getLength();
         claimedRoutes.add(claimedRoute);
 
-        return this.payCostOfRoute(claimedRoute);
+        return this.payCostOfRoute(claimedRoute, color);
     }
 
-    public LinkedList payCostOfRoute(abstractRoute claimedRoute) {
+    public LinkedList payCostOfRoute(abstractRoute claimedRoute, routeColorEnum color) {
         //Get claimed route color
-        String claimedRouteColor = ((singleRouteModel) claimedRoute).getTrainColor().toString();
+        String claimedRouteColor = color.name();
 
         //Make tracker for number of cards to be paid
         int costTracker = claimedRoute.getLength();
@@ -147,7 +148,7 @@ public class playerModel {
 
         //Iterate through list first time for colored cards
         for (int i = 0; i < trainCardHand.size() && costTracker > 0; i++) {
-            if(trainCardHand.get(i).getColor().toString().equals(claimedRouteColor)){
+            if(trainCardHand.get(i).getColor().name().equals(claimedRouteColor)){
                 discards.add(trainCardHand.remove(i));
                 costTracker--;
             }

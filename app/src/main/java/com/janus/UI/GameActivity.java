@@ -7,16 +7,12 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.widget.Toast;
 
-import com.bignerdranch.android.shared.exceptions.DuplicateException;
-import com.bignerdranch.android.shared.exceptions.RouteAlreadyClaimedException;
 import com.bignerdranch.android.shared.models.abstractRoute;
 import com.bignerdranch.android.shared.Constants;
 import com.bignerdranch.android.shared.models.DestinationCardModel;
 import com.bignerdranch.android.shared.models.chatMessageModel;
 import com.bignerdranch.android.shared.models.gameModel;
 import com.bignerdranch.android.shared.models.playerModel;
-import com.bignerdranch.android.shared.models.usernameModel;
-import com.bignerdranch.android.shared.models.colors.playerColorEnum;
 import com.bignerdranch.android.shared.requestObjects.UpdateChatboxRequest;
 import com.janus.ClientFacade;
 import com.janus.Communication.ServerProxy;
@@ -145,7 +141,7 @@ public class GameActivity extends AppCompatActivity
                 List<abstractRoute> curRoutes = curGame.getRoutes();
                 try {
                     curRoutes.get(0).claim(curPlayer.getId());
-                    curPlayer.addToClaimedRoutes(curRoutes.get(0));
+                    curPlayer.addToClaimedRoutes(curRoutes.get(0), request.getColor());
                 } catch (Exception e) {
                     e.printStackTrace();
                 }

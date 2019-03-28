@@ -60,7 +60,7 @@ public class serverModel {
             throw new RouteNotFoundException("Route of invalid class type passed to server!");
         }
 
-        LinkedList discards = curGame.getPlayerModelFromID(request.getPlayerID()).addToClaimedRoutes(curRoute);
+        LinkedList discards = curGame.getPlayerModelFromID(request.getPlayerID()).addToClaimedRoutes(curRoute, request.getColor());
         List<trainCardModel> hand = curGame.getPlayerModelFromID(request.getPlayerID()).getTrainCardHand();
         int points = curGame.getPlayerModelFromID(request.getPlayerID()).getPoints();
 
