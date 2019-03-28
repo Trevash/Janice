@@ -18,4 +18,6 @@
     <string name="drawDestinationsPrompt2Routes">Select At Least 2 Routes To Keep</string>
     <string name="drawDestinationsPrompt1Route">Select At Least 1 Route To Keep</string>
     <string name="accept">Accept</string>
+    <string name="mapString">Map</string>
+    <string name="statusChatString">Game Status / Chat</string>
 </resources>

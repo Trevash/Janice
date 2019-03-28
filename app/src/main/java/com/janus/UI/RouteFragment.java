@@ -5,6 +5,9 @@ import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
@@ -21,6 +24,7 @@ public class RouteFragment extends Fragment implements RouteFragmentPresenter.Vi
 
     public interface Context {
         void onFinishAction();
+        void onMapFragmentSelected();
     }
 
     private RouteFragmentPresenter presenter;
@@ -29,8 +33,33 @@ public class RouteFragment extends Fragment implements RouteFragmentPresenter.Vi
     private Context mContext;
 
     @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater){
+        super.onCreateOptionsMenu(menu, inflater);
+        inflater.inflate(R.menu.fragment_route, menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch(item.getItemId()){
+            case R.id.mapButton:
+                mContext.onMapFragmentSelected();
+                return true;
+            default:
+                return true;
+        }
+    }
+
+    @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setHasOptionsMenu(true);
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        presenter.setFragment();
+        presenter.updateUI();
     }
 
     @Override
