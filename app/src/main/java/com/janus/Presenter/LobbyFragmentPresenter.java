@@ -4,6 +4,7 @@ import com.bignerdranch.android.shared.IServer;
 import com.bignerdranch.android.shared.models.gameModel;
 import com.bignerdranch.android.shared.models.usernameModel;
 import com.bignerdranch.android.shared.requestObjects.StartGameRequest;
+import com.bignerdranch.android.shared.resultobjects.Results;
 import com.janus.ClientFacade;
 import com.janus.Communication.ServerProxy;
 
@@ -33,7 +34,10 @@ public class LobbyFragmentPresenter implements ClientFacade.Presenter {
 
     public void startGameClicked() {
         try {
-            sp.startGame(new StartGameRequest(facade.getGame().getGameID(), facade.getUser().getAuthToken()));
+            Results results = sp.startGame(new StartGameRequest(facade.getGame().getGameID(), facade.getUser().getAuthToken()));
+            if (!results.isSuccess()) {
+                view.displayLobbyError(results.getJSONdata());
+            }
         } catch(Exception e){
             e.printStackTrace();
         }
