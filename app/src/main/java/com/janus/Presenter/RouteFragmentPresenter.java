@@ -142,7 +142,12 @@ public class RouteFragmentPresenter implements ClaimRouteTask.Caller, ClientFaca
             it.remove(); // avoids a ConcurrentModificationException
         }
 
-        return numCardsOfColor.get(cardColorEnum.LOCOMOTIVE) + maxValue;
+        int numLocomotiveCards = 0;
+        if(numCardsOfColor.containsKey(cardColorEnum.LOCOMOTIVE)){
+            numLocomotiveCards = numCardsOfColor.get(cardColorEnum.LOCOMOTIVE);
+        }
+
+        return numLocomotiveCards + maxValue;
     }
 
     private int getNumCardsOfColor(List<trainCardModel> cards, cardColorEnum color){
