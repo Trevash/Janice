@@ -70,7 +70,8 @@ public class TtRClient extends WebSocketClient{
                     break;
                 }
                 case "ReturnDestinationCards": {
-                	facade.setGame((gameModel) result.getData(gameModel.class));
+                	//facade.setGame((gameModel) result.getData(gameModel.class));
+                    // TODO what, if anything, should be in here
                     break;
                 }
                 case "UpdateChat": {
