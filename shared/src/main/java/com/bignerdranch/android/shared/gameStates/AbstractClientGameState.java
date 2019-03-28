@@ -80,7 +80,6 @@ public abstract class AbstractClientGameState extends AbstractGameState implemen
     public List<DestinationCardModel> drawDestinationCards() {
         if(canDrawDestCards()) {
             return destinationCardDeck.drawDestinationCards();
-            //return null; // TODO move functionality to here
         } else {
             throw new IllegalStateException("Cannot draw destination cards in this state");
         }

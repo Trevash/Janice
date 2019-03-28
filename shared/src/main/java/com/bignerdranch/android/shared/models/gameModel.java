@@ -26,7 +26,6 @@ public class gameModel {
     private Map<String, playerModel> mapPlayerIDToModel;
     private chatboxModel gameHistory;
 
-    // TODO create states - will want more for phase 3
     private IGameState state;
 
     // private playerModel hostPlayer;
@@ -37,8 +36,9 @@ public class gameModel {
     // ChatBox
     // Decks
     // Train
+    private TrainCardBank trainCardBank; //
+
     private ArrayList<trainCardModel> trainCardDeck = new ArrayList<>();
-    // Dest
     // Face-up
     private List<trainCardModel> faceUpCards = new ArrayList<>();
     // Discard
@@ -230,7 +230,7 @@ public class gameModel {
         this.createRoutes();
 
         // TODO have each player draw destinationCards - have drawn destination cards,
-        // TODO and each player starts in the draw destination card fragment
+        // TODO and each player starts in the draw destination card fragment?
 
         //color assigned in the addPlayer() function
         //determine player order: order they joined (order in 'players' array)

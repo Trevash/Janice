@@ -1,12 +1,10 @@
 package server.serverClasses;
 
-import com.bignerdranch.android.shared.Serializer;
 import com.bignerdranch.android.shared.exceptions.InvalidAuthorizationException;
 import com.bignerdranch.android.shared.exceptions.RouteAlreadyClaimedException;
 import com.bignerdranch.android.shared.exceptions.RouteNotFoundException;
 import com.bignerdranch.android.shared.models.abstractRoute;
 import com.bignerdranch.android.shared.models.authTokenModel;
-import com.bignerdranch.android.shared.models.chatboxModel;
 import com.bignerdranch.android.shared.models.colors.playerColorEnum;
 import com.bignerdranch.android.shared.models.doubleRouteModelFew;
 import com.bignerdranch.android.shared.models.doubleRouteModelMany;
@@ -26,7 +24,6 @@ import com.bignerdranch.android.shared.exceptions.GameNotFoundException;
 import com.bignerdranch.android.shared.exceptions.UserNotFoundException;
 import com.bignerdranch.android.shared.resultobjects.ChatboxData;
 import com.bignerdranch.android.shared.resultobjects.ClaimRouteData;
-import com.bignerdranch.android.shared.resultobjects.Results;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -188,7 +185,7 @@ public class serverModel {
     }
 
     private playerModel makeNewPlayer(userModel userByAuth) {
-        // TODO change so that not every new player has the same color - only added this to allow compilation
+        // player color gets changed based on their position in the game - so actually unneeded
         return new playerModel(userByAuth.getUserName(), false, false, playerColorEnum.BLUE);
     }
 

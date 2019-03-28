@@ -14,13 +14,11 @@ public class chatMessageModel implements IMessage {
 	
 	@Override
 	public usernameModel getUsername() {
-		// TODO Auto-generated method stub
 		return username;
 	}
 
 	@Override
 	public String getMessage() {
-		// TODO Auto-generated method stub
 		return message;
 	}
 

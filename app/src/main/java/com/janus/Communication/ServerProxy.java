@@ -25,16 +25,17 @@ public class ServerProxy implements IServer {
 
     }
 
-	private static ServerProxy scp;
+    private static ServerProxy scp;
     private static TtRClient client;
 
     private Results messageResult;
     private CurrentState state;
 
-    private ServerProxy() {}
+    private ServerProxy() {
+    }
 
     public static ServerProxy getInstance() {
-        if (scp == null){
+        if (scp == null) {
             scp = new ServerProxy();
         }
         return scp;
@@ -52,10 +53,11 @@ public class ServerProxy implements IServer {
         client.closeBlocking();
     }
 
+    /*
     public Results login(LoginRequest request) throws Exception {
         Object[] paramValues = {Serializer.getInstance().serializeObject(request)};
         String[] paramTypes = {"com.bignerdranch.android.shared.requestObjects.LoginRequest"};
-        GenericCommand commandObj = new GenericCommand("server.handlers.commandHandler", "login",paramTypes, paramValues);
+        GenericCommand commandObj = new GenericCommand("server.handlers.commandHandler", "login", paramTypes, paramValues);
         String commandObjStr = Serializer.getInstance().serializeObject(commandObj);
         client.send(commandObjStr);
         messageResult = null;
@@ -65,12 +67,20 @@ public class ServerProxy implements IServer {
             Thread.sleep(100);
         }
         return messageResult;
+    } // */
+
+    @Override
+    public Results login(LoginRequest request) {
+        return sendGenericRequest(request,
+                "com.bignerdranch.android.shared.requestObjects.LoginRequest",
+                "login");
     }
 
+    /*
     public Results register(RegisterRequest request) throws Exception {
         Object[] paramValues = {Serializer.getInstance().serializeObject(request)};
         String[] paramTypes = {"com.bignerdranch.android.shared.requestObjects.RegisterRequest"};
-        GenericCommand commandObj = new GenericCommand("server.handlers.commandHandler", "register",paramTypes, paramValues);
+        GenericCommand commandObj = new GenericCommand("server.handlers.commandHandler", "register", paramTypes, paramValues);
         String commandObjStr = Serializer.getInstance().serializeObject(commandObj);
         client.send(commandObjStr);
         messageResult = null;
@@ -80,8 +90,16 @@ public class ServerProxy implements IServer {
             Thread.sleep(100);
         }
         return messageResult;
+    } // */
+
+    @Override
+    public Results register(RegisterRequest request) {
+        return sendGenericRequest(request,
+                "com.bignerdranch.android.shared.requestObjects.RegisterRequest",
+                "register");
     }
 
+    /*
     public Results createGame(CreateGameRequest request) throws Exception {
         Object[] paramValues = {Serializer.getInstance().serializeObject(request)};
         String[] paramTypes = {"com.bignerdranch.android.shared.requestObjects.CreateGameRequest"};
@@ -95,8 +113,16 @@ public class ServerProxy implements IServer {
             Thread.sleep(100);
         }
         return messageResult;
+    } // */
+
+    @Override
+    public Results createGame(CreateGameRequest request) {
+        return sendGenericRequest(request,
+                "com.bignerdranch.android.shared.requestObjects.CreateGameRequest",
+                "createGame");
     }
 
+    /*
     public Results startGame(StartGameRequest request) throws Exception {
         Object[] paramValues = {Serializer.getInstance().serializeObject(request)};
         String[] paramTypes = {"com.bignerdranch.android.shared.requestObjects.StartGameRequest"};
@@ -110,8 +136,16 @@ public class ServerProxy implements IServer {
             Thread.sleep(100);
         }
         return messageResult;
+    } // */
+
+    @Override
+    public Results startGame(StartGameRequest request) {
+        return sendGenericRequest(request,
+                "com.bignerdranch.android.shared.requestObjects.StartGameRequest",
+                "startGame");
     }
 
+    /*
     public Results joinGame(JoinGameRequest request) throws Exception {
         Object[] paramValues = {Serializer.getInstance().serializeObject(request)};
         String[] paramTypes = {"com.bignerdranch.android.shared.requestObjects.JoinGameRequest"};
@@ -125,8 +159,16 @@ public class ServerProxy implements IServer {
             Thread.sleep(100);
         }
         return messageResult;
+    } // */
+
+
+    public Results joinGame(JoinGameRequest request) {
+        return sendGenericRequest(request,
+                "com.bignerdranch.android.shared.requestObjects.JoinGameRequest",
+                "joinGame");
     }
 
+    /*
     @Override
     public Results claimRoute(ClaimRouteRequest request) throws Exception {
         Object[] paramValues = {Serializer.getInstance().serializeObject(request)};
@@ -142,8 +184,17 @@ public class ServerProxy implements IServer {
         }
 
         return messageResult;
+    } // */
+
+
+    @Override
+    public Results claimRoute(ClaimRouteRequest request) {
+        return sendGenericRequest(request,
+                "com.bignerdranch.android.shared.requestObjects.ClaimRouteRequest",
+                "claimRoute");
     }
 
+    /*
     public Results updateChatbox(UpdateChatboxRequest request) throws Exception {
         Object[] paramValues = {Serializer.getInstance().serializeObject(request)};
         String[] paramTypes = {"com.bignerdranch.android.shared.requestObjects.UpdateChatboxRequest"};
@@ -157,7 +208,14 @@ public class ServerProxy implements IServer {
             Thread.sleep(100);
         }
         return messageResult;
-	}
+	} // */
+
+
+    public Results updateChatbox(UpdateChatboxRequest request) {
+        return sendGenericRequest(request,
+                "com.bignerdranch.android.shared.requestObjects.UpdateChatboxRequest",
+                "updateChatbox");
+    }
 
     public Results testSocket(UpdateChatboxRequest request) throws Exception {
         Object[] paramValues = {Serializer.getInstance().serializeObject(request)};
@@ -174,8 +232,9 @@ public class ServerProxy implements IServer {
             Thread.sleep(100);
         }
         return messageResult;
-	}
+    }
 
+	/*
     public Results drawDestinationCards(DrawDestinationCardsRequest request) {
         Object[] paramValues = {Serializer.getInstance().serializeObject(request)};
         String[] paramTypes = {"com.bignerdranch.android.shared.requestObjects.DrawDestinationCardsRequest"};
@@ -193,7 +252,15 @@ public class ServerProxy implements IServer {
             }
         }
         return messageResult;
+    } // */
+
+    public Results drawDestinationCards(DrawDestinationCardsRequest request) {
+        return sendGenericRequest(request,
+                "com.bignerdranch.android.shared.requestObjects.DrawDestinationCardsRequest",
+                "drawDestinationCards");
     }
+
+    /*
     public Results returnDestinationCard(ReturnDestinationCardsRequest request) {
         Object[] paramValues = {Serializer.getInstance().serializeObject(request)};
         String[] paramTypes = {"com.bignerdranch.android.shared.requestObjects.ReturnDestinationCardsRequest"};
@@ -212,8 +279,14 @@ public class ServerProxy implements IServer {
         }
 
         return messageResult;
+    } // */
+    public Results returnDestinationCard(ReturnDestinationCardsRequest request) {
+        return sendGenericRequest(request,
+                "com.bignerdranch.android.shared.requestObjects.ReturnDestinationCardsRequest",
+                "returnDestinationCard");
     }
 
+    /*
     public Results drawFirstTrainCard(DrawTrainCardRequest request) {
         Object[] paramValues = {Serializer.getInstance().serializeObject(request)};
         String[] paramTypes = {"com.bignerdranch.android.shared.requestObjects.DrawTrainCardRequest"};
@@ -232,8 +305,15 @@ public class ServerProxy implements IServer {
         }
 
         return messageResult;
+    } // */
+
+    public Results drawFirstTrainCard(DrawTrainCardRequest request) {
+        return sendGenericRequest(request,
+                "com.bignerdranch.android.shared.requestObjects.DrawTrainCardRequest",
+                "drawFirstTrainCard");
     }
 
+    /*
     public Results drawSecondTrainCard(DrawTrainCardRequest request) {
         Object[] paramValues = {Serializer.getInstance().serializeObject(request)};
         String[] paramTypes = {"com.bignerdranch.android.shared.requestObjects.DrawTrainCardRequest"};
@@ -252,7 +332,32 @@ public class ServerProxy implements IServer {
         }
 
         return messageResult;
+    } // */
+
+    public Results drawSecondTrainCard(DrawTrainCardRequest request) {
+        return sendGenericRequest(request,
+                "com.bignerdranch.android.shared.requestObjects.DrawTrainCardRequest",
+                "drawSecondTrainCard");
     }
 
-    // TODO add in a private method that is a generalized method of each command - idea is to reduce code redundancy and to ease future commands
+    private Results sendGenericRequest(Object request, String paramType, String methodName) {
+        Object[] paramValues = {Serializer.getInstance().serializeObject(request)};
+        String[] paramTypes = {paramType};
+        GenericCommand commandObj = new GenericCommand("server.handlers.commandHandler", methodName, paramTypes, paramValues);
+        String commandObjStr = Serializer.getInstance().serializeObject(commandObj);
+        client.send(commandObjStr);
+        messageResult = null;
+        client.setMessageResultToNull();
+        while (messageResult == null) {
+            messageResult = client.getResults();
+            try {
+                Thread.sleep(100);
+            } catch (InterruptedException e) {
+                throw new RuntimeException(e);
+            }
+        }
+
+        return messageResult;
+    }
+
 }
