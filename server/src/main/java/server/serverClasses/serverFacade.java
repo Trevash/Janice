@@ -1,6 +1,6 @@
 package server.serverClasses;
 
-import com.bignerdranch.android.shared.IServer;
+import com.bignerdranch.android.shared.interfaces.IServer;
 import com.bignerdranch.android.shared.exceptions.CannotDrawTrainCardException;
 import com.bignerdranch.android.shared.exceptions.DuplicateException;
 import com.bignerdranch.android.shared.exceptions.GameNotFoundException;
@@ -158,10 +158,10 @@ public class serverFacade implements IServer {
     public Results returnDestinationCard(ReturnDestinationCardsRequest request) {
         gameModel game = serverModel.getInstance().getGameByID(request.getGameID());
         game.updateCurrentPlayerDestinationCards(request.getSelectedCards());
+        usernameModel name = game.getPlayers().get(game.getTurnCounter()).getUserName();
         // the turn gets updated when the cards are returned, so the current player needs to be updated
         // before the cards are actually returned
         game.returnRejectedDestinationCards(request.getSelectedCards(), request.getRejectedCards());
-        usernameModel name = game.getPlayers().get(game.getTurnCounter()).getUserName();
         ReturnDestinationCardData result = new ReturnDestinationCardData(game.getGameID(),name, request.getSelectedCards());
         return new Results("ReturnDestinationCards", true, result);
         // currently does not return anything - will need to update everyone's games

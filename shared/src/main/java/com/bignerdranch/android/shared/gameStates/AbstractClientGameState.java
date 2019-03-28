@@ -1,9 +1,10 @@
 package com.bignerdranch.android.shared.gameStates;
 
-import com.bignerdranch.android.shared.IServer;
+import com.bignerdranch.android.shared.interfaces.IServer;
 import com.bignerdranch.android.shared.interfaces.IGameState;
 import com.bignerdranch.android.shared.models.DestinationCardModel;
 import com.bignerdranch.android.shared.models.gameModel;
+import com.bignerdranch.android.shared.models.trainCardModel;
 import com.bignerdranch.android.shared.proxy.DestinationCardDeckProxy;
 
 import java.util.List;
@@ -97,5 +98,20 @@ public abstract class AbstractClientGameState extends AbstractGameState implemen
     @Override
     public int destinationCardDeckSize() {
         return destinationCardDeck.size();
+    }
+
+    @Override
+    public trainCardModel drawTrainCardFromDeck() {
+        return null;
+    }
+
+    /**
+     * @param cardLocation the number representing the card's location in the face up "pile", which
+     *                     should be a number from 0 through 4
+     * @return the drawn card
+     */
+    @Override
+    public trainCardModel drawFaceUpTrainCard(int cardLocation) {
+        return null;
     }
 }

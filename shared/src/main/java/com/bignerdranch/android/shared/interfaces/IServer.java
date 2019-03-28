@@ -1,4 +1,4 @@
-package com.bignerdranch.android.shared;
+package com.bignerdranch.android.shared.interfaces;
 
 import com.bignerdranch.android.shared.models.gameIDModel;
 import com.bignerdranch.android.shared.requestObjects.ClaimRouteRequest;

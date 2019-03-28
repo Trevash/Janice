@@ -1,7 +1,7 @@
 package server.handlers;
 
 import com.bignerdranch.android.shared.GenericCommand;
-import com.bignerdranch.android.shared.IServer;
+import com.bignerdranch.android.shared.interfaces.IServer;
 import com.bignerdranch.android.shared.exceptions.DuplicateException;
 import com.bignerdranch.android.shared.exceptions.GameNotFoundException;
 import com.bignerdranch.android.shared.exceptions.InvalidAuthorizationException;
@@ -9,11 +9,8 @@ import com.bignerdranch.android.shared.exceptions.RouteAlreadyClaimedException;
 import com.bignerdranch.android.shared.exceptions.RouteNotFoundException;
 import com.bignerdranch.android.shared.exceptions.UserNotFoundException;
 
-import server.serverClasses.ServerCommunicator;
 import server.serverClasses.serverFacade;
-import server.serverClasses.serverModel;
 
-import com.bignerdranch.android.shared.models.gameModel;
 import com.bignerdranch.android.shared.requestObjects.ClaimRouteRequest;
 import com.bignerdranch.android.shared.requestObjects.CreateGameRequest;
 import com.bignerdranch.android.shared.requestObjects.DrawDestinationCardsRequest;

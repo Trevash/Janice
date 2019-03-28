@@ -1,6 +1,7 @@
 package com.bignerdranch.android.shared.models;
 
 import com.bignerdranch.android.shared.Constants;
+import com.bignerdranch.android.shared.interfaces.ITrainCardBank;
 
 import java.util.ArrayList;
 import java.util.LinkedList;
@@ -10,7 +11,7 @@ import java.util.List;
  * A class to hold all of the train card functionality for the game, excluding individual player
  * hands. A class to be used on the server side
  */
-public class TrainCardBank {
+public class TrainCardBank implements ITrainCardBank { // TODO can this class be moved into the server?
 
     private List<trainCardModel> trainCardDeck = new ArrayList<>();
     // Face-up
@@ -58,7 +59,7 @@ public class TrainCardBank {
     /**
      * moves the discard pile into the deck, then shuffles the deck
      */
-    private void discardToDeck() {
+    private void moveDiscardToDeck() {
         trainCardDeck.addAll(trainCardDiscard);
         trainCardDiscard = new ArrayList<>(); // quick, easy way to empty a list
         shuffleTrainCards();
@@ -72,17 +73,47 @@ public class TrainCardBank {
                 throw new IllegalStateException("There are no train cards in the deck or discard to draw");
             }
             // shuffle discard, move into train card deck
-            discardToDeck();
+            moveDiscardToDeck();
         }
         return trainCardDeck.remove(trainCardDeck.size() - 1); // eliminate and return the top
+    }
+
+    public trainCardModel drawFaceUpTrainCard(int i) {
+        if(i < 0 || i >= faceUpCards.size()) {
+            throw new IllegalArgumentException("There isn't a face-up train card in slot " + i);
+        }
+        trainCardModel drawnCard = faceUpCards.get(i);
+        // replace card, if possible
+        if(canDrawTrainCardFromDeck()) {
+            faceUpCards.set(i, drawTrainCardFromDeck());
+            // TODO check if need to discard the face-up train cards
+        } else {
+            // will need to move the train cards
+            faceUpCards.remove(i);
+        }
+        return drawnCard;
     }
 
     public boolean canDrawTrainCardFromDeck() {
         return !trainCardDeck.isEmpty() || !trainCardDiscard.isEmpty();
     }
 
-    public void discardTrainCards(List<trainCardModel> discardedCards) {
+    public void addToDiscard(List<trainCardModel> discardedCards) {
         trainCardDiscard.addAll(discardedCards);
     }
 
+    @Override
+    public int deckSize() {
+        return trainCardDeck.size();
+    }
+
+    @Override
+    public int discardSize() {
+        return trainCardDiscard.size();
+    }
+
+    @Override
+    public List<trainCardModel> getFaceUpTrainCards() {
+        return faceUpCards;
+    }
 }

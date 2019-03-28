@@ -1,10 +1,12 @@
 package com.bignerdranch.android.shared.gameStates;
 
-import com.bignerdranch.android.shared.IServer;
+import com.bignerdranch.android.shared.interfaces.IServer;
 import com.bignerdranch.android.shared.interfaces.IDestinationCardDeck;
 import com.bignerdranch.android.shared.interfaces.IGameState;
 import com.bignerdranch.android.shared.models.DestinationCardModel;
+import com.bignerdranch.android.shared.models.TrainCardBank;
 import com.bignerdranch.android.shared.models.gameModel;
+import com.bignerdranch.android.shared.models.trainCardModel;
 import com.bignerdranch.android.shared.requestObjects.ClientActivePlayerState;
 
 import java.util.List;
@@ -12,13 +14,15 @@ import java.util.List;
 public class ServerInGameState extends AbstractGameState implements IGameState {
 
     private IDestinationCardDeck destinationCardDeck;
+    private TrainCardBank trainCardBank;
 
-    public ServerInGameState(AbstractGameState prevState, IDestinationCardDeck destinationCardDeck) {
+    public ServerInGameState(AbstractGameState prevState, IDestinationCardDeck destinationCardDeck, TrainCardBank bank) {
         super(prevState);
         if(destinationCardDeck == null) {
             throw new IllegalArgumentException("The destination card deck cannot be null");
         }
         this.destinationCardDeck = destinationCardDeck;
+        this.trainCardBank = bank;
     }
 
     /**
@@ -88,5 +92,20 @@ public class ServerInGameState extends AbstractGameState implements IGameState {
         } else {
             return new ClientInactiveState(serverProxy, game, destinationCardDeckSize());
         }
+    }
+
+    @Override
+    public trainCardModel drawTrainCardFromDeck() {
+        return trainCardBank.drawTrainCardFromDeck();
+    }
+
+    /**
+     * @param cardLocation the number representing the card's location in the face up "pile", which
+     *                     should be a number from 0 through 4
+     * @return the drawn card
+     */
+    @Override
+    public trainCardModel drawFaceUpTrainCard(int cardLocation) {
+        return trainCardBank.drawFaceUpTrainCard(cardLocation);
     }
 }

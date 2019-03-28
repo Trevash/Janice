@@ -1,7 +1,7 @@
 package com.bignerdranch.android.shared.models;
 
 import com.bignerdranch.android.shared.Constants;
-import com.bignerdranch.android.shared.IServer;
+import com.bignerdranch.android.shared.interfaces.IServer;
 import com.bignerdranch.android.shared.exceptions.DuplicateException;
 import com.bignerdranch.android.shared.exceptions.RouteNotFoundException;
 import com.bignerdranch.android.shared.gameStates.AbstractClientGameState;
@@ -137,9 +137,9 @@ public class gameModel {
         return trainCardDeck.remove(numCards); //Eliminate top card from array
     }
 
-    public trainCardModel drawFaceUpTrainCard(int pos) throws Exception {
+    public trainCardModel drawFaceUpTrainCard(int pos) {
         if (pos < 0 || pos > 4) {
-            throw new Exception("Invalid card position requested from face up train cards: " + pos);
+            throw new IllegalArgumentException("Invalid card position requested from face up train cards: " + pos);
         }
 
         trainCardModel curCard = this.faceUpCards.get(pos);
@@ -162,17 +162,17 @@ public class gameModel {
     }
 
     public void updateCurrentPlayerDestinationCards(List<DestinationCardModel> selectedCards) {
-    	playerModel curPlayer = players.get(turnCounter);
-    	curPlayer.addDestinationCards(selectedCards);
-    	//TODO: increment turn order, update game history
+        playerModel curPlayer = players.get(turnCounter);
+        curPlayer.addDestinationCards(selectedCards);
+        //TODO: increment turn order, update game history
     }
-    
+
     // host is the first player in the list
     public playerModel getHostPlayer() {
         return players.get(0);
     }
 
-    public void setRoutes(List<abstractRoute> routes){
+    public void setRoutes(List<abstractRoute> routes) {
         this.routes = routes;
     }
 
@@ -219,7 +219,7 @@ public class gameModel {
     }
 
     public void startGame() {
-        if (players.size() < 1){
+        if (players.size() < 1) {
             throw new IllegalStateException("Insufficient number of players to start game!");
         }
         if (players.size() > 5) {
@@ -309,9 +309,8 @@ public class gameModel {
     }
 
     /**
-     *
      * @param serverProxy the server proxy that the client is using
-     * @param playerNum the player number of the client in this game
+     * @param playerNum   the player number of the client in this game
      */
     public void setClientMode(IServer serverProxy, int playerNum) {
         this.state = state.toClientState(serverProxy, this, playerNum);
@@ -324,13 +323,13 @@ public class gameModel {
         this.state = newState;
     }
 
-    public void incrementTurnCounter(){
+    public void incrementTurnCounter() {
         turnCounter += 1;
         if (turnCounter >= this.players.size())
             turnCounter = 0;
     }
 
-    public boolean isPlayersTurn(playerIDModel testPlayer){
+    public boolean isPlayersTurn(playerIDModel testPlayer) {
         return players.get(turnCounter).getId().equals(testPlayer);
     }
 
@@ -339,7 +338,7 @@ public class gameModel {
     }
 
     public boolean canDrawDestCards() {
-        if(state instanceof AbstractClientGameState) {
+        if (state instanceof AbstractClientGameState) {
             return ((AbstractClientGameState) state).canDrawDestCards();
         } else {
             throw new IllegalStateException("canDrawDestCard operation currently a ClientSide only op");
@@ -347,7 +346,7 @@ public class gameModel {
     }
 
     public boolean canDrawTrainCards() {
-        if(state instanceof AbstractClientGameState) {
+        if (state instanceof AbstractClientGameState) {
             return ((AbstractClientGameState) state).canDrawTrainCards();
         } else {
             throw new IllegalStateException("canDrawTrainCard operation currently a ClientSide only op");
@@ -355,15 +354,15 @@ public class gameModel {
     }
 
     public boolean canClaimRoute() {
-        if(state instanceof AbstractClientGameState) {
+        if (state instanceof AbstractClientGameState) {
             return ((AbstractClientGameState) state).canClaimRoute();
         } else {
             throw new IllegalStateException("canClaimRoute operation currently a ClientSide only op");
         }
     }
-    
+
     public void updateGameHistory(chatMessageModel entry) {
-    	this.gameHistory.addMessage(entry);
+        this.gameHistory.addMessage(entry);
     }
 
     public chatboxModel getGameHistory() {
@@ -372,7 +371,7 @@ public class gameModel {
 
     public abstractRoute getRouteById(routeIDModel routeID) throws RouteNotFoundException {
         for (abstractRoute route : routes) {
-            if(route.getRouteID().getValue().equals(routeID.getValue())){
+            if (route.getRouteID().getValue().equals(routeID.getValue())) {
                 return route;
             }
         }

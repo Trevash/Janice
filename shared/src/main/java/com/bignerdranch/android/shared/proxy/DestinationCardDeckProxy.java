@@ -1,6 +1,6 @@
 package com.bignerdranch.android.shared.proxy;
 
-import com.bignerdranch.android.shared.IServer;
+import com.bignerdranch.android.shared.interfaces.IServer;
 import com.bignerdranch.android.shared.interfaces.IDestinationCardDeck;
 import com.bignerdranch.android.shared.resultobjects.DestinationCardListModel;
 import com.bignerdranch.android.shared.models.DestinationCardModel;

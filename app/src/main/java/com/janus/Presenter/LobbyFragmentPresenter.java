@@ -1,6 +1,6 @@
 package com.janus.Presenter;
 
-import com.bignerdranch.android.shared.IServer;
+import com.bignerdranch.android.shared.interfaces.IServer;
 import com.bignerdranch.android.shared.models.gameModel;
 import com.bignerdranch.android.shared.models.usernameModel;
 import com.bignerdranch.android.shared.requestObjects.StartGameRequest;

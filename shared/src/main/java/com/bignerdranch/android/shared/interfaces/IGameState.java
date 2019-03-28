@@ -1,8 +1,8 @@
 package com.bignerdranch.android.shared.interfaces;
 
-import com.bignerdranch.android.shared.IServer;
 import com.bignerdranch.android.shared.models.DestinationCardModel;
 import com.bignerdranch.android.shared.models.gameModel;
+import com.bignerdranch.android.shared.models.trainCardModel;
 
 import java.util.List;
 
@@ -60,6 +60,16 @@ public interface IGameState {
      * @return the client version of this game state (itself if a client version)
      */
     public IGameState toClientState(IServer serverProxy, gameModel game, int playerNum);
+
+    public trainCardModel drawTrainCardFromDeck();
+
+    /**
+     *
+     * @param cardLocation the number representing the card's location in the face up "pile", which
+     *                     should be a number from 0 through 4
+     * @return the drawn card
+     */
+    public trainCardModel drawFaceUpTrainCard(int cardLocation);
 
     // TODO do we want a method that gives out the number of returnable destination cards?
 

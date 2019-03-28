@@ -1,7 +1,7 @@
 package com.janus.Communication;
 
 import com.bignerdranch.android.shared.GenericCommand;
-import com.bignerdranch.android.shared.IServer;
+import com.bignerdranch.android.shared.interfaces.IServer;
 import com.bignerdranch.android.shared.Constants;
 import com.bignerdranch.android.shared.requestObjects.ClaimRouteRequest;
 import com.bignerdranch.android.shared.requestObjects.CreateGameRequest;

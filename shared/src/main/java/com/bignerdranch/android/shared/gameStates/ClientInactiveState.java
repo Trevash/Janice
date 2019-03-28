@@ -1,8 +1,7 @@
 package com.bignerdranch.android.shared.gameStates;
 
-import com.bignerdranch.android.shared.IServer;
+import com.bignerdranch.android.shared.interfaces.IServer;
 import com.bignerdranch.android.shared.models.DestinationCardModel;
-import com.bignerdranch.android.shared.models.gameIDModel;
 import com.bignerdranch.android.shared.models.gameModel;
 
 import java.util.List;

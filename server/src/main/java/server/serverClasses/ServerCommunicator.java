@@ -114,13 +114,16 @@ public class ServerCommunicator extends WebSocketServer {
                 break;
             case "DrawDestinationCards":
             	broadcastOne(resultGson, conn);
+            	break;
             case "ReturnDestinationCards":
             	//gameModel game = (gameModel) result.getData(gameModel.class);
             	//broadcastGame(resultGson, game);
             	ReturnDestinationCardData returnDestdata = (ReturnDestinationCardData) result.getData(ReturnDestinationCardData.class);
                 //broadcastGame(resultGson, serverModel.getInstance().getGameByID(returnDestdata.getGameID()));
                 //broadcastOne(resultGson, conn);
-            	updateGameStatus(returnDestdata.getGameID(), returnDestdata.getUsername(), "drew " + Integer.toString(returnDestdata.getSelectedCards().size()) + " destination cards");
+            	updateGameStatus(returnDestdata.getGameID(), returnDestdata.getUsername(), "drew " +
+                                Integer.toString(returnDestdata.getSelectedCards().size()) + " destination cards");
+            	break;
             case "DrawFirstTrainCard":
                 broadcastOne(resultGson, conn);
                 break;
@@ -178,7 +181,9 @@ public class ServerCommunicator extends WebSocketServer {
 
     public void updateGameStatus(gameIDModel gameID, usernameModel username, String historyUpdate) {
         gameModel curGame = serverModel.getInstance().getGameByID(gameID);
-        curGame.incrementTurnCounter();
+        //curGame.incrementTurnCounter();
+        // states increment the turn counter automatically - and not everything that causes an update
+        // will necessarily require incrementing the turn counter. ex: drawing first train card
         curGame.updateGameHistory(new chatMessageModel(username, historyUpdate));
         GameStatusData data = new GameStatusData(curGame.getTurnCounter(), curGame.getGameHistory());
         Results result = new Results("UpdateGameStatus", true, Serializer.getInstance().serializeObject(data));
