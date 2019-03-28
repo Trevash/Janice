@@ -1,12 +1,10 @@
 package com.janus.Communication;
 
 import java.net.URI;
-import java.util.List;
 
 import org.java_websocket.client.WebSocketClient;
 import org.java_websocket.handshake.ServerHandshake;
 
-import com.bignerdranch.android.shared.models.chatboxModel;
 import com.bignerdranch.android.shared.models.userModel;
 import com.bignerdranch.android.shared.models.gameModel;
 import com.bignerdranch.android.shared.resultobjects.ChatboxData;
@@ -57,6 +55,9 @@ public class TtRClient extends WebSocketClient{
                 case "ClaimRoute":{
                     ClaimRouteData data = (ClaimRouteData) result.getData(ClaimRouteData.class);
                     facade.getGame().setRoutes(data.getRoutes());
+                    facade.getGame().addToTrainDiscards(data.getDiscards());
+                    facade.getGame().getPlayerModelFromID(data.getPlayerID()).setTrainCardHand(data.getHand());
+                    facade.getGame().getPlayerModelFromID(data.getPlayerID()).setPoints(data.getPoints());
                     break;
                 }
                 case "Join": {
@@ -80,6 +81,7 @@ public class TtRClient extends WebSocketClient{
                     GameStatusData data = (GameStatusData) result.getData(GameStatusData.class);
                     facade.setHistory(data.getGameHistory());
                     facade.setTurnCounter(data.getTurnCounter());
+                    facade.setNumTrainCards(data.getNumTrainCards());
                     break;
                 }
                 case "DrawFirstTrainCard": {

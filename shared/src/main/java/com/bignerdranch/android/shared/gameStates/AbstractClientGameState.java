@@ -95,7 +95,7 @@ public abstract class AbstractClientGameState extends AbstractGameState implemen
     }
 
     @Override
-    public int destinationCardDeckSize() {
+    public int getDestinationCardDeckSize() {
         return destinationCardDeck.size();
     }
 }

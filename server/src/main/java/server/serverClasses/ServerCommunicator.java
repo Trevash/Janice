@@ -180,7 +180,7 @@ public class ServerCommunicator extends WebSocketServer {
         gameModel curGame = serverModel.getInstance().getGameByID(gameID);
         curGame.incrementTurnCounter();
         curGame.updateGameHistory(new chatMessageModel(username, historyUpdate));
-        GameStatusData data = new GameStatusData(curGame.getTurnCounter(), curGame.getGameHistory());
+        GameStatusData data = new GameStatusData(curGame.getTurnCounter(), curGame.getGameHistory(), curGame.getNumTrainCards(), curGame.getNumDestinationCards());
         Results result = new Results("UpdateGameStatus", true, Serializer.getInstance().serializeObject(data));
         this.broadcastGame(Serializer.getInstance().serializeObject(result), curGame);
     }

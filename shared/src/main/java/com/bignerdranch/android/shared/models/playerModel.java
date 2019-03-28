@@ -106,7 +106,7 @@ public class playerModel {
     }
 
 
-    public void addToClaimedRoutes(abstractRoute claimedRoute) throws Exception {
+    public LinkedList addToClaimedRoutes(abstractRoute claimedRoute) throws Exception {
         switch (claimedRoute.getLength()) {
             case 1:
                 this.points += 1;
@@ -130,23 +130,25 @@ public class playerModel {
                 throw new Exception("Invalid length of route!");
         }
 
-        this.payCostOfRoute(claimedRoute);
-
         this.locomotives -= claimedRoute.getLength();
         claimedRoutes.add(claimedRoute);
+
+        return this.payCostOfRoute(claimedRoute);
     }
 
-    public void payCostOfRoute(abstractRoute claimedRoute) {
+    public LinkedList payCostOfRoute(abstractRoute claimedRoute) {
         //Get claimed route color
         String claimedRouteColor = ((singleRouteModel) claimedRoute).getTrainColor().toString();
 
         //Make tracker for number of cards to be paid
         int costTracker = claimedRoute.getLength();
 
+        LinkedList discards = new LinkedList();
+
         //Iterate through list first time for colored cards
         for (int i = 0; i < trainCardHand.size() && costTracker > 0; i++) {
             if(trainCardHand.get(i).getColor().toString().equals(claimedRouteColor)){
-                trainCardHand.remove(i);
+                discards.add(trainCardHand.remove(i));
                 costTracker--;
             }
         }
@@ -154,10 +156,12 @@ public class playerModel {
         //Iterate through list second time for necessary locomotive cards
         for (int i = 0; i < trainCardHand.size() && costTracker > 0; i++) {
             if(trainCardHand.get(i).getColor() == cardColorEnum.LOCOMOTIVE){
-                trainCardHand.remove(i);
+                discards.add(trainCardHand.remove(i));
                 costTracker--;
             }
         }
+
+        return discards;
     }
     
     public List<Set<String>> groupCitiesByConnection(){
@@ -222,7 +226,19 @@ public class playerModel {
     	}
     	return overallPoints;
     }
-    
+
+    public int getPoints() {
+        return this.points;
+    }
+
+    public void setTrainCardHand(List<trainCardModel> hand) {
+        this.trainCardHand = hand;
+    }
+
+    public void setPoints(int points) {
+        this.points = points;
+    }
+
     public class adjListNode{
     	String v;
     	int weight;

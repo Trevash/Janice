@@ -62,7 +62,7 @@ public class ServerInGameState extends AbstractGameState implements IGameState {
      * @return the size of the destination card deck
      */
     @Override
-    public int destinationCardDeckSize() {
+    public int getDestinationCardDeckSize() {
         return destinationCardDeck.size();
     }
 
@@ -84,9 +84,9 @@ public class ServerInGameState extends AbstractGameState implements IGameState {
     public AbstractClientGameState toClientState(IServer serverProxy, gameModel game, int playerNum) {
         if(game.isPlayersTurn(playerNum)) {
             // active player state
-            return new ClientActivePlayerState(serverProxy, game, destinationCardDeckSize());
+            return new ClientActivePlayerState(serverProxy, game, getDestinationCardDeckSize());
         } else {
-            return new ClientInactiveState(serverProxy, game, destinationCardDeckSize());
+            return new ClientInactiveState(serverProxy, game, getDestinationCardDeckSize());
         }
     }
 }

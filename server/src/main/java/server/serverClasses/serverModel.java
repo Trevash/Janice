@@ -1,7 +1,6 @@
 package server.serverClasses;
 
 import com.bignerdranch.android.shared.exceptions.InvalidAuthorizationException;
-import com.bignerdranch.android.shared.exceptions.RouteAlreadyClaimedException;
 import com.bignerdranch.android.shared.exceptions.RouteNotFoundException;
 import com.bignerdranch.android.shared.models.abstractRoute;
 import com.bignerdranch.android.shared.models.authTokenModel;
@@ -13,6 +12,7 @@ import com.bignerdranch.android.shared.models.gameModel;
 import com.bignerdranch.android.shared.models.playerIDModel;
 import com.bignerdranch.android.shared.models.playerModel;
 import com.bignerdranch.android.shared.models.singleRouteModel;
+import com.bignerdranch.android.shared.models.trainCardModel;
 import com.bignerdranch.android.shared.models.userIDModel;
 import com.bignerdranch.android.shared.models.userModel;
 import com.bignerdranch.android.shared.requestObjects.ClaimRouteRequest;
@@ -26,6 +26,7 @@ import com.bignerdranch.android.shared.resultobjects.ChatboxData;
 import com.bignerdranch.android.shared.resultobjects.ClaimRouteData;
 
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 
 public class serverModel {
@@ -42,7 +43,7 @@ public class serverModel {
         return sm;
     }
 
-    public ClaimRouteData claimRoute(ClaimRouteRequest request) throws RouteNotFoundException, RouteAlreadyClaimedException, UserNotFoundException {
+    public ClaimRouteData claimRoute(ClaimRouteRequest request) throws Exception {
         gameModel curGame = this.getGameByID(request.getGameID());
         abstractRoute curRoute = curGame.getRouteById(request.getRouteID());
 
@@ -59,7 +60,11 @@ public class serverModel {
             throw new RouteNotFoundException("Route of invalid class type passed to server!");
         }
 
-        return new ClaimRouteData(curGame.getGameID(), curGame.getRoutes(), curRoute, getUser(request.getAuth()).getUserName());
+        LinkedList discards = curGame.getPlayerModelFromID(request.getPlayerID()).addToClaimedRoutes(curRoute);
+        List<trainCardModel> hand = curGame.getPlayerModelFromID(request.getPlayerID()).getTrainCardHand();
+        int points = curGame.getPlayerModelFromID(request.getPlayerID()).getPoints();
+
+        return new ClaimRouteData(curGame.getGameID(), request.getPlayerID(), curGame.getRoutes(), hand, discards, curRoute, points, getUser(request.getAuth()).getUserName());
     }
 
     public void addUser(userModel newUser){
