@@ -3,6 +3,9 @@ package com.janus.UI;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
@@ -21,6 +24,7 @@ public class DeckFragment extends Fragment implements DeckFragmentPresenter.View
 
     public interface Context {
         void onFinishAction();
+        void onMapFragmentSelected();
     }
 
     private DeckFragmentPresenter presenter;
@@ -37,8 +41,33 @@ public class DeckFragment extends Fragment implements DeckFragmentPresenter.View
     private Map<cardColorEnum, Integer> colorMap = new HashMap<>();
 
     @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater){
+        super.onCreateOptionsMenu(menu, inflater);
+        inflater.inflate(R.menu.fragment_route, menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch(item.getItemId()){
+            case R.id.mapButton:
+                mContext.onMapFragmentSelected();
+                return true;
+            default:
+                return true;
+        }
+    }
+
+    @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setHasOptionsMenu(true);
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        presenter.setFragment();
+        presenter.updateUI();
     }
 
     @Override

@@ -56,7 +56,6 @@ public class MapFragment extends Fragment implements MapFragmentPresenter.View{
     private Button mClaimRouteButton;
     private Button mDrawDestinationsButton;
     private Button mRunDemoButton;
-    private MenuItem mStatusMenuItem; //For future use
     private Context mContext;
     private RecyclerView mTurnRecyclerView;
     private PlayerAdapter mPlayerAdapter;
@@ -86,6 +85,13 @@ public class MapFragment extends Fragment implements MapFragmentPresenter.View{
             default:
                 return true;
         }
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        presenter.setFragment();
+        presenter.updateUI();
     }
 
     @Override
@@ -337,6 +343,8 @@ public class MapFragment extends Fragment implements MapFragmentPresenter.View{
             //canvas.drawCircle(780, 380, 15, paint); //Helena
             //canvas.drawCircle(440, 780, 15, paint); //Las Vegas
         }
+
+
 
         @Override
         public int getOpacity() {return PixelFormat.OPAQUE;}
