@@ -44,7 +44,7 @@ public class serverModel {
 
     public ClaimRouteData claimRoute(ClaimRouteRequest request) throws RouteNotFoundException, RouteAlreadyClaimedException, UserNotFoundException {
         gameModel curGame = this.getGameByID(request.getGameID());
-        abstractRoute curRoute = curGame.getRouteById(request.getRoute().getRouteID());
+        abstractRoute curRoute = curGame.getRouteById(request.getRouteID());
 
         if(curRoute instanceof singleRouteModel){
             curRoute.claim(request.getPlayerID());
