@@ -1,9 +1,11 @@
 package server.serverClasses;
 
+import com.bignerdranch.android.shared.exceptions.CannotDrawTrainCardException;
 import com.bignerdranch.android.shared.exceptions.InvalidAuthorizationException;
 import com.bignerdranch.android.shared.exceptions.RouteNotFoundException;
 import com.bignerdranch.android.shared.models.abstractRoute;
 import com.bignerdranch.android.shared.models.authTokenModel;
+import com.bignerdranch.android.shared.models.colors.cardColorEnum;
 import com.bignerdranch.android.shared.models.colors.playerColorEnum;
 import com.bignerdranch.android.shared.models.doubleRouteModelFew;
 import com.bignerdranch.android.shared.models.doubleRouteModelMany;
@@ -16,6 +18,7 @@ import com.bignerdranch.android.shared.models.trainCardModel;
 import com.bignerdranch.android.shared.models.userIDModel;
 import com.bignerdranch.android.shared.models.userModel;
 import com.bignerdranch.android.shared.requestObjects.ClaimRouteRequest;
+import com.bignerdranch.android.shared.requestObjects.DrawTrainCardRequest;
 import com.bignerdranch.android.shared.requestObjects.JoinGameRequest;
 import com.bignerdranch.android.shared.requestObjects.StartGameRequest;
 import com.bignerdranch.android.shared.requestObjects.UpdateChatboxRequest;
@@ -24,6 +27,8 @@ import com.bignerdranch.android.shared.exceptions.GameNotFoundException;
 import com.bignerdranch.android.shared.exceptions.UserNotFoundException;
 import com.bignerdranch.android.shared.resultobjects.ChatboxData;
 import com.bignerdranch.android.shared.resultobjects.ClaimRouteData;
+import com.bignerdranch.android.shared.resultobjects.DrawTrainCardData;
+import com.bignerdranch.android.shared.resultobjects.Results;
 
 import java.util.ArrayList;
 import java.util.LinkedList;
@@ -226,4 +231,43 @@ public class serverModel {
     }
 
 
+    public Results drawFirstTrainCard(DrawTrainCardRequest request) throws Exception {
+        if (!serverModel.getInstance().authTokenExists(request.getAuthtoken())) {
+            throw new InvalidAuthorizationException("Invalid Auth Token passed to updateChatBox");
+        }
+
+        gameModel curGame = serverModel.getInstance().getGameByID(request.getGameID());
+        if(request.getIndex() == 0){
+            return new Results("DrawFirstTrainCard", true, new DrawTrainCardData(request.getGameID(), curGame.drawTrainCardFromDeck(), serverModel.getInstance().getUser(request.getAuthtoken()).getUserName()));
+        }
+        else {
+            trainCardModel returnCard = curGame.drawFaceUpTrainCard(request.getIndex() - 1);
+            if (returnCard.getColor() == cardColorEnum.LOCOMOTIVE){
+                return new Results("DrawSecondTrainCard", true, new DrawTrainCardData(request.getGameID(), returnCard, serverModel.getInstance().getUser(request.getAuthtoken()).getUserName()));
+            }
+            else {
+                return new Results("DrawFirstTrainCard", true, new DrawTrainCardData(request.getGameID(), returnCard, serverModel.getInstance().getUser(request.getAuthtoken()).getUserName()));
+            }
+        }
+    }
+
+    public static Results drawSecondTrainCard(DrawTrainCardRequest request) throws Exception {
+        if (!serverModel.getInstance().authTokenExists(request.getAuthtoken())) {
+            throw new InvalidAuthorizationException("Invalid Auth Token passed to updateChatBox");
+        }
+
+        gameModel curGame = serverModel.getInstance().getGameByID(request.getGameID());
+        if(request.getIndex() == 0){
+            return new Results("DrawSecondTrainCard", true, new DrawTrainCardData(request.getGameID(), curGame.drawTrainCardFromDeck(), serverModel.getInstance().getUser(request.getAuthtoken()).getUserName()));
+        }
+        else {
+            cardColorEnum curCardColor = curGame.getFaceUpTrainCardColor(request.getIndex() - 1);
+            if (curCardColor == cardColorEnum.LOCOMOTIVE){
+                throw new CannotDrawTrainCardException("Your second train card cannot be a faceup locomotive!");
+            }
+            else {
+                return new Results("DrawSecondTrainCard", true, new DrawTrainCardData(request.getGameID(), curGame.drawFaceUpTrainCard(request.getIndex() - 1), serverModel.getInstance().getUser(request.getAuthtoken()).getUserName()));
+            }
+        }
+    }
 }
