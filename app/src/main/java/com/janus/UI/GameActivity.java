@@ -96,6 +96,8 @@ public class GameActivity extends AppCompatActivity
                 .commit();
     }
 
+
+    // This stuff is all related to the demo. I couldn't bring myself to delete it, but you probably shouldn't use it.
     public void onFinishWait(Integer demoState) {
         this.demoState = demoState;
         gameModel curGame = ClientFacade.getInstance().getGame();

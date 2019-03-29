@@ -48,7 +48,6 @@ public class MapFragment extends Fragment implements MapFragmentPresenter.View{
         void onClickClaimRoute();
         void onClickDestinationSelect();
         void onClickGameStatus();
-        void onClickRunDemo();
     }
 
     private MapFragmentPresenter presenter;
@@ -155,14 +154,6 @@ public class MapFragment extends Fragment implements MapFragmentPresenter.View{
             }
         });
         mDrawDestinationsButton.setEnabled(true);
-
-        mRunDemoButton = v.findViewById(R.id.demo_Button);
-        mRunDemoButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                mContext.onClickRunDemo();
-            }
-        });
 
         mTurnRecyclerView = v.findViewById(R.id.turnRecyclerView);
         mTurnRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
