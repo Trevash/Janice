@@ -152,6 +152,7 @@ public class playerModel {
             if(trainCardHand.get(i).getColor().name().equals(claimedRouteColor)){
                 discards.add(trainCardHand.remove(i));
                 costTracker--;
+                i--;
             }
         }
 
@@ -160,6 +161,7 @@ public class playerModel {
             if(trainCardHand.get(i).getColor().name().equals(cardColorEnum.LOCOMOTIVE.name())){
                 discards.add(trainCardHand.remove(i));
                 costTracker--;
+                i--;
             }
         }
 
