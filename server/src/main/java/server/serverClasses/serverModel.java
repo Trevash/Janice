@@ -66,10 +66,11 @@ public class serverModel {
         }
 
         LinkedList discards = curGame.getPlayerModelFromID(request.getPlayerID()).addToClaimedRoutes(curRoute, request.getColor());
+        curGame.addToTrainDiscards(discards);
         List<trainCardModel> hand = curGame.getPlayerModelFromID(request.getPlayerID()).getTrainCardHand();
         int points = curGame.getPlayerModelFromID(request.getPlayerID()).getPoints();
 
-        return new ClaimRouteData(curGame.getGameID(), request.getPlayerID(), curGame.getRoutes(), hand, discards, curRoute, points, getUser(request.getAuth()).getUserName());
+        return new ClaimRouteData(curGame.getGameID(), request.getPlayerID(), curGame.getRoutes(), hand, curGame.getTrainCardDiscards(), curRoute, points, getUser(request.getAuth()).getUserName(), curGame.getPlayerModelFromID(request.getPlayerID()).getLocomotives());
     }
 
     public void addUser(userModel newUser){

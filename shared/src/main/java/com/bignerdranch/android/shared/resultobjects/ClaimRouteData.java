@@ -18,8 +18,9 @@ public class ClaimRouteData {
     private gameIDModel gameID;
     private playerIDModel playerID;
     private usernameModel username;
+    private int locomotives;
 
-    public ClaimRouteData(gameIDModel gameID, playerIDModel playerID, List<abstractRoute> routes, List<trainCardModel> hand, LinkedList discards, abstractRoute curRoute, int points, usernameModel username) {
+    public ClaimRouteData(gameIDModel gameID, playerIDModel playerID, List<abstractRoute> routes, List<trainCardModel> hand, LinkedList discards, abstractRoute curRoute, int points, usernameModel username, int locomotives) {
         this.gameID = gameID;
         this.playerID = playerID;
         this.routes = routes;
@@ -28,6 +29,7 @@ public class ClaimRouteData {
         this.curRoute = curRoute;
         this.points = points;
         this.username = username;
+        this.locomotives = locomotives;
     }
 
     public List<abstractRoute> getRoutes() {
@@ -60,5 +62,9 @@ public class ClaimRouteData {
 
     public playerIDModel getPlayerID() {
         return playerID;
+    }
+
+    public int getNumLocomotives() {
+        return locomotives;
     }
 }

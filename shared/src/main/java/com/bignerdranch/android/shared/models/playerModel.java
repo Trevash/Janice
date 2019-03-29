@@ -240,8 +240,8 @@ public class playerModel {
         this.points = points;
     }
 
-    public void decrementTrainCars(int length) {
-        this.locomotives -= length;
+    public void setTrainCars(int locomotives) {
+        this.locomotives = locomotives;
     }
 
     public class adjListNode{

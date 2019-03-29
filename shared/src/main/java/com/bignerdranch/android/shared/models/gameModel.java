@@ -417,4 +417,16 @@ public class gameModel {
     public void addToTrainDiscards(LinkedList discards) {
         this.trainCardDiscard.addAll(discards);
     }
+
+    public void setTrainDiscards(LinkedList discards) {
+        this.trainCardDiscard = discards;
+    }
+
+    public LinkedList getTrainCardDiscards() {
+        return trainCardDiscard;
+    }
+
+    public void setTrainCardDiscards(LinkedList trainCardDiscards) {
+        this.trainCardDiscard = trainCardDiscards;
+    }
 }

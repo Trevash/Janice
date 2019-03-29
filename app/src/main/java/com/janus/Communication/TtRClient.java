@@ -56,10 +56,10 @@ public class TtRClient extends WebSocketClient{
                 case "ClaimRoute":{
                     ClaimRouteData data = (ClaimRouteData) result.getData(ClaimRouteData.class);
                     facade.getGame().setRoutes(data.getRoutes());
-                    facade.getGame().addToTrainDiscards(data.getDiscards());
+                    facade.getGame().setTrainDiscards(data.getDiscards());
                     facade.getGame().getPlayerModelFromID(data.getPlayerID()).setTrainCardHand(data.getHand());
                     facade.getGame().getPlayerModelFromID(data.getPlayerID()).setPoints(data.getPoints());
-                    facade.getGame().getPlayerModelFromID(data.getPlayerID()).decrementTrainCars(data.getCurRoute().getLength());
+                    facade.getGame().getPlayerModelFromID(data.getPlayerID()).setTrainCars(data.getNumLocomotives());
                     facade.update();
                     break;
                 }
