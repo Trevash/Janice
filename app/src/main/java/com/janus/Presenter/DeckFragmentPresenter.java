@@ -35,7 +35,7 @@ public class DeckFragmentPresenter implements ClientFacade.Presenter, DrawTrainC
         usernameModel username = model.getUser().getUserName();
         playerIDModel currentPlayerID = model.getGame().getPlayerByUsername(username).getId();
         DrawTrainCardRequest request =
-                new DrawTrainCardRequest(model.getAuth(), index, currentPlayerID, model.getGame().getGameID());
+                new DrawTrainCardRequest(model.getUser().getAuthToken(), index, currentPlayerID, model.getGame().getGameID());
         task.execute(request);
         /*if(!model.getGame().isPlayersTurn(currentPlayerID)){
             view.returnToMap();

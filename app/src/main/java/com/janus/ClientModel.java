@@ -13,7 +13,6 @@ public class ClientModel {
     private gameModel game;
     private List<gameModel> serverGameList = new ArrayList<>();
     private userModel user;
-    private authTokenModel auth;
     private static ClientModel model;
     private chatboxModel chatbox = new chatboxModel();
 
@@ -41,14 +40,6 @@ public class ClientModel {
 
     public void setUser(userModel user) {
         this.user = user;
-    }
-
-    public authTokenModel getAuth() {
-        return auth;
-    }
-
-    public void setAuth(authTokenModel auth) {
-        this.auth = auth;
     }
 
     public List<gameModel> getServerGameList() {
