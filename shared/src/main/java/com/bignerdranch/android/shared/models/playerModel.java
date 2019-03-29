@@ -1,5 +1,6 @@
 package com.bignerdranch.android.shared.models;
 
+import com.bignerdranch.android.shared.exceptions.RouteNotFoundException;
 import com.bignerdranch.android.shared.models.colors.cardColorEnum;
 import com.bignerdranch.android.shared.models.colors.playerColorEnum;
 import com.bignerdranch.android.shared.models.colors.routeColorEnum;
@@ -137,7 +138,7 @@ public class playerModel {
         return this.payCostOfRoute(claimedRoute, color);
     }
 
-    public LinkedList payCostOfRoute(abstractRoute claimedRoute, routeColorEnum color) {
+    public LinkedList payCostOfRoute(abstractRoute claimedRoute, routeColorEnum color) throws RouteNotFoundException {
         //Get claimed route color
         String claimedRouteColor = color.name();
 
@@ -160,6 +161,10 @@ public class playerModel {
                 discards.add(trainCardHand.remove(i));
                 costTracker--;
             }
+        }
+
+        if(costTracker > 0){
+            throw new RouteNotFoundException("Insufficient cards to claim route!");
         }
 
         return discards;
