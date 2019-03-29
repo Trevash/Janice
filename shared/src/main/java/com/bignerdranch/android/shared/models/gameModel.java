@@ -23,7 +23,6 @@ public class gameModel {
     private List<playerModel> players = new ArrayList<>();
     private chatboxModel chatbox;
     private int turnCounter;
-    private Map<String, playerModel> mapPlayerIDToModel;
     private chatboxModel gameHistory;
 
     private IGameState state;
@@ -70,7 +69,6 @@ public class gameModel {
         gameID = new gameIDModel();
         setGameName(newGameName);
         gameStarted = false;
-        mapPlayerIDToModel = new ConcurrentHashMap<>();
         this.setDecks();
 
         try {
@@ -202,7 +200,6 @@ public class gameModel {
         for (int i = 0; i < 4; i++) {
             newPlayer.addTrainCardToHand(drawTrainCardFromDeck());
         }
-        mapPlayerIDToModel.put(newPlayer.getId().getValue(), newPlayer);
         players.add(newPlayer);
     }
 
@@ -309,7 +306,12 @@ public class gameModel {
     }
 
     public playerModel getPlayerModelFromID(playerIDModel id) {
-        return mapPlayerIDToModel.get(id.getValue());
+        for (int i = 0; i < players.size(); i++) {
+            if (id.getValue().equals(players.get(i).getId().getValue())) {
+                return players.get(i);
+            }
+        }
+        return null;
     }
 
     /**
