@@ -251,7 +251,7 @@ public class serverModel {
         }
     }
 
-    public static Results drawSecondTrainCard(DrawTrainCardRequest request) throws Exception {
+    public Results drawSecondTrainCard(DrawTrainCardRequest request) throws Exception {
         if (!serverModel.getInstance().authTokenExists(request.getAuthtoken())) {
             throw new InvalidAuthorizationException("Invalid Auth Token passed to updateChatBox");
         }
