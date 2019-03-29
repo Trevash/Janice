@@ -234,40 +234,47 @@ public class serverModel {
 
     public Results drawFirstTrainCard(DrawTrainCardRequest request) throws Exception {
         if (!serverModel.getInstance().authTokenExists(request.getAuthtoken())) {
-            throw new InvalidAuthorizationException("Invalid Auth Token passed to updateChatBox");
+            throw new InvalidAuthorizationException("Invalid Auth Token passed to drawFirstTrainCard");
         }
 
         gameModel curGame = serverModel.getInstance().getGameByID(request.getGameID());
+        playerModel curPlayer = curGame.getPlayerModelFromID(request.getPlayerID());
         if(request.getIndex() == 0){
-            return new Results("DrawFirstTrainCard", true, new DrawTrainCardData(request.getGameID(), curGame.drawTrainCardFromDeck(), serverModel.getInstance().getUser(request.getAuthtoken()).getUserName()));
+            curPlayer.addTrainCardToHand(curGame.drawTrainCardFromDeck());
+            return new Results("DrawFirstTrainCard", true, new DrawTrainCardData(curGame.getGameID(), curPlayer.getTrainCardHand(), curGame.getFaceUpCards(), curGame.getNumTrainCards(), serverModel.getInstance().getUser(request.getAuthtoken()).getUserName()));
         }
         else {
             trainCardModel returnCard = curGame.drawFaceUpTrainCard(request.getIndex() - 1);
             if (returnCard.getColor() == cardColorEnum.LOCOMOTIVE){
-                return new Results("DrawSecondTrainCard", true, new DrawTrainCardData(request.getGameID(), returnCard, serverModel.getInstance().getUser(request.getAuthtoken()).getUserName()));
+                curPlayer.addTrainCardToHand(returnCard);
+                return new Results("DrawSecondTrainCard", true, new DrawTrainCardData(curGame.getGameID(), curPlayer.getTrainCardHand(), curGame.getFaceUpCards(), curGame.getNumTrainCards(), serverModel.getInstance().getUser(request.getAuthtoken()).getUserName()));
             }
             else {
-                return new Results("DrawFirstTrainCard", true, new DrawTrainCardData(request.getGameID(), returnCard, serverModel.getInstance().getUser(request.getAuthtoken()).getUserName()));
+                curPlayer.addTrainCardToHand(returnCard);
+                return new Results("DrawFirstTrainCard", true, new DrawTrainCardData(curGame.getGameID(), curPlayer.getTrainCardHand(), curGame.getFaceUpCards(), curGame.getNumTrainCards(), serverModel.getInstance().getUser(request.getAuthtoken()).getUserName()));
             }
         }
     }
 
     public Results drawSecondTrainCard(DrawTrainCardRequest request) throws Exception {
         if (!serverModel.getInstance().authTokenExists(request.getAuthtoken())) {
-            throw new InvalidAuthorizationException("Invalid Auth Token passed to updateChatBox");
+            throw new InvalidAuthorizationException("Invalid Auth Token passed to drawSecondTrainCard");
         }
 
         gameModel curGame = serverModel.getInstance().getGameByID(request.getGameID());
+        playerModel curPlayer = curGame.getPlayerModelFromID(request.getPlayerID());
         if(request.getIndex() == 0){
-            return new Results("DrawSecondTrainCard", true, new DrawTrainCardData(request.getGameID(), curGame.drawTrainCardFromDeck(), serverModel.getInstance().getUser(request.getAuthtoken()).getUserName()));
+            curPlayer.addTrainCardToHand(curGame.drawTrainCardFromDeck());
+            return new Results("DrawSecondTrainCard", true, new DrawTrainCardData(curGame.getGameID(), curPlayer.getTrainCardHand(), curGame.getFaceUpCards(), curGame.getNumTrainCards(), serverModel.getInstance().getUser(request.getAuthtoken()).getUserName()));
         }
         else {
-            cardColorEnum curCardColor = curGame.getFaceUpTrainCardColor(request.getIndex() - 1);
-            if (curCardColor == cardColorEnum.LOCOMOTIVE){
+            trainCardModel returnCard = curGame.drawFaceUpTrainCard(request.getIndex() - 1);
+            if (returnCard.getColor().name().equals(cardColorEnum.LOCOMOTIVE.name())){
                 throw new CannotDrawTrainCardException("Your second train card cannot be a faceup locomotive!");
             }
             else {
-                return new Results("DrawSecondTrainCard", true, new DrawTrainCardData(request.getGameID(), curGame.drawFaceUpTrainCard(request.getIndex() - 1), serverModel.getInstance().getUser(request.getAuthtoken()).getUserName()));
+                curPlayer.addTrainCardToHand(returnCard);
+                return new Results("DrawSecondTrainCard", true, new DrawTrainCardData(curGame.getGameID(), curPlayer.getTrainCardHand(), curGame.getFaceUpCards(), curGame.getNumTrainCards(), serverModel.getInstance().getUser(request.getAuthtoken()).getUserName()));
             }
         }
     }

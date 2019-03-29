@@ -56,7 +56,7 @@ public class TtRClient extends WebSocketClient{
                 case "ClaimRoute":{
                     ClaimRouteData data = (ClaimRouteData) result.getData(ClaimRouteData.class);
                     facade.getGame().setRoutes(data.getRoutes());
-                    facade.getGame().setTrainDiscards(data.getDiscards());
+                    facade.getGame().setTrainCardDiscards(data.getDiscards());
                     facade.getGame().getPlayerModelFromID(data.getPlayerID()).setTrainCardHand(data.getHand());
                     facade.getGame().getPlayerModelFromID(data.getPlayerID()).setPoints(data.getPoints());
                     facade.getGame().getPlayerModelFromID(data.getPlayerID()).setTrainCars(data.getNumLocomotives());
@@ -90,14 +90,16 @@ public class TtRClient extends WebSocketClient{
                 }
                 case "DrawFirstTrainCard": {
                     DrawTrainCardData data = (DrawTrainCardData) result.getData(DrawTrainCardData.class);
-                    facade.getGame().addTrainCardToPlayersHand(data.getReturnCard(), data.getUsername());
-                    facade.getGame().setNumTrainCards(facade.getGame().getNumTrainCards() - 1);
+                    facade.getGame().setPlayersHand(data.getHand(), data.getUsername());
+                    facade.getGame().setFaceUpCards(data.getFaceUpCards());
+                    facade.getGame().setNumTrainCards(data.getNumTrainCards());
                     break;
                 }
                 case "DrawSecondTrainCard": {
                     DrawTrainCardData data = (DrawTrainCardData) result.getData(DrawTrainCardData.class);
-                    facade.getGame().addTrainCardToPlayersHand(data.getReturnCard(), data.getUsername());
-                    facade.getGame().setNumTrainCards(facade.getGame().getNumTrainCards() - 1);
+                    facade.getGame().setPlayersHand(data.getHand(), data.getUsername());
+                    facade.getGame().setFaceUpCards(data.getFaceUpCards());
+                    facade.getGame().setNumTrainCards(data.getNumTrainCards());
                     break;
                 }
             }

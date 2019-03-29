@@ -420,15 +420,19 @@ public class gameModel {
         this.trainCardDiscard.addAll(discards);
     }
 
-    public void setTrainDiscards(LinkedList discards) {
-        this.trainCardDiscard = discards;
-    }
-
     public LinkedList getTrainCardDiscards() {
         return trainCardDiscard;
     }
 
     public void setTrainCardDiscards(LinkedList trainCardDiscards) {
         this.trainCardDiscard = trainCardDiscards;
+    }
+
+    public void setPlayersHand(List<trainCardModel> hand, usernameModel username) {
+        getPlayerByUsername(username).setTrainCardHand(hand);
+    }
+
+    public void setFaceUpCards(List<trainCardModel> faceUpCards) {
+        this.faceUpCards = faceUpCards;
     }
 }

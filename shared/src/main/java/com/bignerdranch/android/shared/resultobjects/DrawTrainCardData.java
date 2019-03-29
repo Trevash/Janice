@@ -4,14 +4,20 @@ import com.bignerdranch.android.shared.models.gameIDModel;
 import com.bignerdranch.android.shared.models.trainCardModel;
 import com.bignerdranch.android.shared.models.usernameModel;
 
+import java.util.List;
+
 public class DrawTrainCardData {
     private gameIDModel gameID;
-    private trainCardModel returnCard;
+    private List<trainCardModel> hand;
+    private List<trainCardModel> faceUpCards;
+    private int numTrainCards;
     private usernameModel username;
 
-    public DrawTrainCardData(gameIDModel gameID, trainCardModel returnCard, usernameModel username) {
+    public DrawTrainCardData(gameIDModel gameID, List<trainCardModel> hand, List<trainCardModel> faceUpCards, int numTrainCards, usernameModel username) {
         this.gameID = gameID;
-        this.returnCard = returnCard;
+        this.hand = hand;
+        this.faceUpCards = faceUpCards;
+        this.numTrainCards = numTrainCards;
         this.username = username;
     }
 
@@ -20,11 +26,19 @@ public class DrawTrainCardData {
         return gameID;
     }
 
-    public trainCardModel getReturnCard() {
-        return returnCard;
+    public List<trainCardModel> getHand() {
+        return hand;
     }
 
     public usernameModel getUsername() {
         return username;
+    }
+
+    public List<trainCardModel> getFaceUpCards() {
+        return faceUpCards;
+    }
+
+    public int getNumTrainCards() {
+        return numTrainCards;
     }
 }
