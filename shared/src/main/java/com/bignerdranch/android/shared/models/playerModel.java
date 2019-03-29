@@ -109,6 +109,8 @@ public class playerModel {
 
 
     public LinkedList addToClaimedRoutes(abstractRoute claimedRoute, routeColorEnum color) throws Exception {
+        LinkedList discards = payCostOfRoute(claimedRoute, color);
+
         switch (claimedRoute.getLength()) {
             case 1:
                 this.points += 1;
@@ -135,10 +137,12 @@ public class playerModel {
         this.locomotives -= claimedRoute.getLength();
         claimedRoutes.add(claimedRoute);
 
-        return this.payCostOfRoute(claimedRoute, color);
+        return discards;
     }
 
     public LinkedList payCostOfRoute(abstractRoute claimedRoute, routeColorEnum color) throws RouteNotFoundException {
+        checkIfSufficientCards(claimedRoute, color);
+
         //Get claimed route color
         String claimedRouteColor = color.name();
 
@@ -165,13 +169,37 @@ public class playerModel {
             }
         }
 
+        return discards;
+    }
+
+    private void checkIfSufficientCards(abstractRoute claimedRoute, routeColorEnum color) throws RouteNotFoundException {
+        //Get claimed route color
+        String claimedRouteColor = color.name();
+
+        //Make tracker for number of cards to be paid
+        int costTracker = claimedRoute.getLength();
+
+        LinkedList discards = new LinkedList();
+
+        //Iterate through list first time for colored cards
+        for (int i = 0; i < trainCardHand.size() && costTracker > 0; i++) {
+            if(trainCardHand.get(i).getColor().name().equals(claimedRouteColor)){
+                costTracker--;
+            }
+        }
+
+        //Iterate through list second time for necessary locomotive cards
+        for (int i = 0; i < trainCardHand.size() && costTracker > 0; i++) {
+            if(trainCardHand.get(i).getColor().name().equals(cardColorEnum.LOCOMOTIVE.name())){
+                costTracker--;
+            }
+        }
+
         if(costTracker > 0){
             throw new RouteNotFoundException("Insufficient cards to claim route!");
         }
-
-        return discards;
     }
-    
+
     public List<Set<String>> groupCitiesByConnection(){
     	List<Set<String>> routeGroups = new ArrayList<Set<String>>();
     	for(int i = 0;  i< claimedRoutes.size(); i++) {
