@@ -335,5 +335,9 @@ public class playerModel {
     	}
     	return longestRoute;
     }
+
+    public int getLocomotives(){
+    	return this.locomotives;
+	}
 }
 

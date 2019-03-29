@@ -5,6 +5,7 @@ import java.net.URI;
 import org.java_websocket.client.WebSocketClient;
 import org.java_websocket.handshake.ServerHandshake;
 
+import com.bignerdranch.android.shared.models.playerModel;
 import com.bignerdranch.android.shared.models.userModel;
 import com.bignerdranch.android.shared.models.gameModel;
 import com.bignerdranch.android.shared.resultobjects.ChatboxData;
@@ -56,9 +57,10 @@ public class TtRClient extends WebSocketClient{
                     ClaimRouteData data = (ClaimRouteData) result.getData(ClaimRouteData.class);
                     facade.getGame().setRoutes(data.getRoutes());
                     facade.getGame().addToTrainDiscards(data.getDiscards());
-                    facade.getGame().getPlayerModelFromID(data.getPlayerID()).setTrainCardHand(data.getHand());
-                    facade.getGame().getPlayerModelFromID(data.getPlayerID()).setPoints(data.getPoints());
-                    facade.getGame().getPlayerModelFromID(data.getPlayerID()).decrementTrainCars(data.getCurRoute().getLength());
+                    playerModel curPlayer = facade.getGame().getPlayerModelFromID(data.getPlayerID());
+                    curPlayer.setTrainCardHand(data.getHand());
+                    curPlayer.setPoints(data.getPoints());
+                    curPlayer.decrementTrainCars(data.getCurRoute().getLength());
                     facade.update();
                     break;
                 }
