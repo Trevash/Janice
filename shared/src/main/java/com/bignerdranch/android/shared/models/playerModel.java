@@ -156,7 +156,7 @@ public class playerModel {
 
         //Iterate through list second time for necessary locomotive cards
         for (int i = 0; i < trainCardHand.size() && costTracker > 0; i++) {
-            if(trainCardHand.get(i).getColor() == cardColorEnum.LOCOMOTIVE){
+            if(trainCardHand.get(i).getColor().name().equals(cardColorEnum.LOCOMOTIVE.name())){
                 discards.add(trainCardHand.remove(i));
                 costTracker--;
             }

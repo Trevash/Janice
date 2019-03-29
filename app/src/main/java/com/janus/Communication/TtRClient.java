@@ -97,6 +97,7 @@ public class TtRClient extends WebSocketClient{
                     break;
                 }
             }
+            //TODO: Generic update UI here?
             messageResult = result;
         }
         else {
