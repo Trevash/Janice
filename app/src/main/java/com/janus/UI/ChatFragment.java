@@ -72,7 +72,8 @@ public class ChatFragment extends Fragment implements ChatFragmentPresenter.View
         mChatMessage = v.findViewById(R.id.message_EditText);
         mChatMessage.addTextChangedListener(new TextWatcher() {
             @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+            }
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
@@ -80,7 +81,8 @@ public class ChatFragment extends Fragment implements ChatFragmentPresenter.View
             }
 
             @Override
-            public void afterTextChanged(Editable s) {}
+            public void afterTextChanged(Editable s) {
+            }
         });
 
         mSendButton = v.findViewById(R.id.send_Button);
@@ -104,18 +106,23 @@ public class ChatFragment extends Fragment implements ChatFragmentPresenter.View
     }
 
     public void updateUI() {
-        getActivity().runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
+        // can be null if the game activity turned back to the first activity
+        if (getActivity() != null) {
+            getActivity().runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
 
-                //mChatAdapter.notifyItemRangeRemoved(0, chats.size());
-                chats = presenter.getChats();
-                //mChatAdapter.notifyItemRangeInserted(0, chats.size());
+                    //mChatAdapter.notifyItemRangeRemoved(0, chats.size());
+                    chats = presenter.getChats();
+                    //mChatAdapter.notifyItemRangeInserted(0, chats.size());
 
-                mChatAdapter = new ChatFragment.ChatListAdapter(chats);
-                mChatList.setAdapter(mChatAdapter);
-            }
-        });
+                    mChatAdapter = new ChatFragment.ChatListAdapter(chats);
+                    mChatList.setAdapter(mChatAdapter);
+                }
+            });
+        } else {
+            System.out.println("Error: ChatFragment got a null activity in updateUI()");
+        }
     }
 
     public class ChatListAdapter extends RecyclerView.Adapter<ChatListAdapter.ChatViewHolder> {
