@@ -60,7 +60,6 @@ public class TtRClient extends WebSocketClient{
                     facade.getGame().getPlayerModelFromID(data.getPlayerID()).setTrainCardHand(data.getHand());
                     facade.getGame().getPlayerModelFromID(data.getPlayerID()).setPoints(data.getPoints());
                     facade.getGame().getPlayerModelFromID(data.getPlayerID()).setTrainCars(data.getNumLocomotives());
-                    facade.update();
                     break;
                 }
                 case "Join": {
@@ -103,7 +102,7 @@ public class TtRClient extends WebSocketClient{
                     break;
                 }
             }
-            //TODO: Generic update UI here?
+            facade.update();
             messageResult = result;
         }
         else {
