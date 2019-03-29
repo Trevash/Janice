@@ -10,9 +10,13 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.Spinner;
 import android.widget.TextView;
 
+import com.bignerdranch.android.shared.models.colors.routeColorEnum;
 import com.bignerdranch.android.shared.models.singleRouteModel;
 import com.janus.Presenter.RouteFragmentPresenter;
 import com.janus.R;
@@ -20,7 +24,7 @@ import com.janus.R;
 import java.util.ArrayList;
 import java.util.List;
 
-public class RouteFragment extends Fragment implements RouteFragmentPresenter.View{
+public class RouteFragment extends Fragment implements RouteFragmentPresenter.View {
 
     public interface Context {
         void onFinishAction();
@@ -82,19 +86,41 @@ public class RouteFragment extends Fragment implements RouteFragmentPresenter.Vi
         return v;
     }
 
-    private class RouteHolder extends RecyclerView.ViewHolder{
+    private class RouteHolder extends RecyclerView.ViewHolder implements AdapterView.OnItemSelectedListener{
 
         private TextView mRouteCitiesView;
         private TextView mRouteLengthView;
         private TextView mRouteColorView;
+        private Spinner mColorSpinner;
         private Button mClaimButton;
         private singleRouteModel mRoute;
+        private String mSpinnerValue;
 
         public void bind(singleRouteModel r){
             mRouteCitiesView.setText(r.toString());
             mRouteLengthView.setText(Integer.toString(r.getLength()));
             mRouteColorView.setText(r.getTrainColor().toString());
+
+            mColorSpinner.setVisibility(View.VISIBLE);
+            if(!r.getTrainColor().equals(routeColorEnum.GRAY)){
+                mColorSpinner.setVisibility(View.GONE);
+            } else {
+                String[] colors = presenter.getGrayRouteColorChoices(r.getLength());
+                ArrayAdapter<String> adapter = new ArrayAdapter<>(getActivity(), android.R.layout.simple_spinner_dropdown_item, colors);
+                mColorSpinner.setAdapter(adapter);
+                mColorSpinner.setOnItemSelectedListener(this);
+            }
+
             mRoute = r;
+        }
+
+        public void onItemSelected(AdapterView<?> parent, View view,
+                                   int pos, long id) {
+            mSpinnerValue = (String) parent.getItemAtPosition(pos);
+        }
+
+        public void onNothingSelected(AdapterView<?> parent) {
+            // Another interface callback
         }
 
         public RouteHolder(LayoutInflater inflater, ViewGroup parent){
@@ -102,13 +128,20 @@ public class RouteFragment extends Fragment implements RouteFragmentPresenter.Vi
             mRouteCitiesView = itemView.findViewById(R.id.routeCitiesView);
             mRouteLengthView = itemView.findViewById(R.id.routeLengthView);
             mRouteColorView = itemView.findViewById(R.id.routeColorView);
+            mColorSpinner = itemView.findViewById(R.id.colorSpinner);
             mClaimButton = itemView.findViewById(R.id.claimButton);
 
             //This button could be eliminated by making the list elements clickable
             mClaimButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    presenter.claimRoute(mRoute);
+                    routeColorEnum color;
+                    if(mSpinnerValue != null) { //If gray route and has spinner
+                        color = presenter.convertStringToColor(mSpinnerValue);
+                    } else { //Not grey route
+                        color = mRoute.getTrainColor();
+                    }
+                    presenter.claimRoute(mRoute, color);
                     mContext.onFinishAction();
                 }
             });

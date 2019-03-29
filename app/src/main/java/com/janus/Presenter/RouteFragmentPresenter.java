@@ -119,6 +119,48 @@ public class RouteFragmentPresenter implements ClaimRouteTask.Caller, ClientFaca
         return updatedList;
     }
 
+
+    public String[] getGrayRouteColorChoices(int routeLength){
+        ArrayList<String> colorChoices = new ArrayList<>();
+
+        usernameModel playerUsername = model.getUser().getUserName();
+        List<trainCardModel> playerHand = model.getGame().getPlayerByUsername(playerUsername).getTrainCardHand(); //Get train card hand
+
+        Map<cardColorEnum, Integer> numCardsOfColor = new HashMap<>(); //Get color map -> Color to number of cards of each
+        for(trainCardModel card : playerHand) {
+            cardColorEnum color = card.getColor();
+            if(numCardsOfColor.containsKey(color)){
+                numCardsOfColor.put(color, numCardsOfColor.get(color) + 1);
+            } else {
+                numCardsOfColor.put(color, 1);
+            }
+        }
+
+        int numLocomotives = 0; //Get number of Locomotives
+        if(numCardsOfColor.containsKey(cardColorEnum.LOCOMOTIVE)) {
+            numLocomotives = numCardsOfColor.get(cardColorEnum.LOCOMOTIVE);
+        }
+        if(numLocomotives >= routeLength){
+            colorChoices.add("Just Locomotives");
+        }
+
+        Iterator it = numCardsOfColor.entrySet().iterator();
+        while (it.hasNext()) {
+            Map.Entry color = (Map.Entry)it.next();
+            if(!color.getKey().equals(cardColorEnum.LOCOMOTIVE)) {
+                int currentValue = (int) color.getValue();
+                if ((currentValue + numLocomotives) >= routeLength) {
+                    colorChoices.add(color.getKey().toString());
+                }
+            }
+            it.remove(); // avoids a ConcurrentModificationException
+        }
+
+        String[] colorChoicesArray = new String[colorChoices.size()]; //Convert arrayList to array
+        colorChoicesArray = colorChoices.toArray(colorChoicesArray);
+        return colorChoicesArray;
+    }
+
     private int getMaxCardsOfOneColor(List<trainCardModel> cards){
         Map<cardColorEnum, Integer> numCardsOfColor = new HashMap<>();
         for(trainCardModel card : cards) {
@@ -163,13 +205,21 @@ public class RouteFragmentPresenter implements ClaimRouteTask.Caller, ClientFaca
         return numCards;
     }
 
-    public void claimRoute(singleRouteModel route){
+    public routeColorEnum convertStringToColor(String s){
+        if(s.equals("Just Locomotives")){
+            return routeColorEnum.GRAY;
+        } else {
+            return routeColorEnum.valueOf(s);
+        }
+    }
+
+    public void claimRoute(singleRouteModel route, routeColorEnum color){
         ClaimRouteTask task = new ClaimRouteTask(this);
         ClaimRouteRequest request = new ClaimRouteRequest(
                 facade.getUser().getAuthToken(),
                 facade.getGame().getGameID(),
                 facade.getGame().getPlayerByUsername(facade.getUser().getUserName()).getId(),
-                route.getTrainColor(),
+                color,
                 route.getRouteID()
         );
         task.execute(request);
