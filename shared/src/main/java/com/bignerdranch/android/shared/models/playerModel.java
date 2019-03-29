@@ -240,6 +240,10 @@ public class playerModel {
         this.points = points;
     }
 
+    public void decrementTrainCars(int length) {
+        this.locomotives -= length;
+    }
+
     public class adjListNode{
     	String v;
     	int weight;
