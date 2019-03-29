@@ -103,7 +103,6 @@ public class TtRClient extends WebSocketClient{
                     facade.getGame().setPlayersHand(data.getHand(), data.getUsername());
                     facade.getGame().setFaceUpCards(data.getFaceUpCards());
                     facade.getGame().setNumTrainCards(data.getNumTrainCards());
-                    facade.update();
                     break;
                 }
             }
