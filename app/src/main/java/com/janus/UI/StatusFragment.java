@@ -259,13 +259,12 @@ public class StatusFragment extends Fragment implements StatusFragmentPresenter.
 
     private void buildPlayerStats(int playerPosition, StatusListAdapter.StatusViewHolder holder) {
         playerModel playerInfo = presenter.getPlayers().get(playerPosition);
-        int[] playerStats = presenter.getStats().get(playerPosition + 2);
 
         holder.mPlayerName.setText(playerInfo.getUserName().getValue());
-        holder.mPlayerPoints.setText(Integer.toString(playerStats[0]));
-        holder.mNumTrains.setText(Integer.toString(playerStats[1]));
-        holder.mNumCards.setText(Integer.toString(playerStats[2]));
-        holder.mNumDestinationCards.setText(Integer.toString(playerStats[3]));
+        holder.mPlayerPoints.setText(Integer.toString(playerInfo.getPoints()));
+        holder.mNumTrains.setText(Integer.toString(playerInfo.getLocomotives()));
+        holder.mNumCards.setText(Integer.toString(playerInfo.getTrainCardHand().size()));
+        holder.mNumDestinationCards.setText(Integer.toString(playerInfo.getDestinationCardHand().size()));
     }
 
     public void updateUI() {
