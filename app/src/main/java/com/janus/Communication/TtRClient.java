@@ -60,6 +60,7 @@ public class TtRClient extends WebSocketClient{
                     facade.getGame().getPlayerModelFromID(data.getPlayerID()).setTrainCardHand(data.getHand());
                     facade.getGame().getPlayerModelFromID(data.getPlayerID()).setPoints(data.getPoints());
                     facade.getGame().getPlayerModelFromID(data.getPlayerID()).setTrainCars(data.getNumLocomotives());
+                    facade.update();
                     break;
                 }
                 case "Join": {
@@ -78,6 +79,7 @@ public class TtRClient extends WebSocketClient{
                 case "UpdateChat": {
                     ChatboxData chatboxData = (ChatboxData) result.getData(ChatboxData.class);
                     facade.setChatbox(chatboxData.getChatbox());
+                    facade.update();
                     break;
                 }
                 case "UpdateGameStatus": {
@@ -85,6 +87,7 @@ public class TtRClient extends WebSocketClient{
                     facade.setHistory(data.getGameHistory());
                     facade.setTurnCounter(data.getTurnCounter());
                     facade.setNumTrainCards(data.getNumTrainCards());
+                    facade.update();
                     break;
                 }
                 case "DrawFirstTrainCard": {
@@ -92,6 +95,7 @@ public class TtRClient extends WebSocketClient{
                     facade.getGame().setPlayersHand(data.getHand(), data.getUsername());
                     facade.getGame().setFaceUpCards(data.getFaceUpCards());
                     facade.getGame().setNumTrainCards(data.getNumTrainCards());
+                    facade.update();
                     break;
                 }
                 case "DrawSecondTrainCard": {
@@ -99,10 +103,11 @@ public class TtRClient extends WebSocketClient{
                     facade.getGame().setPlayersHand(data.getHand(), data.getUsername());
                     facade.getGame().setFaceUpCards(data.getFaceUpCards());
                     facade.getGame().setNumTrainCards(data.getNumTrainCards());
+                    facade.update();
                     break;
                 }
             }
-            facade.update();
+            //TODO: Generic UI update here maybe? caused problems earlier
             messageResult = result;
         }
         else {
