@@ -92,11 +92,13 @@ public class TtRClient extends WebSocketClient{
                 case "DrawFirstTrainCard": {
                     DrawTrainCardData data = (DrawTrainCardData) result.getData(DrawTrainCardData.class);
                     facade.getGame().addTrainCardToPlayersHand(data.getReturnCard(), data.getUsername());
+                    facade.getGame().setNumTrainCards(facade.getGame().getNumTrainCards() - 1);
                     break;
                 }
                 case "DrawSecondTrainCard": {
                     DrawTrainCardData data = (DrawTrainCardData) result.getData(DrawTrainCardData.class);
                     facade.getGame().addTrainCardToPlayersHand(data.getReturnCard(), data.getUsername());
+                    facade.getGame().setNumTrainCards(facade.getGame().getNumTrainCards() - 1);
                     break;
                 }
             }
