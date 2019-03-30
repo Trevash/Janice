@@ -193,7 +193,8 @@ public class ServerCommunicator extends WebSocketServer {
         curGame.updateGameHistory(new chatMessageModel(username, historyUpdate));
 
         GameStatusData data = new GameStatusData(curGame.getTurnCounter(), curGame.getGameHistory(),
-                curGame.getNumTrainCards(), curGame.getNumDestinationCards());
+                curGame.getNumTrainCards(), curGame.getFaceUpCards(), curGame.getTrainCardDiscards(),
+                curGame.getNumDestinationCards());
         Results result = new Results(UPDATE_GAME_STATUS, true, data);
         this.broadcastGame(Serializer.getInstance().serializeObject(result), curGame);
     }

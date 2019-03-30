@@ -65,4 +65,9 @@ public class ClientActivePlayerState extends AbstractClientGameState {
             updateGameState(new ClientInactiveState(this));
         }
     }
+
+    @Override
+    public void notifyTrainCardDrawn() {
+        super.updateGameState(new ClientDrawTrainCardState(this));
+    }
 }

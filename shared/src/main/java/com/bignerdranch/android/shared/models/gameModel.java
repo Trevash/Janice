@@ -222,6 +222,7 @@ public class gameModel {
     //}
 
     public List<trainCardModel> getFaceUpCards() {
+        // TODO going to the draw train card screen calls this method twice
         return state.getFaceUpTrainCards();
     }
 
@@ -275,7 +276,7 @@ public class gameModel {
     // wrong place to put this, but I (Jason) am not putting forth the effort in figuring out the
     // best way to add this to the client model.
     public playerIDModel getClientID() {
-        if(state instanceof AbstractClientGameState) {
+        if (state instanceof AbstractClientGameState) {
             return ((AbstractClientGameState) state).getClientID();
         } else {
             throw new IllegalStateException("Server-side does not have a client ID for itself");
@@ -299,8 +300,12 @@ public class gameModel {
 
     public void incrementTurnCounter() {
         turnCounter += 1;
-        if (turnCounter >= this.players.size())
+        if (turnCounter >= this.players.size()) {
             turnCounter = 0;
+        }
+        if (state instanceof AbstractClientGameState) {
+            ((AbstractClientGameState) state).notifyTurnAdvancement();
+        }
     }
 
     public int getTurnCounter() {
@@ -309,8 +314,14 @@ public class gameModel {
 
     public void setTurnCounter(int turnCounter) {
         this.turnCounter = turnCounter;
-        if(state instanceof AbstractClientGameState) {
+        if (state instanceof AbstractClientGameState) {
             ((AbstractClientGameState) state).notifyTurnAdvancement();
+        }
+    }
+
+    public void notifyTrainCardDrawn() {
+        if (state instanceof AbstractClientGameState) {
+            ((AbstractClientGameState) state).notifyTrainCardDrawn();
         }
     }
 
@@ -392,7 +403,7 @@ public class gameModel {
     }
 
     public void setNumTrainCards(int numTrainCards) {
-        if(state instanceof AbstractClientGameState) {
+        if (state instanceof AbstractClientGameState) {
             ((AbstractClientGameState) state).setTrainCardDeckSize(numTrainCards);
         } else {
             throw new IllegalStateException("setting the number of train cards to a new value is " +
@@ -402,7 +413,7 @@ public class gameModel {
     }
 
     public void setNumDestinationCards(int numDestinationCards) {
-        if(state instanceof AbstractClientGameState) {
+        if (state instanceof AbstractClientGameState) {
             ((AbstractClientGameState) state).updateNumDestinationCards(numDestinationCards);
         } else {
             throw new IllegalStateException("manually setting the number of destination cards in " +
@@ -418,7 +429,7 @@ public class gameModel {
         state.discard(discards);
         //if(state instanceof AbstractServerGameState) {
         //    state.discard(discards);
-       // } else {
+        // } else {
         //    throw new IllegalStateException("Client states")
         //}
         //this.trainCardDiscard.addAll(discards);
@@ -433,7 +444,7 @@ public class gameModel {
     }
 
     public void setTrainCardDiscards(List<trainCardModel> trainCardDiscards) {
-        if(state instanceof AbstractClientGameState) {
+        if (state instanceof AbstractClientGameState) {
             ((AbstractClientGameState) state).setTrainCardDiscard(trainCardDiscards);
         } else {
             throw new IllegalStateException("Manually changing the train card discard pile is a " +
@@ -448,7 +459,7 @@ public class gameModel {
 
     public void setFaceUpCards(List<trainCardModel> faceUpCards) {
         //this.faceUpCards = faceUpCards;
-        if(state instanceof AbstractClientGameState) {
+        if (state instanceof AbstractClientGameState) {
             ((AbstractClientGameState) state).setFaceUpTrainCards(faceUpCards);
         } else {
             throw new IllegalStateException("Manually changing the face-up-train cards is a " +

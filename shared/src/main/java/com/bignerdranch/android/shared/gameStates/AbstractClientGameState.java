@@ -8,6 +8,7 @@ import com.bignerdranch.android.shared.models.playerIDModel;
 import com.bignerdranch.android.shared.models.trainCardModel;
 import com.bignerdranch.android.shared.proxy.DestinationCardDeckProxy;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public abstract class AbstractClientGameState extends AbstractGameState implements IGameState {
@@ -36,6 +37,9 @@ public abstract class AbstractClientGameState extends AbstractGameState implemen
         super(prevState);
         destinationCardDeck = prevState.destinationCardDeck;
         this.clientID = prevState.clientID;
+        this.trainCardDiscard = prevState.trainCardDiscard;
+        this.trainCardDeckSize = prevState.trainCardDeckSize;
+        this.faceUpTrainCards = prevState.faceUpTrainCards;
     }
 
     /**
@@ -54,6 +58,9 @@ public abstract class AbstractClientGameState extends AbstractGameState implemen
         // should be used when going from Server state to client state
         destinationCardDeck = new DestinationCardDeckProxy(server, game.getGameID(), destCardDeckSize);
         this.clientID = clientID;
+        // these next two vars are here to avoid null-pointer-exceptions
+        trainCardDiscard = new ArrayList<>();
+        faceUpTrainCards = trainCardDiscard;
         //destinationCardDeck.updateSize(destCardDeckSize);
     }
 
@@ -155,9 +162,6 @@ public abstract class AbstractClientGameState extends AbstractGameState implemen
     public void setTrainCardDiscard(List<trainCardModel> trainCardDiscard) {
         this.trainCardDiscard = trainCardDiscard;
     }
-//public void setTrainCardDiscardSize(int size) {
-    //trainCardDiscardSize = size;
-    //}
 
     @Override
     public int getTrainCardDeckSize() {
@@ -181,6 +185,10 @@ public abstract class AbstractClientGameState extends AbstractGameState implemen
     public void discard(List<trainCardModel> discardedCards) {
         throw new IllegalStateException("discarding train cards is currently implemented as a " +
                 "server-side only operation");
+    }
+
+    public void notifyTrainCardDrawn() {
+        // does nothing, most of the time
     }
 
 }

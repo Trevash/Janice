@@ -141,6 +141,7 @@ public class DestinationSelectFragment extends Fragment implements DestinationFr
     }
 
     public void updateButton(){
+        // TODO alter this so that it can use a number provided by the state var - can prob write a method in the IGameState
         if(selectedDestinationCards.size() >= 2){
             mAcceptButton.setEnabled(true);
         } else {

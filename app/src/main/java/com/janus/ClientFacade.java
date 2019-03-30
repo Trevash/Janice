@@ -3,7 +3,6 @@ package com.janus;
 import com.bignerdranch.android.shared.models.*;
 import com.bignerdranch.android.shared.resultobjects.GameListData;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class ClientFacade {
@@ -136,6 +135,14 @@ public class ClientFacade {
         getGame().setNumDestinationCards(numDestinationCards);
     }
 
+    public void setTrainCardDiscards(List<trainCardModel> trainCardDiscardPile) {
+        getGame().setTrainCardDiscards(trainCardDiscardPile);
+    }
+
+    public void setFaceUpTrainCards(List<trainCardModel> faceUpTrainCards) {
+        getGame().setFaceUpCards(faceUpTrainCards);
+    }
+
     public boolean userCanDrawTrainCards() {
         return getGame().canDrawTrainCards();
     }
@@ -151,5 +158,12 @@ public class ClientFacade {
     public void addDestinationCardsToHand(List<DestinationCardModel> selectedCards) {
         //getGame().
         getPlayer().addDestinationCards(selectedCards);
+    }
+
+    /**
+     * method indicates to the game states that a train card was drawn
+     */
+    public void notifyTrainCardDrawn() {
+        getGame().notifyTrainCardDrawn();
     }
 }

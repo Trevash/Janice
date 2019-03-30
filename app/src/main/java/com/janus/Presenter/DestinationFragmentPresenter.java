@@ -37,10 +37,12 @@ public class DestinationFragmentPresenter implements ClientFacade.Presenter, Ret
                                        List<DestinationCardModel> availableCards) {
         List<DestinationCardModel> rejectedCards = new ArrayList<>(availableCards);
         rejectedCards.removeAll(selectedCards);
-        gameIDModel gameID = model.getGame().getGameID();
-        ReturnDestinationCardsRequest request = new ReturnDestinationCardsRequest(gameID, selectedCards, rejectedCards);
+        //gameIDModel gameID = model.getGame().getGameID();
+        //model.getGame().returnRejectedDestinationCards(selectedCards, rejectedCards);
+        //ReturnDestinationCardsRequest request = new ReturnDestinationCardsRequest(gameID, selectedCards, rejectedCards);
         ReturnDestinationCardsTask task = new ReturnDestinationCardsTask(this);
-        task.execute(request);
+        //task.execute(request);
+        task.execute(selectedCards, rejectedCards);
     }
 
     @Override

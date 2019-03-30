@@ -93,15 +93,18 @@ public class TtRClient extends WebSocketClient{
                     facade.setTurnCounter(data.getTurnCounter());
                     facade.setNumTrainCards(data.getNumTrainCards());
                     facade.setNumDestinationCards(data.getNumDestinationCards());
-                    // Is there a way to update the number of destination cards?
+                    facade.setTrainCardDiscards(data.getTrainCardDiscard());
+                    facade.setFaceUpTrainCards(data.getFaceUpTrainCards());
                     facade.update();
                     break;
                 }
                 case DRAW_FIRST_TRAIN_CARD: {
+                    // TODO this currently gets called at least twice when a train card is drawn
                     DrawTrainCardData data = (DrawTrainCardData) result.getData(DrawTrainCardData.class);
                     facade.getGame().setPlayersHand(data.getHand(), data.getUsername());
                     facade.getGame().setFaceUpCards(data.getFaceUpCards());
                     facade.getGame().setNumTrainCards(data.getNumTrainCards());
+                    facade.notifyTrainCardDrawn(); // this allows the state to update properly
                     facade.update();
                     break;
                 }
@@ -110,6 +113,7 @@ public class TtRClient extends WebSocketClient{
                     facade.getGame().setPlayersHand(data.getHand(), data.getUsername());
                     facade.getGame().setFaceUpCards(data.getFaceUpCards());
                     facade.getGame().setNumTrainCards(data.getNumTrainCards());
+                    facade.notifyTrainCardDrawn();
                     break;
                 }
             }

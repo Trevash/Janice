@@ -64,8 +64,8 @@ public class ClientInactiveState extends AbstractClientGameState {
     @Override
     public void notifyTurnAdvancement() {
         if(getGame().isPlayersTurn(super.getClientID())) {
-            System.out.println(this.getClass().toString() + " was notified of a turn advancement: " +
-                    "check for bug, as this state should automatically change states");
+            //System.out.println(this.getClass().toString() + " was notified of a turn advancement: " +
+            //        "check for bug, as this state should automatically change states");
             super.updateGameState(new ClientActivePlayerState(this));
         }
     }

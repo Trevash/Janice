@@ -35,20 +35,26 @@ public class DeckFragmentPresenter implements ClientFacade.Presenter, DrawTrainC
     }
 
     public void drawCard(int index) {
-        DrawTrainCardTask task = new DrawTrainCardTask(this);
-        usernameModel username = model.getUser().getUserName();
-        playerIDModel currentPlayerID = model.getGame().getPlayerByUsername(username).getId();
-        DrawTrainCardRequest request =
-                new DrawTrainCardRequest(model.getUser().getAuthToken(), index, currentPlayerID, model.getGame().getGameID());
-        task.execute(request);
-        /*if(!model.getGame().isPlayersTurn(currentPlayerID)){
-            view.returnToMap();
-        }*/
-        cardCounter++;   //This is for testing purposes only
-        if (cardCounter == 2) {
-            cardCounter = 0;
-            view.returnToMap();
+        if(facade.userCanDrawTrainCards()) {
+            //if(index == 0) { // if deck
+            //    model.getGame().drawTrainCardFromDeck();
+            //} else { // if a face-up-card
+            //    model.getGame().drawFaceUpTrainCard(index - 1);
+            //}
+
+            DrawTrainCardTask task = new DrawTrainCardTask(this);
+            usernameModel username = model.getUser().getUserName();
+            playerIDModel currentPlayerID = model.getGame().getPlayerByUsername(username).getId();
+
+            DrawTrainCardRequest request =
+                    new DrawTrainCardRequest(model.getUser().getAuthToken(), index, currentPlayerID, model.getGame().getGameID());
+            task.execute(request);
+            // TtRClient can inform the state that a train card was drawn, if successful
+        } else {
+            onError("You cannot draw train cards right now"); // currently not implemented
         }
+
+
     }
 
     public void setFragment() {
@@ -57,6 +63,6 @@ public class DeckFragmentPresenter implements ClientFacade.Presenter, DrawTrainC
 
     @Override
     public void onError(String s) {
-
+        // TODO implement: currently doesn't do anything
     }
 }

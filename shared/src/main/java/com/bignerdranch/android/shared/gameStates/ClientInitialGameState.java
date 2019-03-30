@@ -80,7 +80,12 @@ public class ClientInitialGameState extends AbstractClientGameState implements I
         // add in check for num of destination cards?
         getDestinationCardDeck().returnDestinationCards(selectedCards, rejectedCards);
         //super.advanceTurn();
-        super.updateGameState(new ClientInactiveState(this));
+        if (super.getGame().isPlayersTurn(super.getClientID())) {
+            // TODO this may cause issues, but right now, this is needed to ensure that the first player is in the right state
+            super.updateGameState(new ClientActivePlayerState(this));
+        } else {
+            super.updateGameState(new ClientInactiveState(this));
+        }
     }
 
     @Override
