@@ -122,11 +122,10 @@ public class ServerCommunicator extends WebSocketServer {
                 //gameModel game = (gameModel) result.getData(gameModel.class);
                 //broadcastGame(resultGson, game);
                 ReturnDestinationCardData returnDestdata = (ReturnDestinationCardData) result.getData(ReturnDestinationCardData.class);
-                // TODO when are the destination cards added to each player's hands?
-                // may need to broadcast the destination cards to the individual player
 
-                //broadcastGame(resultGson, serverModel.getInstance().getGameByID(returnDestdata.getGameID()));
+                // commented out: the code at the end means that this is already getting broadcasted
                 //broadcastOne(resultGson, conn);
+
                 updateGameStatus(returnDestdata.getGameID(), returnDestdata.getUsername(), "drew " +
                         Integer.toString(returnDestdata.getSelectedCards().size()) + " destination cards");
                 break;

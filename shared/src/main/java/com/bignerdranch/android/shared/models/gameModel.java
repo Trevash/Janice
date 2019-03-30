@@ -272,6 +272,16 @@ public class gameModel {
         return null;
     }
 
+    // wrong place to put this, but I (Jason) am not putting forth the effort in figuring out the
+    // best way to add this to the client model.
+    public playerIDModel getClientID() {
+        if(state instanceof AbstractClientGameState) {
+            return ((AbstractClientGameState) state).getClientID();
+        } else {
+            throw new IllegalStateException("Server-side does not have a client ID for itself");
+        }
+    }
+
     /**
      * @param serverProxy the server proxy that the client is using
      * @param playerNum   the player number of the client in this game
@@ -389,6 +399,17 @@ public class gameModel {
                     "a client-side-only operation");
         }
         //this.numTrainCardDeck = numTrainCards;
+    }
+
+    public void setNumDestinationCards(int numDestinationCards) {
+        if(state instanceof AbstractClientGameState) {
+            ((AbstractClientGameState) state).updateNumDestinationCards(numDestinationCards);
+        } else {
+            throw new IllegalStateException("manually setting the number of destination cards in " +
+                    "the deck to a new value is a client-side-only operation");
+
+        }
+
     }
 
     public void addToTrainDiscards(List<trainCardModel> discards) {

@@ -70,12 +70,16 @@ public abstract class AbstractClientGameState extends AbstractGameState implemen
      */
     public abstract void notifyTurnAdvancement();
 
-    protected playerIDModel getClientID() {
+    public playerIDModel getClientID() {
         return clientID;
     }
 
     protected DestinationCardDeckProxy getDestinationCardDeck() {
         return destinationCardDeck;
+    }
+
+    public void updateNumDestinationCards(int numDestinationCards) {
+        getDestinationCardDeck().updateSize(numDestinationCards);
     }
 
     /**

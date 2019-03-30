@@ -13,6 +13,7 @@ import com.bignerdranch.android.shared.resultobjects.DrawTrainCardData;
 import com.bignerdranch.android.shared.resultobjects.GameStatusData;
 import com.bignerdranch.android.shared.resultobjects.Results;
 import com.bignerdranch.android.shared.Serializer;
+import com.bignerdranch.android.shared.resultobjects.ReturnDestinationCardData;
 import com.janus.ClientFacade;
 import com.bignerdranch.android.shared.resultobjects.GameListData;
 
@@ -73,8 +74,10 @@ public class TtRClient extends WebSocketClient{
                     break;
                 }
                 case RETURN_DESTINATION_CARDS: {
-                	//facade.setGame((gameModel) result.getData(gameModel.class));
-                    // TODO what, if anything, should be in here
+                    // get ReturnDestinationCardData, add to the client's hand
+                    ReturnDestinationCardData data = (ReturnDestinationCardData) result.getData(ReturnDestinationCardData.class);
+                    facade.addDestinationCardsToHand(data.getSelectedCards());
+
                     break;
                 }
                 case UPDATE_CHAT: {
@@ -89,6 +92,7 @@ public class TtRClient extends WebSocketClient{
                     facade.setHistory(data.getGameHistory());
                     facade.setTurnCounter(data.getTurnCounter());
                     facade.setNumTrainCards(data.getNumTrainCards());
+                    facade.setNumDestinationCards(data.getNumDestinationCards());
                     // Is there a way to update the number of destination cards?
                     facade.update();
                     break;

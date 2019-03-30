@@ -17,7 +17,8 @@ public class ClientFacade {
     private Presenter statusPresenter;
     private ClientModel model = ClientModel.getInstance();
 
-    private ClientFacade() {}
+    private ClientFacade() {
+    }
 
     public static ClientFacade getInstance() {
         if (facade == null) {
@@ -110,8 +111,29 @@ public class ClientFacade {
         return getGame().getPlayers();
     }
 
+    /**
+     * method to get the player representing this client
+     *
+     * @return the playerModel representing this client
+     */
+    public playerModel getPlayer() {
+        // apparently, the playerID was never added to the user... so I took it from the client state
+        playerIDModel thisPlayerID = getGame().getClientID(); // would be better if we could grab it from the user
+        for (int i = 0; i < getPlayers().size(); i++) {
+            //if (getUser().getPlayerIDs().contains(getPlayers().get(i).getId())) {
+            if (thisPlayerID.equals(getPlayers().get(i).getId())) {
+                return getPlayers().get(i);
+            }
+        }
+        throw new RuntimeException("Seriously Bugged code: client's player not found in the game");
+    }
+
     public void setNumTrainCards(int numTrainCards) {
         getGame().setNumTrainCards(numTrainCards);
+    }
+
+    public void setNumDestinationCards(int numDestinationCards) {
+        getGame().setNumDestinationCards(numDestinationCards);
     }
 
     public boolean userCanDrawTrainCards() {
@@ -124,5 +146,10 @@ public class ClientFacade {
 
     public boolean userCanClaimRoute() {
         return getGame().canClaimRoute();
+    }
+
+    public void addDestinationCardsToHand(List<DestinationCardModel> selectedCards) {
+        //getGame().
+        getPlayer().addDestinationCards(selectedCards);
     }
 }
