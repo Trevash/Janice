@@ -1,6 +1,7 @@
 package com.janus.UI;
 
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -20,10 +21,11 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class DeckFragment extends Fragment implements DeckFragmentPresenter.View{
+public class DeckFragment extends Fragment implements DeckFragmentPresenter.View {
 
     public interface Context {
         void onFinishAction();
+
         void onMapFragmentSelected();
     }
 
@@ -41,14 +43,14 @@ public class DeckFragment extends Fragment implements DeckFragmentPresenter.View
     private Map<cardColorEnum, Integer> colorMap = new HashMap<>();
 
     @Override
-    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater){
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         super.onCreateOptionsMenu(menu, inflater);
         inflater.inflate(R.menu.fragment_route, menu);
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        switch(item.getItemId()){
+        switch (item.getItemId()) {
             case R.id.mapButton:
                 mContext.onMapFragmentSelected();
                 return true;
@@ -71,7 +73,7 @@ public class DeckFragment extends Fragment implements DeckFragmentPresenter.View
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_deck, container, false);
         presenter = new DeckFragmentPresenter(this);
@@ -144,34 +146,57 @@ public class DeckFragment extends Fragment implements DeckFragmentPresenter.View
     }
 
     //public void updateDeck(List<trainCardModel> updatedDeck){
-    public void updateDeckSize(int deckSize) {
+    @Override
+    public void updateDeckSize(final int deckSize) {
         //deck = updatedDeck;
         //mDeckSizeView.setText("Number of Cards in the Deck: " + deck.size());
-        mDeckSizeView.setText("Number of Cards in the Deck: " + deckSize);
+        if (getActivity() != null) {
+            getActivity().runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    mDeckSizeView.setText("Number of Cards in the Deck: " + deckSize);
+                }
+            });
+        } else {
+            System.out.println("updateDeckSize in DeckFragment called when DeckFragment has a " +
+                    "null activity");
+        }
     }
 
-    public void updateFaceUpCards(List<trainCardModel> updatedTrainCards){
+    @Override
+    public void updateFaceUpCards(final List<trainCardModel> updatedTrainCards) {
+        if (getActivity() != null) {
+            getActivity().runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    faceUpCards = updatedTrainCards;
+                    // can't use for loop due to the several views
+                    if (faceUpCards.size() >= 1) { //These checks are for when cards are running out
+                        mCard1View.setImageResource(colorMap.get(faceUpCards.get(0).getColor()));
+                    }
+                    if (faceUpCards.size() >= 2) {
+                        mCard2View.setImageResource(colorMap.get(faceUpCards.get(1).getColor()));
+                    }
+                    if (faceUpCards.size() >= 3) {
+                        mCard3View.setImageResource(colorMap.get(faceUpCards.get(2).getColor()));
+                    }
+                    if (faceUpCards.size() >= 4) {
+                        mCard4View.setImageResource(colorMap.get(faceUpCards.get(3).getColor()));
+                    }
+                    if (faceUpCards.size() >= 5) {
+                        mCard5View.setImageResource(colorMap.get(faceUpCards.get(4).getColor()));
+                    }
+                }
+            });
+        } else {
+            System.out.println("updateFaceUpCards in DeckFragment called when DeckFragment has a " +
+                    "null activity");
+        }
 
-        faceUpCards = updatedTrainCards;
-        if(faceUpCards.size() >= 1) { //These checks are for when cards are running out
-            mCard1View.setImageResource(colorMap.get(faceUpCards.get(0).getColor()));
-        }
-        if(faceUpCards.size() >= 2) {
-            mCard2View.setImageResource(colorMap.get(faceUpCards.get(1).getColor()));
-        }
-        if(faceUpCards.size() >= 3) {
-            mCard3View.setImageResource(colorMap.get(faceUpCards.get(2).getColor()));
-        }
-        if(faceUpCards.size() >= 4) {
-            mCard4View.setImageResource(colorMap.get(faceUpCards.get(3).getColor()));
-        }
-        if(faceUpCards.size() >= 5) {
-            mCard5View.setImageResource(colorMap.get(faceUpCards.get(4).getColor()));
-        }
 
     }
 
-    public void returnToMap(){
+    public void returnToMap() {
         mContext.onFinishAction();
     }
 }

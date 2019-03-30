@@ -6,7 +6,7 @@ import com.bignerdranch.android.shared.interfaces.IChatbox;
 
 public class chatboxModel implements IChatbox {
 
-	ArrayList<chatMessageModel> gameChatMessages = new ArrayList<>();
+	private ArrayList<chatMessageModel> gameChatMessages = new ArrayList<>();
 	
 	public chatboxModel() {
 		

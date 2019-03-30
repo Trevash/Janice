@@ -57,11 +57,11 @@ public class ServerCommunicator extends WebSocketServer {
     public void onClose(WebSocket conn, int code, String reason, boolean remote) {
         System.out.println("Server closed!");
         Iterator<String> iterator = usernameWSMap.keySet().iterator();
-        while(iterator.hasNext()) {
-        	String username = iterator.next();
-        	if(usernameWSMap.get(username).equals(conn)) {
-        		iterator.remove();
-        	}
+        while (iterator.hasNext()) {
+            String username = iterator.next();
+            if (usernameWSMap.get(username).equals(conn)) {
+                iterator.remove();
+            }
         }
     }
 
@@ -97,17 +97,17 @@ public class ServerCommunicator extends WebSocketServer {
                 updateAllUserGameList();
                 break;
             case START:
-            	gameModel gameStart = (gameModel) result.getData(gameModel.class);
-            	broadcastGame(resultGson, gameStart);
+                gameModel gameStart = (gameModel) result.getData(gameModel.class);
+                broadcastGame(resultGson, gameStart);
                 broadcast(resultGson);
                 updateAllUserGameList();
                 break;
             case UPDATE_CHAT:
                 //TODO: Caleb change this later
-            	ChatboxData chatboxData = (ChatboxData) result.getData(ChatboxData.class);
-            	gameIDModel gameID = chatboxData.getGameID();
-            	gameModel gameChat = serverModel.getInstance().getGameByID(gameID);
-            	broadcastGame(resultGson, gameChat);
+                ChatboxData chatboxData = (ChatboxData) result.getData(ChatboxData.class);
+                gameIDModel gameID = chatboxData.getGameID();
+                gameModel gameChat = serverModel.getInstance().getGameByID(gameID);
+                broadcastGame(resultGson, gameChat);
                 break;
             case CLAIM_ROUTE:
                 ClaimRouteData claimRouteData = (ClaimRouteData) result.getData(ClaimRouteData.class);
@@ -116,20 +116,20 @@ public class ServerCommunicator extends WebSocketServer {
                 break;
             case DRAW_DESTINATION_CARDS:
                 // TODO HOW IS this returning? TtRClient does not have an equivalent for this, but it seems to be working
-            	broadcastOne(resultGson, conn);
-            	break;
+                broadcastOne(resultGson, conn);
+                break;
             case RETURN_DESTINATION_CARDS:
-            	//gameModel game = (gameModel) result.getData(gameModel.class);
-            	//broadcastGame(resultGson, game);
-            	ReturnDestinationCardData returnDestdata = (ReturnDestinationCardData) result.getData(ReturnDestinationCardData.class);
-            	// TODO when are the destination cards added to each player's hands?
+                //gameModel game = (gameModel) result.getData(gameModel.class);
+                //broadcastGame(resultGson, game);
+                ReturnDestinationCardData returnDestdata = (ReturnDestinationCardData) result.getData(ReturnDestinationCardData.class);
+                // TODO when are the destination cards added to each player's hands?
                 // may need to broadcast the destination cards to the individual player
 
                 //broadcastGame(resultGson, serverModel.getInstance().getGameByID(returnDestdata.getGameID()));
                 //broadcastOne(resultGson, conn);
-            	updateGameStatus(returnDestdata.getGameID(), returnDestdata.getUsername(), "drew " +
-                                Integer.toString(returnDestdata.getSelectedCards().size()) + " destination cards");
-            	break;
+                updateGameStatus(returnDestdata.getGameID(), returnDestdata.getUsername(), "drew " +
+                        Integer.toString(returnDestdata.getSelectedCards().size()) + " destination cards");
+                break;
             case DRAW_FIRST_TRAIN_CARD:
                 broadcastOne(resultGson, conn);
                 break;
@@ -149,6 +149,7 @@ public class ServerCommunicator extends WebSocketServer {
         temp.add(conn);
         broadcast(resultGson, temp);
     }
+
     @Override
     public void onError(WebSocket conn, Exception ex) {
         System.out.println(ex.getMessage());
@@ -158,7 +159,7 @@ public class ServerCommunicator extends WebSocketServer {
     public void onStart() {
         System.out.println("Server started!");
     }
-    
+
     private void updateAllUserGameList() {
         Results gameListResult = new Results("GameList", true,
                 new GameListData(serverModel.getInstance().getGames()));
@@ -173,16 +174,16 @@ public class ServerCommunicator extends WebSocketServer {
     }
 
     public void broadcastGame(String resultGson, gameModel game) {
-    	List<WebSocket> temp = new ArrayList<>();
+        List<WebSocket> temp = new ArrayList<>();
 
-    	for(playerModel player: game.getPlayers()) {
-    		String username = player.getUserName().getValue();
-    		if(usernameWSMap.containsKey(username)) {
-    			temp.add(usernameWSMap.get(username));
-    		}
-    	}
-    	
-    	broadcast(resultGson, temp);
+        for (playerModel player : game.getPlayers()) {
+            String username = player.getUserName().getValue();
+            if (usernameWSMap.containsKey(username)) {
+                temp.add(usernameWSMap.get(username));
+            }
+        }
+
+        broadcast(resultGson, temp);
     }
 
     public void updateGameStatus(gameIDModel gameID, usernameModel username, String historyUpdate) {
@@ -192,8 +193,9 @@ public class ServerCommunicator extends WebSocketServer {
         // will necessarily require incrementing the turn counter. ex: drawing first train card
         curGame.updateGameHistory(new chatMessageModel(username, historyUpdate));
 
-        GameStatusData data = new GameStatusData(curGame.getTurnCounter(), curGame.getGameHistory(), curGame.getNumTrainCards(), curGame.getNumDestinationCards());
-        Results result = new Results(UPDATE_GAME_STATUS, true, Serializer.getInstance().serializeObject(data));
+        GameStatusData data = new GameStatusData(curGame.getTurnCounter(), curGame.getGameHistory(),
+                curGame.getNumTrainCards(), curGame.getNumDestinationCards());
+        Results result = new Results(UPDATE_GAME_STATUS, true, data);
         this.broadcastGame(Serializer.getInstance().serializeObject(result), curGame);
     }
 }
