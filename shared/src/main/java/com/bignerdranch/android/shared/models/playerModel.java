@@ -205,65 +205,75 @@ public class playerModel {
         }
     }
 
-    public List<Set<String>> groupCitiesByConnection() {
-        List<Set<String>> routeGroups = new ArrayList<>();
-        for (int i = 0; i < claimedRoutes.size(); i++) {
-            int city1 = -1;
-            int city2 = -1;
-            for (int j = 0; j < routeGroups.size(); j++) {
-                if (routeGroups.get(j).contains(claimedRoutes.get(i).getCity1().getName())) {
-                    city1 = j;
-                }
-                if (routeGroups.get(j).contains(claimedRoutes.get(i).getCity1().getName())) {
-                    city2 = j;
-                }
-            }
-            //if neither city has been considered yet
-            if (city1 == -1 && city2 == -1) {
-                Set<String> routeGroup = new HashSet<>();
-                routeGroup.add(claimedRoutes.get(i).getCity1().getName());
-                routeGroup.add(claimedRoutes.get(i).getCity2().getName());
-                routeGroups.add(new HashSet<String>());
-            }
-            // if both cities have been considered, but in different groups
-            else if (city1 != -1 && city2 != -1 && city1 != city2) {
-                Set<String> routeGroup1 = routeGroups.get(city1);
-                Set<String> routeGroup2 = routeGroups.get(city2);
-                routeGroup1.addAll(routeGroup2);
-                routeGroups.remove(city2);
-            }
-            //if only one city has not be considered, it is added to group that considered it's neighbor
-            else if (city1 == -1) {
-                routeGroups.get(city2).add(claimedRoutes.get(i).getCity1().getName());
-            } else if (city2 == -1) {
-                routeGroups.get(city1).add(claimedRoutes.get(i).getCity1().getName());
-            }
-            //no final else statement: if both in same group, don't need to add anything
-        }
-        return routeGroups;
+    public List<Set<cityModel>> groupCitiesByConnection(){
+    	List<Set<cityModel>> routeGroups = new ArrayList<Set<cityModel>>();
+    	for(int i = 0;  i< claimedRoutes.size(); i++) {
+    		int city1 = -1;
+    		int city2 = -1;
+    		for(int j = 0; j < routeGroups.size(); j++) {
+    			if(routeGroups.get(j).contains(claimedRoutes.get(i).getCity1())){
+    				city1 = j;
+    			}
+    			if(routeGroups.get(j).contains(claimedRoutes.get(i).getCity2())){
+    				city2 = j;
+    			}
+    		}
+    		//if neither city has been considered yet
+    		if(city1 == -1 && city2 == -1) {
+    			Set<cityModel> routeGroup = new HashSet<cityModel>();
+    			routeGroup.add(claimedRoutes.get(i).getCity1());
+    			routeGroup.add(claimedRoutes.get(i).getCity2());
+    			routeGroups.add(routeGroup);
+    		}
+    		// if both cities have been considered, but in different groups
+    		else if(city1 != -1 && city2 != -1 && city1 != city2) {
+    			Set<cityModel> routeGroup1 = routeGroups.get(city1);
+    			Set<cityModel> routeGroup2 = routeGroups.get(city2);
+    			routeGroup1.addAll(routeGroup2);
+    			routeGroups.remove(city2);
+    		}
+    		//if only one city has not be considered, it is added to group that considered it's neighbor
+    		else if(city1 == -1){
+    			routeGroups.get(city2).add(claimedRoutes.get(i).getCity1());
+    		}
+    		else if(city2 == -1) {
+    			routeGroups.get(city1).add(claimedRoutes.get(i).getCity2());
+    		}
+    		//no final else statement: if both in same group, don't need to add anything
+    	}
+    	
+//    	for(int i = 0; i< routeGroups.size(); i++) {
+//    		System.out.println(i);
+//    		Iterator<cityModel> it = routeGroups.get(i).iterator();
+//    		while (it.hasNext()) {
+//    			System.out.println(it.next().getName());
+//    		}
+//    	}
+    	return routeGroups;
     }
 
     public int calculatePointsFromDestinationCards() {
-        List<Set<String>> routeGroups = groupCitiesByConnection();
-
-        int overallPoints = 0;
-        for (int i = 0; i < destinationCardHand.size(); i++) {
-            DestinationCardModel card = destinationCardHand.get(i);
-            String city1Name = card.getCity1().getName();
-            String city2Name = card.getCity2().getName();
-            boolean isNotFulfilled = true;
-            for (int j = 0; j < routeGroups.size(); j++) {
-                if (routeGroups.get(j).contains(city1Name) && routeGroups.get(j).contains(city2Name)) {
-                    isNotFulfilled = false;
-                }
-            }
-            if (isNotFulfilled) {
-                overallPoints -= card.getPointValue();
-            } else {
-                overallPoints += card.getPointValue();
-            }
-        }
-        return overallPoints;
+    	List<Set<cityModel>> routeGroups = groupCitiesByConnection();
+    	
+    	int overallPoints = 0;
+    	for (int i = 0; i < destinationCardHand.size(); i++) {
+			DestinationCardModel card = destinationCardHand.get(i);
+			cityModel city1Name = card.getCity1();
+			cityModel city2Name = card.getCity2();
+			boolean isNotFulfilled = true;
+    		for (int j = 0; j < routeGroups.size(); j++) {
+    			if(routeGroups.get(j).contains(city1Name) && routeGroups.get(j).contains(city2Name)) {
+    				isNotFulfilled = false;
+    			}		
+    		}
+    		if(isNotFulfilled) {
+    			overallPoints -= card.getPointValue();
+    		}
+    		else {
+    			overallPoints += card.getPointValue();
+    		}
+    	}
+    	return overallPoints;
     }
 
     public int getPoints() {
@@ -282,107 +292,101 @@ public class playerModel {
         this.locomotives = locomotives;
     }
 
-    public class adjListNode {
-        String v;
-        int weight;
-
-        public adjListNode(String _v, int _w) {
-            v = _v;
-            weight = _w;
-        }
-
-        String getV() {
-            return v;
-        }
-
-        int getWeight() {
-            return weight;
-        }
+    public class adjListNode{
+    	cityModel v;
+    	int weight;
+    	public adjListNode(cityModel _v, int _w) {
+    		v = _v;
+    		weight = _w;
+    	}
+        cityModel getV() { return v; } 
+        int getWeight() { return weight; } 
     }
+    
+    public class routeGraph{
+    	int V;
+    	Map<cityModel, List<adjListNode>> adj;
+    	//List<List<adjListNode>> adj;
+    	public routeGraph(Set<cityModel> routeGroup, List<abstractRoute> routes) {
+    		V = routeGroup.size();
+    		
+    		adj = new HashMap<cityModel, List<adjListNode>>();
+    		Iterator<cityModel> it = routeGroup.iterator();
+    		while (it.hasNext()) {
+    			adj.put(it.next(), new ArrayList<adjListNode>());
+    		}
 
-    public class routeGraph {
-        int V;
-        Map<String, List<adjListNode>> adj;
-        //List<List<adjListNode>> adj;
+    		for (int i = 0; i < routes.size(); i++) {
+    			cityModel city1Name = routes.get(i).getCity1();
+    			cityModel city2Name = routes.get(i).getCity2();
+    			int length = routes.get(i).getLength();
+    			if(adj.containsKey(city1Name)) {
+    				adj.get(city1Name).add(new adjListNode(city2Name,length));
+    				adj.get(city2Name).add(new adjListNode(city1Name,length));
+    			}
+    		}
 
-        public routeGraph(Set<String> routeGroup, List<abstractRoute> routes) {
 
-            V = routeGroup.size();
+    	}
+    	
+    	public adjListNode bfs(cityModel cityName) {
 
-            adj = new HashMap<String, List<adjListNode>>();
-            Iterator<String> it = routeGroup.iterator();
-            while (it.hasNext()) {
-                adj.put(it.next(), new ArrayList<adjListNode>());
-            }
+    		Map<cityModel, Integer> dis = new HashMap<cityModel,Integer>();
+    		Iterator<cityModel> it = adj.keySet().iterator();
+    		while (it.hasNext()) { dis.put(it.next(), -1); }
+    		Queue<cityModel> q = new LinkedList<>();
+    		q.add(cityName);
+    		dis.put(cityName, 0);
+    		
 
-            for (int i = 0; i < routes.size(); i++) {
-                String city1Name = routes.get(i).getCity1().getName();
-                String city2Name = routes.get(i).getCity2().getName();
-                int length = routes.get(i).getLength();
-                if (adj.containsKey(city1Name)) {
-                    adj.get(city1Name).add(new adjListNode(city2Name, length));
-                    adj.get(city2Name).add(new adjListNode(city1Name, length));
-                }
-            }
+    		while(!q.isEmpty()) {
+    			cityModel t = q.remove();
+    			
+    			for(int i = 0; i< adj.get(t).size(); i++) {
+    				adjListNode node = adj.get(t).get(i);
+    				if(dis.get(node.getV()) == -1) {
+    					q.add(node.getV());
+    					dis.put(node.getV(), dis.get(t)+node.getWeight());
+    				}
+    			}
+    		}
 
-        }
+    		int maxDist = 0;
+    		cityModel maxCity = null;
+    		Iterator<cityModel> it2 = dis.keySet().iterator();
+    		while(it2.hasNext()) {
+    			cityModel cityNameTemp = it2.next();
+    			if(dis.get(cityNameTemp)>maxDist) {
+    				maxDist = dis.get(cityNameTemp);
+    				maxCity = cityNameTemp;
+    			}
+    		}
 
-        public adjListNode bfs(String cityName) {
-            Map<String, Integer> dis = new HashMap<String, Integer>();
-            Iterator<String> it = adj.keySet().iterator();
-            while (it.hasNext()) {
-                dis.put(it.next(), -1);
-            }
-            Queue<String> q = new LinkedList<>();
-            q.add(cityName);
-            dis.put(cityName, 0);
-            while (!q.isEmpty()) {
-                String t = q.remove();
+    		return new adjListNode(maxCity, maxDist);
+    	}
+    	
+    	public int getLongestPathLength() {
 
-                for (int i = 0; i < adj.get(t).size(); i++) {
-                    adjListNode node = adj.get(t).get(i);
-                    if (dis.get(node.getV()) == -1) {
-                        q.add(node.getV());
-                        dis.put(node.getV(), dis.get(t) + node.getWeight());
-                    }
-                }
-            }
-            int maxDist = 0;
-            String maxCity = "";
-            Iterator<String> it2 = dis.keySet().iterator();
-            while (it.hasNext()) {
-                String cityNameTemp = it.next();
-                if (dis.get(cityNameTemp) > maxDist) {
-                    maxDist = dis.get(cityNameTemp);
-                    maxCity = cityNameTemp;
-                }
-            }
-
-            return new adjListNode(maxCity, maxDist);
-        }
-
-        public int getLongestPathLength() {
-            Entry<String, List<adjListNode>> entry = adj.entrySet().iterator().next();
-            String key = entry.getKey();
-            adjListNode t1 = bfs(key);
-            adjListNode t2 = bfs(t1.getV());
-            return t2.getWeight();
-        }
+    		Entry<cityModel, List<adjListNode>> entry = adj.entrySet().iterator().next();
+    		cityModel key = entry.getKey();
+    		adjListNode t1 = bfs(key);
+    		adjListNode t2 = bfs(t1.getV());
+    		return t2.getWeight();
+    	}
     }
-
+    
     public int calculateLongestRouteOfPlayer() {
-        List<Set<String>> routeGroups = groupCitiesByConnection();
-        int longestRoute = 0;
-        for (int i = 0; i < routeGroups.size(); i++) {
-            routeGraph graph = new routeGraph(routeGroups.get(i), claimedRoutes);
-            int tempLength = graph.getLongestPathLength();
-            if (tempLength > longestRoute) {
-                longestRoute = tempLength;
-            }
-        }
-        return longestRoute;
+    	List<Set<cityModel>> routeGroups = groupCitiesByConnection();
+    	int longestRoute = 0;
+    	for(int i = 0; i < routeGroups.size(); i++) {
+    		routeGraph graph = new routeGraph(routeGroups.get(i),claimedRoutes);
+    		int tempLength = graph.getLongestPathLength();
+    		if (tempLength > longestRoute){
+    			longestRoute = tempLength;
+    		}
+    	}
+    	return longestRoute;
     }
-
     public int getLocomotives() {
         return this.locomotives;
     }
