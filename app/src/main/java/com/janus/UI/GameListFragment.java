@@ -147,14 +147,13 @@ public class GameListFragment extends Fragment implements GameListFragmentPresen
         }
 
         @Override
-        public GameListAdapter.GameViewHolder onCreateViewHolder(ViewGroup parent, int position) {
+        public GameListAdapter.GameViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int position) {
             RelativeLayout r = (RelativeLayout) LayoutInflater.from(parent.getContext()).inflate(R.layout.game_list_child, parent, false);
-            GameViewHolder viewHolder = new GameViewHolder(r);
-            return viewHolder;
+            return new GameViewHolder(r);
         }
 
         @Override
-        public void onBindViewHolder(GameViewHolder holder, int position) {
+        public void onBindViewHolder(@NonNull GameViewHolder holder, int position) {
             gameModel game = games.get(position);
 
             holder.mGameName.setText(game.getGameName());
@@ -177,11 +176,17 @@ public class GameListFragment extends Fragment implements GameListFragmentPresen
     @Override
     public void updateGameList(final List<gameModel> games) {
         // final allows games to be accessed by Runnable
-        getActivity().runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                update(games);
-            }
-        });
+        // note: actually can have null pointer exception here
+        if(getActivity() != null) {
+            getActivity().runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    update(games);
+                }
+            });
+        } else {
+            System.out.println("Error: updateGameList called on GameListFragment when its " +
+                    "activity was null!");
+        }
     }
 }

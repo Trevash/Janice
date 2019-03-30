@@ -29,7 +29,7 @@ public class DeckFragment extends Fragment implements DeckFragmentPresenter.View
 
     private DeckFragmentPresenter presenter;
     private Context mContext;
-    private List<trainCardModel> deck;
+    //private List<trainCardModel> deck;
     private List<trainCardModel> faceUpCards;
     private TextView mDeckSizeView;
     private ImageView mFaceDownDeckView;
@@ -143,10 +143,11 @@ public class DeckFragment extends Fragment implements DeckFragmentPresenter.View
         return v;
     }
 
-    public void updateDeck(List<trainCardModel> updatedDeck){
-        deck = updatedDeck;
-
-        mDeckSizeView.setText("Number of Cards in the Deck: " + deck.size());
+    //public void updateDeck(List<trainCardModel> updatedDeck){
+    public void updateDeckSize(int deckSize) {
+        //deck = updatedDeck;
+        //mDeckSizeView.setText("Number of Cards in the Deck: " + deck.size());
+        mDeckSizeView.setText("Number of Cards in the Deck: " + deckSize);
     }
 
     public void updateFaceUpCards(List<trainCardModel> updatedTrainCards){

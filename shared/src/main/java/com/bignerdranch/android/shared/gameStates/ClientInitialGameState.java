@@ -4,6 +4,7 @@ import com.bignerdranch.android.shared.interfaces.IServer;
 import com.bignerdranch.android.shared.interfaces.IGameState;
 import com.bignerdranch.android.shared.models.DestinationCardModel;
 import com.bignerdranch.android.shared.models.gameModel;
+import com.bignerdranch.android.shared.models.playerIDModel;
 
 import java.util.List;
 
@@ -24,11 +25,11 @@ public class ClientInitialGameState extends AbstractClientGameState implements I
 
 
     //public ClientInitialGameState(IServer server, gameIDModel gameID) {
-      //  super(server, gameID);
-        //destinationCardDeck = new DestinationCardDeckProxy(server, gameID);
+    //  super(server, gameID);
+    //destinationCardDeck = new DestinationCardDeckProxy(server, gameID);
     //}
 
-    /**
+    /*
      * Constructs a ClientIntialGameState object that can interact with the provided server for the
      * provided gameID.<!-- -->
      * Preconditions: server is a valid, working IServer
@@ -39,8 +40,13 @@ public class ClientInitialGameState extends AbstractClientGameState implements I
      * @param game the game for this state object.
      * @param destCardDeckSize the size of the destination card deck
      */
-    public ClientInitialGameState(IServer server, gameModel game, int destCardDeckSize) {
-        super(server, game, destCardDeckSize);
+    //public ClientInitialGameState(IServer server, gameModel game, int destCardDeckSize, playerIDModel clientID) {
+    //    super(server, game, destCardDeckSize, clientID);
+    //}
+
+    public ClientInitialGameState(IServer server, gameModel game, int playerNum, AbstractServerGameState serverState) {
+        super(server, game, serverState.getDestinationCardDeckSize(), game.getPlayers().get(playerNum).getId());
+        this.setFaceUpTrainCards(serverState.getFaceUpTrainCards());
     }
 
     /*
@@ -63,7 +69,7 @@ public class ClientInitialGameState extends AbstractClientGameState implements I
 
     @Override
     public List<DestinationCardModel> drawDestinationCards() {
-        if(drawnCards == null) {
+        if (drawnCards == null) {
             drawnCards = super.drawDestinationCards();
         }
         return drawnCards;
@@ -90,5 +96,15 @@ public class ClientInitialGameState extends AbstractClientGameState implements I
     @Override
     public boolean canClaimRoute() {
         return false;
+    }
+
+    @Override
+    public void notifyTurnAdvancement() {
+        // TODO change this state so that it doesn't have a turn counter?
+        System.out.println(this.getClass().toString() + " was notified of a turn advancement: " +
+                "check for bug, as this state should automatically change states");
+        //if(getGame().isPlayersTurn(super.getClientID())) {
+        //super.updateGameState(new ClientActivePlayerState(this));
+        //}
     }
 }

@@ -112,8 +112,14 @@ public class TrainCardBank implements ITrainCardBank { // TODO can this class be
         return trainCardDiscard.size();
     }
 
+    public List<trainCardModel> getTrainCardDiscard() {
+        return new ArrayList<>(trainCardDiscard);
+    }
+
     @Override
     public List<trainCardModel> getFaceUpTrainCards() {
-        return faceUpCards;
+        // this makes a new copy of the list - likely a shallow copy, but changing this new list
+        // should not change the list in the bank...
+        return new ArrayList<>(faceUpCards);
     }
 }

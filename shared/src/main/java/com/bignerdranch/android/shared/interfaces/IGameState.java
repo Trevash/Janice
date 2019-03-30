@@ -20,7 +20,7 @@ public interface IGameState {
      * Postcondition: the deck's size is reduced by the number of destination cards drawn.<!-- -->
      * @return a list containing all of the drawn destination cards.
      */
-    public List<DestinationCardModel> drawDestinationCards();
+    List<DestinationCardModel> drawDestinationCards();
 
     /**
      * Returns all of the destination cards in the provided list to the game's destination card deck,
@@ -34,7 +34,7 @@ public interface IGameState {
      *
      * @param rejectedCards the cards that are to be returned
      */
-    public void returnDestinationCards(List<DestinationCardModel> selectedCards, List<DestinationCardModel> rejectedCards);
+    void returnDestinationCards(List<DestinationCardModel> selectedCards, List<DestinationCardModel> rejectedCards);
 
     /**
      * returns the number of cards in the destination card deck.<!-- -->
@@ -43,7 +43,7 @@ public interface IGameState {
      * deck.<!-- -->
      * @return the size of the destination card deck
      */
-    public int getDestinationCardDeckSize();
+    int getDestinationCardDeckSize();
 
     /**
      * Returns a client-side equivalent of the current state, which has the ability to interact with
@@ -59,9 +59,9 @@ public interface IGameState {
      * @param playerNum
      * @return the client version of this game state (itself if a client version)
      */
-    public IGameState toClientState(IServer serverProxy, gameModel game, int playerNum);
+    IGameState toClientState(IServer serverProxy, gameModel game, int playerNum);
 
-    public trainCardModel drawTrainCardFromDeck();
+    trainCardModel drawTrainCardFromDeck();
 
     /**
      *
@@ -69,7 +69,17 @@ public interface IGameState {
      *                     should be a number from 0 through 4
      * @return the drawn card
      */
-    public trainCardModel drawFaceUpTrainCard(int cardLocation);
+    trainCardModel drawFaceUpTrainCard(int cardLocation);
+
+    int getTrainCardDiscardSize();
+
+    List<trainCardModel> getTrainCardDiscardPile();
+
+    void discard(List<trainCardModel> discardedCards);
+
+    int getTrainCardDeckSize();
+
+    List<trainCardModel> getFaceUpTrainCards();
 
     // TODO do we want a method that gives out the number of returnable destination cards?
 

@@ -28,6 +28,8 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
+import static com.bignerdranch.android.shared.Constants.Commands.*;
+
 public class ServerCommunicator extends WebSocketServer {
     private static final int MAX_WAITING_CONNECTIONS = 12;
     private HttpServer server;
@@ -70,7 +72,7 @@ public class ServerCommunicator extends WebSocketServer {
         String resultGson = Serializer.getInstance().serializeObject(result);
 
         switch (result.getType()) {
-            case "Login":
+            case LOGIN:
                 broadcastOne(resultGson, conn);
                 if (result.isSuccess()) {
                     updateAllUserGameList();
@@ -78,7 +80,7 @@ public class ServerCommunicator extends WebSocketServer {
                     usernameWSMap.put(user.getUserName().getValue(), conn);
                 }
                 break;
-            case "Register":
+            case REGISTER:
                 broadcastOne(resultGson, conn);
                 if (result.isSuccess()) {
                     updateAllUserGameList();
@@ -86,48 +88,52 @@ public class ServerCommunicator extends WebSocketServer {
                     usernameWSMap.put(user.getUserName().getValue(), conn);
                 }
                 break;
-            case "Create":
+            case CREATE:
                 broadcastOne(resultGson, conn);
                 updateAllUserGameList();
                 break;
-            case "Join":
+            case JOIN:
                 broadcast(resultGson);
                 updateAllUserGameList();
                 break;
-            case "Start":
+            case START:
             	gameModel gameStart = (gameModel) result.getData(gameModel.class);
             	broadcastGame(resultGson, gameStart);
                 broadcast(resultGson);
                 updateAllUserGameList();
                 break;
-            case "UpdateChat":
+            case UPDATE_CHAT:
                 //TODO: Caleb change this later
             	ChatboxData chatboxData = (ChatboxData) result.getData(ChatboxData.class);
             	gameIDModel gameID = chatboxData.getGameID();
             	gameModel gameChat = serverModel.getInstance().getGameByID(gameID);
             	broadcastGame(resultGson, gameChat);
                 break;
-            case "ClaimRoute":
+            case CLAIM_ROUTE:
                 ClaimRouteData claimRouteData = (ClaimRouteData) result.getData(ClaimRouteData.class);
                 broadcastGame(resultGson, serverModel.getInstance().getGameByID(claimRouteData.getGameID()));
                 updateGameStatus(claimRouteData.getGameID(), claimRouteData.getUsername(), "Route from " + claimRouteData.getCurRoute().getCity1().getName() + " to " + claimRouteData.getCurRoute().getCity2().getName() + " claimed by " + claimRouteData.getUsername().getValue());
                 break;
-            case "DrawDestinationCards":
+            case DRAW_DESTINATION_CARDS:
+                // TODO HOW IS this returning? TtRClient does not have an equivalent for this, but it seems to be working
             	broadcastOne(resultGson, conn);
             	break;
-            case "ReturnDestinationCards":
+            case RETURN_DESTINATION_CARDS:
             	//gameModel game = (gameModel) result.getData(gameModel.class);
             	//broadcastGame(resultGson, game);
             	ReturnDestinationCardData returnDestdata = (ReturnDestinationCardData) result.getData(ReturnDestinationCardData.class);
+            	// TODO when are the destination cards added to each player's hands?
+                // may need to broadcast the destination cards to the individual player
+
                 //broadcastGame(resultGson, serverModel.getInstance().getGameByID(returnDestdata.getGameID()));
                 //broadcastOne(resultGson, conn);
             	updateGameStatus(returnDestdata.getGameID(), returnDestdata.getUsername(), "drew " +
                                 Integer.toString(returnDestdata.getSelectedCards().size()) + " destination cards");
             	break;
-            case "DrawFirstTrainCard":
+            case DRAW_FIRST_TRAIN_CARD:
                 broadcastOne(resultGson, conn);
                 break;
-            case "DrawSecondTrainCard":
+            case DRAW_SECOND_TRAIN_CARD:
                 DrawTrainCardData data = (DrawTrainCardData) result.getData(DrawTrainCardData.class);
                 broadcastGame(resultGson, serverModel.getInstance().getGameByID(data.getGameID()));
                 updateGameStatus(data.getGameID(), data.getUsername(), data.getUsername().getValue() + " drew train cards");
@@ -185,8 +191,9 @@ public class ServerCommunicator extends WebSocketServer {
         // states increment the turn counter automatically - and not everything that causes an update
         // will necessarily require incrementing the turn counter. ex: drawing first train card
         curGame.updateGameHistory(new chatMessageModel(username, historyUpdate));
+
         GameStatusData data = new GameStatusData(curGame.getTurnCounter(), curGame.getGameHistory(), curGame.getNumTrainCards(), curGame.getNumDestinationCards());
-        Results result = new Results("UpdateGameStatus", true, Serializer.getInstance().serializeObject(data));
+        Results result = new Results(UPDATE_GAME_STATUS, true, Serializer.getInstance().serializeObject(data));
         this.broadcastGame(Serializer.getInstance().serializeObject(result), curGame);
     }
 }

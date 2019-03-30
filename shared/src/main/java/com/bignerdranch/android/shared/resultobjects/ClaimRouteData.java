@@ -12,7 +12,7 @@ import java.util.List;
 public class ClaimRouteData {
     private List<abstractRoute> routes;
     private List<trainCardModel> hand;
-    private LinkedList discards;
+    private List<trainCardModel> discards;
     private abstractRoute curRoute;
     private int points;
     private gameIDModel gameID;
@@ -20,7 +20,9 @@ public class ClaimRouteData {
     private usernameModel username;
     private int locomotives;
 
-    public ClaimRouteData(gameIDModel gameID, playerIDModel playerID, List<abstractRoute> routes, List<trainCardModel> hand, LinkedList discards, abstractRoute curRoute, int points, usernameModel username, int locomotives) {
+    public ClaimRouteData(gameIDModel gameID, playerIDModel playerID, List<abstractRoute> routes,
+                          List<trainCardModel> hand, List<trainCardModel> discards,
+                          abstractRoute curRoute, int points, usernameModel username, int locomotives) {
         this.gameID = gameID;
         this.playerID = playerID;
         this.routes = routes;
@@ -52,7 +54,7 @@ public class ClaimRouteData {
         return points;
     }
 
-    public LinkedList getDiscards() {
+    public List<trainCardModel> getDiscards() {
         return discards;
     }
 

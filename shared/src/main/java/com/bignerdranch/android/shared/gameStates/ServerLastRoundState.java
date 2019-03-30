@@ -11,12 +11,10 @@ public class ServerLastRoundState extends ServerInGameState {
     // Could also store which player initialized this round, and check when the turn increments
 
 
-    /**
-     * @param destinationCardDeck the destination card deck that was used by the previous state
-     * @param prevState the previous server-side state of the game
-     */
-    public ServerLastRoundState(ServerInGameState prevState, IDestinationCardDeck destinationCardDeck, TrainCardBank trainCardBank) {
-        super(prevState, destinationCardDeck, trainCardBank);
+
+
+    public ServerLastRoundState(AbstractServerGameState prevState) {
+        super(prevState);
     }
 
     // need a method to remove the game from the server

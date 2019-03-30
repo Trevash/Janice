@@ -5,8 +5,6 @@ import com.bignerdranch.android.shared.interfaces.IServer;
 import com.bignerdranch.android.shared.exceptions.DuplicateException;
 import com.bignerdranch.android.shared.exceptions.GameNotFoundException;
 import com.bignerdranch.android.shared.exceptions.InvalidAuthorizationException;
-import com.bignerdranch.android.shared.exceptions.RouteAlreadyClaimedException;
-import com.bignerdranch.android.shared.exceptions.RouteNotFoundException;
 import com.bignerdranch.android.shared.exceptions.UserNotFoundException;
 
 import server.serverClasses.serverFacade;
@@ -63,17 +61,17 @@ public class commandHandler extends handlerBase implements IServer {
         return serverFacade.getInstance().joinGame(request);
     }
 
-	public Results updateChatbox(UpdateChatboxRequest request) throws
-			GameNotFoundException, InvalidAuthorizationException {
-		return serverFacade.getInstance().updateChatbox(request);
-	}
-	
-	public Results testSocket(UpdateChatboxRequest test) {
-		return new Results("test", true, "It worked!");
-		
-	}
+    public Results updateChatbox(UpdateChatboxRequest request) throws
+            GameNotFoundException, InvalidAuthorizationException {
+        return serverFacade.getInstance().updateChatbox(request);
+    }
 
-	public Results claimRoute(ClaimRouteRequest request) throws Exception {
+    public Results testSocket(UpdateChatboxRequest test) {
+        return new Results("test", true, "It worked!");
+
+    }
+
+    public Results claimRoute(ClaimRouteRequest request) throws Exception {
         return serverFacade.getInstance().claimRoute(request);
     }
 

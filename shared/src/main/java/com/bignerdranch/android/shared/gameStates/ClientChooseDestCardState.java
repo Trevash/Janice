@@ -39,4 +39,13 @@ public class ClientChooseDestCardState extends AbstractClientGameState {
     //    super.returnDestinationCards(selectedCards, rejectedCards);
         // DO we need to advance the turn counter here? Should be advanced by the server
     //}
+
+    @Override
+    public void notifyTurnAdvancement() {
+        if(getGame().isPlayersTurn(super.getClientID())) {
+            System.out.println(this.getClass().toString() + " was notified of a turn advancement: " +
+                    "check for bug, as this state should automatically change states");
+            super.updateGameState(new ClientActivePlayerState(this));
+        }
+    }
 }

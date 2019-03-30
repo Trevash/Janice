@@ -10,12 +10,16 @@ import com.janus.Communication.DrawTrainCardTask;
 
 import java.util.List;
 
-public class DeckFragmentPresenter implements ClientFacade.Presenter, DrawTrainCardTask.Caller{
+public class DeckFragmentPresenter implements ClientFacade.Presenter, DrawTrainCardTask.Caller {
     public interface View {
-        void updateDeck(List<trainCardModel> cards);
+        //void updateDeck(List<trainCardModel> cards);
+        void updateDeckSize(int trainCardDeckSize);
+
         void updateFaceUpCards(List<trainCardModel> cards);
+
         void returnToMap();
     }
+
     private View view;
     private ClientFacade facade = ClientFacade.getInstance();
     private ClientModel model = ClientModel.getInstance();
@@ -25,12 +29,12 @@ public class DeckFragmentPresenter implements ClientFacade.Presenter, DrawTrainC
         this.view = view;
     }
 
-    public void updateUI(){
-        view.updateDeck(model.getGame().getTrainCardDeck());
-        view.updateFaceUpCards(model.getGame().getFaceUpCards());
+    public void updateUI() {
+        view.updateDeckSize(model.getGame().getNumTrainCards());
+        view.updateFaceUpCards(model.getGame().getFaceUpCards()); // TODO faceUpCards is not on the client side during the initial part of the game
     }
 
-    public void drawCard(int index){
+    public void drawCard(int index) {
         DrawTrainCardTask task = new DrawTrainCardTask(this);
         usernameModel username = model.getUser().getUserName();
         playerIDModel currentPlayerID = model.getGame().getPlayerByUsername(username).getId();
@@ -41,7 +45,7 @@ public class DeckFragmentPresenter implements ClientFacade.Presenter, DrawTrainC
             view.returnToMap();
         }*/
         cardCounter++;   //This is for testing purposes only
-        if(cardCounter == 2){
+        if (cardCounter == 2) {
             cardCounter = 0;
             view.returnToMap();
         }

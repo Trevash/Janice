@@ -25,6 +25,26 @@ public class Constants {
     //96 Train Cards (12 each in Red, Orange, Yellow, Green, Blue, Purple, Black & White)
     //14 Locomotive Wild Cards (Multicolored)
 
+
+    public static class Commands {
+        // Client commands
+        public static final String LOGIN = "Login";
+        public static final String REGISTER = "Register";
+        public static final String GAME_LIST = "GameList";
+        public static final String CREATE = "Create";
+        public static final String CLAIM_ROUTE = "ClaimRoute";
+        public static final String JOIN = "Join";
+        public static final String START = "Start";
+        public static final String RETURN_DESTINATION_CARDS = "ReturnDestinationCards";
+        public static final String UPDATE_CHAT = "UpdateChat";
+        public static final String UPDATE_GAME_STATUS = "UpdateGameStatus";
+        public static final String DRAW_FIRST_TRAIN_CARD = "DrawFirstTrainCard";
+        public static final String DRAW_SECOND_TRAIN_CARD = "DrawSecondTrainCard";
+
+        // server commands
+        public static final String DRAW_DESTINATION_CARDS = "DrawDestinationCards";
+
+    }
     public static class TrainCards {
         // 12 of each color
         public static final trainCardModel RED = new trainCardModel(cardColorEnum.RED);

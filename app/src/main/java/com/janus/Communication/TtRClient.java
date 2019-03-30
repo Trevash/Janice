@@ -17,6 +17,8 @@ import com.bignerdranch.android.shared.Serializer;
 import com.janus.ClientFacade;
 import com.bignerdranch.android.shared.resultobjects.GameListData;
 
+import static com.bignerdranch.android.shared.Constants.Commands.*;
+
 public class TtRClient extends WebSocketClient{
     private static Results messageResult;
 
@@ -37,23 +39,23 @@ public class TtRClient extends WebSocketClient{
         if (result.isSuccess()) {
             System.out.println("Received Message: " + result.getJSONdata());
             switch (result.getType()) {
-                case "Login": {
+                case LOGIN: {
                     facade.setUser((userModel) result.getData(userModel.class));
                     break;
                 }
-                case "Register": {
+                case REGISTER: {
                     facade.setUser((userModel) result.getData(userModel.class));
                     break;
                 }
-                case "GameList": {
+                case GAME_LIST: {
                     facade.setServerGameList((GameListData) result.getData(GameListData.class));
                     break;
                 }
-                case "Create": {
+                case CREATE: {
                     facade.setGame((gameModel) result.getData(gameModel.class));
                     break;
                 }
-                case "ClaimRoute":{
+                case CLAIM_ROUTE:{
                     ClaimRouteData data = (ClaimRouteData) result.getData(ClaimRouteData.class);
                     facade.getGame().setRoutes(data.getRoutes());
                     facade.getGame().setTrainCardDiscards(data.getDiscards());
@@ -63,34 +65,35 @@ public class TtRClient extends WebSocketClient{
                     facade.update();
                     break;
                 }
-                case "Join": {
+                case JOIN: {
                     facade.setGame((gameModel) result.getData(gameModel.class));
                     break;
                 }
-                case "Start": {
+                case START: {
                     facade.setGame((gameModel) result.getData(gameModel.class));
                     break;
                 }
-                case "ReturnDestinationCards": {
+                case RETURN_DESTINATION_CARDS: {
                 	//facade.setGame((gameModel) result.getData(gameModel.class));
                     // TODO what, if anything, should be in here
                     break;
                 }
-                case "UpdateChat": {
+                case UPDATE_CHAT: {
                     ChatboxData chatboxData = (ChatboxData) result.getData(ChatboxData.class);
                     facade.setChatbox(chatboxData.getChatbox());
                     facade.update();
                     break;
                 }
-                case "UpdateGameStatus": {
+                case UPDATE_GAME_STATUS: {
                     GameStatusData data = (GameStatusData) result.getData(GameStatusData.class);
                     facade.setHistory(data.getGameHistory());
                     facade.setTurnCounter(data.getTurnCounter());
                     facade.setNumTrainCards(data.getNumTrainCards());
+                    // Is there a way to update the number of destination cards?
                     facade.update();
                     break;
                 }
-                case "DrawFirstTrainCard": {
+                case DRAW_FIRST_TRAIN_CARD: {
                     DrawTrainCardData data = (DrawTrainCardData) result.getData(DrawTrainCardData.class);
                     facade.getGame().setPlayersHand(data.getHand(), data.getUsername());
                     facade.getGame().setFaceUpCards(data.getFaceUpCards());
@@ -98,7 +101,7 @@ public class TtRClient extends WebSocketClient{
                     facade.update();
                     break;
                 }
-                case "DrawSecondTrainCard": {
+                case DRAW_SECOND_TRAIN_CARD: {
                     DrawTrainCardData data = (DrawTrainCardData) result.getData(DrawTrainCardData.class);
                     facade.getGame().setPlayersHand(data.getHand(), data.getUsername());
                     facade.getGame().setFaceUpCards(data.getFaceUpCards());
@@ -107,7 +110,8 @@ public class TtRClient extends WebSocketClient{
                 }
             }
             //TODO: Generic UI update here maybe? caused problems earlier
-            messageResult = result;
+            messageResult = result; // TODO do we want every messageResult getting stored here? Even if they aren't getting used here?
+            // could potentially overwrite stuff.
         }
         else {
             System.out.println("Received Error: " + result.getData(String.class));

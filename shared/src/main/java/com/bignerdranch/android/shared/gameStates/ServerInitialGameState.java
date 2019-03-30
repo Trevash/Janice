@@ -1,20 +1,15 @@
 package com.bignerdranch.android.shared.gameStates;
 
 import com.bignerdranch.android.shared.interfaces.IServer;
-import com.bignerdranch.android.shared.models.DestinationCardDeck;
-import com.bignerdranch.android.shared.interfaces.IDestinationCardDeck;
 import com.bignerdranch.android.shared.interfaces.IGameState;
 import com.bignerdranch.android.shared.models.DestinationCardModel;
-import com.bignerdranch.android.shared.models.TrainCardBank;
 import com.bignerdranch.android.shared.models.gameModel;
 import com.bignerdranch.android.shared.models.trainCardModel;
 
 import java.util.List;
 
-public class ServerInitialGameState extends AbstractGameState implements IGameState {
+public class ServerInitialGameState extends AbstractServerGameState implements IGameState {
 
-    private IDestinationCardDeck destinationCardDeck = new DestinationCardDeck();
-    private TrainCardBank trainCardBank = new TrainCardBank();
 
     // idea: have an array of size of the # of players containing the returned lists of destination
     // cards
@@ -24,39 +19,27 @@ public class ServerInitialGameState extends AbstractGameState implements IGameSt
         super(game);
     }
 
-    @Override
-    public List<DestinationCardModel> drawDestinationCards() {
-        return destinationCardDeck.drawDestinationCards();
+
+    public AbstractClientGameState toClientState(IServer server, gameModel game, int playerNum) {
+        //super.getFaceUpTrainCards();
+        //super.getGame();
+        //return new ClientInitialGameState(server, game, getDestinationCardDeckSize(), game.getPlayers().get(playerNum).getId());
+        return new ClientInitialGameState(server, game, playerNum, this);
     }
 
     @Override
     public void returnDestinationCards(List<DestinationCardModel> selectedCards, List<DestinationCardModel> rejectedCards) {
-        destinationCardDeck.returnDestinationCards(selectedCards, rejectedCards);
-        // TODO I'm assuming that the game actually returned the rejected cards? test that it does
-        super.advanceTurn();
+        super.returnDestinationCards(selectedCards, rejectedCards);
         if (super.getGame().isPlayersTurn(0)) {
             // updating the state ends up being redundant: the game state automatically updates
             // whenever a new state is made
-            super.updateGameState(new ServerInGameState(this, destinationCardDeck, trainCardBank));
+            super.updateGameState(new ServerInGameState(this));
         }
-
     }
 
-    public AbstractClientGameState toClientState(IServer server, gameModel game, int playerNum) {
-        return new ClientInitialGameState(server, game, getDestinationCardDeckSize());
-    }
+    // note: drawing a train card from the deck is used in starting the game, so it does not
+    // throw in this state
 
-
-    public int getDestinationCardDeckSize() {
-        return destinationCardDeck.size();
-    }
-
-    @Override
-    public trainCardModel drawTrainCardFromDeck() {
-        // note that this method is called when starting the game
-        return trainCardBank.drawTrainCardFromDeck();
-        //throw new IllegalStateException("Cannot draw train cards during the start of the game");
-    }
 
     /**
      * @param cardLocation the number representing the card's location in the face up "pile", which

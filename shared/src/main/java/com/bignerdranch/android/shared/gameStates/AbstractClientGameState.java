@@ -4,6 +4,7 @@ import com.bignerdranch.android.shared.interfaces.IServer;
 import com.bignerdranch.android.shared.interfaces.IGameState;
 import com.bignerdranch.android.shared.models.DestinationCardModel;
 import com.bignerdranch.android.shared.models.gameModel;
+import com.bignerdranch.android.shared.models.playerIDModel;
 import com.bignerdranch.android.shared.models.trainCardModel;
 import com.bignerdranch.android.shared.proxy.DestinationCardDeckProxy;
 
@@ -17,9 +18,15 @@ public abstract class AbstractClientGameState extends AbstractGameState implemen
      */
     private DestinationCardDeckProxy destinationCardDeck;
 
+    //private int trainCardDiscardSize;
+    private List<trainCardModel> trainCardDiscard;
+    private int trainCardDeckSize;
+    private List<trainCardModel> faceUpTrainCards;
+    private playerIDModel clientID;
 
-    public AbstractClientGameState(IServer server, gameModel game) {
-        this(server, game, 30);
+
+    public AbstractClientGameState(IServer server, gameModel game, playerIDModel clientID) {
+        this(server, game, 30, clientID);
         //super(game)
         // should be used when going from client state to client state - if at all
         //destinationCardDeck = new DestinationCardDeckProxy(server, game.getGameID(), 30);
@@ -28,6 +35,7 @@ public abstract class AbstractClientGameState extends AbstractGameState implemen
     public AbstractClientGameState(AbstractClientGameState prevState) {
         super(prevState);
         destinationCardDeck = prevState.destinationCardDeck;
+        this.clientID = prevState.clientID;
     }
 
     /**
@@ -36,22 +44,35 @@ public abstract class AbstractClientGameState extends AbstractGameState implemen
      * Preconditions: server is a valid, working IServer
      * Preconditions: gameID is the gameID of the game that this state object is a part of
      *
-     * @param server An Iserver, typically a serverProxy, that can be used to interact with the
-     *               server's version of the game.
-     * @param game the game for this state object.
+     * @param server           An Iserver, typically a serverProxy, that can be used to interact with the
+     *                         server's version of the game.
+     * @param game             the game for this state object.
      * @param destCardDeckSize the number of cards in the destination card deck
      */
-    public AbstractClientGameState(IServer server, gameModel game, int destCardDeckSize) {
+    public AbstractClientGameState(IServer server, gameModel game, int destCardDeckSize, playerIDModel clientID) {
         super(game);
         // should be used when going from Server state to client state
         destinationCardDeck = new DestinationCardDeckProxy(server, game.getGameID(), destCardDeckSize);
+        this.clientID = clientID;
         //destinationCardDeck.updateSize(destCardDeckSize);
     }
 
 
     public abstract boolean canDrawTrainCards();
+
     public abstract boolean canDrawDestCards();
+
     public abstract boolean canClaimRoute();
+
+    /**
+     * a method that notifies the client game state that it needs to check that its state is valid
+     * based on the turn
+     */
+    public abstract void notifyTurnAdvancement();
+
+    protected playerIDModel getClientID() {
+        return clientID;
+    }
 
     protected DestinationCardDeckProxy getDestinationCardDeck() {
         return destinationCardDeck;
@@ -79,7 +100,7 @@ public abstract class AbstractClientGameState extends AbstractGameState implemen
 
     @Override
     public List<DestinationCardModel> drawDestinationCards() {
-        if(canDrawDestCards()) {
+        if (canDrawDestCards()) {
             return destinationCardDeck.drawDestinationCards();
         } else {
             throw new IllegalStateException("Cannot draw destination cards in this state");
@@ -88,7 +109,7 @@ public abstract class AbstractClientGameState extends AbstractGameState implemen
 
     @Override
     public void returnDestinationCards(List<DestinationCardModel> selectedCards, List<DestinationCardModel> rejectedCards) {
-        if(canDrawDestCards()) {
+        if (canDrawDestCards()) {
             destinationCardDeck.returnDestinationCards(selectedCards, rejectedCards);
         } else {
             throw new IllegalStateException("Cannot draw/return destination cards in this state");
@@ -102,7 +123,8 @@ public abstract class AbstractClientGameState extends AbstractGameState implemen
 
     @Override
     public trainCardModel drawTrainCardFromDeck() {
-        return null;
+        throw new RuntimeException("drawing train cards not usable in this client state");
+        //return null;
     }
 
     /**
@@ -112,6 +134,49 @@ public abstract class AbstractClientGameState extends AbstractGameState implemen
      */
     @Override
     public trainCardModel drawFaceUpTrainCard(int cardLocation) {
-        return null;
+        throw new RuntimeException("drawing train cards not usable in this client state");
+        //return null;
     }
+
+    @Override
+    public int getTrainCardDiscardSize() {
+        //return trainCardDiscardSize;
+        return trainCardDiscard.size();
+    }
+
+    public List<trainCardModel> getTrainCardDiscardPile() {
+        return trainCardDiscard;
+    }
+
+    public void setTrainCardDiscard(List<trainCardModel> trainCardDiscard) {
+        this.trainCardDiscard = trainCardDiscard;
+    }
+//public void setTrainCardDiscardSize(int size) {
+    //trainCardDiscardSize = size;
+    //}
+
+    @Override
+    public int getTrainCardDeckSize() {
+        return trainCardDeckSize;
+    }
+
+    public void setTrainCardDeckSize(int size) {
+        trainCardDeckSize = size;
+    }
+
+    @Override
+    public List<trainCardModel> getFaceUpTrainCards() {
+        return faceUpTrainCards;
+    }
+
+    public void setFaceUpTrainCards(List<trainCardModel> faceUpTrainCards) {
+        this.faceUpTrainCards = faceUpTrainCards;
+    }
+
+    @Override
+    public void discard(List<trainCardModel> discardedCards) {
+        throw new IllegalStateException("discarding train cards is currently implemented as a " +
+                "server-side only operation");
+    }
+
 }

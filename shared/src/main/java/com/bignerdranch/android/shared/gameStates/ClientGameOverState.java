@@ -1,13 +1,9 @@
 package com.bignerdranch.android.shared.gameStates;
 
-import com.bignerdranch.android.shared.interfaces.IServer;
-import com.bignerdranch.android.shared.models.gameModel;
-
 public class ClientGameOverState extends AbstractClientGameState {
 
-
-    public ClientGameOverState(IServer server, gameModel game, int destCardDeckSize) {
-        super(server, game, destCardDeckSize);
+    public ClientGameOverState(AbstractClientGameState prevState) {
+        super(prevState);
     }
 
     @Override
@@ -23,5 +19,11 @@ public class ClientGameOverState extends AbstractClientGameState {
     @Override
     public boolean canClaimRoute() {
         return false;
+    }
+
+    @Override
+    public void notifyTurnAdvancement() {
+        throw new IllegalStateException("The turn counter should not be changing once the game is " +
+                "over - check for bug");
     }
 }

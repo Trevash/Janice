@@ -1,6 +1,5 @@
 package com.bignerdranch.android.shared.models;
 
-import com.bignerdranch.android.shared.Constants;
 import com.bignerdranch.android.shared.interfaces.IServer;
 import com.bignerdranch.android.shared.exceptions.DuplicateException;
 import com.bignerdranch.android.shared.exceptions.RouteNotFoundException;
@@ -11,10 +10,7 @@ import com.bignerdranch.android.shared.models.colors.cardColorEnum;
 import com.bignerdranch.android.shared.models.colors.playerColorEnum;
 
 import java.util.ArrayList;
-import java.util.LinkedList;
 import java.util.List;
-import java.util.Map;
-import java.util.concurrent.ConcurrentHashMap;
 
 public class gameModel {
     private gameIDModel gameID;
@@ -35,15 +31,15 @@ public class gameModel {
     // ChatBox
     // Decks
     // Train
-    private TrainCardBank trainCardBank; //
+    //private TrainCardBank trainCardBank; //
 
-    private ArrayList<trainCardModel> trainCardDeck = new ArrayList<>();
-    private int numTrainCardDeck;
+    //private ArrayList<trainCardModel> trainCardDeck = new ArrayList<>();
+    //private int numTrainCardDeck;
     // Dest
     // Face-up
-    private List<trainCardModel> faceUpCards = new ArrayList<>();
+    //private List<trainCardModel> faceUpCards = new ArrayList<>();
     // Discard
-    private LinkedList trainCardDiscard = new LinkedList();
+    //private LinkedList trainCardDiscard = new LinkedList();
 
     /*
     public gameModel(String newGameName, playerModel hostPlayer, IGameState state) {
@@ -69,7 +65,8 @@ public class gameModel {
         gameID = new gameIDModel();
         setGameName(newGameName);
         gameStarted = false;
-        this.setDecks();
+        //this.setDecks(); decks are set in the game state
+        this.state = new ServerInitialGameState(this);
 
         try {
             addPlayer(hostPlayer);
@@ -79,40 +76,6 @@ public class gameModel {
         chatbox = new chatboxModel();
         gameHistory = new chatboxModel();
         this.turnCounter = 0;
-
-        this.state = new ServerInitialGameState(this);
-    }
-
-    private void setDecks() {
-
-        //Create dest cards deck here
-        //this.destinationCardDeck.add(Constants.DestinationCards.LOS_ANGELES_NEW_YORK);
-
-        //Create train card deck here, then shuffles
-        for (int i = 0; i < 12; i++) {
-            this.trainCardDeck.add(Constants.TrainCards.BLUE);
-            this.trainCardDeck.add(Constants.TrainCards.ORANGE);
-            this.trainCardDeck.add(Constants.TrainCards.PURPLE);
-            this.trainCardDeck.add(Constants.TrainCards.WHITE);
-            this.trainCardDeck.add(Constants.TrainCards.BLACK);
-            this.trainCardDeck.add(Constants.TrainCards.GREEN);
-            this.trainCardDeck.add(Constants.TrainCards.RED);
-            this.trainCardDeck.add(Constants.TrainCards.YELLOW);
-        }
-        for (int i = 0; i < 14; i++) {
-            this.trainCardDeck.add(Constants.TrainCards.LOCOMOTIVE);
-        }
-        shuffleTrainCards();
-        //Draw 5 cards from deck, assign to the faceUp stuff
-        this.faceUpCards.add(this.drawTrainCardFromDeck());
-        this.faceUpCards.add(this.drawTrainCardFromDeck());
-        this.faceUpCards.add(this.drawTrainCardFromDeck());
-        this.faceUpCards.add(this.drawTrainCardFromDeck());
-        this.faceUpCards.add(this.drawTrainCardFromDeck());
-
-        this.numTrainCardDeck = trainCardDeck.size();
-
-        //destinationCardDeck = new DestinationCardDeckProxy();
     }
 
     private void createRoutes() {
@@ -124,30 +87,23 @@ public class gameModel {
         }
     }
 
-    private void shuffleTrainCards() {
-        for (int i = 0; i < trainCardDeck.size(); i++) {
-            int j = (int) (Math.random() * trainCardDeck.size());
-            trainCardModel temp = trainCardDeck.get(i);
-            trainCardDeck.set(i, trainCardDeck.get(j));
-            trainCardDeck.set(j, temp);
-        }
-    }
 
     // Todo: Check for empty deck and other special cases - recommend moving decks into their own classes
     public trainCardModel drawTrainCardFromDeck() {
-        int numCards = (trainCardDeck.size() - 1);
-        return trainCardDeck.remove(numCards); //Eliminate top card from array
+        return state.drawTrainCardFromDeck();
+        // method handles case of empty train card deck
     }
 
     public trainCardModel drawFaceUpTrainCard(int pos) {
-        if (pos < 0 || pos > 4) {
-            throw new IllegalArgumentException("Invalid card position requested from face up train cards: " + pos);
-        }
+        return state.drawFaceUpTrainCard(pos);
+        // method handles error checking and drawing replacement cards
 
-        trainCardModel curCard = this.faceUpCards.get(pos);
-        this.faceUpCards.set(pos, drawTrainCardFromDeck());
-
-        return curCard;
+        //if (pos < 0 || pos > 4) {
+        //    throw new IllegalArgumentException("Invalid card position requested from face up train cards: " + pos);
+        //}
+        //trainCardModel curCard = this.faceUpCards.get(pos);
+        //this.faceUpCards.set(pos, drawTrainCardFromDeck());
+        //return curCard;
     }
 
     // public or private
@@ -167,6 +123,7 @@ public class gameModel {
         playerModel curPlayer = players.get(turnCounter);
         curPlayer.addDestinationCards(selectedCards);
         //TODO: increment turn order, update game history
+        // turn order incremented when the card is returned to the deck, by the state
     }
 
     // host is the first player in the list
@@ -260,12 +217,12 @@ public class gameModel {
         }
     }
 
-    public ArrayList<trainCardModel> getTrainCardDeck() {
-        return trainCardDeck;
-    }
+    //public ArrayList<trainCardModel> getTrainCardDeck() {
+    //    return trainCardDeck;
+    //}
 
     public List<trainCardModel> getFaceUpCards() {
-        return faceUpCards;
+        return state.getFaceUpTrainCards();
     }
 
     public List<abstractRoute> getRoutes() {
@@ -295,7 +252,8 @@ public class gameModel {
         stats.add(cardTypes);
 
         int[] totals = new int[2];
-        totals[0] = numTrainCardDeck;
+        //totals[0] = numTrainCardDeck;
+        totals[0] = getNumTrainCards(); // TODO do we also want the number of discarded train cards?
         totals[1] = state.getDestinationCardDeckSize();
         stats.add(totals);
 
@@ -333,6 +291,17 @@ public class gameModel {
         turnCounter += 1;
         if (turnCounter >= this.players.size())
             turnCounter = 0;
+    }
+
+    public int getTurnCounter() {
+        return turnCounter;
+    }
+
+    public void setTurnCounter(int turnCounter) {
+        this.turnCounter = turnCounter;
+        if(state instanceof AbstractClientGameState) {
+            ((AbstractClientGameState) state).notifyTurnAdvancement();
+        }
     }
 
     public boolean isPlayersTurn(playerIDModel testPlayer) {
@@ -384,20 +353,15 @@ public class gameModel {
         throw new RouteNotFoundException("Route at id " + routeID.getValue() + " not found in game " + this.getGameID().getValue());
     }
 
-    public int getTurnCounter() {
-        return turnCounter;
-    }
-
     public void setGameHistory(chatboxModel gameHistory) {
         this.gameHistory = gameHistory;
     }
 
-    public void setTurnCounter(int turnCounter) {
-        this.turnCounter = turnCounter;
-    }
 
     public cardColorEnum getFaceUpTrainCardColor(int i) {
-        return this.faceUpCards.get(i).getColor();
+        //return this.faceUpCards.get(i).getColor();
+        //return trainCardBank.getFaceUpTrainCards().get(i).getColor();
+        return getFaceUpCards().get(i).getColor();
     }
 
     public void addTrainCardToPlayersHand(trainCardModel returnCard, usernameModel username) {
@@ -405,7 +369,11 @@ public class gameModel {
     }
 
     public int getNumTrainCards() {
-        return this.trainCardDeck.size();
+        return state.getTrainCardDeckSize();
+    }
+
+    public int getNumTrainCardDiscards() {
+        return state.getTrainCardDiscardSize();
     }
 
     public int getNumDestinationCards() {
@@ -413,19 +381,43 @@ public class gameModel {
     }
 
     public void setNumTrainCards(int numTrainCards) {
-        this.numTrainCardDeck = numTrainCards;
+        if(state instanceof AbstractClientGameState) {
+            ((AbstractClientGameState) state).setTrainCardDeckSize(numTrainCards);
+        } else {
+            throw new IllegalStateException("setting the number of train cards to a new value is " +
+                    "a client-side-only operation");
+        }
+        //this.numTrainCardDeck = numTrainCards;
     }
 
-    public void addToTrainDiscards(LinkedList discards) {
-        this.trainCardDiscard.addAll(discards);
+    public void addToTrainDiscards(List<trainCardModel> discards) {
+        //trainCardBank.addToDiscard(discards);
+        // TODO is this a server-side only operation? currently implemented as such
+        state.discard(discards);
+        //if(state instanceof AbstractServerGameState) {
+        //    state.discard(discards);
+       // } else {
+        //    throw new IllegalStateException("Client states")
+        //}
+        //this.trainCardDiscard.addAll(discards);
     }
 
-    public LinkedList getTrainCardDiscards() {
-        return trainCardDiscard;
+    public List<trainCardModel> getTrainCardDiscards() {
+        return state.getTrainCardDiscardPile();
     }
 
-    public void setTrainCardDiscards(LinkedList trainCardDiscards) {
-        this.trainCardDiscard = trainCardDiscards;
+    public int getTrainCardDiscardSize() {
+        return state.getTrainCardDiscardSize();
+    }
+
+    public void setTrainCardDiscards(List<trainCardModel> trainCardDiscards) {
+        if(state instanceof AbstractClientGameState) {
+            ((AbstractClientGameState) state).setTrainCardDiscard(trainCardDiscards);
+        } else {
+            throw new IllegalStateException("Manually changing the train card discard pile is a " +
+                    "client-side-only operation");
+        }
+
     }
 
     public void setPlayersHand(List<trainCardModel> hand, usernameModel username) {
@@ -433,6 +425,12 @@ public class gameModel {
     }
 
     public void setFaceUpCards(List<trainCardModel> faceUpCards) {
-        this.faceUpCards = faceUpCards;
+        //this.faceUpCards = faceUpCards;
+        if(state instanceof AbstractClientGameState) {
+            ((AbstractClientGameState) state).setFaceUpTrainCards(faceUpCards);
+        } else {
+            throw new IllegalStateException("Manually changing the face-up-train cards is a " +
+                    "client-side-only operation");
+        }
     }
 }
