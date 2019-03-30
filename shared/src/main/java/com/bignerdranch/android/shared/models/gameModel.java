@@ -320,6 +320,7 @@ public class gameModel {
         }
     }
 
+
     public boolean canDrawTrainCards() {
         if (state instanceof AbstractClientGameState) {
             return ((AbstractClientGameState) state).canDrawTrainCards();

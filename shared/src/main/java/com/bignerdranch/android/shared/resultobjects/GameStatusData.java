@@ -8,7 +8,7 @@ public class GameStatusData {
     private int numDestinationCards;
     private chatboxModel gameHistory;
 
-    public GameStatusData(int turnCounter, chatboxModel gameHistory, int numTrainCards, int numDestinationCards){
+    public GameStatusData(int turnCounter, chatboxModel gameHistory, int numTrainCards, int numDestinationCards) {
         this.turnCounter = turnCounter;
         this.gameHistory = gameHistory;
         this.numTrainCards = numTrainCards;

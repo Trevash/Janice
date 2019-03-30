@@ -13,7 +13,7 @@ public class ClientFacade {
     }
 
     private static ClientFacade facade;
-    private Presenter currentPresenter;
+    private Presenter currentPresenter; // TODO from the looks of it, this sometimes gets out of sync
     private Presenter statusPresenter;
     private ClientModel model = ClientModel.getInstance();
 

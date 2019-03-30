@@ -5,7 +5,6 @@ import java.net.URI;
 import org.java_websocket.client.WebSocketClient;
 import org.java_websocket.handshake.ServerHandshake;
 
-import com.bignerdranch.android.shared.models.playerModel;
 import com.bignerdranch.android.shared.models.userModel;
 import com.bignerdranch.android.shared.models.gameModel;
 import com.bignerdranch.android.shared.resultobjects.ChatboxData;
@@ -85,6 +84,7 @@ public class TtRClient extends WebSocketClient{
                     break;
                 }
                 case UPDATE_GAME_STATUS: {
+                    // TODO somehow it is failing to deserialize the gameStatusData - GSON gets IllegalStateException
                     GameStatusData data = (GameStatusData) result.getData(GameStatusData.class);
                     facade.setHistory(data.getGameHistory());
                     facade.setTurnCounter(data.getTurnCounter());

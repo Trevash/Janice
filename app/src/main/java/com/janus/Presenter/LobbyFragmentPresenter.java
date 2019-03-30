@@ -34,9 +34,13 @@ public class LobbyFragmentPresenter implements ClientFacade.Presenter {
 
     public void startGameClicked() {
         try {
-            Results results = sp.startGame(new StartGameRequest(facade.getGame().getGameID(), facade.getUser().getAuthToken()));
-            if (!results.isSuccess()) {
-                view.displayLobbyError(results.getJSONdata());
+            if(facade.getGame().isGameStarted()) {
+                updateUI();
+            } else {
+                Results results = sp.startGame(new StartGameRequest(facade.getGame().getGameID(), facade.getUser().getAuthToken()));
+                if (!results.isSuccess()) {
+                    view.displayLobbyError(results.getJSONdata());
+                }
             }
         } catch(Exception e){
             e.printStackTrace();
