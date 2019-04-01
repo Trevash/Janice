@@ -13,7 +13,8 @@ public class DrawTrainCardData {
     private int numTrainCards;
     private usernameModel username;
 
-    public DrawTrainCardData(gameIDModel gameID, List<trainCardModel> hand, List<trainCardModel> faceUpCards, int numTrainCards, usernameModel username) {
+    public DrawTrainCardData(gameIDModel gameID, List<trainCardModel> hand,
+                             List<trainCardModel> faceUpCards, int numTrainCards, usernameModel username) {
         this.gameID = gameID;
         this.hand = hand;
         this.faceUpCards = faceUpCards;

@@ -110,6 +110,7 @@ public class ServerCommunicator extends WebSocketServer {
                 broadcastGame(resultGson, gameChat);
                 break;
             case CLAIM_ROUTE:
+                // TODO claiming a route needs restrictions to be enforced.
                 ClaimRouteData claimRouteData = (ClaimRouteData) result.getData(ClaimRouteData.class);
                 broadcastGame(resultGson, serverModel.getInstance().getGameByID(claimRouteData.getGameID()));
                 updateGameStatus(claimRouteData.getGameID(), claimRouteData.getUsername(), "Route from " + claimRouteData.getCurRoute().getCity1().getName() + " to " + claimRouteData.getCurRoute().getCity2().getName() + " claimed by " + claimRouteData.getUsername().getValue());
@@ -124,7 +125,7 @@ public class ServerCommunicator extends WebSocketServer {
                 ReturnDestinationCardData returnDestdata = (ReturnDestinationCardData) result.getData(ReturnDestinationCardData.class);
 
                 // commented out: the code at the end means that this is already getting broadcasted
-                //broadcastOne(resultGson, conn);
+                broadcastOne(resultGson, conn);
 
                 updateGameStatus(returnDestdata.getGameID(), returnDestdata.getUsername(), "drew " +
                         Integer.toString(returnDestdata.getSelectedCards().size()) + " destination cards");
@@ -134,6 +135,7 @@ public class ServerCommunicator extends WebSocketServer {
                 break;
             case DRAW_SECOND_TRAIN_CARD:
                 DrawTrainCardData data = (DrawTrainCardData) result.getData(DrawTrainCardData.class);
+                // TODO this should probably be altered so that other players don't see the drawing player's hand
                 broadcastGame(resultGson, serverModel.getInstance().getGameByID(data.getGameID()));
                 updateGameStatus(data.getGameID(), data.getUsername(), data.getUsername().getValue() + " drew train cards");
                 break;
@@ -143,10 +145,10 @@ public class ServerCommunicator extends WebSocketServer {
             default:
                 System.out.println("Invalid type passed to onMessage from Result: " + result.getType());
         }
-        // TODO what is this doing? It does make for a default-case
-        List<WebSocket> temp = new ArrayList<>();
-        temp.add(conn);
-        broadcast(resultGson, temp);
+        // TODO what is this doing? It does make for a default-case. Removing as it is causing a bug with drawing train cards, and everything appears to already be broadcasting
+        //List<WebSocket> temp = new ArrayList<>();
+        //temp.add(conn);
+        //broadcast(resultGson, temp);
     }
 
     @Override

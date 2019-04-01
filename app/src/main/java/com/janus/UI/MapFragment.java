@@ -8,6 +8,7 @@ import android.graphics.Paint;
 import android.graphics.PixelFormat;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -103,7 +104,7 @@ public class MapFragment extends Fragment implements MapFragmentPresenter.View {
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_map, container, false);
         presenter = new MapFragmentPresenter(this);
@@ -229,7 +230,7 @@ public class MapFragment extends Fragment implements MapFragmentPresenter.View {
         }
 
         @Override
-        public PlayerHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+        public PlayerHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
             LayoutInflater layoutInflater = LayoutInflater.from(parent.getContext());
 
             return new PlayerHolder(layoutInflater, parent);
@@ -244,6 +245,19 @@ public class MapFragment extends Fragment implements MapFragmentPresenter.View {
         @Override
         public int getItemCount() {
             return mPlayers.length;
+        }
+    }
+
+    @Override
+    public void updateDestinationsDrawable(final boolean canDrawDestCards) {
+        if (getActivity() != null) {
+            getActivity().runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    mDrawDestinationsButton.setEnabled(canDrawDestCards);
+                    // TODO might be better to show an "error message" explaining that you can't draw dest. cards
+                }
+            });
         }
     }
 
