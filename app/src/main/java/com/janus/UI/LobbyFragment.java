@@ -83,11 +83,17 @@ public class LobbyFragment extends Fragment implements LobbyFragmentPresenter.Vi
         mPlayerRecyclerView.setAdapter(mPlayerAdapter);
 
         mStartGameButton = (Button) v.findViewById(R.id.startGameButton);
-        mStartGameButton.setEnabled(true);
-        if(isHost){
-            mStartGameButton.setText("Start Game");
+
+        playerModel host = ClientModel.getInstance().getGame().getHostPlayer();
+        usernameModel username = presenter.getUsername();
+        isHost = username.getValue().equals(host.getUserName().getValue());
+        if(isHost) {
+            mStartGameButton.setEnabled(true);
+            mStartGameButton.setText("Start");
         } else {
-            mStartGameButton.setText("Ready");
+            //mStartGameButton.setText("Ready");
+            mStartGameButton.setEnabled(false);
+            mStartGameButton.setVisibility(View.INVISIBLE);
         }
 
         mStartGameButton.setOnClickListener(new View.OnClickListener() {
@@ -134,11 +140,11 @@ public class LobbyFragment extends Fragment implements LobbyFragmentPresenter.Vi
                 mReadyStatusView.setText(R.string.hostString);
             }
             else {
-                if (p.isReady()) {
+                //if (p.isReady()) {
                     mReadyStatusView.setText(R.string.readyString);
-                } else {
-                    mReadyStatusView.setText(R.string.notReadyString);
-                }
+                //} else {
+                    //mReadyStatusView.setText(R.string.notReadyString);
+                //}
             }
         }
 
@@ -187,16 +193,17 @@ public class LobbyFragment extends Fragment implements LobbyFragmentPresenter.Vi
         playerModel host = ClientModel.getInstance().getGame().getHostPlayer();
         usernameModel username = presenter.getUsername();
         isHost = username.getValue().equals(host.getUserName().getValue());
-        mStartGameButton.setEnabled(true);
         if (isHost) {
             mStartGameButton.setText("Start");
-            /*
             if(numOfPlayers >= 2 && numOfPlayers <= 5) {
                 mStartGameButton.setEnabled(true);
             } else {
                 mStartGameButton.setEnabled(false);
             }
-            */
+        } else {
+            //mStartGameButton.setText("Ready");
+            mStartGameButton.setEnabled(false);
+            mStartGameButton.setVisibility(View.INVISIBLE);
         }
 
         //gameIDModel id = ClientModel.getInstance().getGame().getGameID();
