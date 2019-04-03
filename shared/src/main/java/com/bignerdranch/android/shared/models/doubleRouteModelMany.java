@@ -66,6 +66,10 @@ public class doubleRouteModelMany extends abstractDoubleRoute{
             throw new RouteNotFoundException("Requested color not found in DoubleRouteMany!");
         }
 
+        if(claimer.getValue().equals(this.claimer1.getValue()) || claimer.getValue().equals(this.claimer2.getValue())){
+            throw new RouteAlreadyClaimedException("You have already claimed half of this double route!");
+        }
+
         if(color.equals(this.trainColor1)){
             if (!this.claimableRoute1()) {
                 throw new RouteAlreadyClaimedException(this.trainColor1.toString() + " route from " + this.getCity1().getName() + " to " + this.getCity2().getName() + " already claimed!");
