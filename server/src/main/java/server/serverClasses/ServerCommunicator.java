@@ -2,10 +2,6 @@ package server.serverClasses;
 
 import com.bignerdranch.android.shared.GenericCommand;
 import com.bignerdranch.android.shared.Constants;
-import com.bignerdranch.android.shared.requestObjects.CreateGameRequest;
-import com.bignerdranch.android.shared.requestObjects.DrawTrainCardRequest;
-import com.bignerdranch.android.shared.requestObjects.JoinGameRequest;
-import com.bignerdranch.android.shared.requestObjects.StartGameRequest;
 import com.bignerdranch.android.shared.resultobjects.ChatboxData;
 import com.bignerdranch.android.shared.resultobjects.ClaimRouteData;
 import com.bignerdranch.android.shared.resultobjects.DrawTrainCardData;
