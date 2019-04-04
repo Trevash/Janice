@@ -112,4 +112,9 @@ public class ClientInitialGameState extends AbstractClientGameState implements I
         //super.updateGameState(new ClientActivePlayerState(this));
         //}
     }
+
+    @Override
+    public int minKeepDestCards() {
+        return 2;
+    }
 }

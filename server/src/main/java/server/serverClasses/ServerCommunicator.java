@@ -132,6 +132,7 @@ public class ServerCommunicator extends WebSocketServer {
                 break;
             case DRAW_FIRST_TRAIN_CARD:
                 broadcastOne(resultGson, conn);
+                // TODO probably would want a way to update everyone's GUI.
                 break;
             case DRAW_SECOND_TRAIN_CARD:
                 DrawTrainCardData data = (DrawTrainCardData) result.getData(DrawTrainCardData.class);

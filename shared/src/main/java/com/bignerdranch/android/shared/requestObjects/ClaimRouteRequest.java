@@ -1,6 +1,5 @@
 package com.bignerdranch.android.shared.requestObjects;
 
-import com.bignerdranch.android.shared.models.abstractRoute;
 import com.bignerdranch.android.shared.models.authTokenModel;
 import com.bignerdranch.android.shared.models.colors.routeColorEnum;
 import com.bignerdranch.android.shared.models.gameIDModel;
