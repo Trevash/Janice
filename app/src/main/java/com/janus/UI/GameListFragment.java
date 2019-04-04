@@ -1,6 +1,7 @@
 package com.janus.UI;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
@@ -42,6 +43,7 @@ public class GameListFragment extends Fragment implements GameListFragmentPresen
     private List<gameModel> games;
     private LinearLayoutManager mLayoutManager;
     private GameListAdapter mAdapter;
+    private int selectedGame = -1;
 
     public GameListFragment() {}
 
@@ -120,6 +122,7 @@ public class GameListFragment extends Fragment implements GameListFragmentPresen
             public TextView mGameName;
             public TextView mPlayerNumber;
             public RelativeLayout layout;
+            public int position;
 
             public GameViewHolder(RelativeLayout r) {
                 super(r);
@@ -128,11 +131,26 @@ public class GameListFragment extends Fragment implements GameListFragmentPresen
                     @Override
                     public void onClick(View v) {
                         presenter.selectGame(mGame);
+                        setSelectedGame(getAdapterPosition());
+                        update(games);
                     }
                 });
 
                 mGameName = (TextView) r.findViewById(R.id.game_name_text_view);
                 mPlayerNumber = (TextView) r.findViewById(R.id.player_number_text_view);
+            }
+
+            public void checkPosition(int position) {
+                if (position == selectedGame) {
+                    layout.setBackgroundColor(Color.BLUE);
+                }
+                else {
+                    layout.setBackgroundColor(Color.WHITE);
+                }
+            }
+
+            public void setSelectedGame(int position) {
+                selectedGame = position;
             }
         }
 
@@ -159,7 +177,7 @@ public class GameListFragment extends Fragment implements GameListFragmentPresen
             holder.mGameName.setText(game.getGameName());
             holder.mPlayerNumber.setText(game.numPlayers() + "/5");
             holder.mGame = game;
-
+            holder.checkPosition(position);
         }
 
         @Override
