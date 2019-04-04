@@ -33,6 +33,8 @@ import static com.bignerdranch.android.shared.Constants.Commands.UPDATE_CHAT;
 
 public class ServerProxy implements IServer {
 
+    private String expectedResultType = null;
+
     public interface CurrentState {
 
     }
@@ -351,15 +353,20 @@ public class ServerProxy implements IServer {
         String[] paramTypes = {paramType};
         GenericCommand commandObj = new GenericCommand("server.handlers.commandHandler", methodName, paramTypes, paramValues);
         String commandObjStr = Serializer.getInstance().serializeObject(commandObj);
-        client.resetMessageResult();
-        client.send(commandObjStr);
         this.messageResult = null;
-        return waitForMessageResult(expectedResultType);
+        this.expectedResultType = expectedResultType;
+        client.send(commandObjStr);
+        return waitForMessageResult();
     }
 
-    private Results waitForMessageResult(String expectedResultType) {
-        while (messageResult == null || !messageResult.getType().equals(expectedResultType)) {
-            messageResult = client.getResults();
+    public void checkMessageResult(Results result) {
+        if(result.getType().equals(this.expectedResultType) || result.getType().equals("ERROR")){
+            this.messageResult = result;
+        }
+    }
+
+    private Results waitForMessageResult() {
+        while (this.messageResult == null) {
             try {
                 Thread.sleep(100);
             } catch (InterruptedException e) {
