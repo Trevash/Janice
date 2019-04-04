@@ -274,10 +274,6 @@ public class MapFragment extends Fragment implements MapFragmentPresenter.View {
             System.out.println("Error: MapFragment tried to updateturnIndicator() when its " +
                     "activity was null");
         }
-        /*mDrawDestinationsButton.setEnabled(false);
-        if(presenter.isCurrentPlayersTurn()){
-            mDrawDestinationsButton.setEnabled(true);
-        }*/
     }
 
     private void updateTurnIndicatorMainThread() {
@@ -285,6 +281,14 @@ public class MapFragment extends Fragment implements MapFragmentPresenter.View {
         playerModels = tempPlayers.toArray(playerModels);
         mPlayerAdapter = new PlayerAdapter(playerModels);
         mTurnRecyclerView.setAdapter(mPlayerAdapter);
+    }
+
+    public void updateDestinationButton(boolean canDrawDestinationCards) {
+        if(canDrawDestinationCards){
+            mDrawDestinationsButton.setEnabled(true);
+        } else {
+            mDrawDestinationsButton.setEnabled(false);
+        }
     }
 
     public void updateRoutes(List<abstractRoute> updatedRoutes) {

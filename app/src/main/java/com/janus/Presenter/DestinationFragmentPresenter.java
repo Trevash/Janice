@@ -43,6 +43,7 @@ public class DestinationFragmentPresenter implements ClientFacade.Presenter, Ret
         ReturnDestinationCardsTask task = new ReturnDestinationCardsTask(this);
         //task.execute(request);
         task.execute(selectedCards, rejectedCards);
+        facade.i
     }
 
     @Override

@@ -132,9 +132,10 @@ public class DestinationSelectFragment extends Fragment implements DestinationFr
     }
 
     @Override
-    public void updateDestinationCards(List<DestinationCardModel> destCards) {
+    public void updateDestinationCards(List<DestinationCardModel> destCards, ) {
         availableDestinationCards = destCards;
         mPrompt.setText(R.string.drawDestinationsPrompt2Routes); // Should show number of cards
+
         mDestination1.setText(destCards.get(0).getFormattedDestinationCard());
         mDestination2.setText(destCards.get(1).getFormattedDestinationCard());
         mDestination3.setText(destCards.get(2).getFormattedDestinationCard());

@@ -41,14 +41,14 @@ public class GameActivity extends AppCompatActivity
         Fragment fragment = fm.findFragmentById(R.id.game_layout);
 
         if(fragment == null) {
-            MapFragment mapFragment = new MapFragment();
-            fm.beginTransaction()
-                    .add(R.id.game_layout, mapFragment)
-                    .commit();
-            /*DestinationSelectFragment destinationFragment = new DestinationSelectFragment();
+            /*MapFragment mapFragment = new MapFragment(); //For testing
             fm.beginTransaction()
                     .add(R.id.game_layout, mapFragment)
                     .commit();*/
+            DestinationSelectFragment destinationFragment = new DestinationSelectFragment();
+            fm.beginTransaction()
+                    .add(R.id.game_layout, destinationFragment)
+                    .commit();
         }
 
         makeToast("You started the game!");
