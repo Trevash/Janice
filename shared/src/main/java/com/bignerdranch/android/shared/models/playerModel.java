@@ -206,7 +206,7 @@ public class playerModel {
     }
 
     public List<Set<cityModel>> groupCitiesByConnection(){
-    	List<Set<cityModel>> routeGroups = new ArrayList<Set<cityModel>>();
+    	List<Set<cityModel>> routeGroups = new ArrayList<>();
     	for(int i = 0;  i< claimedRoutes.size(); i++) {
     		int city1 = -1;
     		int city2 = -1;
@@ -220,7 +220,7 @@ public class playerModel {
     		}
     		//if neither city has been considered yet
     		if(city1 == -1 && city2 == -1) {
-    			Set<cityModel> routeGroup = new HashSet<cityModel>();
+    			Set<cityModel> routeGroup = new HashSet<>();
     			routeGroup.add(claimedRoutes.get(i).getCity1());
     			routeGroup.add(claimedRoutes.get(i).getCity2());
     			routeGroups.add(routeGroup);
@@ -331,7 +331,7 @@ public class playerModel {
     	
     	public adjListNode bfs(cityModel cityName) {
 
-    		Map<cityModel, Integer> dis = new HashMap<cityModel,Integer>();
+    		Map<cityModel, Integer> dis = new HashMap<>();
     		Iterator<cityModel> it = adj.keySet().iterator();
     		while (it.hasNext()) { dis.put(it.next(), -1); }
     		Queue<cityModel> q = new LinkedList<>();
@@ -389,6 +389,25 @@ public class playerModel {
     }
     public int getLocomotives() {
         return this.locomotives;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        playerModel that = (playerModel) o;
+
+        if (!getUserName().equals(that.getUserName())) return false;
+        if (!getId().equals(that.getId())) return false;
+        return getPlayerColor() == that.getPlayerColor();
+    }
+
+    @Override
+    public int hashCode() {
+        int result = getUserName().hashCode();
+        result = 31 * result + getId().hashCode();
+        return result;
     }
 }
 

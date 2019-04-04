@@ -24,9 +24,13 @@ public class ClientDrawTrainCardState extends AbstractClientGameState {
 
     @Override
     public void notifyTurnAdvancement() {
-        if(getGame().isPlayersTurn(super.getClientID())) {
-            System.out.println(this.getClass().toString() + " was notified of a turn advancement: " +
-                    "check for bug, as this state should automatically change states");
+        if(!getGame().isPlayersTurn(super.getClientID())) {
+            super.updateGameState(new ClientInactiveState(this));
+        } else {
+            //System.out.println(this.getClass().toString() + " was notified of a turn advancement: " +
+            //        "check for bug, as this state should automatically change states");
+            System.out.println("ERROR: draw train card state went straight to the active " +
+                    "player state, which should never happen");
             super.updateGameState(new ClientActivePlayerState(this));
         }
     }

@@ -30,4 +30,24 @@ public class DestinationCardModel {
     public int getPointValue() {
     	return pointValue;
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        DestinationCardModel that = (DestinationCardModel) o;
+
+        if (getPointValue() != that.getPointValue()) return false;
+        if (!getCity1().equals(that.getCity1())) return false;
+        return getCity2().equals(that.getCity2());
+    }
+
+    @Override
+    public int hashCode() {
+        int result = getCity1().hashCode();
+        result = 31 * result + getCity2().hashCode();
+        result = 37 * result + getPointValue();
+        return result;
+    }
 }

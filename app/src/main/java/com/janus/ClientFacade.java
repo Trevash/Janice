@@ -117,14 +117,15 @@ public class ClientFacade {
      */
     public playerModel getPlayer() {
         // apparently, the playerID was never added to the user... so I took it from the client state
-        playerIDModel thisPlayerID = getGame().getClientID(); // would be better if we could grab it from the user
-        for (int i = 0; i < getPlayers().size(); i++) {
+        //playerIDModel thisPlayerID = model.getPlayerID();
+        return getGame().getPlayerByUsername(model.getUser().getUserName());
+        //for (int i = 0; i < getPlayers().size(); i++) {
             //if (getUser().getPlayerIDs().contains(getPlayers().get(i).getId())) {
-            if (thisPlayerID.equals(getPlayers().get(i).getId())) {
-                return getPlayers().get(i);
-            }
-        }
-        throw new RuntimeException("Seriously Bugged code: client's player not found in the game");
+        //    if (thisPlayerID.equals(getPlayers().get(i).getId())) {
+        //        return getPlayers().get(i);
+        //    }
+        //}
+        //throw new RuntimeException("Seriously Bugged code: client's player not found in the game");
     }
 
     public void setNumTrainCards(int numTrainCards) {

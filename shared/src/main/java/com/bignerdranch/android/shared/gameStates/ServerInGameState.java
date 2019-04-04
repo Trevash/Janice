@@ -20,11 +20,7 @@ public class ServerInGameState extends AbstractServerGameState implements IGameS
     //public ServerInGameState(AbstractServerGameState prevState, IDestinationCardDeck destinationCardDeck, TrainCardBank bank) {
     public ServerInGameState(AbstractServerGameState prevState) {
         super(prevState);
-        //this.destinationCardDeck = destinationCardDeck;
-        //this.trainCardBank = bank;
     }
-    
-
 
     /**
      * Draws up to 3 destination cards, as specified by the rules of the game.<!-- -->
