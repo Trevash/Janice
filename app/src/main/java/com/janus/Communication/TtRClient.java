@@ -70,6 +70,7 @@ public class TtRClient extends WebSocketClient{
                 }
                 case DRAW_DESTINATION_CARDS: {
                     messageResult = result;
+                    break;
                 }
                 case JOIN: {
                     facade.setGame((gameModel) result.getData(gameModel.class));
@@ -127,7 +128,7 @@ public class TtRClient extends WebSocketClient{
                 }
             }
             // TODO: Generic UI update here maybe? caused problems earlier
-            // messageResult = result; // TODO do we want every messageResult getting stored here? Even if they aren't getting used here?
+            // messageResult = result;
             // could potentially overwrite stuff.
         }
         else {

@@ -122,6 +122,7 @@ public class gameModel {
     }
 
     public void updateCurrentPlayerDestinationCards(List<DestinationCardModel> selectedCards) {
+        // note: changed to be turn-independent - now directly returns to the player
         playerModel curPlayer = players.get(turnCounter);
         curPlayer.addDestinationCards(selectedCards);
         // turn order incremented when the card is returned to the deck, by the state
