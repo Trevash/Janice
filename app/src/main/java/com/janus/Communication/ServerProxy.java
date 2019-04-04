@@ -351,6 +351,7 @@ public class ServerProxy implements IServer {
         String[] paramTypes = {paramType};
         GenericCommand commandObj = new GenericCommand("server.handlers.commandHandler", methodName, paramTypes, paramValues);
         String commandObjStr = Serializer.getInstance().serializeObject(commandObj);
+        client.resetMessageResult();
         client.send(commandObjStr);
         this.messageResult = null;
         return waitForMessageResult(expectedResultType);
