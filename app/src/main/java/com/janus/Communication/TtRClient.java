@@ -41,10 +41,12 @@ public class TtRClient extends WebSocketClient{
             switch (result.getType()) {
                 case LOGIN: {
                     facade.setUser((userModel) result.getData(userModel.class));
+                    messageResult = result;
                     break;
                 }
                 case REGISTER: {
                     facade.setUser((userModel) result.getData(userModel.class));
+                    messageResult = result;
                     break;
                 }
                 case GAME_LIST: {
@@ -53,6 +55,7 @@ public class TtRClient extends WebSocketClient{
                 }
                 case CREATE: {
                     facade.setGame((gameModel) result.getData(gameModel.class));
+                    messageResult = result;
                     break;
                 }
                 case CLAIM_ROUTE:{
@@ -65,19 +68,24 @@ public class TtRClient extends WebSocketClient{
                     facade.update();
                     break;
                 }
+                case DRAW_DESTINATION_CARDS: {
+                    messageResult = result;
+                }
                 case JOIN: {
                     facade.setGame((gameModel) result.getData(gameModel.class));
+                    messageResult = result;
                     break;
                 }
                 case START: {
                     facade.setGame((gameModel) result.getData(gameModel.class));
+                    messageResult = result;
                     break;
                 }
                 case RETURN_DESTINATION_CARDS: {
                     // get ReturnDestinationCardData, add to the client's hand
                     ReturnDestinationCardData data = (ReturnDestinationCardData) result.getData(ReturnDestinationCardData.class);
                     facade.addDestinationCardsToHand(data.getSelectedCards());
-
+                    messageResult = result;
                     break;
                 }
                 case UPDATE_CHAT: {
@@ -105,6 +113,7 @@ public class TtRClient extends WebSocketClient{
                     facade.getGame().setNumTrainCards(data.getNumTrainCards());
                     facade.notifyTrainCardDrawn(); // this allows the state to update properly
                     facade.update();
+                    messageResult = result;
                     break;
                 }
                 case DRAW_SECOND_TRAIN_CARD: {
@@ -113,11 +122,12 @@ public class TtRClient extends WebSocketClient{
                     facade.getGame().setFaceUpCards(data.getFaceUpCards());
                     facade.getGame().setNumTrainCards(data.getNumTrainCards());
                     facade.notifyTrainCardDrawn();
+                    messageResult = result;
                     break;
                 }
             }
-            //TODO: Generic UI update here maybe? caused problems earlier
-            messageResult = result; // TODO do we want every messageResult getting stored here? Even if they aren't getting used here?
+            // TODO: Generic UI update here maybe? caused problems earlier
+            // messageResult = result; // TODO do we want every messageResult getting stored here? Even if they aren't getting used here?
             // could potentially overwrite stuff.
         }
         else {
@@ -138,5 +148,9 @@ public class TtRClient extends WebSocketClient{
     
     public Results getResults() {
     	return messageResult;
+    }
+
+    public void resetMessageResult() {
+        messageResult = null;
     }
 }
