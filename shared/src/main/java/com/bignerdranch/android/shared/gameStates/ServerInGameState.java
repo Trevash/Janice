@@ -6,6 +6,7 @@ import com.bignerdranch.android.shared.interfaces.IGameState;
 import com.bignerdranch.android.shared.models.DestinationCardModel;
 import com.bignerdranch.android.shared.models.TrainCardBank;
 import com.bignerdranch.android.shared.models.gameModel;
+import com.bignerdranch.android.shared.models.playerIDModel;
 import com.bignerdranch.android.shared.models.trainCardModel;
 
 
@@ -22,11 +23,27 @@ public class ServerInGameState extends AbstractServerGameState implements IGameS
         //this.destinationCardDeck = destinationCardDeck;
         //this.trainCardBank = bank;
     }
+    
 
 
-
-
-
+    /**
+     * Draws up to 3 destination cards, as specified by the rules of the game.<!-- -->
+     * Precondition: the state has a valid reference to the game's destination card deck.<!-- -->
+     * Postcondition: the returned list contains all of the destination cards removed from the deck.<!-- -->
+     * Postcondition: the deck's size is reduced by the number of destination cards drawn.<!-- -->
+     *
+     * @param clientID
+     * @return a list containing all of the drawn destination cards.
+     */
+    @Override
+    public List<DestinationCardModel> drawDestinationCards(playerIDModel clientID) {
+        if(super.getGame().isPlayersTurn(clientID)) {
+            return super.drawDestinationCards(clientID);
+        } else {
+            throw new IllegalArgumentException("Only the client whose turn it is may " +
+                    "draw destination cards");
+        }
+    }
 
 
     /**

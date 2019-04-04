@@ -5,6 +5,7 @@ import com.bignerdranch.android.shared.models.DestinationCardDeck;
 import com.bignerdranch.android.shared.models.DestinationCardModel;
 import com.bignerdranch.android.shared.models.TrainCardBank;
 import com.bignerdranch.android.shared.models.gameModel;
+import com.bignerdranch.android.shared.models.playerIDModel;
 import com.bignerdranch.android.shared.models.trainCardModel;
 
 import java.util.List;
@@ -42,7 +43,7 @@ public abstract class AbstractServerGameState extends AbstractGameState {
      * @return a list containing all of the drawn destination cards.
      */
     @Override
-    public List<DestinationCardModel> drawDestinationCards() {
+    public List<DestinationCardModel> drawDestinationCards(playerIDModel clientID) {
         return destinationCardDeck.drawDestinationCards();
     }
 

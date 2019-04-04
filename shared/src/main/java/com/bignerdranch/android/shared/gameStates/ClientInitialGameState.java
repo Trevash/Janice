@@ -68,9 +68,9 @@ public class ClientInitialGameState extends AbstractClientGameState implements I
     */
 
     @Override
-    public List<DestinationCardModel> drawDestinationCards() {
+    public List<DestinationCardModel> drawDestinationCards(playerIDModel clientID) {
         if (drawnCards == null) {
-            drawnCards = super.drawDestinationCards();
+            drawnCards = super.drawDestinationCards(clientID);
         }
         return drawnCards;
     }

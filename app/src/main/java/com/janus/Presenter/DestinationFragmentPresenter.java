@@ -26,7 +26,7 @@ public class DestinationFragmentPresenter implements ClientFacade.Presenter, Ret
     }
 
     public void updateUI(){
-        view.updateDestinationCards(model.getGame().drawDestinationCards());
+        view.updateDestinationCards(model.getGame().drawDestinationCards(facade.getPlayer().getId()));
     }
 
     public void setFragment() {

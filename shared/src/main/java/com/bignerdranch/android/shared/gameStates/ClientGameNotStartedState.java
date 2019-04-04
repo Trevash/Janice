@@ -1,18 +1,10 @@
 package com.bignerdranch.android.shared.gameStates;
 
 import com.bignerdranch.android.shared.interfaces.IServer;
-import com.bignerdranch.android.shared.models.DestinationCardModel;
 import com.bignerdranch.android.shared.models.gameModel;
 import com.bignerdranch.android.shared.models.playerIDModel;
 
-import java.util.List;
-
-public class ClientActivePlayerState extends AbstractClientGameState {
-
-    public ClientActivePlayerState(AbstractClientGameState prevState) {
-        super(prevState);
-    }
-
+public class ClientGameNotStartedState extends AbstractClientGameState {
     /**
      * Constructs a AbstractClientGameState object that can interact with the provided server for the
      * provided gameID.<!-- -->
@@ -25,34 +17,24 @@ public class ClientActivePlayerState extends AbstractClientGameState {
      * @param destCardDeckSize the number of cards in the destination card deck
      * @param clientID
      */
-    public ClientActivePlayerState(IServer server, gameModel game, int destCardDeckSize, playerIDModel clientID) {
+    public ClientGameNotStartedState(IServer server, gameModel game, int destCardDeckSize, playerIDModel clientID) {
+        //super(server, game, serverState.getDestinationCardDeckSize(), game.getPlayers().get(playerNum).getId());
         super(server, game, destCardDeckSize, clientID);
     }
 
     @Override
     public boolean canDrawTrainCards() {
-        return true;
+        return false;
     }
 
     @Override
     public boolean canDrawDestCards() {
-        return true;
+        return false;
     }
 
     @Override
     public boolean canClaimRoute() {
-        return true;
-    }
-
-    @Override
-    public List<DestinationCardModel> drawDestinationCards(playerIDModel client) {
-        // TODO provide error handling - also may want way to avoid two quick succession draws
-        List<DestinationCardModel> drawnCards = super.drawDestinationCards(client);
-        // do if succeeded
-        super.updateGameState(new ClientChooseDestCardState(this, drawnCards));
-        return drawnCards;
-        // else if failed
-            // error message - which would likely mean an exception
+        return false;
     }
 
     /**
@@ -61,13 +43,6 @@ public class ClientActivePlayerState extends AbstractClientGameState {
      */
     @Override
     public void notifyTurnAdvancement() {
-        if(!getGame().isPlayersTurn(super.getClientID())) {
-            updateGameState(new ClientInactiveState(this));
-        }
-    }
-
-    @Override
-    public void notifyTrainCardDrawn() {
-        super.updateGameState(new ClientDrawTrainCardState(this));
+        //throw new IllegalStateException() // shouldn't ever get called in this state
     }
 }

@@ -6,8 +6,10 @@ import com.bignerdranch.android.shared.gameStates.AbstractServerGameState;
 import com.bignerdranch.android.shared.gameStates.ClientActivePlayerState;
 import com.bignerdranch.android.shared.gameStates.ClientChooseDestCardState;
 import com.bignerdranch.android.shared.gameStates.ClientDrawTrainCardState;
+import com.bignerdranch.android.shared.gameStates.ClientGameNotStartedState;
 import com.bignerdranch.android.shared.gameStates.ClientGameOverState;
 import com.bignerdranch.android.shared.gameStates.ClientInactiveState;
+import com.bignerdranch.android.shared.gameStates.ServerGameNotStartedState;
 import com.bignerdranch.android.shared.gameStates.ServerInGameState;
 import com.bignerdranch.android.shared.interfaces.IDestinationCardDeck;
 import com.bignerdranch.android.shared.interfaces.IGameState;
@@ -60,7 +62,9 @@ public class Serializer {
                     .registerSubtype(ClientGameOverState.class)
                     .registerSubtype(ClientInitialGameState.class)
                     .registerSubtype(ServerInGameState.class)
-                    .registerSubtype(ServerInitialGameState.class);
+                    .registerSubtype(ServerInitialGameState.class)
+                    .registerSubtype(ServerGameNotStartedState.class)
+                    .registerSubtype(ClientGameNotStartedState.class);
     private static RuntimeTypeAdapterFactory<AbstractGameState> abGameStateAdapter =
             RuntimeTypeAdapterFactory
                     .of(AbstractGameState.class)
@@ -73,7 +77,9 @@ public class Serializer {
                     .registerSubtype(ClientGameOverState.class)
                     .registerSubtype(ClientInitialGameState.class)
                     .registerSubtype(ServerInGameState.class)
-                    .registerSubtype(ServerInitialGameState.class);
+                    .registerSubtype(ServerInitialGameState.class)
+                    .registerSubtype(ServerGameNotStartedState.class)
+                    .registerSubtype(ClientGameNotStartedState.class);
     private static RuntimeTypeAdapterFactory<AbstractClientGameState> abClientGameStateAdapter =
             RuntimeTypeAdapterFactory
                     .of(AbstractClientGameState.class)
@@ -82,12 +88,14 @@ public class Serializer {
                     .registerSubtype(ClientChooseDestCardState.class)
                     .registerSubtype(ClientDrawTrainCardState.class)
                     .registerSubtype(ClientGameOverState.class)
-                    .registerSubtype(ClientInitialGameState.class);
+                    .registerSubtype(ClientInitialGameState.class)
+                    .registerSubtype(ClientGameNotStartedState.class);
     private static RuntimeTypeAdapterFactory<AbstractServerGameState> abServerGameStateAdapter =
             RuntimeTypeAdapterFactory
                     .of(AbstractServerGameState.class)
                     .registerSubtype(ServerInGameState.class)
-                    .registerSubtype(ServerInitialGameState.class);
+                    .registerSubtype(ServerInitialGameState.class)
+                    .registerSubtype(ServerGameNotStartedState.class);
 
     private static RuntimeTypeAdapterFactory<IDestinationCardDeck> destinationCardAdapter =
             RuntimeTypeAdapterFactory

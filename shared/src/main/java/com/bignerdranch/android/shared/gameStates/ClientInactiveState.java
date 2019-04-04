@@ -57,7 +57,7 @@ public class ClientInactiveState extends AbstractClientGameState {
      * @return a list containing all of the drawn destination cards.
      */
     @Override
-    public List<DestinationCardModel> drawDestinationCards() {
+    public List<DestinationCardModel> drawDestinationCards(playerIDModel clientID) {
         throw new IllegalStateException("Cannot draw destination cards outside of your turn");
     }
 

@@ -1,5 +1,7 @@
 package com.bignerdranch.android.shared.models;
 
+import com.bignerdranch.android.shared.gameStates.AbstractServerGameState;
+import com.bignerdranch.android.shared.gameStates.ServerGameNotStartedState;
 import com.bignerdranch.android.shared.interfaces.IServer;
 import com.bignerdranch.android.shared.exceptions.DuplicateException;
 import com.bignerdranch.android.shared.exceptions.RouteNotFoundException;
@@ -66,7 +68,7 @@ public class gameModel {
         setGameName(newGameName);
         gameStarted = false;
         //this.setDecks(); decks are set in the game state
-        this.state = new ServerInitialGameState(this);
+        this.state = new ServerGameNotStartedState(this);
 
         try {
             addPlayer(hostPlayer);
@@ -107,10 +109,10 @@ public class gameModel {
     }
 
     // public or private
-    public List<DestinationCardModel> drawDestinationCards() {
+    public List<DestinationCardModel> drawDestinationCards(playerIDModel clientID) {
         // state draws the destination cards: if on the client side, it calls a method on the server proxy
         // if on the server side, the state draws cards from the deck inside of it
-        return state.drawDestinationCards();
+        return state.drawDestinationCards(clientID);
     }
 
     public void returnRejectedDestinationCards(List<DestinationCardModel> selectedCards, List<DestinationCardModel> rejectedCards) {
@@ -122,7 +124,6 @@ public class gameModel {
     public void updateCurrentPlayerDestinationCards(List<DestinationCardModel> selectedCards) {
         playerModel curPlayer = players.get(turnCounter);
         curPlayer.addDestinationCards(selectedCards);
-        //TODO: increment turn order, update game history
         // turn order incremented when the card is returned to the deck, by the state
     }
 
@@ -177,18 +178,21 @@ public class gameModel {
     }
 
     public void startGame() {
-        if (players.size() < 1) {
+        if (players.size() < 2) {
             throw new IllegalStateException("Insufficient number of players to start game!");
         }
         if (players.size() > 5) {
             throw new IllegalStateException("Too many players to start game!");
         }
 
-        this.gameStarted = true;
-        this.createRoutes();
 
-        // TODO have each player draw destinationCards - have drawn destination cards,
-        // TODO and each player starts in the draw destination card fragment?
+        if (state instanceof AbstractServerGameState) {
+            this.state = new ServerInitialGameState((AbstractServerGameState) state);
+            this.gameStarted = true;
+            this.createRoutes();
+        } else {
+            throw new IllegalStateException("the game needs to be started on the serverSide");
+        }
 
         //color assigned in the addPlayer() function
         //determine player order: order they joined (order in 'players' array)

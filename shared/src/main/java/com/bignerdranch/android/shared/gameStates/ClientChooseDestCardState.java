@@ -1,6 +1,7 @@
 package com.bignerdranch.android.shared.gameStates;
 
 import com.bignerdranch.android.shared.models.DestinationCardModel;
+import com.bignerdranch.android.shared.models.playerIDModel;
 
 import java.util.List;
 
@@ -30,7 +31,7 @@ public class ClientChooseDestCardState extends AbstractClientGameState {
     }
 
     @Override
-    public List<DestinationCardModel> drawDestinationCards() {
+    public List<DestinationCardModel> drawDestinationCards(playerIDModel clientID) {
         return drawnCards; // Don't want to draw new cards here
     }
 

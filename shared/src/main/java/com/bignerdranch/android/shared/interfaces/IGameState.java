@@ -1,7 +1,9 @@
 package com.bignerdranch.android.shared.interfaces;
 
+import com.bignerdranch.android.shared.gameStates.AbstractClientGameState;
 import com.bignerdranch.android.shared.models.DestinationCardModel;
 import com.bignerdranch.android.shared.models.gameModel;
+import com.bignerdranch.android.shared.models.playerIDModel;
 import com.bignerdranch.android.shared.models.trainCardModel;
 
 import java.util.List;
@@ -20,7 +22,7 @@ public interface IGameState {
      * Postcondition: the deck's size is reduced by the number of destination cards drawn.<!-- -->
      * @return a list containing all of the drawn destination cards.
      */
-    List<DestinationCardModel> drawDestinationCards();
+    List<DestinationCardModel> drawDestinationCards(playerIDModel clientID);
 
     /**
      * Returns all of the destination cards in the provided list to the game's destination card deck,
@@ -59,7 +61,7 @@ public interface IGameState {
      * @param playerNum
      * @return the client version of this game state (itself if a client version)
      */
-    IGameState toClientState(IServer serverProxy, gameModel game, int playerNum);
+    AbstractClientGameState toClientState(IServer serverProxy, gameModel game, int playerNum);
 
     trainCardModel drawTrainCardFromDeck();
 

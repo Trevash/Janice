@@ -56,7 +56,7 @@ public abstract class AbstractClientGameState extends AbstractGameState implemen
     public AbstractClientGameState(IServer server, gameModel game, int destCardDeckSize, playerIDModel clientID) {
         super(game);
         // should be used when going from Server state to client state
-        destinationCardDeck = new DestinationCardDeckProxy(server, game.getGameID(), destCardDeckSize);
+        destinationCardDeck = new DestinationCardDeckProxy(server, game.getGameID(), clientID, destCardDeckSize);
         this.clientID = clientID;
         // these next two vars are here to avoid null-pointer-exceptions
         trainCardDiscard = new ArrayList<>();
@@ -104,13 +104,17 @@ public abstract class AbstractClientGameState extends AbstractGameState implemen
      * @return the client version of this game state (itself if a client version)
      */
     @Override
-    public IGameState toClientState(IServer serverProxy, gameModel game, int playerNum) {
+    public AbstractClientGameState toClientState(IServer serverProxy, gameModel game, int playerNum) {
         return this;
     }
 
 
     @Override
-    public List<DestinationCardModel> drawDestinationCards() {
+    public List<DestinationCardModel> drawDestinationCards(playerIDModel clientID) {
+        if(!clientID.equals(this.clientID)) {
+            throw new IllegalArgumentException("Error: the clientID passed into " +
+                    "drawDestinationCards does not match the clientID in the state");
+        }
         if (canDrawDestCards()) {
             return destinationCardDeck.drawDestinationCards();
         } else {
