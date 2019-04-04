@@ -19,6 +19,18 @@ import com.bignerdranch.android.shared.Serializer;
 import java.net.URI;
 import java.net.URISyntaxException;
 
+import static com.bignerdranch.android.shared.Constants.Commands.CLAIM_ROUTE;
+import static com.bignerdranch.android.shared.Constants.Commands.CREATE;
+import static com.bignerdranch.android.shared.Constants.Commands.DRAW_DESTINATION_CARDS;
+import static com.bignerdranch.android.shared.Constants.Commands.DRAW_FIRST_TRAIN_CARD;
+import static com.bignerdranch.android.shared.Constants.Commands.DRAW_SECOND_TRAIN_CARD;
+import static com.bignerdranch.android.shared.Constants.Commands.JOIN;
+import static com.bignerdranch.android.shared.Constants.Commands.LOGIN;
+import static com.bignerdranch.android.shared.Constants.Commands.REGISTER;
+import static com.bignerdranch.android.shared.Constants.Commands.RETURN_DESTINATION_CARDS;
+import static com.bignerdranch.android.shared.Constants.Commands.START;
+import static com.bignerdranch.android.shared.Constants.Commands.UPDATE_CHAT;
+
 public class ServerProxy implements IServer {
 
     public interface CurrentState {
@@ -73,7 +85,8 @@ public class ServerProxy implements IServer {
     public Results login(LoginRequest request) {
         return sendGenericRequest(request,
                 "com.bignerdranch.android.shared.requestObjects.LoginRequest",
-                "login");
+                "login",
+                LOGIN);
     }
 
     /*
@@ -96,7 +109,8 @@ public class ServerProxy implements IServer {
     public Results register(RegisterRequest request) {
         return sendGenericRequest(request,
                 "com.bignerdranch.android.shared.requestObjects.RegisterRequest",
-                "register");
+                "register",
+                 REGISTER);
     }
 
     /*
@@ -119,7 +133,8 @@ public class ServerProxy implements IServer {
     public Results createGame(CreateGameRequest request) {
         return sendGenericRequest(request,
                 "com.bignerdranch.android.shared.requestObjects.CreateGameRequest",
-                "createGame");
+                "createGame",
+                 CREATE);
     }
 
     /*
@@ -142,7 +157,8 @@ public class ServerProxy implements IServer {
     public Results startGame(StartGameRequest request) {
         return sendGenericRequest(request,
                 "com.bignerdranch.android.shared.requestObjects.StartGameRequest",
-                "startGame");
+                "startGame",
+                 START);
     }
 
     /*
@@ -165,7 +181,8 @@ public class ServerProxy implements IServer {
     public Results joinGame(JoinGameRequest request) {
         return sendGenericRequest(request,
                 "com.bignerdranch.android.shared.requestObjects.JoinGameRequest",
-                "joinGame");
+                "joinGame",
+                 JOIN);
     }
 
     /*
@@ -191,7 +208,8 @@ public class ServerProxy implements IServer {
     public Results claimRoute(ClaimRouteRequest request) {
         return sendGenericRequest(request,
                 "com.bignerdranch.android.shared.requestObjects.ClaimRouteRequest",
-                "claimRoute");
+                "claimRoute",
+                 CLAIM_ROUTE);
     }
 
     /*
@@ -214,24 +232,8 @@ public class ServerProxy implements IServer {
     public Results updateChatbox(UpdateChatboxRequest request) {
         return sendGenericRequest(request,
                 "com.bignerdranch.android.shared.requestObjects.UpdateChatboxRequest",
-                "updateChatbox");
-    }
-
-    public Results testSocket(UpdateChatboxRequest request) throws Exception {
-        Object[] paramValues = {Serializer.getInstance().serializeObject(request)};
-        String[] paramTypes = {"com.bignerdranch.android.shared.requestObjects.UpdateChatboxRequest"};
-        GenericCommand commandObj = new GenericCommand("server.handlers.commandHandler", "updateChatbox", paramTypes, paramValues);
-        //switch this one out with yours
-        String commandObjStr = Serializer.getInstance().serializeObject(commandObj);
-        //
-        client.send(commandObjStr);
-        messageResult = null;
-        client.setMessageResultToNull();
-        while (messageResult == null) {
-            messageResult = client.getResults();
-            Thread.sleep(100);
-        }
-        return messageResult;
+                "updateChatbox",
+                 UPDATE_CHAT);
     }
 
 	/*
@@ -257,7 +259,8 @@ public class ServerProxy implements IServer {
     public Results drawDestinationCards(DrawDestinationCardsRequest request) {
         return sendGenericRequest(request,
                 "com.bignerdranch.android.shared.requestObjects.DrawDestinationCardsRequest",
-                "drawDestinationCards");
+                "drawDestinationCards",
+                 DRAW_DESTINATION_CARDS);
     }
 
     /*
@@ -283,7 +286,8 @@ public class ServerProxy implements IServer {
     public Results returnDestinationCard(ReturnDestinationCardsRequest request) {
         return sendGenericRequest(request,
                 "com.bignerdranch.android.shared.requestObjects.ReturnDestinationCardsRequest",
-                "returnDestinationCard");
+                "returnDestinationCard",
+                 RETURN_DESTINATION_CARDS);
     }
 
     /*
@@ -310,7 +314,8 @@ public class ServerProxy implements IServer {
     public Results drawFirstTrainCard(DrawTrainCardRequest request) {
         return sendGenericRequest(request,
                 "com.bignerdranch.android.shared.requestObjects.DrawTrainCardRequest",
-                "drawFirstTrainCard");
+                "drawFirstTrainCard",
+                 DRAW_FIRST_TRAIN_CARD);
     }
 
     /*
@@ -337,18 +342,22 @@ public class ServerProxy implements IServer {
     public Results drawSecondTrainCard(DrawTrainCardRequest request) {
         return sendGenericRequest(request,
                 "com.bignerdranch.android.shared.requestObjects.DrawTrainCardRequest",
-                "drawSecondTrainCard");
+                "drawSecondTrainCard",
+                 DRAW_SECOND_TRAIN_CARD);
     }
 
-    private Results sendGenericRequest(Object request, String paramType, String methodName) {
+    private Results sendGenericRequest(Object request, String paramType, String methodName, String expectedResultType) {
         Object[] paramValues = {Serializer.getInstance().serializeObject(request)};
         String[] paramTypes = {paramType};
         GenericCommand commandObj = new GenericCommand("server.handlers.commandHandler", methodName, paramTypes, paramValues);
         String commandObjStr = Serializer.getInstance().serializeObject(commandObj);
         client.send(commandObjStr);
-        messageResult = null;
-        client.setMessageResultToNull();
-        while (messageResult == null) {
+        this.messageResult = null;
+        return waitForMessageResult(expectedResultType);
+    }
+
+    private Results waitForMessageResult(String expectedResultType) {
+        while (messageResult == null || !messageResult.getType().equals(expectedResultType)) {
             messageResult = client.getResults();
             try {
                 Thread.sleep(100);

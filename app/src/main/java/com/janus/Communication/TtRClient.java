@@ -140,8 +140,4 @@ public class TtRClient extends WebSocketClient{
     public Results getResults() {
     	return messageResult;
     }
-
-    public void setMessageResultToNull() {
-        messageResult = null;
-    }
 }
