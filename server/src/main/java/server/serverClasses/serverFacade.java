@@ -118,7 +118,7 @@ public class serverFacade implements IServer {
 
     @Override
     public Results claimRoute(ClaimRouteRequest request) throws Exception {
-        if(!serverModel.getInstance().authTokenExists(request.getAuth())){
+        if (!serverModel.getInstance().authTokenExists(request.getAuth())) {
             throw new InvalidAuthorizationException("Invalid Auth Token passed to ClaimRoute!");
         }
 
@@ -128,15 +128,15 @@ public class serverFacade implements IServer {
     }
 
     @Override
-	public Results updateChatbox(UpdateChatboxRequest request) throws InvalidAuthorizationException, 
-			GameNotFoundException {
+    public Results updateChatbox(UpdateChatboxRequest request) throws InvalidAuthorizationException,
+            GameNotFoundException {
         if (!serverModel.getInstance().authTokenExists(request.getAuth())) {
             throw new InvalidAuthorizationException("Invalid Auth Token passed to updateChatBox");
         }
-        
+
         ChatboxData chatbox = serverModel.getInstance().updateChatbox(request);
         return new Results("UpdateChat", true, chatbox);
-	}
+    }
 
     @Override
     public Results drawDestinationCards(DrawDestinationCardsRequest request) {
@@ -156,7 +156,7 @@ public class serverFacade implements IServer {
         // the turn gets updated when the cards are returned, so the current player needs to be updated
         // before the cards are actually returned
         game.returnRejectedDestinationCards(request.getSelectedCards(), request.getRejectedCards());
-        ReturnDestinationCardData result = new ReturnDestinationCardData(game.getGameID(),name, request.getSelectedCards());
+        ReturnDestinationCardData result = new ReturnDestinationCardData(game.getGameID(), name, request.getSelectedCards());
         return new Results("ReturnDestinationCards", true, result);
         // currently does not return anything - will need to update everyone's games
     }

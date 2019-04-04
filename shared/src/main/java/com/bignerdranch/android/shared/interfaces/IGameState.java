@@ -83,7 +83,6 @@ public interface IGameState {
 
     List<trainCardModel> getFaceUpTrainCards();
 
-    //int minKeepDestCards(); // or some such method
-    // TODO do we want a method that gives out the number of returnable destination cards?
+    int minKeepDestCards();
 
 }

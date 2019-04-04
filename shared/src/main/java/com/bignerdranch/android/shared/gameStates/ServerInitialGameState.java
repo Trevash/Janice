@@ -133,4 +133,9 @@ public class ServerInitialGameState extends AbstractServerGameState implements I
     public trainCardModel drawFaceUpTrainCard(int cardLocation) {
         throw new IllegalStateException("Cannot draw train cards during the start of the game");
     }
+
+    @Override
+    public int minKeepDestCards() {
+        return 2;
+    }
 }

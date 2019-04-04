@@ -167,4 +167,8 @@ public class ClientFacade {
     public void notifyTrainCardDrawn() {
         getGame().notifyTrainCardDrawn();
     }
+
+    public int getMinKeepDestCards() {
+        return getGame().minKeepDestCards();
+    }
 }

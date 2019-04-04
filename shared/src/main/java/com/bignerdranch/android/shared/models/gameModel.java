@@ -470,4 +470,8 @@ public class gameModel {
                     "client-side-only operation");
         }
     }
+
+    public int minKeepDestCards() {
+        return state.minKeepDestCards();
+    }
 }

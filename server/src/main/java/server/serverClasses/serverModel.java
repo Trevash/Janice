@@ -42,7 +42,7 @@ public class serverModel {
     private List<gameModel> games = new ArrayList<>();
 
     public static serverModel getInstance() {
-        if(sm == null){
+        if (sm == null) {
             sm = new serverModel();
         }
         return sm;
@@ -52,16 +52,13 @@ public class serverModel {
         gameModel curGame = this.getGameByID(request.getGameID());
         abstractRoute curRoute = curGame.getRouteById(request.getRouteID());
 
-        if(curRoute instanceof singleRouteModel){
+        if (curRoute instanceof singleRouteModel) {
             curRoute.claim(request.getPlayerID());
-        }
-        else if(curRoute instanceof doubleRouteModelFew){
+        } else if (curRoute instanceof doubleRouteModelFew) {
             curRoute.claim(request.getPlayerID());
-        }
-        else if(curRoute instanceof doubleRouteModelMany){
+        } else if (curRoute instanceof doubleRouteModelMany) {
             curRoute.claim(request.getPlayerID(), request.getColor());
-        }
-        else{
+        } else {
             throw new RouteNotFoundException("Route of invalid class type passed to server!");
         }
 
@@ -73,13 +70,13 @@ public class serverModel {
         return new ClaimRouteData(curGame.getGameID(), request.getPlayerID(), curGame.getRoutes(), hand, curGame.getTrainCardDiscards(), curRoute, points, getUser(request.getAuth()).getUserName(), curGame.getPlayerModelFromID(request.getPlayerID()).getLocomotives());
     }
 
-    public void addUser(userModel newUser){
+    public void addUser(userModel newUser) {
         this.users.add(newUser);
     }
 
     public boolean userExists(String test) {
         for (userModel user : this.users) {
-            if(test.equals(user.getUserName().getValue())){
+            if (test.equals(user.getUserName().getValue())) {
                 return true;
             }
         }
@@ -88,7 +85,7 @@ public class serverModel {
 
     public boolean userExists(userModel test) {
         for (userModel user : this.users) {
-            if(test == user){
+            if (test == user) {
                 return true;
             }
         }
@@ -97,7 +94,7 @@ public class serverModel {
 
     public boolean userExists(userIDModel test) {
         for (userModel user : this.users) {
-            if(test == user.getUserID()){
+            if (test == user.getUserID()) {
                 return true;
             }
         }
@@ -106,7 +103,7 @@ public class serverModel {
 
     public boolean userIDExists(String test) {
         for (userModel user : this.users) {
-            if(test.equals(user.getUserID().getValue())){
+            if (test.equals(user.getUserID().getValue())) {
                 return true;
             }
         }
@@ -125,8 +122,8 @@ public class serverModel {
     }
 
     public userModel getUser(String username) throws UserNotFoundException {
-        for(userModel user : this.users) {
-            if(user.getUserName().getValue().equals(username)) {
+        for (userModel user : this.users) {
+            if (user.getUserName().getValue().equals(username)) {
                 return user;
             }
         }
@@ -134,8 +131,8 @@ public class serverModel {
     }
 
     public userModel getUser(authTokenModel auth) throws UserNotFoundException {
-        for(userModel user : this.users) {
-            if(user.getAuthToken().getValue().equals(auth.getValue())) {
+        for (userModel user : this.users) {
+            if (user.getAuthToken().getValue().equals(auth.getValue())) {
                 return user;
             }
         }
@@ -144,7 +141,7 @@ public class serverModel {
 
     public boolean authTokenExists(authTokenModel auth) {
         for (userModel curUser : this.users) {
-            if(curUser.getAuthToken().getValue().equals(auth.getValue()))
+            if (curUser.getAuthToken().getValue().equals(auth.getValue()))
                 return true;
         }
         return false;
@@ -152,15 +149,15 @@ public class serverModel {
 
     public boolean authTokenExists(String newValue) {
         for (userModel curUser : this.users) {
-            if(curUser.getAuthToken().getValue().equals(newValue))
+            if (curUser.getAuthToken().getValue().equals(newValue))
                 return true;
         }
         return false;
     }
 
     public boolean gameIDExists(String newValue) {
-        for(gameModel game : this.games){
-            if(game.getGameID().getValue().equals(newValue)){
+        for (gameModel game : this.games) {
+            if (game.getGameID().getValue().equals(newValue)) {
                 return true;
             }
         }
@@ -172,8 +169,8 @@ public class serverModel {
     }
 
     public gameModel getGameByID(gameIDModel id) {
-        for(gameModel game: this.games){
-            if(id.equals(game.getGameID())) {
+        for (gameModel game : this.games) {
+            if (id.equals(game.getGameID())) {
                 return game;
             }
         }
@@ -187,7 +184,7 @@ public class serverModel {
     public gameModel joinGame(JoinGameRequest request) throws GameNotFoundException,
             InvalidAuthorizationException, DuplicateException {
         for (gameModel curGame : this.games) {
-            if(curGame.getGameID().getValue().equals(request.getModel().getGameID().getValue())) {
+            if (curGame.getGameID().getValue().equals(request.getModel().getGameID().getValue())) {
                 curGame.addPlayer(this.makeNewPlayer(this.getUserByAuth(request.getAuth())));
                 return curGame;
             }
@@ -202,7 +199,7 @@ public class serverModel {
 
     private userModel getUserByAuth(authTokenModel auth) throws InvalidAuthorizationException {
         for (userModel curUser : this.users) {
-            if(curUser.getAuthToken().getValue().equals(auth.getValue()))
+            if (curUser.getAuthToken().getValue().equals(auth.getValue()))
                 return curUser;
         }
         throw new InvalidAuthorizationException("User not found by auth token to find game!");
@@ -211,17 +208,17 @@ public class serverModel {
     public gameModel startGame(StartGameRequest request) throws GameNotFoundException {
         for (gameModel curGame : this.games) {
             //if(curGame.getGameID().getValue().equals(request.getModel().getGameID().getValue())) {
-            if(curGame.getGameID().equals(request.getGameID()) ) {
+            if (curGame.getGameID().equals(request.getGameID())) {
                 curGame.startGame();
                 return curGame;
             }
         }
         throw new GameNotFoundException("Game not found to start!");
     }
-    
+
     public ChatboxData updateChatbox(UpdateChatboxRequest request) throws GameNotFoundException {
         for (gameModel curGame : this.games) {
-            if(curGame.getGameID().getValue().equals(request.getGameID().getValue())) {
+            if (curGame.getGameID().getValue().equals(request.getGameID().getValue())) {
                 curGame.updateChatbox(request.getMessage());
                 return new ChatboxData(curGame.getChatbox(), curGame.getGameID());
                 //ChatboxData data = new ChatboxData(curGame.getChatbox(), curGame.getGameID());
@@ -239,17 +236,15 @@ public class serverModel {
 
         gameModel curGame = serverModel.getInstance().getGameByID(request.getGameID());
         playerModel curPlayer = curGame.getPlayerModelFromID(request.getPlayerID());
-        if(request.getIndex() == 0){
+        if (request.getIndex() == 0) {
             curPlayer.addTrainCardToHand(curGame.drawTrainCardFromDeck());
             return new Results("DrawFirstTrainCard", true, new DrawTrainCardData(curGame.getGameID(), curPlayer.getTrainCardHand(), curGame.getFaceUpCards(), curGame.getNumTrainCards(), serverModel.getInstance().getUser(request.getAuthtoken()).getUserName()));
-        }
-        else {
+        } else {
             trainCardModel returnCard = curGame.drawFaceUpTrainCard(request.getIndex() - 1);
-            if (returnCard.getColor() == cardColorEnum.LOCOMOTIVE){
+            if (returnCard.getColor() == cardColorEnum.LOCOMOTIVE) {
                 curPlayer.addTrainCardToHand(returnCard);
                 return new Results("DrawSecondTrainCard", true, new DrawTrainCardData(curGame.getGameID(), curPlayer.getTrainCardHand(), curGame.getFaceUpCards(), curGame.getNumTrainCards(), serverModel.getInstance().getUser(request.getAuthtoken()).getUserName()));
-            }
-            else {
+            } else {
                 curPlayer.addTrainCardToHand(returnCard);
                 return new Results("DrawFirstTrainCard", true, new DrawTrainCardData(curGame.getGameID(), curPlayer.getTrainCardHand(), curGame.getFaceUpCards(), curGame.getNumTrainCards(), serverModel.getInstance().getUser(request.getAuthtoken()).getUserName()));
             }
@@ -263,18 +258,27 @@ public class serverModel {
 
         gameModel curGame = serverModel.getInstance().getGameByID(request.getGameID());
         playerModel curPlayer = curGame.getPlayerModelFromID(request.getPlayerID());
-        if(request.getIndex() == 0){
+        if (request.getIndex() == 0) {
             curPlayer.addTrainCardToHand(curGame.drawTrainCardFromDeck());
-            return new Results("DrawSecondTrainCard", true, new DrawTrainCardData(curGame.getGameID(), curPlayer.getTrainCardHand(), curGame.getFaceUpCards(), curGame.getNumTrainCards(), serverModel.getInstance().getUser(request.getAuthtoken()).getUserName()));
-        }
-        else {
+            Results results = new Results("DrawSecondTrainCard", true,
+                    new DrawTrainCardData(curGame.getGameID(), curPlayer.getTrainCardHand(),
+                            curGame.getFaceUpCards(), curGame.getNumTrainCards(),
+                            serverModel.getInstance().getUser(request.getAuthtoken()).getUserName()));
+            curGame.incrementTurnCounter();
+            return results;
+        } else {
             trainCardModel returnCard = curGame.drawFaceUpTrainCard(request.getIndex() - 1);
-            if (returnCard.getColor().name().equals(cardColorEnum.LOCOMOTIVE.name())){
+            if (returnCard.getColor().name().equals(cardColorEnum.LOCOMOTIVE.name())) {
                 throw new CannotDrawTrainCardException("Your second train card cannot be a faceup locomotive!");
-            }
-            else {
+            } else {
                 curPlayer.addTrainCardToHand(returnCard);
-                return new Results("DrawSecondTrainCard", true, new DrawTrainCardData(curGame.getGameID(), curPlayer.getTrainCardHand(), curGame.getFaceUpCards(), curGame.getNumTrainCards(), serverModel.getInstance().getUser(request.getAuthtoken()).getUserName()));
+                Results results = new Results("DrawSecondTrainCard", true,
+                        new DrawTrainCardData(curGame.getGameID(), curPlayer.getTrainCardHand(),
+                                curGame.getFaceUpCards(), curGame.getNumTrainCards(),
+                                serverModel.getInstance().getUser(request.getAuthtoken()).getUserName()));
+                curGame.incrementTurnCounter();
+                return results;
+
             }
         }
     }

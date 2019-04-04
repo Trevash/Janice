@@ -50,5 +50,10 @@ public abstract class AbstractGameState implements IGameState { // TODO is this 
         return game;
     }
 
+    @Override
+    public int minKeepDestCards() {
+        return 1;
+    }
+
     //protected void updateGame()
 }
