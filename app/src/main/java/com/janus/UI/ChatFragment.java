@@ -91,6 +91,7 @@ public class ChatFragment extends Fragment implements ChatFragmentPresenter.View
             @Override
             public void onClick(View v) {
                 presenter.sendClicked();
+                mChatMessage.setText("");
             }
         });
 

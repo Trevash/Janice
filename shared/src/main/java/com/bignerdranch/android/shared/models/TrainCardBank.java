@@ -86,7 +86,22 @@ public class TrainCardBank implements ITrainCardBank { // TODO can this class be
         // replace card, if possible
         if(canDrawTrainCardFromDeck()) {
             faceUpCards.set(i, drawTrainCardFromDeck());
-            // TODO check if need to discard the face-up train cards
+            
+            int locomotiveCount = 0;
+            for (int j = 0; j< faceUpCards.size(); j++) {
+            	if(faceUpCards.get(j).equals(Constants.TrainCards.LOCOMOTIVE)) {locomotiveCount += 1;}
+            }
+            if (locomotiveCount > 2) {
+            	addToDiscard(faceUpCards);
+            	faceUpCards.clear();
+                faceUpCards.add(drawTrainCardFromDeck());
+                faceUpCards.add(drawTrainCardFromDeck());
+                faceUpCards.add(drawTrainCardFromDeck());
+                faceUpCards.add(drawTrainCardFromDeck());
+                faceUpCards.add(drawTrainCardFromDeck());
+            }
+            
+            
         } else {
             // will need to move the train cards
             faceUpCards.remove(i);
