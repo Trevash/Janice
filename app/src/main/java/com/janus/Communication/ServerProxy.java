@@ -377,14 +377,4 @@ public class ServerProxy implements IServer {
 
         return messageResult;
     }
-
-    @Override
-    public void endGame(gameIDModel game) {
-        throw new RuntimeException("Don't call this method here");
-    }
-
-    @Override
-    public void sendLastRoundMessage(gameIDModel game) {
-        throw new RuntimeException("Don't call this method here");
-    }
 }
