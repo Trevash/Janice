@@ -5,6 +5,7 @@ import com.bignerdranch.android.shared.exceptions.DuplicateException;
 import com.bignerdranch.android.shared.exceptions.GameNotFoundException;
 import com.bignerdranch.android.shared.exceptions.InvalidAuthorizationException;
 import com.bignerdranch.android.shared.exceptions.UserNotFoundException;
+import com.bignerdranch.android.shared.models.gameIDModel;
 import com.bignerdranch.android.shared.requestObjects.DrawTrainCardRequest;
 import com.bignerdranch.android.shared.resultobjects.DestinationCardListModel;
 import com.bignerdranch.android.shared.models.authTokenModel;
@@ -172,5 +173,15 @@ public class serverFacade implements IServer {
     @Override
     public Results drawSecondTrainCard(DrawTrainCardRequest request) throws Exception {
         return serverModel.getInstance().drawSecondTrainCard(request);
+    }
+
+    @Override
+    public void endGame(gameIDModel game) {
+        // TODO
+    }
+
+    @Override
+    public void sendLastRoundMessage(gameIDModel game) {
+        // TODO
     }
 }

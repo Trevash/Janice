@@ -80,14 +80,9 @@ public class ClientInitialGameState extends AbstractClientGameState implements I
         // add in check for num of destination cards?
         getDestinationCardDeck().returnDestinationCards(selectedCards, rejectedCards);
         //super.advanceTurn();
-        if (super.getGame().isPlayersTurn(super.getClientID())) {
-            // TODO this may cause issues, but right now, this is needed to ensure that the first player is in the right state
-            super.updateGameState(new ClientActivePlayerState(this));
-        } else {
-            super.updateGameState(new ClientInactiveState(this));
-        }
+
         // This should trigger the notifyTurnAdvancement() method for the new state
-        getGame().setTurnCounter(getGame().getTurnCounter());
+        //getGame().setTurnCounter(getGame().getTurnCounter());
     }
 
     @Override
@@ -112,8 +107,20 @@ public class ClientInitialGameState extends AbstractClientGameState implements I
 
     @Override
     public void notifyTurnAdvancement() {
-        System.out.println(this.getClass().toString() + " was notified of a turn advancement: " +
-                "check for bug, as this state should automatically change states");
+        if(getGame().getTurnCounter() == -1) {
+            return;
+        }
+        //AbstractClientGameState newState;
+        if (super.getGame().isPlayersTurn(super.getClientID())) {
+            super.updateGameState(new ClientActivePlayerState(this));
+            //newState = new ClientActivePlayerState(this);
+        } else {
+            //newState = new ClientInactiveState(this);
+            super.updateGameState(new ClientInactiveState(this));
+        }
+        //super.updateGameState(newState);
+        //System.out.println(this.getClass().toString() + " was notified of a turn advancement: " +
+        //        "check for bug, as this state should automatically change states");
         //if(getGame().isPlayersTurn(super.getClientID())) {
         //super.updateGameState(new ClientActivePlayerState(this));
         //}

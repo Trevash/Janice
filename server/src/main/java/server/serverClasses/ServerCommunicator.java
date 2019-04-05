@@ -200,6 +200,7 @@ public class ServerCommunicator extends WebSocketServer {
         // will necessarily require incrementing the turn counter. ex: drawing first train card
         curGame.updateGameHistory(new chatMessageModel(username, historyUpdate));
 
+        // TODO add in a list containing the number of dest. cards each player has
         GameStatusData data = new GameStatusData(curGame.getTurnCounter(), curGame.getGameHistory(),
                 curGame.getNumTrainCards(), curGame.getFaceUpCards(), curGame.getTrainCardDiscards(),
                 curGame.getNumDestinationCards());

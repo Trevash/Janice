@@ -9,6 +9,7 @@ import com.bignerdranch.android.shared.exceptions.UserNotFoundException;
 
 import server.serverClasses.serverFacade;
 
+import com.bignerdranch.android.shared.models.gameIDModel;
 import com.bignerdranch.android.shared.requestObjects.ClaimRouteRequest;
 import com.bignerdranch.android.shared.requestObjects.CreateGameRequest;
 import com.bignerdranch.android.shared.requestObjects.DrawDestinationCardsRequest;
@@ -89,5 +90,15 @@ public class commandHandler extends handlerBase implements IServer {
 
     public Results drawSecondTrainCard(DrawTrainCardRequest request) throws Exception {
         return serverFacade.getInstance().drawSecondTrainCard(request);
+    }
+
+    @Override
+    public void endGame(gameIDModel game) {
+        throw new RuntimeException("Don't call this method here");
+    }
+
+    @Override
+    public void sendLastRoundMessage(gameIDModel game) {
+        throw new RuntimeException("Don't call this method here");
     }
 }

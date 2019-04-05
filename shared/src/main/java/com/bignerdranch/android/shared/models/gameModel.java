@@ -540,9 +540,9 @@ public class gameModel {
         return state.minKeepDestCards();
     }
 
-    public void onRouteClaimed(playerIDModel claimerID) {
+    public void onRouteClaimed(playerIDModel claimerID, IServer serverFacade) {
         if (state instanceof AbstractServerGameState) {
-            ((AbstractServerGameState) state).onRouteClaimed(claimerID);
+            ((AbstractServerGameState) state).onRouteClaimed(claimerID, serverFacade);
         }
     }
 }
