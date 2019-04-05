@@ -205,7 +205,7 @@ public class ServerCommunicator extends WebSocketServer {
     public void broadcastGameStats(gameModel game) {
         List<int[]> gameStats = game.getStats(game.getPlayers().get(0).getUserName());
         gameStats.remove(0);
-        Results r = new Results("stats", true, gameStats);
+        Results r = new Results("Stats", true, gameStats);
         String resultGson = Serializer.getInstance().serializeObject(r);
 
         this.broadcastGame(resultGson, game);
