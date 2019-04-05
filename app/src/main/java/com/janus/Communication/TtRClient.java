@@ -1,5 +1,7 @@
 package com.janus.Communication;
 
+import android.widget.ArrayAdapter;
+
 import java.net.URI;
 import java.util.ArrayList;
 import java.util.List;
@@ -120,9 +122,17 @@ public class TtRClient extends WebSocketClient{
                     break;
                 }
                 case "stats": {
-                	List<int[]> s = (ArrayList) result.getData(ArrayList.class);
+                	List<List<Double>> s = (ArrayList) result.getData(ArrayList.class);
+                	List<int[]> convertedStats = new ArrayList<>();
+                	for (int i = 0; i < s.size(); i++) {
+                	    int[] arr = new int[s.get(i).size()];
+                	    for (int j = 0; j < s.get(i).size(); j++) {
+                	        arr[j] = s.get(i).get(j).intValue();
+                        }
+                        convertedStats.add(arr);
+                    }
                 	usernameModel username = facade.getPlayer().getUserName();
-                	facade.getGame().setStats(s, username);
+                	facade.getGame().setStats(convertedStats, username);
                 }
             }
             proxy.checkMessageResult(result);
