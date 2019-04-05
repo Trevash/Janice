@@ -74,7 +74,7 @@ public class DestinationSelectFragment extends Fragment implements DestinationFr
                 } else {
                     destination1Selected = false;
                     selectedDestinationCards.remove(availableDestinationCards.get(0));
-                    mDestination1.setTextColor(Color.BLACK);
+                    mDestination1.setTextColor(Color.GRAY);
                     updateButton();
                 }
             }
@@ -92,7 +92,7 @@ public class DestinationSelectFragment extends Fragment implements DestinationFr
                 } else {
                     destination2Selected = false;
                     selectedDestinationCards.remove(availableDestinationCards.get(1));
-                    mDestination2.setTextColor(Color.BLACK);
+                    mDestination2.setTextColor(Color.GRAY);
                     updateButton();
                 }
             }
@@ -110,7 +110,7 @@ public class DestinationSelectFragment extends Fragment implements DestinationFr
                 } else {
                     destination3Selected = false;
                     selectedDestinationCards.remove(availableDestinationCards.get(2));
-                    mDestination3.setTextColor(Color.BLACK);
+                    mDestination3.setTextColor(Color.GRAY);
                     updateButton();
                 }
             }
@@ -140,13 +140,24 @@ public class DestinationSelectFragment extends Fragment implements DestinationFr
             mPrompt.setText(R.string.drawDestinationsPrompt1Route);
         }
 
-        if(availableDestinationCards.size() >= 1) {
-            mDestination1.setText(destCards.get(0).getFormattedDestinationCard());
+        if(availableDestinationCards.size() == 0){
+            mDestination1.setEnabled(false);
+            mDestination2.setEnabled(false);
+            mDestination3.setEnabled(false);
         }
-        if(availableDestinationCards.size() >= 2) {
+        if(availableDestinationCards.size() == 1) {
+            mDestination1.setText(destCards.get(0).getFormattedDestinationCard());
+            mDestination2.setEnabled(false);
+            mDestination3.setEnabled(false);
+        }
+        if(availableDestinationCards.size() == 2) {
+            mDestination1.setText(destCards.get(0).getFormattedDestinationCard());
             mDestination2.setText(destCards.get(1).getFormattedDestinationCard());
+            mDestination3.setEnabled(false);
         }
         if(availableDestinationCards.size() >= 3) {
+            mDestination1.setText(destCards.get(0).getFormattedDestinationCard());
+            mDestination2.setText(destCards.get(1).getFormattedDestinationCard());
             mDestination3.setText(destCards.get(2).getFormattedDestinationCard());
         }
     }
