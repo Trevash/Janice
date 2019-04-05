@@ -195,11 +195,6 @@ public class DeckFragment extends Fragment implements DeckFragmentPresenter.View
         }
     }
 
-    @Override
-    public void updateMenu(boolean menuActive){
-        setHasOptionsMenu(menuActive);
-    }
-
     public void errorToast(String message){
         Toast.makeText(getActivity(), message, Toast.LENGTH_LONG).show();
     }
