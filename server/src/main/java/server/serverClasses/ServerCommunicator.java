@@ -109,7 +109,10 @@ public class ServerCommunicator extends WebSocketServer {
                 // TODO claiming a route needs restrictions to be enforced.
                 ClaimRouteData claimRouteData = (ClaimRouteData) result.getData(ClaimRouteData.class);
                 broadcastGame(resultGson, serverModel.getInstance().getGameByID(claimRouteData.getGameID()));
-                updateGameStatus(claimRouteData.getGameID(), claimRouteData.getUsername(), "Route from " + claimRouteData.getCurRoute().getCity1().getName() + " to " + claimRouteData.getCurRoute().getCity2().getName() + " claimed by " + claimRouteData.getUsername().getValue());
+                updateGameStatus(claimRouteData.getGameID(), claimRouteData.getUsername(),
+                        "Route from " + claimRouteData.getCurRoute().getCity1().getName() +
+                                " to " + claimRouteData.getCurRoute().getCity2().getName() +
+                                " claimed by " + claimRouteData.getUsername().getValue());
                 broadcastGameStats(serverModel.getInstance().getGameByID(claimRouteData.getGameID()));
                 break;
             case DRAW_DESTINATION_CARDS:
@@ -119,7 +122,8 @@ public class ServerCommunicator extends WebSocketServer {
             case RETURN_DESTINATION_CARDS:
                 //gameModel game = (gameModel) result.getData(gameModel.class);
                 //broadcastGame(resultGson, game);
-                ReturnDestinationCardData returnDestdata = (ReturnDestinationCardData) result.getData(ReturnDestinationCardData.class);
+                ReturnDestinationCardData returnDestdata = (ReturnDestinationCardData)
+                        result.getData(ReturnDestinationCardData.class);
 
                 // commented out: the code at the end means that this is already getting broadcasted
                 broadcastOne(resultGson, conn);
@@ -189,21 +193,27 @@ public class ServerCommunicator extends WebSocketServer {
         broadcast(resultGson, temp);
     }
 
+    // method that broadcasts all public information to everyone in the game
     public void updateGameStatus(gameIDModel gameID, usernameModel username, String historyUpdate) {
         gameModel curGame = serverModel.getInstance().getGameByID(gameID);
-        curGame.incrementTurnCounter();
+        //curGame.incrementTurnCounter();
         // states increment the turn counter automatically - and not everything that causes an update
         // will necessarily require incrementing the turn counter. ex: drawing first train card
         curGame.updateGameHistory(new chatMessageModel(username, historyUpdate));
 
+        // TODO add in a list containing the number of dest. cards each player has
         GameStatusData data = new GameStatusData(curGame.getTurnCounter(), curGame.getGameHistory(),
                 curGame.getNumTrainCards(), curGame.getFaceUpCards(), curGame.getTrainCardDiscards(),
                 curGame.getNumDestinationCards());
         Results result = new Results(UPDATE_GAME_STATUS, true, data);
         this.broadcastGame(Serializer.getInstance().serializeObject(result), curGame);
     }
-    
+
+    // What is this method supposed to be doing? Please add explanatory comments
+    // as it is not apparent what this method is supposed to be sending
     public void broadcastGameStats(gameModel game) {
+        List<WebSocket> temp = new ArrayList<>();
+        // TODO Why 0? that exclusively broadcasts to the host, and I can't think of any info that only the host would need to know
         List<int[]> gameStats = game.getStats(game.getPlayers().get(0).getUserName());
         gameStats.remove(0);
         Results r = new Results("Stats", true, gameStats);
@@ -211,5 +221,5 @@ public class ServerCommunicator extends WebSocketServer {
 
         this.broadcastGame(resultGson, game);
     }
-    
+
 }

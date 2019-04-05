@@ -71,6 +71,10 @@ public abstract class AbstractClientGameState extends AbstractGameState implemen
 
     public abstract boolean canClaimRoute();
 
+    public boolean canDrawLocomotive() {
+        return canDrawTrainCards();
+    }
+
     /**
      * a method that notifies the client game state that it needs to check that its state is valid
      * based on the turn
@@ -196,8 +200,5 @@ public abstract class AbstractClientGameState extends AbstractGameState implemen
     }
 
 
-    public boolean canDrawLocomotive() {
-        return false;
-    }
 
 }

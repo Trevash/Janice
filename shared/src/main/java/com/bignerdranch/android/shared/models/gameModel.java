@@ -78,7 +78,7 @@ public class gameModel {
         }
         chatbox = new chatboxModel();
         gameHistory = new chatboxModel();
-        this.turnCounter = 0;
+        setTurnCounter(-1);
     }
 
     public void setStats(List<int[]> s, usernameModel username) {
@@ -366,16 +366,16 @@ public class gameModel {
         }
     }
 
-    public int getTurnCounter() {
-        return turnCounter;
-    }
-
     public void setTurnCounter(int turnCounter) {
         this.turnCounter = turnCounter;
         if (state instanceof AbstractClientGameState) {
             ((AbstractClientGameState) state).notifyTurnAdvancement();
         }
     }
+    public int getTurnCounter() {
+        return turnCounter;
+    }
+
 
     public void notifyTrainCardDrawn() {
         if (state instanceof AbstractClientGameState) {
@@ -384,6 +384,9 @@ public class gameModel {
     }
 
     public boolean isPlayersTurn(playerIDModel testPlayer) {
+        if(getTurnCounter() == -1) {
+            return false;
+        }
         return players.get(turnCounter).getId().equals(testPlayer);
     }
 
@@ -537,9 +540,9 @@ public class gameModel {
         return state.minKeepDestCards();
     }
 
-    public void onRouteClaimed(playerIDModel claimerID) {
+    public void onRouteClaimed(playerIDModel claimerID, IServer serverFacade) {
         if (state instanceof AbstractServerGameState) {
-            ((AbstractServerGameState) state).onRouteClaimed(claimerID);
+            ((AbstractServerGameState) state).onRouteClaimed(claimerID, serverFacade);
         }
     }
 }

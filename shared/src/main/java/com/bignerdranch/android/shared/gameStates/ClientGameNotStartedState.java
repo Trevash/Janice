@@ -20,6 +20,7 @@ public class ClientGameNotStartedState extends AbstractClientGameState {
     public ClientGameNotStartedState(IServer server, gameModel game, int destCardDeckSize, playerIDModel clientID) {
         //super(server, game, serverState.getDestinationCardDeckSize(), game.getPlayers().get(playerNum).getId());
         super(server, game, destCardDeckSize, clientID);
+        //super.getGame().setTurnCounter(-1);
     }
 
     @Override

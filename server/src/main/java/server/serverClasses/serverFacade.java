@@ -5,6 +5,7 @@ import com.bignerdranch.android.shared.exceptions.DuplicateException;
 import com.bignerdranch.android.shared.exceptions.GameNotFoundException;
 import com.bignerdranch.android.shared.exceptions.InvalidAuthorizationException;
 import com.bignerdranch.android.shared.exceptions.UserNotFoundException;
+import com.bignerdranch.android.shared.models.gameIDModel;
 import com.bignerdranch.android.shared.requestObjects.DrawTrainCardRequest;
 import com.bignerdranch.android.shared.resultobjects.DestinationCardListModel;
 import com.bignerdranch.android.shared.models.authTokenModel;
@@ -158,7 +159,8 @@ public class serverFacade implements IServer {
         game.returnRejectedDestinationCards(request.getSelectedCards(), request.getRejectedCards());
         player.addDestinationCards(request.getSelectedCards());
         //request.
-        ReturnDestinationCardData result = new ReturnDestinationCardData(game.getGameID(), name, request.getSelectedCards());
+        ReturnDestinationCardData result = new ReturnDestinationCardData(game.getGameID(), name,
+                request.getSelectedCards());
         return new Results("ReturnDestinationCards", true, result);
         // currently does not return anything - will need to update everyone's games
     }
@@ -171,5 +173,15 @@ public class serverFacade implements IServer {
     @Override
     public Results drawSecondTrainCard(DrawTrainCardRequest request) throws Exception {
         return serverModel.getInstance().drawSecondTrainCard(request);
+    }
+
+    @Override
+    public void endGame(gameIDModel game) {
+        // TODO
+    }
+
+    @Override
+    public void sendLastRoundMessage(gameIDModel game) {
+        // TODO send the game to everyone
     }
 }

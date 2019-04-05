@@ -67,11 +67,12 @@ public class ServerInGameState extends AbstractServerGameState implements IGameS
     }
 
     @Override
-    public void onRouteClaimed(playerIDModel claimer) {
+    public void onRouteClaimed(playerIDModel claimer, IServer serverFacade) {
         if(getGame().getPlayerModelFromID(claimer).getLocomotives() <= 2) {
-            super.updateGameState(new ServerLastRoundState(this));
+            super.updateGameState(new ServerLastRoundState(this, serverFacade));
         }
-        // TODO figure out how to signal that the last round has begun
+        super.onRouteClaimed(claimer, serverFacade); // to update the turn counter
+        serverFacade.sendLastRoundMessage(getGame().getGameID());
     }
 
 

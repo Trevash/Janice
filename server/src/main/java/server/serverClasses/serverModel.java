@@ -67,7 +67,7 @@ public class serverModel {
         List<trainCardModel> hand = curGame.getPlayerModelFromID(request.getPlayerID()).getTrainCardHand();
         int points = curGame.getPlayerModelFromID(request.getPlayerID()).getPoints();
         // advances the turn/state
-        curGame.onRouteClaimed(request.getPlayerID());
+        curGame.onRouteClaimed(request.getPlayerID(), serverFacade.getInstance());
 
         return new ClaimRouteData(curGame.getGameID(), request.getPlayerID(), curGame.getRoutes(),
                 hand, curGame.getTrainCardDiscards(), curRoute, points,
@@ -185,12 +185,19 @@ public class serverModel {
         playerModel curPlayer = curGame.getPlayerModelFromID(request.getPlayerID());
         if (request.getIndex() == 0) {
             curPlayer.addTrainCardToHand(curGame.drawTrainCardFromDeck());
-            return new Results("DrawFirstTrainCard", true, new DrawTrainCardData(curGame.getGameID(), curPlayer.getTrainCardHand(), curGame.getFaceUpCards(), curGame.getNumTrainCards(), serverModel.getInstance().getUser(request.getAuthtoken()).getUserName()));
+            return new Results("DrawFirstTrainCard", true,
+                    new DrawTrainCardData(curGame.getGameID(), curPlayer.getTrainCardHand(),
+                            curGame.getFaceUpCards(), curGame.getNumTrainCards(),
+                            serverModel.getInstance().getUser(request.getAuthtoken()).getUserName()));
         } else {
             trainCardModel returnCard = curGame.drawFaceUpTrainCard(request.getIndex() - 1);
             if (returnCard.getColor() == cardColorEnum.LOCOMOTIVE) {
                 curPlayer.addTrainCardToHand(returnCard);
-                return new Results("DrawSecondTrainCard", true, new DrawTrainCardData(curGame.getGameID(), curPlayer.getTrainCardHand(), curGame.getFaceUpCards(), curGame.getNumTrainCards(), serverModel.getInstance().getUser(request.getAuthtoken()).getUserName()));
+                curGame.incrementTurnCounter(); // turn is over due to drawing a locomotive
+                return new Results("DrawSecondTrainCard", true,
+                        new DrawTrainCardData(curGame.getGameID(), curPlayer.getTrainCardHand(),
+                                curGame.getFaceUpCards(), curGame.getNumTrainCards(),
+                                serverModel.getInstance().getUser(request.getAuthtoken()).getUserName()));
             } else {
                 curPlayer.addTrainCardToHand(returnCard);
                 return new Results("DrawFirstTrainCard", true, new DrawTrainCardData(curGame.getGameID(), curPlayer.getTrainCardHand(), curGame.getFaceUpCards(), curGame.getNumTrainCards(), serverModel.getInstance().getUser(request.getAuthtoken()).getUserName()));
@@ -207,6 +214,7 @@ public class serverModel {
         playerModel curPlayer = curGame.getPlayerModelFromID(request.getPlayerID());
         if (request.getIndex() == 0) {
             curPlayer.addTrainCardToHand(curGame.drawTrainCardFromDeck());
+            curGame.incrementTurnCounter();
             Results results = new Results("DrawSecondTrainCard", true,
                     new DrawTrainCardData(curGame.getGameID(), curPlayer.getTrainCardHand(),
                             curGame.getFaceUpCards(), curGame.getNumTrainCards(),
@@ -218,6 +226,7 @@ public class serverModel {
                 throw new CannotDrawTrainCardException("Your second train card cannot be a faceup locomotive!");
             } else {
                 curPlayer.addTrainCardToHand(returnCard);
+                curGame.incrementTurnCounter();
                 Results results = new Results("DrawSecondTrainCard", true,
                         new DrawTrainCardData(curGame.getGameID(), curPlayer.getTrainCardHand(),
                                 curGame.getFaceUpCards(), curGame.getNumTrainCards(),

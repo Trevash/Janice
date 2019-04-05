@@ -3,6 +3,7 @@ package com.janus.Communication;
 import com.bignerdranch.android.shared.GenericCommand;
 import com.bignerdranch.android.shared.interfaces.IServer;
 import com.bignerdranch.android.shared.Constants;
+import com.bignerdranch.android.shared.models.gameIDModel;
 import com.bignerdranch.android.shared.requestObjects.ClaimRouteRequest;
 import com.bignerdranch.android.shared.requestObjects.CreateGameRequest;
 import com.bignerdranch.android.shared.requestObjects.DrawDestinationCardsRequest;
@@ -377,4 +378,13 @@ public class ServerProxy implements IServer {
         return messageResult;
     }
 
+    @Override
+    public void endGame(gameIDModel game) {
+        throw new RuntimeException("Don't call this method here");
+    }
+
+    @Override
+    public void sendLastRoundMessage(gameIDModel game) {
+        throw new RuntimeException("Don't call this method here");
+    }
 }
