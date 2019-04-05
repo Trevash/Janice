@@ -21,13 +21,7 @@ public class ServerLastRoundState extends ServerInGameState {
         //startingPlayer = super.getGame().getPlayers().get(getGame().getTurnCounter());
     }
 
-
-
-    // TODO implement now
-
-    @Override
-    protected void advanceTurn() {
-        super.advanceTurn();
+    public void checkIfLastTurn() {
         if(getCurrentPlayer().getLocomotives() <= 2) {
             // advanced to the player who initiated the turn
             lastTurn = true;

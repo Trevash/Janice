@@ -556,9 +556,15 @@ public class gameModel {
     }
 
     public boolean isLastTurn() {
-        if(state instanceof ServerLastRoundState){
+        if(isLastRound()){
             return ((ServerLastRoundState) state).isLastTurn();
         }
         return false;
+    }
+
+    public void checkIfLastTurn() {
+        if(isLastRound()){
+            ((ServerLastRoundState) state).checkIfLastTurn();
+        }
     }
 }

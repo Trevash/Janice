@@ -116,6 +116,7 @@ public class ServerCommunicator extends WebSocketServer {
                 broadcastGameStats(curGame);
 
                 //Check if last turn
+                curGame.checkIfLastTurn();
                 if(curGame.isLastTurn()){
                     broadcastEndGame(curGame);
                 }
@@ -143,6 +144,7 @@ public class ServerCommunicator extends WebSocketServer {
 
                 //Check if last turn
                 gameModel game = serverModel.getInstance().getGameByID(returnDestdata.getGameID());
+                game.checkIfLastTurn();
                 if(game.isLastTurn()){
                     broadcastEndGame(game);
                 }
@@ -161,6 +163,7 @@ public class ServerCommunicator extends WebSocketServer {
 
                 //Check if last turn
                 gameModel Game = serverModel.getInstance().getGameByID(data.getGameID());
+                Game.checkIfLastTurn();
                 if(Game.isLastTurn()){
                     broadcastEndGame(Game);
                 }
