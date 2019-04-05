@@ -320,6 +320,9 @@ public class gameModel {
     }
 
     public void incrementTurnCounter() {
+        if(turnCounter < 0){
+            turnCounter = 0;
+        }
         turnCounter += 1;
         if (turnCounter >= this.players.size()) {
             turnCounter = 0;
