@@ -30,6 +30,10 @@ public class GameActivity extends AppCompatActivity
 
     // TODO figure out bug: sometimes a back button press returns player to MainActivity
 
+    @Override
+    public void onBackPressed() {
+        Toast.makeText(GameActivity.this, "Cannot Press Back Button Here", Toast.LENGTH_LONG).show();
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

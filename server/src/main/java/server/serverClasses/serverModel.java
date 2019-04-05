@@ -211,7 +211,6 @@ public class serverModel {
                     new DrawTrainCardData(curGame.getGameID(), curPlayer.getTrainCardHand(),
                             curGame.getFaceUpCards(), curGame.getNumTrainCards(),
                             serverModel.getInstance().getUser(request.getAuthtoken()).getUserName()));
-            curGame.incrementTurnCounter();
             return results;
         } else {
             trainCardModel returnCard = curGame.drawFaceUpTrainCard(request.getIndex() - 1);
@@ -223,7 +222,6 @@ public class serverModel {
                         new DrawTrainCardData(curGame.getGameID(), curPlayer.getTrainCardHand(),
                                 curGame.getFaceUpCards(), curGame.getNumTrainCards(),
                                 serverModel.getInstance().getUser(request.getAuthtoken()).getUserName()));
-                curGame.incrementTurnCounter();
                 return results;
 
             }

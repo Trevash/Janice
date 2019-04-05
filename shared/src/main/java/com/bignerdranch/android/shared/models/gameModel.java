@@ -92,6 +92,40 @@ public class gameModel {
     	this.stats.add(0, cardTypes);
     }
     
+    // Returns a list of integers
+    // indices corresponding to player indices return their respective final scores
+    // all following integers are player indices corresponding to who had the longest
+    //    routes.
+    // For example, player 0 and player 1. Their respective scores at the end of the
+    // 	  game are 100 and 105. Player 0 had the longest route. Thus, the returned
+    //    list of variables will be [100, 105, 0].
+    public List<Integer> getFinalStats() {
+    	List<Integer> finalPoints = new ArrayList<>(); 
+    	int maxRoute = -1;
+    	List<Integer> longestRoutes = new ArrayList<>();
+    	
+    	for(int i = 0; i < players.size(); i++) {
+    		playerModel tempPlayer = players.get(i);
+    		int points = tempPlayer.getPoints();
+    		points += tempPlayer.calculatePointsFromDestinationCards();
+    		finalPoints.add(points);
+    		int playerRouteLength = tempPlayer.calculateLongestRouteOfPlayer();
+    		if (playerRouteLength > maxRoute) {
+    			maxRoute = playerRouteLength;
+    			longestRoutes = new ArrayList<>(i);
+    		}
+    		else if (playerRouteLength == maxRoute) {
+    			longestRoutes.add(i);
+    		}
+    	}
+    	for(int i = 0; i< longestRoutes.size(); i++) {
+    		int index = longestRoutes.get(i);
+    		finalPoints.set(index, finalPoints.get(index)+10);
+    		finalPoints.add(index);
+    	}
+     	return finalPoints;
+    }
+    
     public List<int[]> getVariableStats(){
     	return this.stats;
     }
@@ -320,6 +354,9 @@ public class gameModel {
     }
 
     public void incrementTurnCounter() {
+        if(turnCounter < 0){
+            turnCounter = 0;
+        }
         turnCounter += 1;
         if (turnCounter >= this.players.size()) {
             turnCounter = 0;
