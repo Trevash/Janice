@@ -207,6 +207,8 @@ public class ServerCommunicator extends WebSocketServer {
         this.broadcastGame(Serializer.getInstance().serializeObject(result), curGame);
     }
 
+    // What is this method supposed to be doing? Please add explanatory comments
+    // as it is not apparent what this method is supposed to be sending
     public void broadcastGameStats(gameModel game) {
         List<WebSocket> temp = new ArrayList<>();
         // TODO Why 0? that exclusively broadcasts to the host, and I can't think of any info that only the host would need to know
@@ -215,14 +217,7 @@ public class ServerCommunicator extends WebSocketServer {
         Results r = new Results("stats", true, gameStats);
         String resultGson = Serializer.getInstance().serializeObject(r);
 
-        for (playerModel player : game.getPlayers()) {
-            String username = player.getUserName().getValue();
-            if (usernameWSMap.containsKey(username)) {
-                temp.add(usernameWSMap.get(username));
-            }
-        }
-
-        broadcast(resultGson, temp);
+        this.broadcastGame(resultGson, game);
     }
 
 }

@@ -4,6 +4,8 @@ import android.os.AsyncTask;
 
 import com.bignerdranch.android.shared.requestObjects.DrawTrainCardRequest;
 import com.bignerdranch.android.shared.resultobjects.Results;
+import com.janus.ClientFacade;
+import com.janus.ClientModel;
 
 public class DrawTrainCardTask extends AsyncTask<DrawTrainCardRequest, Void, Results> {
     public interface Caller {
@@ -11,6 +13,7 @@ public class DrawTrainCardTask extends AsyncTask<DrawTrainCardRequest, Void, Res
     }
 
     private com.janus.Communication.DrawTrainCardTask.Caller caller;
+    private ClientFacade facade = ClientFacade.getInstance();
 
     public DrawTrainCardTask(com.janus.Communication.DrawTrainCardTask.Caller c) {
         caller = c;
@@ -21,7 +24,11 @@ public class DrawTrainCardTask extends AsyncTask<DrawTrainCardRequest, Void, Res
             ServerProxy proxy = ServerProxy.getInstance();
             try {
                 Results res = null;
-                res = proxy.drawFirstTrainCard(requests[0]);
+                if(facade.userCanDrawLocomotive()) {
+                    res = proxy.drawFirstTrainCard(requests[0]);
+                } else {
+                    res = proxy.drawSecondTrainCard(requests[0]);
+                }
                 return res;
             } catch(Exception e){
                 e.printStackTrace();

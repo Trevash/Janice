@@ -40,10 +40,13 @@ public class DeckFragmentPresenter implements ClientFacade.Presenter, DrawTrainC
         }
     }
 
-    public void drawCard(int index) {
+    public void drawCard(int index) { //index 0 is face-down deck, 1-5 is face-up cards
         if(facade.userCanDrawTrainCards()) {
-            boolean isLocomotive = model.getGame().getFaceUpCards().get(index).getColor() == cardColorEnum.LOCOMOTIVE;
-            if(isLocomotive && !facade.userCanDrawLocomotive()){
+            boolean isLocomotive = false;
+            if(index != 0) {
+                isLocomotive = model.getGame().getFaceUpCards().get(index - 1).getColor() == cardColorEnum.LOCOMOTIVE;
+            }
+            if((isLocomotive && !facade.userCanDrawLocomotive()) && (index != 0)){
                 view.errorToast("You already drew one card.  You can't draw a locomotive now!");
             } else {
                 DrawTrainCardTask task = new DrawTrainCardTask(this);
