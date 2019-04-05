@@ -12,7 +12,7 @@ public class Constants {
     public static final String IP_ADDRESS =
             //"192.168.1.100"; // Jason's home IP address
             //"192.168.254.216";
-            "192.168.254.186";
+            "192.168.254.249";
             //"10.37.93.67"; // Regular IP address for group testing
             //"10.34.241.184"; // another IP address for group testing
     public static final int PORT = 8087;
