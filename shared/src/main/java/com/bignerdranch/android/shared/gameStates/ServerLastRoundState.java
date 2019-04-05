@@ -6,13 +6,14 @@ import com.bignerdranch.android.shared.models.gameModel;
 import com.bignerdranch.android.shared.models.playerModel;
 
 public class ServerLastRoundState extends ServerInGameState {
-    // several ways to do the last-turn check: could check to see if the player has 2 or fewer train cards at
-    // the start of their turn: if they do, then the game ends at the end of their turn
+    // TODO implement state - add in a check to see if it is the last player's turn
+    // several ways to do the check: could check to see if the player has 2 or fewer train cards at
+    // the start of their turn: if they do, then the game ends
 
     // Could also store which player initialized this round, and check when the turn increments
 
 
-    private boolean lastTurn = false; // boolean value to tell if it is the very last player's turn
+    private boolean lastTurn; // boolean value to tell if it is the very last player's turn
 
     public ServerLastRoundState(AbstractServerGameState prevState) {
         super(prevState);

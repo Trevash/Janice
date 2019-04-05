@@ -12,7 +12,7 @@ public class Constants {
     public static final String IP_ADDRESS =
             //"192.168.1.100"; // Jason's home IP address
             //"192.168.254.216";
-            "192.168.254.249";
+            "192.168.254.186";
             //"10.37.93.67"; // Regular IP address for group testing
             //"10.34.241.184"; // another IP address for group testing
     public static final int PORT = 8087;
@@ -38,8 +38,7 @@ public class Constants {
         public static final String DRAW_FIRST_TRAIN_CARD = "DrawFirstTrainCard";
         public static final String DRAW_SECOND_TRAIN_CARD = "DrawSecondTrainCard";
         public static final String STATS = "Stats";
-        public static final String LAST_ROUND = "LastRound";
-        public static final String END_GAME = "EndGame";
+        public static final String
 
         // server commands
         public static final String DRAW_DESTINATION_CARDS = "DrawDestinationCards";
