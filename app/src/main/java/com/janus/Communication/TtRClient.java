@@ -137,14 +137,6 @@ public class TtRClient extends WebSocketClient{
                 	facade.getGame().setStats(convertedStats, username);
                     facade.update();
                 }
-                case LAST_ROUND: {
-                    facade.lastRound();
-                }
-                case END_GAME: {
-                    IGameState currentState = facade.getGame().getState();
-                    facade.getGame().setState(new ClientGameOverState( (AbstractClientGameState) currentState));
-                    facade.endGame();
-                }
             }
             proxy.checkMessageResult(result);
         }
