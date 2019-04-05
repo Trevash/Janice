@@ -2,6 +2,7 @@ package com.bignerdranch.android.shared.models;
 
 import com.bignerdranch.android.shared.gameStates.AbstractServerGameState;
 import com.bignerdranch.android.shared.gameStates.ServerGameNotStartedState;
+import com.bignerdranch.android.shared.gameStates.ServerLastRoundState;
 import com.bignerdranch.android.shared.interfaces.IServer;
 import com.bignerdranch.android.shared.exceptions.DuplicateException;
 import com.bignerdranch.android.shared.exceptions.RouteNotFoundException;
@@ -542,7 +543,18 @@ public class gameModel {
 
     public void onRouteClaimed(playerIDModel claimerID, IServer serverFacade) {
         if (state instanceof AbstractServerGameState) {
-            ((AbstractServerGameState) state).onRouteClaimed(claimerID, serverFacade);
+            ((AbstractServerGameState) state).onRouteClaimed(claimerID);
         }
+    }
+
+    public boolean isLastRound() {
+        return state instanceof ServerLastRoundState;
+    }
+
+    public boolean isLastTurn() {
+        if(state instanceof ServerLastRoundState){
+            return ((ServerLastRoundState) state).isLastTurn();
+        }
+        return false;
     }
 }
