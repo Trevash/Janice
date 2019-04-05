@@ -30,9 +30,13 @@ public class playerModel {
     // color
     private playerColorEnum playerColor;
     // Locomotives left
-    private int locomotives = 45;
+    private int locomotives = 5;
     // points
     private int points = 0;
+
+    public List<abstractRoute> getClaimedRoutes() {
+        return this.claimedRoutes;
+    }
 
     public playerModel(usernameModel userName, boolean isReady, boolean isHost, playerColorEnum playerColor) {
         this.userName = userName;
@@ -367,6 +371,14 @@ public class playerModel {
     		return t2.getWeight();
     	}
     }
+
+    private boolean determineCardFulfilled(DestinationCardModel card) {
+        cityModel city1 = card.getCity1();
+        cityModel city2 = card.getCity2();
+        for (abstractRoute route : getClaimedRoutes()) {
+        }
+        return false;
+    }
     
     public int calculateLongestRouteOfPlayer() {
     	List<Set<cityModel>> routeGroups = groupCitiesByConnection();
@@ -379,6 +391,17 @@ public class playerModel {
     		}
     	}
     	return longestRoute;
+    }
+
+    public int calculatePointsLostFromDestinationCards() {
+        int totalLost = 0;
+        for (DestinationCardModel card : destinationCardHand) {
+            boolean cardFulfilled = determineCardFulfilled(card);
+            if (!cardFulfilled) {
+                totalLost += card.getPointValue();
+            }
+        }
+        return totalLost;
     }
     public int getLocomotives() {
         return this.locomotives;

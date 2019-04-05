@@ -180,4 +180,8 @@ public class ClientFacade {
     public int getMinKeepDestCards() {
         return getGame().minKeepDestCards();
     }
+
+    public List<Integer> getFinalStats() {
+        return getGame().getFinalStats();
+    }
 }

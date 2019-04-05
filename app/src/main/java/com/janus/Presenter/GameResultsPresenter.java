@@ -20,12 +20,7 @@ public class GameResultsPresenter {
         return facade.getPlayers();
     }
 
-    //TODO: Calculate winner and longest path so Text Views can be set
-    public playerModel getWinner() {
-        return facade.getPlayers().get(0);
-    }
-
-    public playerModel getLongestRoute() {
-        return facade.getPlayers().get(0);
+    public List<Integer> getFinalStats() {
+        return facade.getFinalStats();
     }
 }

@@ -46,11 +46,17 @@ public class GameResultsFragment  extends Fragment{
 
         players = presenter.getPlayers();
 
+        int playerWithLongestRoute = presenter.getFinalStats().get(presenter.getFinalStats().size()-1);
+        players.get(playerWithLongestRoute).setPoints(players.get(playerWithLongestRoute).getPoints() + 10);
+        //presenter.updateLongestRoutePoints(playerWithLongestRoute);
+
+        int winner = determineWinner(presenter.getFinalStats());
+
         mWinner = v.findViewById(R.id.winner_TextView);
-        mWinner.setText(presenter.getWinner().getUserName().getValue());
+        mWinner.setText(players.get(winner).getUserName().getValue());
 
         mLongestPath = v.findViewById(R.id.longest_path_TextView);
-        mLongestPath.setText(presenter.getLongestRoute().getUserName().getValue());
+        mLongestPath.setText(players.get(playerWithLongestRoute).getUserName().getValue());
 
         mPlayerList = v.findViewById(R.id.results_player_list_RecyclerView);
         mPlayerList.setLayoutManager(new LinearLayoutManager(getActivity()));
@@ -58,6 +64,19 @@ public class GameResultsFragment  extends Fragment{
         mPlayerList.setAdapter(adapter);
 
         return v;
+    }
+
+    private int determineWinner(List<Integer> finalStats) {
+        int winner = 0;
+        int winningScore = 0;
+        for (int i = 0; i < finalStats.size(); i++) {
+            if (finalStats.get(i) > winningScore) {
+                winningScore = finalStats.get(i);
+                winner = i;
+            }
+        }
+
+        return winner;
     }
 
     private class PlayerHolder extends RecyclerView.ViewHolder{
@@ -69,11 +88,11 @@ public class GameResultsFragment  extends Fragment{
         private TextView mDestinationCardPoints;
         private TextView mPointsLost;
 
-        public void bind(playerModel p){
+        public void bind(playerModel p, int position){
             mName.setText(p.getUserName().getValue());
-            mPointTotal.setText(Integer.toString(p.getStats()[0]));
-            mDestinationCardPoints.setText(Integer.toString(p.getStats()[1]));
-            mPointsLost.setText(Integer.toString(p.getStats()[2]));
+            mPointTotal.setText(Integer.toString(presenter.getFinalStats().get(position)));
+            mDestinationCardPoints.setText(Integer.toString(p.calculatePointsFromDestinationCards()));
+            mPointsLost.setText(Integer.toString(p.calculatePointsLostFromDestinationCards()));
         }
 
         public PlayerHolder(LayoutInflater inflater, ViewGroup parent){
@@ -103,7 +122,7 @@ public class GameResultsFragment  extends Fragment{
         @Override
         public void onBindViewHolder(GameResultsFragment.PlayerHolder holder, int position) {
             playerModel p = players.get(position);
-            holder.bind(p);
+            holder.bind(p, position);
         }
 
         @Override
