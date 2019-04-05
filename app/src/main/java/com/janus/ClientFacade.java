@@ -9,6 +9,8 @@ public class ClientFacade {
 
     public interface Presenter {
         void updateUI();
+        void endGame();
+        void lastRound();
     }
 
     private static ClientFacade facade;
@@ -30,6 +32,20 @@ public class ClientFacade {
         currentPresenter.updateUI();
         if (statusPresenter != null) {
             statusPresenter.updateUI();
+        }
+    }
+
+    public void endGame(){
+        currentPresenter.endGame();
+        if (statusPresenter != null) {
+            statusPresenter.endGame();
+        }
+    }
+
+    public void lastRound(){
+        currentPresenter.lastRound();
+        if (statusPresenter != null) {
+            statusPresenter.lastRound();
         }
     }
 

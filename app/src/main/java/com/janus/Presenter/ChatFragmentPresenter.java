@@ -72,4 +72,8 @@ public class ChatFragmentPresenter implements ClientFacade.Presenter, UpdateChat
         view.updateUI();
     }
 
+    @Override
+    public void endGame(){}
+
+    public void lastRound(){}
 }

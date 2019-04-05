@@ -73,4 +73,9 @@ public class LobbyFragmentPresenter implements ClientFacade.Presenter {
     public Boolean isModelEmpty(){
         return facade.getGame() == null;
     }
+
+    @Override
+    public void endGame(){}
+
+    public void lastRound(){}
 }

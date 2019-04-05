@@ -73,4 +73,9 @@ public class GameListFragmentPresenter implements JoinGameTask.Caller, CreateGam
     public void updateUI() {
         view.updateGameList(facade.getServerGameList());
     }
+
+    @Override
+    public void endGame(){}
+
+    public void lastRound(){}
 }

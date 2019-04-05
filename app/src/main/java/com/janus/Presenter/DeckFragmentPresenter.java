@@ -20,6 +20,8 @@ public class DeckFragmentPresenter implements ClientFacade.Presenter, DrawTrainC
         void returnToMap();
 
         void errorToast(String message);
+
+        void endGame();
     }
 
     private View view;
@@ -71,4 +73,10 @@ public class DeckFragmentPresenter implements ClientFacade.Presenter, DrawTrainC
     public void onError(String s) {
         // TODO implement: currently doesn't do anything
     }
+
+    public void endGame(){
+        view.endGame();
+    }
+
+    public void lastRound(){}
 }

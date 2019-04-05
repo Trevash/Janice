@@ -24,6 +24,8 @@ public class RouteFragmentPresenter implements ClaimRouteTask.Caller, ClientFaca
 
     public interface View {
         void updateRoutes(List<singleRouteModel> routes);
+        void endGame();
+        void lastRoundToast();
     }
     private View view;
     private ClientFacade facade = ClientFacade.getInstance();
@@ -35,6 +37,9 @@ public class RouteFragmentPresenter implements ClaimRouteTask.Caller, ClientFaca
 
     //Converts doubleRoutes into singleRoutes for display
     public void updateUI(){
+        if(model.getGame().isLastRound()){
+            view.lastRoundToast();
+        }
         List<abstractRoute> routes = facade.getGame().getRoutes();
         ArrayList<singleRouteModel> simplifiedList = new ArrayList<>();
         for (abstractRoute element : routes) {
@@ -241,6 +246,14 @@ public class RouteFragmentPresenter implements ClaimRouteTask.Caller, ClientFaca
 
     public void setFragment() {
         facade.setPresenter(this);
+    }
+
+    public void endGame(){
+        view.endGame();
+    }
+
+    public void lastRound(){
+        view.lastRoundToast();
     }
 
 }

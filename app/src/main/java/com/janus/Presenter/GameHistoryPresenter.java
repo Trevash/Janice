@@ -30,4 +30,9 @@ public class GameHistoryPresenter implements ClientFacade.Presenter {
     public void updateUI() {
         view.updateUI();
     }
+
+    @Override
+    public void endGame(){}
+
+    public void lastRound(){}
 }

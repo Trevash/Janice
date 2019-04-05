@@ -13,10 +13,10 @@ import java.util.List;
 public class MapFragmentPresenter implements ClientFacade.Presenter {
     public interface View {
         void updateTurnIndicator(List<playerModel> players);
-
         void updateRoutes(List<abstractRoute> routes);
         void updateButtons(boolean canDrawDestCards, boolean canClaimRoute, boolean canDrawTrainCards);
-
+        void lastRoundToast();
+        void endGame();
     }
 
     private MapFragmentPresenter.View view;
@@ -48,4 +48,13 @@ public class MapFragmentPresenter implements ClientFacade.Presenter {
     public boolean outOfDestinationCards(){
         return model.getGame().getNumDestinationCards() == 0;
     }
+
+    public void endGame(){
+        view.endGame();
+    }
+
+    public void lastRound(){
+        view.lastRoundToast();
+    }
+
 }

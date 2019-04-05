@@ -28,6 +28,8 @@ public class DeckFragment extends Fragment implements DeckFragmentPresenter.View
         void onFinishAction();
 
         void onMapFragmentSelected();
+
+        void onEndGame();
     }
 
     private DeckFragmentPresenter presenter;
@@ -201,5 +203,9 @@ public class DeckFragment extends Fragment implements DeckFragmentPresenter.View
 
     public void returnToMap() {
         mContext.onFinishAction();
+    }
+
+    public void endGame(){
+        mContext.onEndGame();
     }
 }

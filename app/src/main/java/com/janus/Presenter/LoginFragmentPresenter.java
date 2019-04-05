@@ -153,4 +153,9 @@ public class LoginFragmentPresenter implements LoginTask.Caller, ClientFacade.Pr
      */
     @Override
     public void updateUI() {}
+
+    @Override
+    public void endGame(){}
+
+    public void lastRound(){}
 }

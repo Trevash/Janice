@@ -354,6 +354,10 @@ public class gameModel {
         this.state = newState;
     }
 
+    public IGameState getState() {
+        return state;
+    }
+
     public void incrementTurnCounter() {
         if(turnCounter < 0){
             turnCounter = 0;

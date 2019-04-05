@@ -9,6 +9,9 @@ import java.util.List;
 import org.java_websocket.client.WebSocketClient;
 import org.java_websocket.handshake.ServerHandshake;
 
+import com.bignerdranch.android.shared.gameStates.AbstractClientGameState;
+import com.bignerdranch.android.shared.gameStates.ClientGameOverState;
+import com.bignerdranch.android.shared.interfaces.IGameState;
 import com.bignerdranch.android.shared.models.userModel;
 import com.bignerdranch.android.shared.models.usernameModel;
 import com.bignerdranch.android.shared.models.gameModel;
@@ -135,10 +138,12 @@ public class TtRClient extends WebSocketClient{
                     facade.update();
                 }
                 case LAST_ROUND: {
-
+                    facade.lastRound();
                 }
                 case END_GAME: {
-
+                    IGameState currentState = facade.getGame().getState();
+                    facade.getGame().setState(new ClientGameOverState( (AbstractClientGameState) currentState));
+                    facade.endGame();
                 }
             }
             proxy.checkMessageResult(result);

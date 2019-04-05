@@ -34,4 +34,9 @@ public class DestinationRoutesFragmentPresenter implements ClientFacade.Presente
                 .getPlayerByUsername(ClientModel.getInstance().getUser().getUserName())
                 .getDestinationCardHand();
     }
+
+    @Override
+    public void endGame(){}
+
+    public void lastRound(){}
 }

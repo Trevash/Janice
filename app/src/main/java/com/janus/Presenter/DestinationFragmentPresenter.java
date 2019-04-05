@@ -16,6 +16,7 @@ import java.util.List;
 public class DestinationFragmentPresenter implements ClientFacade.Presenter, ReturnDestinationCardsTask.Caller {
     public interface View {
         void updateDestinationCards(List<DestinationCardModel> cards, int minDestinationCards);
+        void endGame();
     }
     private DestinationFragmentPresenter.View view;
     private ClientFacade facade = ClientFacade.getInstance();
@@ -49,4 +50,10 @@ public class DestinationFragmentPresenter implements ClientFacade.Presenter, Ret
     public void onError(String s) {
 
     }
+
+    public void endGame(){
+        view.endGame();
+    }
+
+    public void lastRound(){}
 }

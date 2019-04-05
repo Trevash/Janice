@@ -72,6 +72,13 @@ public class GameActivity extends AppCompatActivity
                 .commit();
     }
 
+    public void onEndGame() {
+        GameResultsFragment resultsFragment = new GameResultsFragment();
+        fm.beginTransaction()
+                .replace(R.id.game_layout, resultsFragment)
+                .commit();
+    }
+
     public void onClickClaimRoute() {
         RouteFragment routeFragment = new RouteFragment();
         fm.beginTransaction()

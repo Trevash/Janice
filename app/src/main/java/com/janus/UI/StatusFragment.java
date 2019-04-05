@@ -20,6 +20,7 @@ import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.bignerdranch.android.shared.models.gameModel;
 import com.bignerdranch.android.shared.models.playerModel;
@@ -34,6 +35,7 @@ public class StatusFragment extends Fragment implements StatusFragmentPresenter.
     public interface Context {
         void onFinishAction();
         void onMapFragmentSelected();
+        void onEndGame();
     }
 
     private TabLayout tabLayout;
@@ -282,6 +284,14 @@ public class StatusFragment extends Fragment implements StatusFragmentPresenter.
                 }
             });
         }
+    }
+
+    public void lastRoundToast(){
+        Toast.makeText(getActivity(), "This is the Last Round!", Toast.LENGTH_LONG).show();
+    }
+
+    public void endGame(){
+        context.onEndGame();
     }
 
     public class StatusListAdapter extends RecyclerView.Adapter<StatusListAdapter.StatusViewHolder> {

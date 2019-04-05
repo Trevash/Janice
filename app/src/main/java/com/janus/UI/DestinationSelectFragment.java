@@ -20,6 +20,7 @@ public class DestinationSelectFragment extends Fragment implements DestinationFr
 
     public interface Context {
         void onFinishAction();
+        void onEndGame();
     }
 
     //ToDo: Disable if it's not your turn, connect to server to get destination cards.
@@ -169,5 +170,9 @@ public class DestinationSelectFragment extends Fragment implements DestinationFr
         } else {
             mAcceptButton.setEnabled(false);
         }
+    }
+
+    public void endGame(){
+        mContext.onEndGame();
     }
 }

@@ -3,19 +3,26 @@ package com.janus.Presenter;
 import com.bignerdranch.android.shared.models.playerModel;
 import com.bignerdranch.android.shared.models.userModel;
 import com.janus.ClientFacade;
+import com.janus.ClientModel;
 
 import java.util.List;
 
 public class StatusFragmentPresenter implements ClientFacade.Presenter {
 
     private View view;
+    private ClientModel model = ClientModel.getInstance();
     private ClientFacade facade = ClientFacade.getInstance();
 
     public interface View {
         void updateUI();
+        void lastRoundToast();
+        void endGame();
     }
 
     public void updateUI() {
+        if(model.getGame().isLastRound()){
+            view.lastRoundToast();
+        }
         view.updateUI();
     }
 
@@ -41,5 +48,13 @@ public class StatusFragmentPresenter implements ClientFacade.Presenter {
 
     public void removeStatusPresenter() {
         facade.removeStatusPresenter();
+    }
+
+    public void endGame(){
+        view.endGame();
+    }
+
+    public void lastRound(){
+        view.lastRoundToast();
     }
 }

@@ -23,6 +23,7 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.bignerdranch.android.shared.Constants;
 import com.bignerdranch.android.shared.models.abstractDoubleRoute;
@@ -52,6 +53,8 @@ public class MapFragment extends Fragment implements MapFragmentPresenter.View {
         void onClickDestinationSelect();
 
         void onClickGameStatus();
+
+        void onEndGame();
     }
 
     private MapFragmentPresenter presenter;
@@ -291,6 +294,14 @@ public class MapFragment extends Fragment implements MapFragmentPresenter.View {
     public void updateRoutes(List<abstractRoute> updatedRoutes) {
         mRoutes = new ArrayList<>(updatedRoutes);
         mapImage.setImageDrawable(new Drawings());
+    }
+
+    public void lastRoundToast(){
+        Toast.makeText(getActivity(), "This is the Last Round!", Toast.LENGTH_LONG).show();
+    }
+
+    public void endGame(){
+        mContext.onEndGame();
     }
 
     private class Drawings extends Drawable {

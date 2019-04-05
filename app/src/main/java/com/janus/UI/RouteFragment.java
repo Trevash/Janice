@@ -30,6 +30,7 @@ public class RouteFragment extends Fragment implements RouteFragmentPresenter.Vi
     public interface Context {
         void onFinishAction();
         void onMapFragmentSelected();
+        void onEndGame();
     }
 
     private RouteFragmentPresenter presenter;
@@ -183,5 +184,13 @@ public class RouteFragment extends Fragment implements RouteFragmentPresenter.Vi
     public void updateRoutes(List<singleRouteModel> routes){
         mRouteAdapter = new RouteAdapter(routes);
         mRouteRecyclerView.setAdapter(mRouteAdapter);
+    }
+
+    public void endGame(){
+        mContext.onEndGame();
+    }
+
+    public void lastRoundToast(){
+        Toast.makeText(getActivity(), "This is the Last Round!", Toast.LENGTH_LONG).show();
     }
 }
