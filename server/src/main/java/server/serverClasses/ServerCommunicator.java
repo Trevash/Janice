@@ -97,6 +97,7 @@ public class ServerCommunicator extends WebSocketServer {
                 broadcastGame(resultGson, gameStart);
                 broadcast(resultGson);
                 updateAllUserGameList();
+                broadcastGameStats(gameStart);
                 break;
             case UPDATE_CHAT:
                 //TODO: Caleb change this later
