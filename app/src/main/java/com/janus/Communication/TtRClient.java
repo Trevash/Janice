@@ -120,7 +120,7 @@ public class TtRClient extends WebSocketClient{
                     facade.update();
                     break;
                 }
-                case "stats": {
+                case STATS: {
                 	List<List<Double>> s = (ArrayList) result.getData(ArrayList.class);
                 	List<int[]> convertedStats = new ArrayList<>();
                 	for (int i = 0; i < s.size(); i++) {

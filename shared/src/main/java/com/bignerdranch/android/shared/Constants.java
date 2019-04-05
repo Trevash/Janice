@@ -37,6 +37,7 @@ public class Constants {
         public static final String UPDATE_GAME_STATUS = "UpdateGameStatus";
         public static final String DRAW_FIRST_TRAIN_CARD = "DrawFirstTrainCard";
         public static final String DRAW_SECOND_TRAIN_CARD = "DrawSecondTrainCard";
+        public static final String STATS = "Stats";
 
         // server commands
         public static final String DRAW_DESTINATION_CARDS = "DrawDestinationCards";

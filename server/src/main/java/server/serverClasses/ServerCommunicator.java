@@ -134,14 +134,15 @@ public class ServerCommunicator extends WebSocketServer {
 
                 break;
             case DRAW_FIRST_TRAIN_CARD:
+                DrawTrainCardData fData = (DrawTrainCardData) result.getData(DrawTrainCardData.class);
+                gameModel curGame = serverModel.getInstance().getGameByID(fData.getGameID());
+                curGame.updateGameHistory(new chatMessageModel(fData.getUsername(), fData.getUsername().getValue() + " drew a " + fData.getHand().get(fData.getHand().size() - 1).getColor().name() + "card"));
                 broadcastOne(resultGson, conn);
-                // TODO probably would want a way to update everyone's GUI.
                 break;
             case DRAW_SECOND_TRAIN_CARD:
                 DrawTrainCardData data = (DrawTrainCardData) result.getData(DrawTrainCardData.class);
-                // TODO this should probably be altered so that other players don't see the drawing player's hand
                 broadcastGame(resultGson, serverModel.getInstance().getGameByID(data.getGameID()));
-                updateGameStatus(data.getGameID(), data.getUsername(), data.getUsername().getValue() + " drew train cards");
+                updateGameStatus(data.getGameID(), data.getUsername(), data.getUsername().getValue() + " drew a " + data.getHand().get(data.getHand().size() - 1).getColor().name() + "card");
                 broadcastGameStats(serverModel.getInstance().getGameByID(data.getGameID()));
                 break;
             case "ERROR":
@@ -215,7 +216,7 @@ public class ServerCommunicator extends WebSocketServer {
         // TODO Why 0? that exclusively broadcasts to the host, and I can't think of any info that only the host would need to know
         List<int[]> gameStats = game.getStats(game.getPlayers().get(0).getUserName());
         gameStats.remove(0);
-        Results r = new Results("stats", true, gameStats);
+        Results r = new Results("Stats", true, gameStats);
         String resultGson = Serializer.getInstance().serializeObject(r);
 
         this.broadcastGame(resultGson, game);
