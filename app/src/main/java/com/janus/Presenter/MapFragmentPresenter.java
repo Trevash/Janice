@@ -14,7 +14,7 @@ public class MapFragmentPresenter implements ClientFacade.Presenter {
     public interface View {
         void updateTurnIndicator(List<playerModel> players);
         void updateRoutes(List<abstractRoute> routes);
-        void updateDestinationsDrawable(boolean canDrawDestCards);
+        void updateButtons(boolean canDrawDestCards, boolean canClaimRoute, boolean canDrawTrainCards);
     }
     private MapFragmentPresenter.View view;
     private ClientFacade facade = ClientFacade.getInstance();
@@ -27,7 +27,7 @@ public class MapFragmentPresenter implements ClientFacade.Presenter {
     public void updateUI(){
         view.updateTurnIndicator(model.getGame().getPlayers());
         view.updateRoutes(model.getGame().getRoutes());
-        view.updateDestinationsDrawable(facade.userCanDrawDestCards());
+        view.updateButtons(facade.userCanDrawDestCards(), facade.userCanClaimRoute(), facade.userCanDrawTrainCards());
     }
 
     public void setFragment() {

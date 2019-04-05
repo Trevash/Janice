@@ -249,12 +249,14 @@ public class MapFragment extends Fragment implements MapFragmentPresenter.View {
     }
 
     @Override
-    public void updateDestinationsDrawable(final boolean canDrawDestCards) {
+    public void updateButtons(final boolean canDrawDestCards, final boolean canClaimRoutes, final boolean canDrawTrainCards) {
         if (getActivity() != null) {
             getActivity().runOnUiThread(new Runnable() {
                 @Override
                 public void run() {
                     mDrawDestinationsButton.setEnabled(canDrawDestCards);
+                    mClaimRouteButton.setEnabled(canClaimRoutes);
+                    mDrawCardsButton.setEnabled(canDrawTrainCards);
                     // TODO might be better to show an "error message" explaining that you can't draw dest. cards
                 }
             });
