@@ -257,6 +257,9 @@ public class MapFragment extends Fragment implements MapFragmentPresenter.View {
                     mDrawDestinationsButton.setEnabled(canDrawDestCards);
                     mClaimRouteButton.setEnabled(canClaimRoutes);
                     mDrawCardsButton.setEnabled(canDrawTrainCards);
+                    if(presenter.outOfDestinationCards()){
+                        mDrawDestinationsButton.setEnabled(false);
+                    }
                     // TODO might be better to show an "error message" explaining that you can't draw dest. cards
                 }
             });
