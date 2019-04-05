@@ -182,6 +182,6 @@ public class serverFacade implements IServer {
 
     @Override
     public void sendLastRoundMessage(gameIDModel game) {
-        // TODO
+        // TODO send the game to everyone
     }
 }

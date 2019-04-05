@@ -67,7 +67,7 @@ public class serverModel {
         List<trainCardModel> hand = curGame.getPlayerModelFromID(request.getPlayerID()).getTrainCardHand();
         int points = curGame.getPlayerModelFromID(request.getPlayerID()).getPoints();
         // advances the turn/state
-        curGame.onRouteClaimed(request.getPlayerID());
+        curGame.onRouteClaimed(request.getPlayerID(), serverFacade.getInstance());
 
         return new ClaimRouteData(curGame.getGameID(), request.getPlayerID(), curGame.getRoutes(),
                 hand, curGame.getTrainCardDiscards(), curRoute, points,
