@@ -22,6 +22,7 @@ public class gameModel {
     private chatboxModel chatbox;
     private int turnCounter;
     private chatboxModel gameHistory;
+    private List<int[]> stats = new ArrayList<int[]>();
 
     private IGameState state;
 
@@ -80,6 +81,21 @@ public class gameModel {
         this.turnCounter = 0;
     }
 
+    public void setStats(List<int[]> s, usernameModel username) {
+    	this.stats = s;
+        List<trainCardModel> curPlayerHand = getPlayerByUsername(username).getTrainCardHand();
+        int[] cardTypes = new int[9];
+        for (int i = 0; i < curPlayerHand.size(); i++) {
+            cardTypes[curPlayerHand.get(i).getColor().ordinal()] += 1;
+        }
+        stats.add(cardTypes);
+    	this.stats.add(0, cardTypes);
+    }
+    
+    public List<int[]> getVariableStats(){
+    	return this.stats;
+    }
+    
     private void createRoutes() {
         routes.addAll(singleRouteModel.createSingleRoutes());
         if (players.size() > 3) {

@@ -1,11 +1,14 @@
 package com.janus.Communication;
 
 import java.net.URI;
+import java.util.ArrayList;
+import java.util.List;
 
 import org.java_websocket.client.WebSocketClient;
 import org.java_websocket.handshake.ServerHandshake;
 
 import com.bignerdranch.android.shared.models.userModel;
+import com.bignerdranch.android.shared.models.usernameModel;
 import com.bignerdranch.android.shared.models.gameModel;
 import com.bignerdranch.android.shared.resultobjects.ChatboxData;
 import com.bignerdranch.android.shared.resultobjects.ClaimRouteData;
@@ -113,6 +116,11 @@ public class TtRClient extends WebSocketClient{
                     facade.getGame().setNumTrainCards(data.getNumTrainCards());
                     facade.notifyTrainCardDrawn();
                     break;
+                }
+                case "stats": {
+                	List<int[]> s = (ArrayList) result.getData(ArrayList.class); 
+                	usernameModel username = facade.getPlayer().getUserName();
+                	facade.getGame().setStats(s, username);
                 }
             }
             proxy.checkMessageResult(result);
