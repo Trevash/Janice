@@ -203,20 +203,12 @@ public class ServerCommunicator extends WebSocketServer {
     }
     
     public void broadcastGameStats(gameModel game) {
-        List<WebSocket> temp = new ArrayList<>();
         List<int[]> gameStats = game.getStats(game.getPlayers().get(0).getUserName());
         gameStats.remove(0);
         Results r = new Results("stats", true, gameStats);
         String resultGson = Serializer.getInstance().serializeObject(r);
 
-        for (playerModel player : game.getPlayers()) {
-            String username = player.getUserName().getValue();
-            if (usernameWSMap.containsKey(username)) {
-                temp.add(usernameWSMap.get(username));
-            }
-        }
-
-        broadcast(resultGson, temp);
+        this.broadcastGame(resultGson, game);
     }
     
 }
