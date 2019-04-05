@@ -36,7 +36,7 @@ public class ClientActivePlayerState extends AbstractClientGameState {
 
     @Override
     public boolean canDrawDestCards() {
-        return true;
+        return getDestinationCardDeckSize() != 0;
     }
 
     @Override

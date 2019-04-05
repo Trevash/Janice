@@ -66,8 +66,13 @@ public class serverModel {
         curGame.addToTrainDiscards(discards);
         List<trainCardModel> hand = curGame.getPlayerModelFromID(request.getPlayerID()).getTrainCardHand();
         int points = curGame.getPlayerModelFromID(request.getPlayerID()).getPoints();
+        // advances the turn/state
+        curGame.onRouteClaimed(request.getPlayerID());
 
-        return new ClaimRouteData(curGame.getGameID(), request.getPlayerID(), curGame.getRoutes(), hand, curGame.getTrainCardDiscards(), curRoute, points, getUser(request.getAuth()).getUserName(), curGame.getPlayerModelFromID(request.getPlayerID()).getLocomotives());
+        return new ClaimRouteData(curGame.getGameID(), request.getPlayerID(), curGame.getRoutes(),
+                hand, curGame.getTrainCardDiscards(), curRoute, points,
+                getUser(request.getAuth()).getUserName(),
+                curGame.getPlayerModelFromID(request.getPlayerID()).getLocomotives());
     }
 
     public void addUser(userModel newUser) {
@@ -206,7 +211,6 @@ public class serverModel {
                     new DrawTrainCardData(curGame.getGameID(), curPlayer.getTrainCardHand(),
                             curGame.getFaceUpCards(), curGame.getNumTrainCards(),
                             serverModel.getInstance().getUser(request.getAuthtoken()).getUserName()));
-            curGame.incrementTurnCounter();
             return results;
         } else {
             trainCardModel returnCard = curGame.drawFaceUpTrainCard(request.getIndex() - 1);
@@ -218,7 +222,6 @@ public class serverModel {
                         new DrawTrainCardData(curGame.getGameID(), curPlayer.getTrainCardHand(),
                                 curGame.getFaceUpCards(), curGame.getNumTrainCards(),
                                 serverModel.getInstance().getUser(request.getAuthtoken()).getUserName()));
-                curGame.incrementTurnCounter();
                 return results;
 
             }

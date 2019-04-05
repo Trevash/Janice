@@ -27,6 +27,7 @@ public class GameStatusData {
         this.faceUpTrainCards = faceUpTrainCards;
         //this.numTrainCardDiscard = numTrainCardDiscard;
         this.trainCardDiscard = trainCardDiscard;
+        // TODO add in the number of destination cards of each player - this currently doesn't update on each client
     }
 
     public int getTurnCounter() {

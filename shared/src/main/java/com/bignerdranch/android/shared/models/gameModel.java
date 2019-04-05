@@ -172,6 +172,7 @@ public class gameModel {
     }
 
     public void updateCurrentPlayerDestinationCards(List<DestinationCardModel> selectedCards) {
+        // note: changed to be turn-independent - now directly returns to the player
         playerModel curPlayer = players.get(turnCounter);
         curPlayer.addDestinationCards(selectedCards);
         // turn order incremented when the card is returned to the deck, by the state
@@ -353,6 +354,9 @@ public class gameModel {
     }
 
     public void incrementTurnCounter() {
+        if(turnCounter < 0){
+            turnCounter = 0;
+        }
         turnCounter += 1;
         if (turnCounter >= this.players.size()) {
             turnCounter = 0;
@@ -531,5 +535,11 @@ public class gameModel {
 
     public int minKeepDestCards() {
         return state.minKeepDestCards();
+    }
+
+    public void onRouteClaimed(playerIDModel claimerID) {
+        if (state instanceof AbstractServerGameState) {
+            ((AbstractServerGameState) state).onRouteClaimed(claimerID);
+        }
     }
 }

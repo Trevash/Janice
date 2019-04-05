@@ -66,5 +66,13 @@ public class ServerInGameState extends AbstractServerGameState implements IGameS
         }
     }
 
+    @Override
+    public void onRouteClaimed(playerIDModel claimer) {
+        if(getGame().getPlayerModelFromID(claimer).getLocomotives() <= 2) {
+            super.updateGameState(new ServerLastRoundState(this));
+        }
+        // TODO figure out how to signal that the last round has begun
+    }
+
 
 }

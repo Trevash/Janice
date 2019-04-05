@@ -80,7 +80,7 @@ public class ServerInitialGameState extends AbstractServerGameState implements I
 
     @Override
     public void returnDestinationCards(List<DestinationCardModel> selectedCards, List<DestinationCardModel> rejectedCards) {
-
+        // TODO add in check that the num of selectedCards is large enough
         List<playerModel> players = super.getGame().getPlayers();
         for(int i = 0; i < players.size(); i++) {
             if(drawnCards.get(i).containsAll(selectedCards) && drawnCards.get(i).containsAll(rejectedCards)) {
@@ -112,9 +112,10 @@ public class ServerInitialGameState extends AbstractServerGameState implements I
         // return the cards
         for(List<DestinationCardModel> rejectedCards: returnedCards) {
             // selectedCards is currently neither used nor checked in this case
-            super.returnDestinationCards(null, rejectedCards);
+            super.returnDestinationCards(null, rejectedCards); // TODO advances the turn
         }
         // update the state
+        //super.getGame().setTurnCounter(-1); // Does this work?
         super.updateGameState(new ServerInGameState(this));
     }
 

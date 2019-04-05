@@ -40,7 +40,7 @@ public class DestinationCardDeckProxy implements IDestinationCardDeck {
 
     @Override
     public void returnDestinationCards(List<DestinationCardModel> selectedCards, List<DestinationCardModel> rejectedCards) {
-        Results results = server.returnDestinationCard(new ReturnDestinationCardsRequest(gameID, selectedCards, rejectedCards));
+        Results results = server.returnDestinationCard(new ReturnDestinationCardsRequest(gameID, clientID, selectedCards, rejectedCards));
         if(results.isSuccess()) {
             size += rejectedCards.size();
         }

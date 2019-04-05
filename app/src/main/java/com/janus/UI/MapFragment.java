@@ -158,7 +158,7 @@ public class MapFragment extends Fragment implements MapFragmentPresenter.View {
             }
         });
         mDrawDestinationsButton.setEnabled(true);
-
+        // TODO add to update ui: enable/disable this button based on whether state allows it
         mTurnRecyclerView = v.findViewById(R.id.turnRecyclerView);
         mTurnRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
 

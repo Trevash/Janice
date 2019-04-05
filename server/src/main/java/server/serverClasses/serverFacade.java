@@ -151,11 +151,13 @@ public class serverFacade implements IServer {
     @Override
     public Results returnDestinationCard(ReturnDestinationCardsRequest request) {
         gameModel game = serverModel.getInstance().getGameByID(request.getGameID());
-        game.updateCurrentPlayerDestinationCards(request.getSelectedCards());
-        usernameModel name = game.getPlayers().get(game.getTurnCounter()).getUserName();
+        playerModel player = game.getPlayerModelFromID(request.getPlayerID());
+        usernameModel name = player.getUserName();
         // the turn gets updated when the cards are returned, so the current player needs to be updated
         // before the cards are actually returned
         game.returnRejectedDestinationCards(request.getSelectedCards(), request.getRejectedCards());
+        player.addDestinationCards(request.getSelectedCards());
+        //request.
         ReturnDestinationCardData result = new ReturnDestinationCardData(game.getGameID(), name, request.getSelectedCards());
         return new Results("ReturnDestinationCards", true, result);
         // currently does not return anything - will need to update everyone's games

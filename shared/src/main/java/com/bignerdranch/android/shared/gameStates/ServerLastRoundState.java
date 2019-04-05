@@ -1,7 +1,5 @@
 package com.bignerdranch.android.shared.gameStates;
 
-import com.bignerdranch.android.shared.interfaces.IDestinationCardDeck;
-import com.bignerdranch.android.shared.models.TrainCardBank;
 
 public class ServerLastRoundState extends ServerInGameState {
     // TODO implement state - add in a check to see if it is the last player's turn
@@ -16,6 +14,10 @@ public class ServerLastRoundState extends ServerInGameState {
     public ServerLastRoundState(AbstractServerGameState prevState) {
         super(prevState);
     }
+
+
+
+    // TODO implement now
 
     // need a method to remove the game from the server
 }

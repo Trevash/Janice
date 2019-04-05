@@ -68,6 +68,7 @@ public class TtRClient extends WebSocketClient{
                     facade.update();
                     break;
                 }
+                // case DRAW_DESTINATION_CARDS - doesn't do anything
                 case JOIN: {
                     facade.setGame((gameModel) result.getData(gameModel.class));
                     break;
@@ -115,10 +116,11 @@ public class TtRClient extends WebSocketClient{
                     facade.getGame().setFaceUpCards(data.getFaceUpCards());
                     facade.getGame().setNumTrainCards(data.getNumTrainCards());
                     facade.notifyTrainCardDrawn();
+                    facade.update();
                     break;
                 }
                 case "stats": {
-                	List<int[]> s = (ArrayList) result.getData(ArrayList.class); 
+                	List<int[]> s = (ArrayList) result.getData(ArrayList.class);
                 	usernameModel username = facade.getPlayer().getUserName();
                 	facade.getGame().setStats(s, username);
                 }

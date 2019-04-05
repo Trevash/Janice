@@ -97,7 +97,6 @@ public class ServerCommunicator extends WebSocketServer {
                 broadcastGame(resultGson, gameStart);
                 broadcast(resultGson);
                 updateAllUserGameList();
-                broadcastGameStats(gameStart);
                 break;
             case UPDATE_CHAT:
                 //TODO: Caleb change this later
@@ -191,7 +190,7 @@ public class ServerCommunicator extends WebSocketServer {
 
     public void updateGameStatus(gameIDModel gameID, usernameModel username, String historyUpdate) {
         gameModel curGame = serverModel.getInstance().getGameByID(gameID);
-        //curGame.incrementTurnCounter();
+        curGame.incrementTurnCounter();
         // states increment the turn counter automatically - and not everything that causes an update
         // will necessarily require incrementing the turn counter. ex: drawing first train card
         curGame.updateGameHistory(new chatMessageModel(username, historyUpdate));
