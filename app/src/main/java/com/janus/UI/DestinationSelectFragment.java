@@ -140,9 +140,15 @@ public class DestinationSelectFragment extends Fragment implements DestinationFr
             mPrompt.setText(R.string.drawDestinationsPrompt1Route);
         }
 
-        mDestination1.setText(destCards.get(0).getFormattedDestinationCard());
-        mDestination2.setText(destCards.get(1).getFormattedDestinationCard());
-        mDestination3.setText(destCards.get(2).getFormattedDestinationCard());
+        if(availableDestinationCards.size() >= 1) {
+            mDestination1.setText(destCards.get(0).getFormattedDestinationCard());
+        }
+        if(availableDestinationCards.size() >= 2) {
+            mDestination2.setText(destCards.get(1).getFormattedDestinationCard());
+        }
+        if(availableDestinationCards.size() >= 3) {
+            mDestination3.setText(destCards.get(2).getFormattedDestinationCard());
+        }
     }
 
     public void updateButton(){
