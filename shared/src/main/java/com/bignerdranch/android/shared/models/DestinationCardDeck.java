@@ -56,11 +56,11 @@ public class DestinationCardDeck implements IDestinationCardDeck {
     public List<DestinationCardModel> drawDestinationCards() {
         List<DestinationCardModel> drawnCards = new ArrayList<>();
         //ListIterator<DestinationCardModel> it = deck.listIterator();
+        if(deck.isEmpty()) {
+            throw new IllegalStateException("No cards in destination card deck to draw");
+        }
         while(!deck.isEmpty() && drawnCards.size() < 3) { // while card to draw and need to draw
             drawnCards.add(deck.pop());
-        }
-        if(drawnCards.size() == 0) {
-            throw new IllegalStateException("No cards in destination card deck to draw");
         }
         return drawnCards;
     }

@@ -97,6 +97,7 @@ public class ServerCommunicator extends WebSocketServer {
                 broadcastGame(resultGson, gameStart);
                 broadcast(resultGson);
                 updateAllUserGameList();
+                broadcastGameStats(gameStart);
                 break;
             case UPDATE_CHAT:
                 //TODO: Caleb change this later
@@ -110,6 +111,7 @@ public class ServerCommunicator extends WebSocketServer {
                 ClaimRouteData claimRouteData = (ClaimRouteData) result.getData(ClaimRouteData.class);
                 broadcastGame(resultGson, serverModel.getInstance().getGameByID(claimRouteData.getGameID()));
                 updateGameStatus(claimRouteData.getGameID(), claimRouteData.getUsername(), "Route from " + claimRouteData.getCurRoute().getCity1().getName() + " to " + claimRouteData.getCurRoute().getCity2().getName() + " claimed by " + claimRouteData.getUsername().getValue());
+                broadcastGameStats(serverModel.getInstance().getGameByID(claimRouteData.getGameID()));
                 break;
             case DRAW_DESTINATION_CARDS:
                 // TODO HOW IS this returning? TtRClient does not have an equivalent for this, but it seems to be working
@@ -125,6 +127,8 @@ public class ServerCommunicator extends WebSocketServer {
 
                 updateGameStatus(returnDestdata.getGameID(), returnDestdata.getUsername(), "drew " +
                         Integer.toString(returnDestdata.getSelectedCards().size()) + " destination cards");
+                broadcastGameStats(serverModel.getInstance().getGameByID(returnDestdata.getGameID()));
+
                 break;
             case DRAW_FIRST_TRAIN_CARD:
                 broadcastOne(resultGson, conn);
@@ -135,6 +139,7 @@ public class ServerCommunicator extends WebSocketServer {
                 // TODO this should probably be altered so that other players don't see the drawing player's hand
                 broadcastGame(resultGson, serverModel.getInstance().getGameByID(data.getGameID()));
                 updateGameStatus(data.getGameID(), data.getUsername(), data.getUsername().getValue() + " drew train cards");
+                broadcastGameStats(serverModel.getInstance().getGameByID(data.getGameID()));
                 break;
             case "ERROR":
                 broadcastOne(resultGson, conn);
@@ -197,4 +202,22 @@ public class ServerCommunicator extends WebSocketServer {
         Results result = new Results(UPDATE_GAME_STATUS, true, data);
         this.broadcastGame(Serializer.getInstance().serializeObject(result), curGame);
     }
+    
+    public void broadcastGameStats(gameModel game) {
+        List<WebSocket> temp = new ArrayList<>();
+        List<int[]> gameStats = game.getStats(game.getPlayers().get(0).getUserName());
+        gameStats.remove(0);
+        Results r = new Results("stats", true, gameStats);
+        String resultGson = Serializer.getInstance().serializeObject(r);
+
+        for (playerModel player : game.getPlayers()) {
+            String username = player.getUserName().getValue();
+            if (usernameWSMap.containsKey(username)) {
+                temp.add(usernameWSMap.get(username));
+            }
+        }
+
+        broadcast(resultGson, temp);
+    }
+    
 }

@@ -225,6 +225,10 @@ public class RouteFragmentPresenter implements ClaimRouteTask.Caller, ClientFaca
         task.execute(request);
     }
 
+    public boolean canClaimRoute(){
+        return facade.userCanClaimRoute();
+    }
+
     @Override
     public void onError(String s) {
 

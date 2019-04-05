@@ -195,4 +195,9 @@ public abstract class AbstractClientGameState extends AbstractGameState implemen
         // does nothing, most of the time
     }
 
+
+    public boolean canDrawLocomotive() {
+        return false;
+    }
+
 }

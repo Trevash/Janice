@@ -12,10 +12,7 @@ public class Constants {
     public static final String IP_ADDRESS =
             //"192.168.1.100"; // Jason's home IP address
             //"192.168.254.216";
-            //"192.168.253.133";
-            "10.34.229.10";
-            //"10.24.198.100";
-            //"10.34.237.205";
+            "192.168.254.249";
             //"10.37.93.67"; // Regular IP address for group testing
             //"10.34.241.184"; // another IP address for group testing
     public static final int PORT = 8087;
@@ -60,6 +57,7 @@ public class Constants {
     }
 
     public static class Cities {
+        // TODO have someone check over this list for completion
         public static final cityModel ATLANTA = new cityModel("Atlanta", 888, 502);
         public static final cityModel BOSTON = new cityModel("Boston", 1080, 208);
         public static final cityModel CALGARY = new cityModel("Calgary", 350, 56);

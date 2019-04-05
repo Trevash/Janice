@@ -54,6 +54,12 @@ public class ClientModel {
         this.serverGameList = serverGameList.getGames();
     }
 
+    public boolean isYourTurn(){
+        usernameModel username = getUser().getUserName();
+        playerIDModel currentPlayerID = getGame().getPlayerByUsername(username).getId();
+        return getGame().isPlayersTurn(currentPlayerID);
+    }
+
     public chatboxModel getChatbox() {
         return chatbox;
     }

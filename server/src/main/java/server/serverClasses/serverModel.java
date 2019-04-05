@@ -88,44 +88,6 @@ public class serverModel {
         return false;
     }
 
-    public boolean userExists(userModel test) {
-        for (userModel user : this.users) {
-            if (test == user) {
-                return true;
-            }
-        }
-        return false;
-    }
-
-    public boolean userExists(userIDModel test) {
-        for (userModel user : this.users) {
-            if (test == user.getUserID()) {
-                return true;
-            }
-        }
-        return false;
-    }
-
-    public boolean userIDExists(String test) {
-        for (userModel user : this.users) {
-            if (test.equals(user.getUserID().getValue())) {
-                return true;
-            }
-        }
-        return false;
-    }
-
-    public boolean playerIDExists(String test) {
-        for (userModel user : this.users) {
-            for (playerIDModel playerID : user.getPlayerIDs()) {
-                if (test.equals(playerID.getValue())) {
-                    return true;
-                }
-            }
-        }
-        return false;
-    }
-
     public userModel getUser(String username) throws UserNotFoundException {
         for (userModel user : this.users) {
             if (user.getUserName().getValue().equals(username)) {
@@ -148,23 +110,6 @@ public class serverModel {
         for (userModel curUser : this.users) {
             if (curUser.getAuthToken().getValue().equals(auth.getValue()))
                 return true;
-        }
-        return false;
-    }
-
-    public boolean authTokenExists(String newValue) {
-        for (userModel curUser : this.users) {
-            if (curUser.getAuthToken().getValue().equals(newValue))
-                return true;
-        }
-        return false;
-    }
-
-    public boolean gameIDExists(String newValue) {
-        for (gameModel game : this.games) {
-            if (game.getGameID().getValue().equals(newValue)) {
-                return true;
-            }
         }
         return false;
     }
@@ -212,7 +157,6 @@ public class serverModel {
 
     public gameModel startGame(StartGameRequest request) throws GameNotFoundException {
         for (gameModel curGame : this.games) {
-            //if(curGame.getGameID().getValue().equals(request.getModel().getGameID().getValue())) {
             if (curGame.getGameID().equals(request.getGameID())) {
                 curGame.startGame();
                 return curGame;
@@ -226,8 +170,6 @@ public class serverModel {
             if (curGame.getGameID().getValue().equals(request.getGameID().getValue())) {
                 curGame.updateChatbox(request.getMessage());
                 return new ChatboxData(curGame.getChatbox(), curGame.getGameID());
-                //ChatboxData data = new ChatboxData(curGame.getChatbox(), curGame.getGameID());
-                //return data;
             }
         }
         throw new GameNotFoundException("Update chat failed, game not found");

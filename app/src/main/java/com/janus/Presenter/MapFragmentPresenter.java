@@ -15,8 +15,8 @@ public class MapFragmentPresenter implements ClientFacade.Presenter {
         void updateTurnIndicator(List<playerModel> players);
 
         void updateRoutes(List<abstractRoute> routes);
+        void updateButtons(boolean canDrawDestCards, boolean canClaimRoute, boolean canDrawTrainCards);
 
-        void updateDestinationsDrawable(boolean canDrawDestCards);
     }
 
     private MapFragmentPresenter.View view;
@@ -30,7 +30,7 @@ public class MapFragmentPresenter implements ClientFacade.Presenter {
     public void updateUI() {
         view.updateTurnIndicator(model.getGame().getPlayers());
         view.updateRoutes(model.getGame().getRoutes());
-        view.updateDestinationsDrawable(facade.userCanDrawDestCards());
+        view.updateButtons(facade.userCanDrawDestCards(), facade.userCanClaimRoute(), facade.userCanDrawTrainCards());
     }
 
     public void setFragment() {
@@ -43,11 +43,6 @@ public class MapFragmentPresenter implements ClientFacade.Presenter {
 
     public boolean isPlayersTurn(playerIDModel pidModel) {
         return model.getGame().isPlayersTurn(pidModel);
-    }
-
-    public boolean isCurrentPlayersTurn() {
-        usernameModel username = model.getUser().getUserName();
-        return isPlayersTurn(model.getGame().getPlayerByUsername(username).getId());
     }
 
     // a method that could be used to alter whether the destination card button is clickable

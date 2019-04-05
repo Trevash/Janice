@@ -249,12 +249,14 @@ public class MapFragment extends Fragment implements MapFragmentPresenter.View {
     }
 
     @Override
-    public void updateDestinationsDrawable(final boolean canDrawDestCards) {
+    public void updateButtons(final boolean canDrawDestCards, final boolean canClaimRoutes, final boolean canDrawTrainCards) {
         if (getActivity() != null) {
             getActivity().runOnUiThread(new Runnable() {
                 @Override
                 public void run() {
                     mDrawDestinationsButton.setEnabled(canDrawDestCards);
+                    mClaimRouteButton.setEnabled(canClaimRoutes);
+                    mDrawCardsButton.setEnabled(canDrawTrainCards);
                     // TODO might be better to show an "error message" explaining that you can't draw dest. cards
                 }
             });
@@ -274,10 +276,6 @@ public class MapFragment extends Fragment implements MapFragmentPresenter.View {
             System.out.println("Error: MapFragment tried to updateturnIndicator() when its " +
                     "activity was null");
         }
-        /*mDrawDestinationsButton.setEnabled(false);
-        if(presenter.isCurrentPlayersTurn()){
-            mDrawDestinationsButton.setEnabled(true);
-        }*/
     }
 
     private void updateTurnIndicatorMainThread() {

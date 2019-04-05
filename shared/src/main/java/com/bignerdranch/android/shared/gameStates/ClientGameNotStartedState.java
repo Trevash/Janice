@@ -37,6 +37,11 @@ public class ClientGameNotStartedState extends AbstractClientGameState {
         return false;
     }
 
+    @Override
+    public boolean canDrawLocomotive() {
+        return false;
+    }
+
     /**
      * a method that notifies the client game state that it needs to check that its state is valid
      * based on the turn

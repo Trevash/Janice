@@ -18,6 +18,11 @@ public class ClientDrawTrainCardState extends AbstractClientGameState {
     }
 
     @Override
+    public boolean canDrawLocomotive() {
+        return false;
+    }
+
+    @Override
     public boolean canClaimRoute() {
         return false;
     }

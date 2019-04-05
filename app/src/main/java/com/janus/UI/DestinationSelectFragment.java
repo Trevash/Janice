@@ -132,17 +132,22 @@ public class DestinationSelectFragment extends Fragment implements DestinationFr
     }
 
     @Override
-    public void updateDestinationCards(List<DestinationCardModel> destCards) {
+    public void updateDestinationCards(List<DestinationCardModel> destCards, int minDestinationCards) {
         availableDestinationCards = destCards;
-        mPrompt.setText(R.string.drawDestinationsPrompt2Routes); // Should show number of cards
+        if(minDestinationCards == 2) {
+            mPrompt.setText(R.string.drawDestinationsPrompt2Routes);
+        } else {
+            mPrompt.setText(R.string.drawDestinationsPrompt1Route);
+        }
+
         mDestination1.setText(destCards.get(0).getFormattedDestinationCard());
         mDestination2.setText(destCards.get(1).getFormattedDestinationCard());
         mDestination3.setText(destCards.get(2).getFormattedDestinationCard());
     }
 
     public void updateButton(){
-        // TODO alter this so that it can use a number provided by the state var - can prob write a method in the IGameState
-        if(selectedDestinationCards.size() >= 2){
+        int minDestinationCards = presenter.getMinDestinationCards();
+        if(selectedDestinationCards.size() >= minDestinationCards){
             mAcceptButton.setEnabled(true);
         } else {
             mAcceptButton.setEnabled(false);
