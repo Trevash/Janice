@@ -257,14 +257,14 @@ public class StatusFragment extends Fragment implements StatusFragmentPresenter.
         mTotalDestinationCards.setText(Integer.toString(totals[1]));
     }
 
-    private void buildPlayerStats(int playerPosition, StatusListAdapter.StatusViewHolder holder) {
+    private void buildPlayerStats(int playerPosition, StatusListAdapter.StatusViewHolder holder, int[] stats) {
         playerModel playerInfo = presenter.getPlayers().get(playerPosition);
 
         holder.mPlayerName.setText(playerInfo.getUserName().getValue());
-        holder.mPlayerPoints.setText(Integer.toString(playerInfo.getPoints()));
-        holder.mNumTrains.setText(Integer.toString(playerInfo.getLocomotives()));
-        holder.mNumCards.setText(Integer.toString(playerInfo.getTrainCardHand().size()));
-        holder.mNumDestinationCards.setText(Integer.toString(playerInfo.getDestinationCardHand().size()));
+        holder.mPlayerPoints.setText(Integer.toString(stats[0]));
+        holder.mNumTrains.setText(Integer.toString(stats[1]));
+        holder.mNumCards.setText(Integer.toString(stats[2]));
+        holder.mNumDestinationCards.setText(Integer.toString(stats[3]));
     }
 
     public void updateUI() {
@@ -323,7 +323,8 @@ public class StatusFragment extends Fragment implements StatusFragmentPresenter.
 
         @Override
         public void onBindViewHolder(StatusListAdapter.StatusViewHolder holder, int position) {
-            buildPlayerStats(position, holder);
+            int[] playerStats = presenter.getStats().get(position+2);
+            buildPlayerStats(position, holder, playerStats);
         }
 
         @Override
