@@ -28,7 +28,4 @@ public interface IServer {
 
     Results drawDestinationCards(DrawDestinationCardsRequest request);
     Results returnDestinationCard(ReturnDestinationCardsRequest request);
-
-    void endGame(gameIDModel game);
-    void sendLastRoundMessage(gameIDModel game);
 }

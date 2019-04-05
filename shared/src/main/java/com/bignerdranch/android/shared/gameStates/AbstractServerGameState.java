@@ -1,7 +1,6 @@
 package com.bignerdranch.android.shared.gameStates;
 
 import com.bignerdranch.android.shared.interfaces.IDestinationCardDeck;
-import com.bignerdranch.android.shared.interfaces.IServer;
 import com.bignerdranch.android.shared.models.DestinationCardDeck;
 import com.bignerdranch.android.shared.models.DestinationCardModel;
 import com.bignerdranch.android.shared.models.TrainCardBank;
@@ -120,7 +119,7 @@ public abstract class AbstractServerGameState extends AbstractGameState {
         trainCardBank.addToDiscard(discardedCards);
     }
 
-    public void onRouteClaimed(playerIDModel claimer, IServer serverFacade) {
+    public void onRouteClaimed(playerIDModel claimer) {
         super.advanceTurn();
     }
 }

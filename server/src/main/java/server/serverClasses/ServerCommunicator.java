@@ -106,14 +106,23 @@ public class ServerCommunicator extends WebSocketServer {
                 broadcastGame(resultGson, gameChat);
                 break;
             case CLAIM_ROUTE:
-                // TODO claiming a route needs restrictions to be enforced.
                 ClaimRouteData claimRouteData = (ClaimRouteData) result.getData(ClaimRouteData.class);
-                broadcastGame(resultGson, serverModel.getInstance().getGameByID(claimRouteData.getGameID()));
+                gameModel curGame = serverModel.getInstance().getGameByID(claimRouteData.getGameID());
+                broadcastGame(resultGson, curGame);
                 updateGameStatus(claimRouteData.getGameID(), claimRouteData.getUsername(),
                         "Route from " + claimRouteData.getCurRoute().getCity1().getName() +
                                 " to " + claimRouteData.getCurRoute().getCity2().getName() +
                                 " claimed by " + claimRouteData.getUsername().getValue());
-                broadcastGameStats(serverModel.getInstance().getGameByID(claimRouteData.getGameID()));
+                broadcastGameStats(curGame);
+
+                //Check if last turn
+                if(curGame.isLastTurn()){
+                    broadcastEndGame(curGame);
+                }
+                //Check if last round
+                else if(curGame.isLastRound()){
+                    broadcastLastRound(curGame);
+                }
                 break;
             case DRAW_DESTINATION_CARDS:
                 // TODO HOW IS this returning? TtRClient does not have an equivalent for this, but it seems to be working
@@ -132,11 +141,16 @@ public class ServerCommunicator extends WebSocketServer {
                         Integer.toString(returnDestdata.getSelectedCards().size()) + " destination cards");
                 broadcastGameStats(serverModel.getInstance().getGameByID(returnDestdata.getGameID()));
 
+                //Check if last turn
+                gameModel game = serverModel.getInstance().getGameByID(returnDestdata.getGameID());
+                if(game.isLastTurn()){
+                    broadcastEndGame(game);
+                }
                 break;
             case DRAW_FIRST_TRAIN_CARD:
                 DrawTrainCardData fData = (DrawTrainCardData) result.getData(DrawTrainCardData.class);
-                gameModel curGame = serverModel.getInstance().getGameByID(fData.getGameID());
-                curGame.updateGameHistory(new chatMessageModel(fData.getUsername(), fData.getUsername().getValue() + " drew a " + fData.getHand().get(fData.getHand().size() - 1).getColor().name() + "card"));
+                gameModel currentGame = serverModel.getInstance().getGameByID(fData.getGameID());
+                currentGame.updateGameHistory(new chatMessageModel(fData.getUsername(), fData.getUsername().getValue() + " drew a " + fData.getHand().get(fData.getHand().size() - 1).getColor().name() + "card"));
                 broadcastOne(resultGson, conn);
                 break;
             case DRAW_SECOND_TRAIN_CARD:
@@ -144,6 +158,12 @@ public class ServerCommunicator extends WebSocketServer {
                 broadcastGame(resultGson, serverModel.getInstance().getGameByID(data.getGameID()));
                 updateGameStatus(data.getGameID(), data.getUsername(), data.getUsername().getValue() + " drew a " + data.getHand().get(data.getHand().size() - 1).getColor().name() + "card");
                 broadcastGameStats(serverModel.getInstance().getGameByID(data.getGameID()));
+
+                //Check if last turn
+                gameModel Game = serverModel.getInstance().getGameByID(data.getGameID());
+                if(Game.isLastTurn()){
+                    broadcastEndGame(Game);
+                }
                 break;
             case "ERROR":
                 broadcastOne(resultGson, conn);
@@ -155,6 +175,16 @@ public class ServerCommunicator extends WebSocketServer {
         //List<WebSocket> temp = new ArrayList<>();
         //temp.add(conn);
         //broadcast(resultGson, temp);
+    }
+
+    private void broadcastEndGame(gameModel curGame) {
+        Results results = new Results("EndGame", true, null);
+        broadcastGame(Serializer.getInstance().serializeObject(results), curGame);
+    }
+
+    private void broadcastLastRound(gameModel curGame) {
+        Results results = new Results("LastRound", true, null);
+        broadcastGame(Serializer.getInstance().serializeObject(results), curGame);
     }
 
     @Override

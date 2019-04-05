@@ -174,14 +174,4 @@ public class serverFacade implements IServer {
     public Results drawSecondTrainCard(DrawTrainCardRequest request) throws Exception {
         return serverModel.getInstance().drawSecondTrainCard(request);
     }
-
-    @Override
-    public void endGame(gameIDModel game) {
-        // TODO
-    }
-
-    @Override
-    public void sendLastRoundMessage(gameIDModel game) {
-        // TODO send the game to everyone
-    }
 }

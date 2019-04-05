@@ -13,11 +13,9 @@ public class ServerLastRoundState extends ServerInGameState {
 
 
     private boolean lastTurn; // boolean value to tell if it is the very last player's turn
-    private transient IServer serverFacade;
 
-    public ServerLastRoundState(AbstractServerGameState prevState, IServer serverFacade) {
+    public ServerLastRoundState(AbstractServerGameState prevState) {
         super(prevState);
-        this.serverFacade = serverFacade;
         // note: turn counter is not yet updated
         //startingPlayer = super.getGame().getPlayers().get(getGame().getTurnCounter());
     }
@@ -28,9 +26,6 @@ public class ServerLastRoundState extends ServerInGameState {
 
     @Override
     protected void advanceTurn() {
-        if(lastTurn) {
-            serverFacade.endGame(getGame().getGameID());
-        }
         super.advanceTurn();
         if(getCurrentPlayer().getLocomotives() <= 2) {
             // advanced to the player who initiated the turn
@@ -63,4 +58,8 @@ public class ServerLastRoundState extends ServerInGameState {
     }
 
     // need a method to remove the game from the server
+
+    public boolean isLastTurn(){
+        return lastTurn;
+    }
 }
