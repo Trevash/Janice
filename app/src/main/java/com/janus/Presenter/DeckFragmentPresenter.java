@@ -1,5 +1,6 @@
 package com.janus.Presenter;
 
+import com.bignerdranch.android.shared.models.colors.cardColorEnum;
 import com.bignerdranch.android.shared.models.playerIDModel;
 import com.bignerdranch.android.shared.models.trainCardModel;
 import com.bignerdranch.android.shared.models.usernameModel;
@@ -12,12 +13,15 @@ import java.util.List;
 
 public class DeckFragmentPresenter implements ClientFacade.Presenter, DrawTrainCardTask.Caller {
     public interface View {
-        //void updateDeck(List<trainCardModel> cards);
         void updateDeckSize(int trainCardDeckSize);
 
         void updateFaceUpCards(List<trainCardModel> cards);
 
         void returnToMap();
+
+        void errorToast(String message);
+
+        void updateMenu(boolean menuActive);
     }
 
     private View view;
@@ -30,31 +34,39 @@ public class DeckFragmentPresenter implements ClientFacade.Presenter, DrawTrainC
     }
 
     public void updateUI() {
-        view.updateDeckSize(model.getGame().getNumTrainCards());
-        view.updateFaceUpCards(model.getGame().getFaceUpCards()); // TODO faceUpCards is not on the client side during the initial part of the game
+        if(model.isYourTurn()){
+            boolean menuActive;
+            if(!facade.userCanDrawLocomotive()) { //Need to draw second card still
+                menuActive = false;
+            } else { //Haven't drawn a card yet, can return to map
+                menuActive = true;
+            }
+            view.updateMenu(menuActive);
+            view.updateDeckSize(model.getGame().getNumTrainCards());
+            view.updateFaceUpCards(model.getGame().getFaceUpCards()); // TODO faceUpCards is not on the client side during the initial part of the game
+        } else {
+            view.returnToMap();
+        }
     }
 
     public void drawCard(int index) {
         if(facade.userCanDrawTrainCards()) {
-            //if(index == 0) { // if deck
-            //    model.getGame().drawTrainCardFromDeck();
-            //} else { // if a face-up-card
-            //    model.getGame().drawFaceUpTrainCard(index - 1);
-            //}
+            boolean isLocomotive = model.getGame().getFaceUpCards().get(index).getColor() == cardColorEnum.LOCOMOTIVE;
+            if(isLocomotive && !facade.userCanDrawLocomotive()){
+                view.errorToast("You already drew one card.  You can't draw a locomotive now!");
+            } else {
+                DrawTrainCardTask task = new DrawTrainCardTask(this);
+                usernameModel username = model.getUser().getUserName();
+                playerIDModel currentPlayerID = model.getGame().getPlayerByUsername(username).getId();
 
-            DrawTrainCardTask task = new DrawTrainCardTask(this);
-            usernameModel username = model.getUser().getUserName();
-            playerIDModel currentPlayerID = model.getGame().getPlayerByUsername(username).getId();
-
-            DrawTrainCardRequest request =
-                    new DrawTrainCardRequest(model.getUser().getAuthToken(), index, currentPlayerID, model.getGame().getGameID());
-            task.execute(request);
-            // TtRClient can inform the state that a train card was drawn, if successful
+                DrawTrainCardRequest request =
+                        new DrawTrainCardRequest(model.getUser().getAuthToken(), index, currentPlayerID, model.getGame().getGameID());
+                task.execute(request);
+                // TtRClient can inform the state that a train card was drawn, if successful
+            }
         } else {
-            onError("You cannot draw train cards right now"); // currently not implemented
+            view.errorToast("It's not your turn!");
         }
-
-
     }
 
     public void setFragment() {

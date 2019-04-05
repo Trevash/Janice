@@ -45,6 +45,11 @@ public class ClientActivePlayerState extends AbstractClientGameState {
     }
 
     @Override
+    public boolean canDrawLocomotive() {
+        return true;
+    }
+
+    @Override
     public List<DestinationCardModel> drawDestinationCards(playerIDModel client) {
         // TODO provide error handling - also may want way to avoid two quick succession draws
         List<DestinationCardModel> drawnCards = super.drawDestinationCards(client);

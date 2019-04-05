@@ -15,7 +15,7 @@ import java.util.List;
 
 public class DestinationFragmentPresenter implements ClientFacade.Presenter, ReturnDestinationCardsTask.Caller {
     public interface View {
-        void updateDestinationCards(List<DestinationCardModel> cards);
+        void updateDestinationCards(List<DestinationCardModel> cards, int minDestinationCards);
     }
     private DestinationFragmentPresenter.View view;
     private ClientFacade facade = ClientFacade.getInstance();
@@ -26,7 +26,7 @@ public class DestinationFragmentPresenter implements ClientFacade.Presenter, Ret
     }
 
     public void updateUI(){
-        view.updateDestinationCards(model.getGame().drawDestinationCards(facade.getPlayer().getId()));
+        view.updateDestinationCards(model.getGame().drawDestinationCards(facade.getPlayer().getId()), facade.getMinKeepDestCards());
     }
 
     public void setFragment() {
@@ -37,13 +37,12 @@ public class DestinationFragmentPresenter implements ClientFacade.Presenter, Ret
                                        List<DestinationCardModel> availableCards) {
         List<DestinationCardModel> rejectedCards = new ArrayList<>(availableCards);
         rejectedCards.removeAll(selectedCards);
-        //gameIDModel gameID = model.getGame().getGameID();
-        //model.getGame().returnRejectedDestinationCards(selectedCards, rejectedCards);
-        //ReturnDestinationCardsRequest request = new ReturnDestinationCardsRequest(gameID, selectedCards, rejectedCards);
         ReturnDestinationCardsTask task = new ReturnDestinationCardsTask(this);
-        //task.execute(request);
         task.execute(selectedCards, rejectedCards);
-        facade.i
+    }
+
+    public int getMinDestinationCards(){
+       return facade.getMinKeepDestCards();
     }
 
     @Override

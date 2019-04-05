@@ -283,14 +283,6 @@ public class MapFragment extends Fragment implements MapFragmentPresenter.View {
         mTurnRecyclerView.setAdapter(mPlayerAdapter);
     }
 
-    public void updateDestinationButton(boolean canDrawDestinationCards) {
-        if(canDrawDestinationCards){
-            mDrawDestinationsButton.setEnabled(true);
-        } else {
-            mDrawDestinationsButton.setEnabled(false);
-        }
-    }
-
     public void updateRoutes(List<abstractRoute> updatedRoutes) {
         mRoutes = new ArrayList<>(updatedRoutes);
         mapImage.setImageDrawable(new Drawings());

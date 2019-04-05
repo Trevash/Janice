@@ -354,6 +354,14 @@ public class gameModel {
         }
     }
 
+    public boolean canDrawLocomotive() {
+        if (state instanceof AbstractClientGameState) {
+            return ((AbstractClientGameState) state).canDrawLocomotive();
+        } else {
+            throw new IllegalStateException("canDrawLocomotive operation currently a ClientSide only op");
+        }
+    }
+
     public boolean canClaimRoute() {
         if (state instanceof AbstractClientGameState) {
             return ((AbstractClientGameState) state).canClaimRoute();

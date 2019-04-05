@@ -31,6 +31,11 @@ public class ClientChooseDestCardState extends AbstractClientGameState {
     }
 
     @Override
+    public boolean canDrawLocomotive() {
+        return false;
+    }
+
+    @Override
     public List<DestinationCardModel> drawDestinationCards(playerIDModel clientID) {
         return drawnCards; // Don't want to draw new cards here
     }

@@ -42,11 +42,6 @@ public class MapFragmentPresenter implements ClientFacade.Presenter {
         return model.getGame().isPlayersTurn(pidModel);
     }
 
-    public boolean isCurrentPlayersTurn(){
-        usernameModel username = model.getUser().getUserName();
-        return isPlayersTurn(model.getGame().getPlayerByUsername(username).getId());
-    }
-
     // a method that could be used to alter whether the destination card button is clickable
     //public void stateChanged() {
     //    view.updateDestinationsDrawable(facade.userCanDrawDestCards());

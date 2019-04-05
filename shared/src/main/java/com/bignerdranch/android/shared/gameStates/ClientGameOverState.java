@@ -22,6 +22,11 @@ public class ClientGameOverState extends AbstractClientGameState {
     }
 
     @Override
+    public boolean canDrawLocomotive() {
+        return false;
+    }
+
+    @Override
     public void notifyTurnAdvancement() {
         throw new IllegalStateException("The turn counter should not be changing once the game is " +
                 "over - check for bug");

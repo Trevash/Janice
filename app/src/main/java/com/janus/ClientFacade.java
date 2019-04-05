@@ -147,6 +147,8 @@ public class ClientFacade {
         return getGame().canClaimRoute();
     }
 
+    public boolean userCanDrawLocomotive() {return getGame().canDrawLocomotive();}
+
     public void addDestinationCardsToHand(List<DestinationCardModel> selectedCards) {
         //getGame().
         getPlayer().addDestinationCards(selectedCards);

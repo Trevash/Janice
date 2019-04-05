@@ -47,6 +47,11 @@ public class ClientInactiveState extends AbstractClientGameState {
         return false;
     }
 
+    @Override
+    public boolean canDrawLocomotive() {
+        return false;
+    }
+
     // TODO rewrite javadocs
     /**
      * Draws up to 3 destination cards, as specified by the rules of the game.<!-- -->

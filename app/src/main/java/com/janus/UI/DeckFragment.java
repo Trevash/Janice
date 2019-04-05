@@ -11,6 +11,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.bignerdranch.android.shared.models.colors.cardColorEnum;
 import com.bignerdranch.android.shared.models.trainCardModel;
@@ -192,8 +193,15 @@ public class DeckFragment extends Fragment implements DeckFragmentPresenter.View
             System.out.println("updateFaceUpCards in DeckFragment called when DeckFragment has a " +
                     "null activity");
         }
+    }
 
+    @Override
+    public void updateMenu(boolean menuActive){
+        setHasOptionsMenu(menuActive);
+    }
 
+    public void errorToast(String message){
+        Toast.makeText(getActivity(), message, Toast.LENGTH_LONG).show();
     }
 
     public void returnToMap() {

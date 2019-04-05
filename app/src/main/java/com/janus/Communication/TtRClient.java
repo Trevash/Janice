@@ -65,8 +65,6 @@ public class TtRClient extends WebSocketClient{
                     facade.update();
                     break;
                 }
-                case DRAW_DESTINATION_CARDS: {
-                }
                 case JOIN: {
                     facade.setGame((gameModel) result.getData(gameModel.class));
                     break;

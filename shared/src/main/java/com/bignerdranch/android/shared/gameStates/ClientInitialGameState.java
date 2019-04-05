@@ -104,6 +104,11 @@ public class ClientInitialGameState extends AbstractClientGameState implements I
     }
 
     @Override
+    public boolean canDrawLocomotive() {
+        return false;
+    }
+
+    @Override
     public void notifyTurnAdvancement() {
         // TODO change this state so that it doesn't have a turn counter?
         System.out.println(this.getClass().toString() + " was notified of a turn advancement: " +

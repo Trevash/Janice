@@ -15,6 +15,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.bignerdranch.android.shared.models.colors.routeColorEnum;
 import com.bignerdranch.android.shared.models.singleRouteModel;
@@ -141,8 +142,12 @@ public class RouteFragment extends Fragment implements RouteFragmentPresenter.Vi
                     } else { //Not grey route
                         color = mRoute.getTrainColor();
                     }
-                    presenter.claimRoute(mRoute, color);
-                    mContext.onFinishAction();
+                    if(presenter.canClaimRoute()) {
+                        presenter.claimRoute(mRoute, color);
+                        mContext.onFinishAction();
+                    } else {
+                        Toast.makeText(getActivity(), R.string.notTurnString, Toast.LENGTH_LONG).show();
+                    }
                 }
             });
         }
