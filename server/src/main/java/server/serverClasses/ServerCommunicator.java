@@ -204,13 +204,13 @@ public class ServerCommunicator extends WebSocketServer {
         broadcast(gameListGson);
     }
 
-    public void broadcastOne(String resultGson, WebSocket conn) {
+    private void broadcastOne(String resultGson, WebSocket conn) {
         List<WebSocket> temp = new ArrayList<>();
         temp.add(conn);
         broadcast(resultGson, temp);
     }
 
-    public void broadcastGame(String resultGson, gameModel game) {
+    private void broadcastGame(String resultGson, gameModel game) {
         List<WebSocket> temp = new ArrayList<>();
 
         for (playerModel player : game.getPlayers()) {
@@ -224,7 +224,7 @@ public class ServerCommunicator extends WebSocketServer {
     }
 
     // method that broadcasts all public information to everyone in the game
-    public void updateGameStatus(gameIDModel gameID, usernameModel username, String historyUpdate) {
+    private void updateGameStatus(gameIDModel gameID, usernameModel username, String historyUpdate) {
         gameModel curGame = serverModel.getInstance().getGameByID(gameID);
         //curGame.incrementTurnCounter();
         // states increment the turn counter automatically - and not everything that causes an update
@@ -241,7 +241,7 @@ public class ServerCommunicator extends WebSocketServer {
 
     // What is this method supposed to be doing? Please add explanatory comments
     // as it is not apparent what this method is supposed to be sending
-    public void broadcastGameStats(gameModel game) {
+    private void broadcastGameStats(gameModel game) {
         List<WebSocket> temp = new ArrayList<>();
         // TODO Why 0? that exclusively broadcasts to the host, and I can't think of any info that only the host would need to know
         List<int[]> gameStats = game.getStats(game.getPlayers().get(0).getUserName());
