@@ -20,8 +20,6 @@ public class DeckFragmentPresenter implements ClientFacade.Presenter, DrawTrainC
         void returnToMap();
 
         void errorToast(String message);
-
-        void updateMenu(boolean menuActive);
     }
 
     private View view;
@@ -35,13 +33,6 @@ public class DeckFragmentPresenter implements ClientFacade.Presenter, DrawTrainC
 
     public void updateUI() {
         if(model.isYourTurn()){
-            boolean menuActive;
-            if(!facade.userCanDrawLocomotive()) { //Need to draw second card still
-                menuActive = false;
-            } else { //Haven't drawn a card yet, can return to map
-                menuActive = true;
-            }
-            view.updateMenu(menuActive);
             view.updateDeckSize(model.getGame().getNumTrainCards());
             view.updateFaceUpCards(model.getGame().getFaceUpCards()); // TODO faceUpCards is not on the client side during the initial part of the game
         } else {
