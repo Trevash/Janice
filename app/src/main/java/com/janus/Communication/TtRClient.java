@@ -103,7 +103,6 @@ public class TtRClient extends WebSocketClient{
                     break;
                 }
                 case DRAW_FIRST_TRAIN_CARD: {
-                    // TODO this currently gets called at least twice when a train card is drawn
                     DrawTrainCardData data = (DrawTrainCardData) result.getData(DrawTrainCardData.class);
                     facade.getGame().setPlayersHand(data.getHand(), data.getUsername());
                     facade.getGame().setFaceUpCards(data.getFaceUpCards());
@@ -133,6 +132,7 @@ public class TtRClient extends WebSocketClient{
                     }
                 	usernameModel username = facade.getPlayer().getUserName();
                 	facade.getGame().setStats(convertedStats, username);
+                    facade.update();
                 }
             }
             proxy.checkMessageResult(result);
