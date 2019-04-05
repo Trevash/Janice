@@ -21,23 +21,16 @@ public class playerModel {
     private playerIDModel id;
     private boolean isReady;
     private boolean isHost;
-
-
     // train hand
     private List<trainCardModel> trainCardHand = new ArrayList<>();
-
     // destination hand
     private List<DestinationCardModel> destinationCardHand = new ArrayList<>();
-
     // claimed routes
     private List<abstractRoute> claimedRoutes = new ArrayList<>();
-
     // color
     private playerColorEnum playerColor;
-
     // Locomotives left
     private int locomotives = 45;
-
     // points
     private int points = 0;
 

@@ -475,4 +475,10 @@ public class gameModel {
     public int minKeepDestCards() {
         return state.minKeepDestCards();
     }
+
+    public void onRouteClaimed(playerIDModel claimerID) {
+        if (state instanceof AbstractServerGameState) {
+            ((AbstractServerGameState) state).onRouteClaimed(claimerID);
+        }
+    }
 }

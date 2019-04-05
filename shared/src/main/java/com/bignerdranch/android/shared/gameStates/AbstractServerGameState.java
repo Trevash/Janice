@@ -118,4 +118,8 @@ public abstract class AbstractServerGameState extends AbstractGameState {
     public void discard(List<trainCardModel> discardedCards) {
         trainCardBank.addToDiscard(discardedCards);
     }
+
+    public void onRouteClaimed(playerIDModel claimer) {
+        advanceTurn();
+    }
 }
