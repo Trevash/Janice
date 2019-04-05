@@ -192,9 +192,10 @@ public class ServerCommunicator extends WebSocketServer {
         broadcast(resultGson, temp);
     }
 
+    // method that broadcasts all public information to everyone in the game
     public void updateGameStatus(gameIDModel gameID, usernameModel username, String historyUpdate) {
         gameModel curGame = serverModel.getInstance().getGameByID(gameID);
-        curGame.incrementTurnCounter();
+        //curGame.incrementTurnCounter();
         // states increment the turn counter automatically - and not everything that causes an update
         // will necessarily require incrementing the turn counter. ex: drawing first train card
         curGame.updateGameHistory(new chatMessageModel(username, historyUpdate));
@@ -208,6 +209,7 @@ public class ServerCommunicator extends WebSocketServer {
 
     public void broadcastGameStats(gameModel game) {
         List<WebSocket> temp = new ArrayList<>();
+        // TODO Why 0? that exclusively broadcasts to the host, and I can't think of any info that only the host would need to know
         List<int[]> gameStats = game.getStats(game.getPlayers().get(0).getUserName());
         gameStats.remove(0);
         Results r = new Results("stats", true, gameStats);

@@ -64,7 +64,7 @@ public abstract class AbstractServerGameState extends AbstractGameState {
     @Override
     public void returnDestinationCards(List<DestinationCardModel> selectedCards, List<DestinationCardModel> rejectedCards) {
         destinationCardDeck.returnDestinationCards(selectedCards, rejectedCards);
-        //super.advanceTurn();
+        super.advanceTurn();
     }
 
     /**
@@ -120,6 +120,6 @@ public abstract class AbstractServerGameState extends AbstractGameState {
     }
 
     public void onRouteClaimed(playerIDModel claimer) {
-        advanceTurn();
+        super.advanceTurn();
     }
 }
