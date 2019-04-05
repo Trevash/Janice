@@ -103,7 +103,8 @@ public class ClientFacade {
     }
 
     public List<int[]> getStats() {
-        return getGame().getStats(getUser().getUserName());
+        //return getGame().getStats(getUser().getUserName());
+    	return getGame().getVariableStats();
     }
 
     public List<playerModel> getPlayers() {
