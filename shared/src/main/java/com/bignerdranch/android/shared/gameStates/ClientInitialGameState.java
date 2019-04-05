@@ -86,6 +86,8 @@ public class ClientInitialGameState extends AbstractClientGameState implements I
         } else {
             super.updateGameState(new ClientInactiveState(this));
         }
+        // This should trigger the notifyTurnAdvancement() method for the new state
+        getGame().setTurnCounter(getGame().getTurnCounter());
     }
 
     @Override
@@ -110,7 +112,6 @@ public class ClientInitialGameState extends AbstractClientGameState implements I
 
     @Override
     public void notifyTurnAdvancement() {
-        // TODO change this state so that it doesn't have a turn counter?
         System.out.println(this.getClass().toString() + " was notified of a turn advancement: " +
                 "check for bug, as this state should automatically change states");
         //if(getGame().isPlayersTurn(super.getClientID())) {

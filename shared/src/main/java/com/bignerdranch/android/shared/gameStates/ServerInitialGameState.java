@@ -112,8 +112,10 @@ public class ServerInitialGameState extends AbstractServerGameState implements I
         // return the cards
         for(List<DestinationCardModel> rejectedCards: returnedCards) {
             // selectedCards is currently neither used nor checked in this case
-            super.returnDestinationCards(null, rejectedCards); // TODO advances the turn
+            super.returnDestinationCards(null, rejectedCards); // note: advances the turn
         }
+        // makes certain that the turn counter is correct - right now, it actually isn't at this point
+        super.getGame().setTurnCounter(0);
         // update the state
         //super.getGame().setTurnCounter(-1); // Does this work?
         super.updateGameState(new ServerInGameState(this));

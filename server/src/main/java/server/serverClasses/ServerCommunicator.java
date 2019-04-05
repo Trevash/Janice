@@ -110,7 +110,10 @@ public class ServerCommunicator extends WebSocketServer {
                 // TODO claiming a route needs restrictions to be enforced.
                 ClaimRouteData claimRouteData = (ClaimRouteData) result.getData(ClaimRouteData.class);
                 broadcastGame(resultGson, serverModel.getInstance().getGameByID(claimRouteData.getGameID()));
-                updateGameStatus(claimRouteData.getGameID(), claimRouteData.getUsername(), "Route from " + claimRouteData.getCurRoute().getCity1().getName() + " to " + claimRouteData.getCurRoute().getCity2().getName() + " claimed by " + claimRouteData.getUsername().getValue());
+                updateGameStatus(claimRouteData.getGameID(), claimRouteData.getUsername(),
+                        "Route from " + claimRouteData.getCurRoute().getCity1().getName() +
+                                " to " + claimRouteData.getCurRoute().getCity2().getName() +
+                                " claimed by " + claimRouteData.getUsername().getValue());
                 broadcastGameStats(serverModel.getInstance().getGameByID(claimRouteData.getGameID()));
                 break;
             case DRAW_DESTINATION_CARDS:
@@ -120,7 +123,8 @@ public class ServerCommunicator extends WebSocketServer {
             case RETURN_DESTINATION_CARDS:
                 //gameModel game = (gameModel) result.getData(gameModel.class);
                 //broadcastGame(resultGson, game);
-                ReturnDestinationCardData returnDestdata = (ReturnDestinationCardData) result.getData(ReturnDestinationCardData.class);
+                ReturnDestinationCardData returnDestdata = (ReturnDestinationCardData)
+                        result.getData(ReturnDestinationCardData.class);
 
                 // commented out: the code at the end means that this is already getting broadcasted
                 broadcastOne(resultGson, conn);
@@ -202,7 +206,7 @@ public class ServerCommunicator extends WebSocketServer {
         Results result = new Results(UPDATE_GAME_STATUS, true, data);
         this.broadcastGame(Serializer.getInstance().serializeObject(result), curGame);
     }
-    
+
     public void broadcastGameStats(gameModel game) {
         List<WebSocket> temp = new ArrayList<>();
         List<int[]> gameStats = game.getStats(game.getPlayers().get(0).getUserName());
@@ -219,5 +223,5 @@ public class ServerCommunicator extends WebSocketServer {
 
         broadcast(resultGson, temp);
     }
-    
+
 }
