@@ -12,7 +12,7 @@ public class ServerLastRoundState extends ServerInGameState {
     // Could also store which player initialized this round, and check when the turn increments
 
 
-    private boolean lastTurn; // boolean value to tell if it is the very last player's turn
+    private boolean lastTurn = false; // boolean value to tell if it is the very last player's turn
 
     public ServerLastRoundState(AbstractServerGameState prevState) {
         super(prevState);
