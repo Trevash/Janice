@@ -5,6 +5,7 @@ import com.bignerdranch.android.shared.Constants;
 import com.bignerdranch.android.shared.resultobjects.ChatboxData;
 import com.bignerdranch.android.shared.resultobjects.ClaimRouteData;
 import com.bignerdranch.android.shared.resultobjects.DrawTrainCardData;
+import com.bignerdranch.android.shared.resultobjects.FinalStatsData;
 import com.bignerdranch.android.shared.resultobjects.GameListData;
 import com.bignerdranch.android.shared.resultobjects.GameStatusData;
 import com.bignerdranch.android.shared.resultobjects.Results;
@@ -126,7 +127,6 @@ public class ServerCommunicator extends WebSocketServer {
                 }
                 break;
             case DRAW_DESTINATION_CARDS:
-                // TODO HOW IS this returning? TtRClient does not have an equivalent for this, but it seems to be working
                 broadcastOne(resultGson, conn);
                 break;
             case RETURN_DESTINATION_CARDS:
@@ -181,7 +181,7 @@ public class ServerCommunicator extends WebSocketServer {
     }
 
     private void broadcastEndGame(gameModel curGame) {
-        Results results = new Results("EndGame", true, null);
+        Results results = new Results("EndGame", true, new FinalStatsData(curGame.getFinalStats()));
         broadcastGame(Serializer.getInstance().serializeObject(results), curGame);
     }
 
@@ -246,7 +246,6 @@ public class ServerCommunicator extends WebSocketServer {
     // as it is not apparent what this method is supposed to be sending
     private void broadcastGameStats(gameModel game) {
         List<WebSocket> temp = new ArrayList<>();
-        // TODO Why 0? that exclusively broadcasts to the host, and I can't think of any info that only the host would need to know
         List<int[]> gameStats = game.getStats(game.getPlayers().get(0).getUserName());
         gameStats.remove(0);
         Results r = new Results("Stats", true, gameStats);

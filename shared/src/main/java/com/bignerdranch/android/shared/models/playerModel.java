@@ -289,6 +289,10 @@ public class playerModel {
         this.locomotives = locomotives;
     }
 
+    public void setStats(Integer integer) {
+        //TODO: actually update final stats
+    }
+
     public class adjListNode{
     	cityModel v;
     	int weight;

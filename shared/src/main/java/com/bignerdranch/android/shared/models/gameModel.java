@@ -309,8 +309,7 @@ public class gameModel {
         stats.add(cardTypes);
 
         int[] totals = new int[2];
-        //totals[0] = numTrainCardDeck;
-        totals[0] = getNumTrainCards(); // TODO do we also want the number of discarded train cards?
+        totals[0] = getNumTrainCards();
         totals[1] = state.getDestinationCardDeckSize();
         stats.add(totals);
 
@@ -565,6 +564,12 @@ public class gameModel {
     public void checkIfLastTurn() {
         if(isLastRound()){
             ((ServerLastRoundState) state).checkIfLastTurn();
+        }
+    }
+
+    public void setFinalStats(List<Integer> finalStats) {
+        for (int i = 0; i < players.size(); i++) {
+            players.get(i).setStats(finalStats.get(i));
         }
     }
 }
