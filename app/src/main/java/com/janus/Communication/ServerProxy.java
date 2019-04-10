@@ -359,7 +359,6 @@ public class ServerProxy implements IServer {
         this.messageResult = null;
         this.expectedResultType = expectedResultType;
         try {
-        client.send(commandObjStr);
         if (client.isClosed()) {
         	try {
 				this.connectClient();
@@ -369,6 +368,7 @@ public class ServerProxy implements IServer {
 	        	return new Results("disconnected",false,"Server Down, Try Again");
 			}
         }
+        client.send(commandObjStr);
         return waitForMessageResult();
         } catch(WebsocketNotConnectedException e) {
         	return new Results("disconnected",false,"Server Down, Try Again");
