@@ -360,16 +360,17 @@ public class ServerProxy implements IServer {
         this.expectedResultType = expectedResultType;
         try {
         client.send(commandObjStr);
-        return waitForMessageResult();
-        } catch(WebsocketNotConnectedException e) {
+        if (client.isClosed()) {
         	try {
 				this.connectClient();
-			} catch (InterruptedException e1) {
+			} catch (InterruptedException e) {
 	        	return new Results("disconnected",false,"Server Down, Try Again");
-			} catch (URISyntaxException e1) {
+			} catch (URISyntaxException e) {
 	        	return new Results("disconnected",false,"Server Down, Try Again");
-
 			}
+        }
+        return waitForMessageResult();
+        } catch(WebsocketNotConnectedException e) {
         	return new Results("disconnected",false,"Server Down, Try Again");
         }
     }
