@@ -2,16 +2,17 @@ package server.serverClasses;
 
 import com.bignerdranch.android.shared.GenericCommand;
 import com.bignerdranch.android.shared.Constants;
+import com.bignerdranch.android.shared.interfaces.IGameRequest;
 import com.bignerdranch.android.shared.resultobjects.ChatboxData;
 import com.bignerdranch.android.shared.resultobjects.ClaimRouteData;
 import com.bignerdranch.android.shared.resultobjects.DrawTrainCardData;
+import com.bignerdranch.android.shared.resultobjects.FinalStatsData;
 import com.bignerdranch.android.shared.resultobjects.GameListData;
 import com.bignerdranch.android.shared.resultobjects.GameStatusData;
 import com.bignerdranch.android.shared.resultobjects.Results;
 import com.bignerdranch.android.shared.resultobjects.ReturnDestinationCardData;
 import com.bignerdranch.android.shared.Serializer;
 import com.bignerdranch.android.shared.models.*;
-import com.sun.net.httpserver.HttpServer;
 
 import org.java_websocket.WebSocket;
 import org.java_websocket.handshake.ClientHandshake;
@@ -27,8 +28,6 @@ import java.util.Map;
 import static com.bignerdranch.android.shared.Constants.Commands.*;
 
 public class ServerCommunicator extends WebSocketServer {
-    private static final int MAX_WAITING_CONNECTIONS = 12;
-    private HttpServer server;
     private Map<String, WebSocket> usernameWSMap = new HashMap<>();
 
     private ServerCommunicator(InetSocketAddress address) {
@@ -66,6 +65,8 @@ public class ServerCommunicator extends WebSocketServer {
         GenericCommand command = Serializer.getInstance().deserializeCommand(message);
         Results result = command.execute();
         String resultGson = Serializer.getInstance().serializeObject(result);
+
+        this.sendCommandToDatabase(command, command.getRequest());
 
         switch (result.getType()) {
             case LOGIN:
@@ -126,7 +127,6 @@ public class ServerCommunicator extends WebSocketServer {
                 }
                 break;
             case DRAW_DESTINATION_CARDS:
-                // TODO HOW IS this returning? TtRClient does not have an equivalent for this, but it seems to be working
                 broadcastOne(resultGson, conn);
                 break;
             case RETURN_DESTINATION_CARDS:
@@ -174,14 +174,25 @@ public class ServerCommunicator extends WebSocketServer {
             default:
                 System.out.println("Invalid type passed to onMessage from Result: " + result.getType());
         }
-        // TODO what is this doing? It does make for a default-case. Removing as it is causing a bug with drawing train cards, and everything appears to already be broadcasting
-        //List<WebSocket> temp = new ArrayList<>();
-        //temp.add(conn);
-        //broadcast(resultGson, temp);
+    }
+
+    private void sendCommandToDatabase(GenericCommand command, Object request) {
+        if(request instanceof IGameRequest){
+            gameModel curGame = serverModel.getInstance().getGameByID(((IGameRequest) request).getGameID());
+            curGame.addCommand(command);
+
+            if(curGame.numCommands() > 5){
+                curGame.clearCommands();
+                //TODO: Send game blob to database
+            }
+            else{
+                //TODO: Send commands linked list blob to database
+            }
+        }
     }
 
     private void broadcastEndGame(gameModel curGame) {
-        Results results = new Results("EndGame", true, null);
+        Results results = new Results("EndGame", true, new FinalStatsData(curGame.getFinalStats()));
         broadcastGame(Serializer.getInstance().serializeObject(results), curGame);
     }
 
@@ -246,7 +257,6 @@ public class ServerCommunicator extends WebSocketServer {
     // as it is not apparent what this method is supposed to be sending
     private void broadcastGameStats(gameModel game) {
         List<WebSocket> temp = new ArrayList<>();
-        // TODO Why 0? that exclusively broadcasts to the host, and I can't think of any info that only the host would need to know
         List<int[]> gameStats = game.getStats(game.getPlayers().get(0).getUserName());
         gameStats.remove(0);
         Results r = new Results("Stats", true, gameStats);

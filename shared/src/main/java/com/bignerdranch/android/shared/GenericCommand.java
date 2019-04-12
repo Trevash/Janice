@@ -21,15 +21,8 @@ public class GenericCommand {
     public String getMethod(){
         return _methodName;
     }
-    public Object[] getParamValues(){
-        return _paramValues;
-    }
-    public void setParamValues(Object[] paramValues) {
-        this._paramValues = paramValues;
-    }
 
-
-    private Class<?>[] getClasses() throws ClassNotFoundException {
+    private Class<?>[] getClasses() {
         try {
             Class<?>[] paramTypes = new Class<?>[_paramTypes.length];
             for (int i = 0; i<paramTypes.length; i++) {
@@ -52,7 +45,9 @@ public class GenericCommand {
             Class<?> receiver = Class.forName(_className);
             Class<?>[] paramTypes = getClasses();
             for (int i = 0; i < _paramValues.length; i++) {
-                _paramValues[i] = getData(paramTypes[i], (String) _paramValues[i]);
+                if (paramTypes != null) {
+                    _paramValues[i] = getData(paramTypes[i], (String) _paramValues[i]);
+                }
             }
             Method method = receiver.getMethod(_methodName, paramTypes);
             return (Results) method.invoke(receiver.newInstance(), _paramValues);
@@ -65,5 +60,14 @@ public class GenericCommand {
             e.printStackTrace();
             return new Results("ERROR", false, e.getMessage());
         }
+    }
+
+    public Object getRequest() {
+        try {
+            return Class.forName(_className);
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+        return null;
     }
 }

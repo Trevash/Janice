@@ -1,12 +1,13 @@
 package com.bignerdranch.android.shared.requestObjects;
 
+import com.bignerdranch.android.shared.interfaces.IGameRequest;
 import com.bignerdranch.android.shared.models.DestinationCardModel;
 import com.bignerdranch.android.shared.models.gameIDModel;
 import com.bignerdranch.android.shared.models.playerIDModel;
 
 import java.util.List;
 
-public class ReturnDestinationCardsRequest {
+public class ReturnDestinationCardsRequest implements IGameRequest {
     private gameIDModel id;
     private playerIDModel playerID;
     private List<DestinationCardModel> selectedCards;
