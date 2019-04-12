@@ -134,7 +134,7 @@ public class serverModel {
     public gameModel joinGame(JoinGameRequest request) throws GameNotFoundException,
             InvalidAuthorizationException, DuplicateException {
         for (gameModel curGame : this.games) {
-            if (curGame.getGameID().getValue().equals(request.getModel().getGameID().getValue())) {
+            if (curGame.getGameID().getValue().equals(request.getGameID().getValue())) {
                 curGame.addPlayer(this.makeNewPlayer(this.getUserByAuth(request.getAuth())));
                 return curGame;
             }

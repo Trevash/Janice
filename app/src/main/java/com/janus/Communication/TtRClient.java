@@ -1,7 +1,5 @@
 package com.janus.Communication;
 
-import android.widget.ArrayAdapter;
-
 import java.net.URI;
 import java.util.ArrayList;
 import java.util.List;

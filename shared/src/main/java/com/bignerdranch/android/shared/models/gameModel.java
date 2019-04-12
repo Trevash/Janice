@@ -1,5 +1,6 @@
 package com.bignerdranch.android.shared.models;
 
+import com.bignerdranch.android.shared.GenericCommand;
 import com.bignerdranch.android.shared.gameStates.AbstractServerGameState;
 import com.bignerdranch.android.shared.gameStates.ServerGameNotStartedState;
 import com.bignerdranch.android.shared.gameStates.ServerLastRoundState;
@@ -13,6 +14,7 @@ import com.bignerdranch.android.shared.models.colors.cardColorEnum;
 import com.bignerdranch.android.shared.models.colors.playerColorEnum;
 
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 
 public class gameModel {
@@ -27,43 +29,10 @@ public class gameModel {
 
     private IGameState state;
 
-    // private playerModel hostPlayer;
-
-    // MapPic
-    // Map<City, coordinate)
     private List<abstractRoute> routes = new ArrayList<>();
-    // ChatBox
-    // Decks
-    // Train
-    //private TrainCardBank trainCardBank; //
 
-    //private ArrayList<trainCardModel> trainCardDeck = new ArrayList<>();
-    //private int numTrainCardDeck;
-    // Dest
-    // Face-up
-    //private List<trainCardModel> faceUpCards = new ArrayList<>();
-    // Discard
-    //private LinkedList trainCardDiscard = new LinkedList();
-
-    /*
-    public gameModel(String newGameName, playerModel hostPlayer, IGameState state) {
-        gameID = new gameIDModel();
-        setGameName(newGameName);
-        gameStarted = false;
-        mapPlayerIDToModel = new ConcurrentHashMap<>();
-        this.setDecks();
-
-        try {
-            addPlayer(hostPlayer);
-        } catch (DuplicateException e) {
-            e.printStackTrace();
-        }
-        chatbox = new chatboxModel();
-        gameHistory = new chatboxModel();
-        this.turnCounter = 0;
-
-        this.state = state;
-    } // */
+    //For Database Connections:
+    private LinkedList commands = new LinkedList();
 
     public gameModel(String newGameName, playerModel hostPlayer) {
         gameID = new gameIDModel();
@@ -571,5 +540,17 @@ public class gameModel {
         for (int i = 0; i < players.size(); i++) {
             players.get(i).setStats(finalStats.get(i));
         }
+    }
+
+    public void addCommand(GenericCommand command) {
+        this.commands.add(command);
+    }
+
+    public int numCommands(){
+        return this.commands.size();
+    }
+
+    public void clearCommands() {
+        this.commands.clear();
     }
 }

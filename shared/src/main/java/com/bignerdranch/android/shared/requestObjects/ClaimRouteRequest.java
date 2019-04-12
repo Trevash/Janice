@@ -1,12 +1,13 @@
 package com.bignerdranch.android.shared.requestObjects;
 
+import com.bignerdranch.android.shared.interfaces.IGameRequest;
 import com.bignerdranch.android.shared.models.authTokenModel;
 import com.bignerdranch.android.shared.models.colors.routeColorEnum;
 import com.bignerdranch.android.shared.models.gameIDModel;
 import com.bignerdranch.android.shared.models.playerIDModel;
 import com.bignerdranch.android.shared.models.routeIDModel;
 
-public class ClaimRouteRequest {
+public class ClaimRouteRequest implements IGameRequest {
     private authTokenModel auth;
     private gameIDModel gameID;
     private playerIDModel playerID;
