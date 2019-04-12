@@ -57,6 +57,15 @@ public class ServerProxy implements IServer {
         }
         return scp;
     }
+    
+    public boolean isClientConnected() {
+    	if (client.isClosed()) {
+    		return false;
+    	}
+    	else {
+    		return true;
+    	}
+    }
 
     //private String className = "server.handlers";
 
