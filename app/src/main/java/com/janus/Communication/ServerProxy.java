@@ -20,6 +20,8 @@ import com.bignerdranch.android.shared.Serializer;
 import java.net.URI;
 import java.net.URISyntaxException;
 
+import org.java_websocket.exceptions.WebsocketNotConnectedException;
+
 import static com.bignerdranch.android.shared.Constants.Commands.CLAIM_ROUTE;
 import static com.bignerdranch.android.shared.Constants.Commands.CREATE;
 import static com.bignerdranch.android.shared.Constants.Commands.DRAW_DESTINATION_CARDS;
@@ -356,8 +358,21 @@ public class ServerProxy implements IServer {
         String commandObjStr = Serializer.getInstance().serializeObject(commandObj);
         this.messageResult = null;
         this.expectedResultType = expectedResultType;
+        try {
+        if (client.isClosed()) {
+        	try {
+				this.connectClient();
+			} catch (InterruptedException e) {
+	        	return new Results("disconnected",false,"Server Down, Try Again");
+			} catch (URISyntaxException e) {
+	        	return new Results("disconnected",false,"Server Down, Try Again");
+			}
+        }
         client.send(commandObjStr);
         return waitForMessageResult();
+        } catch(WebsocketNotConnectedException e) {
+        	return new Results("disconnected",false,"Server Down, Try Again");
+        }
     }
 
     public void checkMessageResult(Results result) {
