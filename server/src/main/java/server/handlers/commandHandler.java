@@ -40,16 +40,19 @@ public class commandHandler extends handlerBase implements IServer {
     public Results register(RegisterRequest request)
             throws DuplicateException {
         return serverFacade.getInstance().register(request);
+        // add user to the DB
     }
 
     public Results createGame(CreateGameRequest request)
             throws InvalidAuthorizationException, UserNotFoundException {
         return serverFacade.getInstance().createGame(request);
+        // add Game to the DB
     }
 
     public Results startGame(StartGameRequest request)
             throws InvalidAuthorizationException, GameNotFoundException {
         return serverFacade.getInstance().startGame(request);
+        // add ocmmand to the DB
     }
 
     public Results login(LoginRequest request)
