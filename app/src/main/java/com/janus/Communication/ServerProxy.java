@@ -60,7 +60,14 @@ public class ServerProxy implements IServer {
     
     public boolean isClientConnected() {
     	if (client.isClosed()) {
-    		return false;
+    		try {
+				this.connectClient();
+			} catch (InterruptedException e) {
+				return false;
+			} catch (URISyntaxException e) {
+				return false;
+			}
+    		return true;
     	}
     	else {
     		return true;
