@@ -9,6 +9,7 @@ import com.bignerdranch.android.shared.resultobjects.Results;
 import com.janus.ClientFacade;
 import com.janus.ClientModel;
 import com.janus.Communication.ReturnDestinationCardsTask;
+import com.janus.Communication.ServerProxy;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -21,6 +22,7 @@ public class DestinationFragmentPresenter implements ClientFacade.Presenter, Ret
     private DestinationFragmentPresenter.View view;
     private ClientFacade facade = ClientFacade.getInstance();
     private ClientModel model = ClientModel.getInstance();
+    private ServerProxy proxy = ServerProxy.getInstance();
 
     public DestinationFragmentPresenter(View view) {
         this.view = view;
@@ -56,4 +58,8 @@ public class DestinationFragmentPresenter implements ClientFacade.Presenter, Ret
     }
 
     public void lastRound(){}
+
+    public boolean connectedToServer(){
+        return proxy.isClientConnected();
+    }
 }
