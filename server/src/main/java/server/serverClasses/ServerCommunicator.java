@@ -66,7 +66,7 @@ public class ServerCommunicator extends WebSocketServer {
         Results result = command.execute();
         String resultGson = Serializer.getInstance().serializeObject(result);
 
-        this.sendCommandToDatabase(command, command.getRequest());
+        this.sendCommandsToDatabase(command, command.getRequest());
 
         switch (result.getType()) {
             case LOGIN:
@@ -176,7 +176,7 @@ public class ServerCommunicator extends WebSocketServer {
         }
     }
 
-    private void sendCommandToDatabase(GenericCommand command, Object request) {
+    private void sendCommandsToDatabase(GenericCommand command, Object request) {
         if(request instanceof IGameRequest){
             gameModel curGame = serverModel.getInstance().getGameByID(((IGameRequest) request).getGameID());
             curGame.addCommand(command);
@@ -184,9 +184,10 @@ public class ServerCommunicator extends WebSocketServer {
             if(curGame.numCommands() > 5){
                 curGame.clearCommands();
                 //TODO: Send game blob to database
+                //TODO: Clear this games list of commands in the database
             }
             else{
-                //TODO: Send commands linked list blob to database
+                //TODO: Send commands linked list blob to database, save by gameID
             }
         }
     }
@@ -209,6 +210,7 @@ public class ServerCommunicator extends WebSocketServer {
     @Override
     public void onStart() {
         System.out.println("Server started!");
+        //TODO: Retrieve all game blobs from database
     }
 
     private void updateAllUserGameList() {
