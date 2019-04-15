@@ -3,9 +3,9 @@ package com.janus.Presenter;
 import com.bignerdranch.android.shared.models.abstractRoute;
 import com.bignerdranch.android.shared.models.playerIDModel;
 import com.bignerdranch.android.shared.models.playerModel;
-import com.bignerdranch.android.shared.models.usernameModel;
 import com.janus.ClientFacade;
 import com.janus.ClientModel;
+import com.janus.Communication.ServerProxy;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -22,6 +22,7 @@ public class MapFragmentPresenter implements ClientFacade.Presenter {
     private MapFragmentPresenter.View view;
     private ClientFacade facade = ClientFacade.getInstance();
     private ClientModel model = ClientModel.getInstance();
+    private ServerProxy proxy = ServerProxy.getInstance();
 
     public MapFragmentPresenter(View view) {
         this.view = view;
@@ -55,6 +56,10 @@ public class MapFragmentPresenter implements ClientFacade.Presenter {
 
     public void lastRound(){
         view.lastRoundToast();
+    }
+
+    public boolean connectedToServer(){
+        return proxy.isClientConnected();
     }
 
 }

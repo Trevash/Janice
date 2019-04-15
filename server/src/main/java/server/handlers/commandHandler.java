@@ -37,6 +37,12 @@ public class commandHandler extends handlerBase implements IServer {
         }
     }
 
+	@Override
+	public Results reRegister(RegisterRequest request)
+        throws DuplicateException {
+    return serverFacade.getInstance().reRegister(request);
+	}
+    
     public Results register(RegisterRequest request)
             throws DuplicateException {
         return serverFacade.getInstance().register(request);

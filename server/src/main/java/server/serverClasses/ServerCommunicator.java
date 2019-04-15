@@ -34,10 +34,24 @@ public class ServerCommunicator extends WebSocketServer {
         super(address);
     }
 
-    public static void main(String[] args) {
-        //String host = "10.37.93.67";
+    public static void main(String[] args) throws ClassNotFoundException, IllegalAccessException,
+            InstantiationException {
         String host = Constants.IP_ADDRESS;
         int port = Constants.PORT;
+        // set the deltas for the plugin
+        if (args.length > 1) {
+            serverModel.getInstance().setDeltas(Integer.parseInt(args[1]));
+        } else {
+            serverModel.getInstance().setDeltas(5);
+        }
+
+        // set the plugIns for the serverModel
+        if (args.length > 0) {
+            serverModel.getInstance().setPlugIn(args[0]);
+        } else {
+            serverModel.getInstance().setPlugIn("Dummy");
+        }
+
 
         WebSocketServer server = new ServerCommunicator(new InetSocketAddress(host, port));
         server.run();
@@ -176,6 +190,10 @@ public class ServerCommunicator extends WebSocketServer {
                     broadcastEndGame(Game);
                 }
                 break;
+            case "reRegister":
+            	usernameModel username = (usernameModel) result.getData(usernameModel.class);
+                usernameWSMap.put(username.getValue(), conn);
+            	break;
             case "ERROR":
                 broadcastOne(resultGson, conn);
                 break;

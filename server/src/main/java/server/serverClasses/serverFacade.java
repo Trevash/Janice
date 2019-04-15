@@ -40,6 +40,12 @@ public class serverFacade implements IServer {
         return sf;
     }
 
+	@Override
+	public Results reRegister(RegisterRequest request) throws DuplicateException {
+		Results result = new Results("reRegister",true,request.getUsername());
+		return result;
+	}
+    
     @Override
     public Results login(LoginRequest request)
             throws UserNotFoundException, InvalidAuthorizationException {

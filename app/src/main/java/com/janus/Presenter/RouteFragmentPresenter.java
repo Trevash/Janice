@@ -13,6 +13,7 @@ import com.bignerdranch.android.shared.resultobjects.Results;
 import com.janus.ClientFacade;
 import com.janus.ClientModel;
 import com.janus.Communication.ClaimRouteTask;
+import com.janus.Communication.ServerProxy;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -30,6 +31,7 @@ public class RouteFragmentPresenter implements ClaimRouteTask.Caller, ClientFaca
     private View view;
     private ClientFacade facade = ClientFacade.getInstance();
     private ClientModel model = ClientModel.getInstance();
+    private ServerProxy proxy = ServerProxy.getInstance();
 
     public RouteFragmentPresenter(View view) {
         this.view = view;
@@ -254,6 +256,10 @@ public class RouteFragmentPresenter implements ClaimRouteTask.Caller, ClientFaca
 
     public void lastRound(){
         view.lastRoundToast();
+    }
+
+    public boolean connectedToServer(){
+        return proxy.isClientConnected();
     }
 
 }

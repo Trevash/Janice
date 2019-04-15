@@ -4,6 +4,7 @@ import com.bignerdranch.android.shared.GenericCommand;
 import com.bignerdranch.android.shared.interfaces.IServer;
 import com.bignerdranch.android.shared.Constants;
 import com.bignerdranch.android.shared.models.gameIDModel;
+import com.bignerdranch.android.shared.models.usernameModel;
 import com.bignerdranch.android.shared.requestObjects.ClaimRouteRequest;
 import com.bignerdranch.android.shared.requestObjects.CreateGameRequest;
 import com.bignerdranch.android.shared.requestObjects.DrawDestinationCardsRequest;
@@ -67,6 +68,11 @@ public class ServerProxy implements IServer {
 			} catch (URISyntaxException e) {
 				return false;
 			}
+    		try {
+				this.reRegister(new RegisterRequest(client.getUsername().getValue(),"password"));
+			} catch (Exception e) {
+				return false;
+			}
     		return true;
     	}
     	else {
@@ -74,6 +80,21 @@ public class ServerProxy implements IServer {
     	}
     }
 
+    public void reconnectClient(usernameModel name) {
+    	while (!this.isClientConnected()) {
+            try {
+                Thread.sleep(100);
+            } catch (InterruptedException e) {
+                throw new RuntimeException(e);
+            }
+        }
+		try {
+			this.reRegister(new RegisterRequest(client.getUsername().getValue(),"password"));
+		} catch (Exception e) {
+			e.printStackTrace();
+		}    	
+    }
+    
     //private String className = "server.handlers";
 
     public void connectClient() throws InterruptedException, URISyntaxException {
@@ -85,7 +106,16 @@ public class ServerProxy implements IServer {
     public void disconnectClient() throws InterruptedException {
         client.closeBlocking();
     }
-
+    
+	@Override
+	public Results reRegister(RegisterRequest request) throws Exception {
+		// TODO Auto-generated method stub
+		return sendGenericRequest(request,
+                "com.bignerdranch.android.shared.requestObjects.RegisterRequest",
+                "reRegister",
+                "reRegister");
+	}
+    
     @Override
     public Results login(LoginRequest request) {
         return sendGenericRequest(request,
@@ -209,4 +239,6 @@ public class ServerProxy implements IServer {
 
         return messageResult;
     }
+
+
 }
