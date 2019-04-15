@@ -16,6 +16,7 @@ import com.bignerdranch.android.shared.resultobjects.Results;
 public interface IServer {
     // TODO update the Exceptions thrown to be more specific
 
+	Results reRegister(RegisterRequest request) throws Exception;
     Results login(LoginRequest request) throws Exception;
     Results register(RegisterRequest request) throws Exception;
     Results createGame(CreateGameRequest request) throws Exception;

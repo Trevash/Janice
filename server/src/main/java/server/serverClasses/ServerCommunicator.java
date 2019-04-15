@@ -172,6 +172,10 @@ public class ServerCommunicator extends WebSocketServer {
                     broadcastEndGame(Game);
                 }
                 break;
+            case "reRegister":
+            	usernameModel username = (usernameModel) result.getData(usernameModel.class);
+                usernameWSMap.put(username.getValue(), conn);
+            	break;
             case "ERROR":
                 broadcastOne(resultGson, conn);
                 break;

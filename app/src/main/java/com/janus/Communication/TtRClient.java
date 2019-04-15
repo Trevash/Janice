@@ -165,11 +165,16 @@ public class TtRClient extends WebSocketClient{
 
     @Override
     public void onClose(int code, String reason, boolean remote) {
+    	proxy.reconnectClient(this.getUsername());
         System.out.println("Connection Closed!");
     }
 
     @Override
     public void onError(Exception ex) {
         System.out.println(ex.getMessage());
+    }
+    
+    public usernameModel getUsername() {
+    	return facade.getUser().getUserName();
     }
 }
