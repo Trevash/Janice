@@ -34,10 +34,24 @@ public class ServerCommunicator extends WebSocketServer {
         super(address);
     }
 
-    public static void main(String[] args) {
-        //String host = "10.37.93.67";
+    public static void main(String[] args) throws ClassNotFoundException, IllegalAccessException,
+            InstantiationException {
         String host = Constants.IP_ADDRESS;
         int port = Constants.PORT;
+        // set the deltas for the plugin
+        if (args.length > 1) {
+            serverModel.getInstance().setDeltas(Integer.parseInt(args[1]));
+        } else {
+            serverModel.getInstance().setDeltas(5);
+        }
+
+        // set the plugIns for the serverModel
+        if (args.length > 0) {
+            serverModel.getInstance().setPlugIn(args[0]);
+        } else {
+            serverModel.getInstance().setPlugIn("Dummy");
+        }
+
 
         WebSocketServer server = new ServerCommunicator(new InetSocketAddress(host, port));
         server.run();
@@ -118,11 +132,11 @@ public class ServerCommunicator extends WebSocketServer {
 
                 //Check if last turn
                 curGame.checkIfLastTurn();
-                if(curGame.isLastTurn()){
+                if (curGame.isLastTurn()) {
                     broadcastEndGame(curGame);
                 }
                 //Check if last round
-                else if(curGame.isLastRound()){
+                else if (curGame.isLastRound()) {
                     broadcastLastRound(curGame);
                 }
                 break;
@@ -145,7 +159,7 @@ public class ServerCommunicator extends WebSocketServer {
                 //Check if last turn
                 gameModel game = serverModel.getInstance().getGameByID(returnDestdata.getGameID());
                 game.checkIfLastTurn();
-                if(game.isLastTurn()){
+                if (game.isLastTurn()) {
                     broadcastEndGame(game);
                 }
                 break;
@@ -164,7 +178,7 @@ public class ServerCommunicator extends WebSocketServer {
                 //Check if last turn
                 gameModel Game = serverModel.getInstance().getGameByID(data.getGameID());
                 Game.checkIfLastTurn();
-                if(Game.isLastTurn()){
+                if (Game.isLastTurn()) {
                     broadcastEndGame(Game);
                 }
                 break;
@@ -177,15 +191,14 @@ public class ServerCommunicator extends WebSocketServer {
     }
 
     private void sendCommandToDatabase(GenericCommand command, Object request) {
-        if(request instanceof IGameRequest){
+        if (request instanceof IGameRequest) {
             gameModel curGame = serverModel.getInstance().getGameByID(((IGameRequest) request).getGameID());
             curGame.addCommand(command);
 
-            if(curGame.numCommands() > 5){
-                curGame.clearCommands();
+            if (curGame.numCommands() > serverModel.getInstance().getDeltas()) {
                 //TODO: Send game blob to database
-            }
-            else{
+                curGame.clearCommands();
+            } else {
                 //TODO: Send commands linked list blob to database
             }
         }
