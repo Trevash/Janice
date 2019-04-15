@@ -14,6 +14,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.janus.Presenter.ChatFragmentPresenter;
 import com.janus.R;
@@ -90,8 +91,12 @@ public class ChatFragment extends Fragment implements ChatFragmentPresenter.View
         mSendButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                presenter.sendClicked();
-                mChatMessage.setText("");
+                if(presenter.connectedToServer()) {
+                    presenter.sendClicked();
+                    mChatMessage.setText("");
+                } else {
+                    Toast.makeText(getActivity(), "The Server is Down!", Toast.LENGTH_LONG).show();
+                }
             }
         });
 

@@ -8,6 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.bignerdranch.android.shared.models.DestinationCardModel;
 import com.janus.Presenter.DestinationFragmentPresenter;
@@ -123,8 +124,12 @@ public class DestinationSelectFragment extends Fragment implements DestinationFr
         mAcceptButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                presenter.selectDestinationCards(selectedDestinationCards, availableDestinationCards);
-                mContext.onFinishAction();
+                if(presenter.connectedToServer()) {
+                    presenter.selectDestinationCards(selectedDestinationCards, availableDestinationCards);
+                    mContext.onFinishAction();
+                } else {
+                    Toast.makeText(getActivity(), "The Server is Down!", Toast.LENGTH_LONG).show();
+                }
             }
         });
 

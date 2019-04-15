@@ -5,6 +5,7 @@ dependencies {
     implementation project(':shared')
     implementation 'junit:junit:4.12'
     implementation files('libs/Java-WebSocket-1.4.0-with-dependencies.jar')
+    implementation files('libs/Dummy.jar')
 }
 
 sourceCompatibility = "1.7"

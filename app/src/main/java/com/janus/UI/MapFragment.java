@@ -157,7 +157,11 @@ public class MapFragment extends Fragment implements MapFragmentPresenter.View {
         mDrawDestinationsButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                mContext.onClickDestinationSelect();
+                if(presenter.connectedToServer()) {
+                    mContext.onClickDestinationSelect();
+                } else {
+                    Toast.makeText(getActivity(), "The Server is Down!", Toast.LENGTH_LONG).show();
+                }
             }
         });
         mDrawDestinationsButton.setEnabled(true);

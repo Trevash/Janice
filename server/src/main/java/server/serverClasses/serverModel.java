@@ -11,11 +11,9 @@ import com.bignerdranch.android.shared.models.doubleRouteModelFew;
 import com.bignerdranch.android.shared.models.doubleRouteModelMany;
 import com.bignerdranch.android.shared.models.gameIDModel;
 import com.bignerdranch.android.shared.models.gameModel;
-import com.bignerdranch.android.shared.models.playerIDModel;
 import com.bignerdranch.android.shared.models.playerModel;
 import com.bignerdranch.android.shared.models.singleRouteModel;
 import com.bignerdranch.android.shared.models.trainCardModel;
-import com.bignerdranch.android.shared.models.userIDModel;
 import com.bignerdranch.android.shared.models.userModel;
 import com.bignerdranch.android.shared.requestObjects.ClaimRouteRequest;
 import com.bignerdranch.android.shared.requestObjects.DrawTrainCardRequest;
@@ -34,6 +32,11 @@ import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
+import server.plugIn.FactoryCreator;
+import server.plugIn.IDaoFactory;
+import server.plugIn.IGameDao;
+import server.plugIn.IUserDao;
+
 public class serverModel {
     private static serverModel sm = null;
 
@@ -41,11 +44,48 @@ public class serverModel {
 
     private List<gameModel> games = new ArrayList<>();
 
+    //private String daoPlugIn = null;
+    private IGameDao gameDao;
+    private IUserDao userDao;
+    private int deltas;
+
     public static serverModel getInstance() {
         if (sm == null) {
             sm = new serverModel();
         }
         return sm;
+    }
+
+    /**
+     * @param plugInName plugInName must be the name of the IDaoFactory in server.plugIn -
+     *                   note that server.plugIn is automatically added, so only the name of the
+     *                   actual class is needed
+     */
+    public void setPlugIn(String plugInName) throws ClassNotFoundException, InstantiationException,
+            IllegalAccessException {
+        //daoPlugIn = plugInName;
+        IDaoFactory factory = FactoryCreator.getFactory(plugInName);
+        gameDao = factory.createGameDao();
+        userDao = factory.createUserDao();
+        // TODO change the server so that it actually uses the plugin
+        //gameDao.addGame(null, null);
+        //gameDao.retrieveGames();
+    }
+
+    public void setDeltas(int deltas) {
+        this.deltas = deltas;
+    }
+
+    public IGameDao getGameDao() {
+        return gameDao;
+    }
+
+    public IUserDao getUserDao() {
+        return userDao;
+    }
+
+    public int getDeltas() {
+        return deltas;
     }
 
     public ClaimRouteData claimRoute(ClaimRouteRequest request) throws Exception {

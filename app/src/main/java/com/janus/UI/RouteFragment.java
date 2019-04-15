@@ -143,11 +143,15 @@ public class RouteFragment extends Fragment implements RouteFragmentPresenter.Vi
                     } else { //Not grey route
                         color = mRoute.getTrainColor();
                     }
-                    if(presenter.canClaimRoute()) {
-                        presenter.claimRoute(mRoute, color);
-                        mContext.onFinishAction();
+                    if(presenter.connectedToServer()) {
+                        if (presenter.canClaimRoute()) {
+                            presenter.claimRoute(mRoute, color);
+                            mContext.onFinishAction();
+                        } else {
+                            Toast.makeText(getActivity(), R.string.notTurnString, Toast.LENGTH_LONG).show();
+                        }
                     } else {
-                        Toast.makeText(getActivity(), R.string.notTurnString, Toast.LENGTH_LONG).show();
+                        Toast.makeText(getActivity(), "The Server is Down!", Toast.LENGTH_LONG).show();
                     }
                 }
             });
