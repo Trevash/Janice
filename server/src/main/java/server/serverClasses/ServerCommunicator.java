@@ -65,7 +65,7 @@ public class ServerCommunicator extends WebSocketServer {
         GenericCommand command = Serializer.getInstance().deserializeCommand(message);
 
         //Handles commands as saved in database
-        if(command.getRequest() instanceof IGameRequest) {
+        if(IGameRequest.class.isAssignableFrom(command.getRequest().getClass())) {
             this.sendCommandToDatabase(command);
         }
 
@@ -187,7 +187,7 @@ public class ServerCommunicator extends WebSocketServer {
         if(curGame.numCommands() > 5){
             curGame.clearCommands();
             //TODO: Send game blob to database
-            //TODO: Clear this games list of commands in the database
+            //TODO: Clear this games' list of commands in the database
         }
         else{
             //TODO: Send commands linked list blob to database, save by gameID
