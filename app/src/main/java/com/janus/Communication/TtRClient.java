@@ -33,7 +33,16 @@ public class TtRClient extends WebSocketClient{
 
     private ClientFacade facade = ClientFacade.getInstance();
     private ServerProxy proxy = ServerProxy.getInstance();
+    private boolean isReallyConnected = true;
 
+    public boolean isClientReallyConnected() {
+    	return isReallyConnected;
+    }
+    
+    public void setConnectionBoolean(boolean value) {
+    	isReallyConnected = value;
+    }
+    
     @Override
     public void onOpen(ServerHandshake handshakedata) {
         System.out.println("Connection Open!");
@@ -165,8 +174,9 @@ public class TtRClient extends WebSocketClient{
 
     @Override
     public void onClose(int code, String reason, boolean remote) {
-    	proxy.reconnectClient(this.getUsername());
         System.out.println("Connection Closed!");
+    	isReallyConnected = false;
+    	proxy.reconnectClient(this.getUsername());
     }
 
     @Override

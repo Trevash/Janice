@@ -59,10 +59,11 @@ public class ServerProxy implements IServer {
         return scp;
     }
     
-    public boolean isClientConnected() {
-    	if (client.isClosed()) {
+    public boolean isClientConnectedProxy() {
+    	if (!client.isClientReallyConnected()) {
     		try {
 				this.connectClient();
+				//client.setConnectionBoolean(true);
 			} catch (InterruptedException e) {
 				return false;
 			} catch (URISyntaxException e) {
@@ -81,18 +82,13 @@ public class ServerProxy implements IServer {
     }
 
     public void reconnectClient(usernameModel name) {
-    	while (!this.isClientConnected()) {
+    	while (!this.isClientConnectedProxy()) {
             try {
                 Thread.sleep(100);
             } catch (InterruptedException e) {
                 throw new RuntimeException(e);
             }
-        }
-		try {
-			this.reRegister(new RegisterRequest(client.getUsername().getValue(),"password"));
-		} catch (Exception e) {
-			e.printStackTrace();
-		}    	
+        }   	
     }
     
     //private String className = "server.handlers";
