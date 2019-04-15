@@ -63,12 +63,14 @@ public class ServerCommunicator extends WebSocketServer {
     @Override
     public void onMessage(WebSocket conn, String message) {
         GenericCommand command = Serializer.getInstance().deserializeCommand(message);
-        Results result = command.execute();
-        String resultGson = Serializer.getInstance().serializeObject(result);
 
+        //Handles commands as saved in database
         if(command.getRequest() instanceof IGameRequest) {
             this.sendCommandToDatabase(command);
         }
+
+        Results result = command.execute();
+        String resultGson = Serializer.getInstance().serializeObject(result);
 
         switch (result.getType()) {
             case LOGIN:
