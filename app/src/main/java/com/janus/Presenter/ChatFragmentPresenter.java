@@ -4,6 +4,7 @@ import com.bignerdranch.android.shared.models.chatMessageModel;
 import com.bignerdranch.android.shared.requestObjects.UpdateChatboxRequest;
 import com.bignerdranch.android.shared.resultobjects.Results;
 import com.janus.ClientFacade;
+import com.janus.Communication.ServerProxy;
 import com.janus.Communication.UpdateChatTask;
 
 import java.util.List;
@@ -28,6 +29,7 @@ public class ChatFragmentPresenter implements ClientFacade.Presenter, UpdateChat
     }
 
     private ClientFacade facade = ClientFacade.getInstance();
+    private ServerProxy proxy = ServerProxy.getInstance();
     private String chatMessage = "";
     private View view;
 
@@ -76,4 +78,8 @@ public class ChatFragmentPresenter implements ClientFacade.Presenter, UpdateChat
     public void endGame(){}
 
     public void lastRound(){}
+
+    public boolean connectedToServer(){
+        return proxy.isClientConnected();
+    }
 }
