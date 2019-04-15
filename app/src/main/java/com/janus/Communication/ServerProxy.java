@@ -57,6 +57,22 @@ public class ServerProxy implements IServer {
         }
         return scp;
     }
+    
+    public boolean isClientConnected() {
+    	if (client.isClosed()) {
+    		try {
+				this.connectClient();
+			} catch (InterruptedException e) {
+				return false;
+			} catch (URISyntaxException e) {
+				return false;
+			}
+    		return true;
+    	}
+    	else {
+    		return true;
+    	}
+    }
 
     //private String className = "server.handlers";
 

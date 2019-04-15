@@ -14,7 +14,7 @@ public interface IGameDao {
     //List<List<String>> retrieveDeltas()
     List<String> retrieveDeltas(String gameID); // returns genericCommands in serialized form
     void addDelta(String gameID, String serializedCommand);
-    void ClearDB();
+    void clearDB();
     // SOMETHING connectToDB()
 
     // server side: to unpack:

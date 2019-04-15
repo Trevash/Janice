@@ -77,10 +77,14 @@ public class ServerCommunicator extends WebSocketServer {
     @Override
     public void onMessage(WebSocket conn, String message) {
         GenericCommand command = Serializer.getInstance().deserializeCommand(message);
+
+        //Handles commands as saved in database
+        if (IGameRequest.class.isAssignableFrom(command.getRequest().getClass())) {
+            this.sendCommandToDatabase(command);
+        }
+
         Results result = command.execute();
         String resultGson = Serializer.getInstance().serializeObject(result);
-
-        this.sendCommandToDatabase(command, command.getRequest());
 
         switch (result.getType()) {
             case LOGIN:
@@ -190,17 +194,16 @@ public class ServerCommunicator extends WebSocketServer {
         }
     }
 
-    private void sendCommandToDatabase(GenericCommand command, Object request) {
-        if (request instanceof IGameRequest) {
-            gameModel curGame = serverModel.getInstance().getGameByID(((IGameRequest) request).getGameID());
-            curGame.addCommand(command);
+    private void sendCommandToDatabase(GenericCommand command) {
+        gameModel curGame = serverModel.getInstance().getGameByID(((IGameRequest) command.getRequest()).getGameID());
+        curGame.addCommand(command);
 
-            if (curGame.numCommands() > serverModel.getInstance().getDeltas()) {
-                //TODO: Send game blob to database
-                curGame.clearCommands();
-            } else {
-                //TODO: Send commands linked list blob to database
-            }
+        if (curGame.numCommands() > serverModel.getInstance().getDeltas()) {
+            //TODO: Send game blob to database
+            curGame.clearCommands();
+            //TODO: Clear this games' list of commands in the database
+        } else {
+            //TODO: Send commands linked list blob to database, save by gameID
         }
     }
 
@@ -222,6 +225,9 @@ public class ServerCommunicator extends WebSocketServer {
     @Override
     public void onStart() {
         System.out.println("Server started!");
+        //TODO: Retrieve all game blobs from database
+        //TODO: Retrieve all commands from database
+        //TODO: Execute all commands in order for all games
     }
 
     private void updateAllUserGameList() {
