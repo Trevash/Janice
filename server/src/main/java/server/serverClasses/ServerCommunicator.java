@@ -2,9 +2,9 @@ package server.serverClasses;
 
 import com.bignerdranch.android.shared.GenericCommand;
 import com.bignerdranch.android.shared.Constants;
-import com.bignerdranch.android.shared.interfaces.IGameRequest;
 import com.bignerdranch.android.shared.resultobjects.ChatboxData;
 import com.bignerdranch.android.shared.resultobjects.ClaimRouteData;
+import com.bignerdranch.android.shared.resultobjects.DestinationCardListModel;
 import com.bignerdranch.android.shared.resultobjects.DrawTrainCardData;
 import com.bignerdranch.android.shared.resultobjects.FinalStatsData;
 import com.bignerdranch.android.shared.resultobjects.GameListData;
@@ -77,12 +77,6 @@ public class ServerCommunicator extends WebSocketServer {
     @Override
     public void onMessage(WebSocket conn, String message) {
         GenericCommand command = Serializer.getInstance().deserializeCommand(message);
-
-        //Handles commands as saved in database
-        if (IGameRequest.class.isAssignableFrom(command.getRequest().getClass())) {
-            this.sendCommandToDatabase(command);
-        }
-
         Results result = command.execute();
         String resultGson = Serializer.getInstance().serializeObject(result);
 
@@ -104,29 +98,37 @@ public class ServerCommunicator extends WebSocketServer {
                 }
                 break;
             case CREATE:
+                //Send new game to database
+                this.sendGameToDatabase((gameModel) result.getData(gameModel.class));
+
                 broadcastOne(resultGson, conn);
                 updateAllUserGameList();
                 break;
             case JOIN:
+                this.sendCommandToDatabase(command, ((gameModel) result.getData(gameModel.class)).getGameID());
+
                 broadcast(resultGson);
                 updateAllUserGameList();
                 break;
             case START:
+                this.sendCommandToDatabase(command, ((gameModel) result.getData(gameModel.class)).getGameID());
+
                 gameModel gameStart = (gameModel) result.getData(gameModel.class);
                 broadcastGame(resultGson, gameStart);
                 broadcast(resultGson);
                 updateAllUserGameList();
                 break;
             case UPDATE_CHAT:
-                //TODO: Caleb change this later
                 ChatboxData chatboxData = (ChatboxData) result.getData(ChatboxData.class);
                 gameIDModel gameID = chatboxData.getGameID();
+                this.sendCommandToDatabase(command, gameID);
                 gameModel gameChat = serverModel.getInstance().getGameByID(gameID);
                 broadcastGame(resultGson, gameChat);
                 break;
             case CLAIM_ROUTE:
                 ClaimRouteData claimRouteData = (ClaimRouteData) result.getData(ClaimRouteData.class);
                 gameModel curGame = serverModel.getInstance().getGameByID(claimRouteData.getGameID());
+                this.sendCommandToDatabase(command, curGame.getGameID());
                 broadcastGame(resultGson, curGame);
                 updateGameStatus(claimRouteData.getGameID(), claimRouteData.getUsername(),
                         "Route from " + claimRouteData.getCurRoute().getCity1().getName() +
@@ -136,24 +138,23 @@ public class ServerCommunicator extends WebSocketServer {
 
                 //Check if last turn
                 curGame.checkIfLastTurn();
-                if (curGame.isLastTurn()) {
+                if(curGame.isLastTurn()){
                     broadcastEndGame(curGame);
                 }
                 //Check if last round
-                else if (curGame.isLastRound()) {
+                else if(curGame.isLastRound()){
                     broadcastLastRound(curGame);
                 }
                 break;
             case DRAW_DESTINATION_CARDS:
+                this.sendCommandToDatabase(command, ((DestinationCardListModel) result.getData(DestinationCardListModel.class)).getGameID());
                 broadcastOne(resultGson, conn);
                 break;
             case RETURN_DESTINATION_CARDS:
-                //gameModel game = (gameModel) result.getData(gameModel.class);
-                //broadcastGame(resultGson, game);
                 ReturnDestinationCardData returnDestdata = (ReturnDestinationCardData)
                         result.getData(ReturnDestinationCardData.class);
+                this.sendCommandToDatabase(command, returnDestdata.getGameID());
 
-                // commented out: the code at the end means that this is already getting broadcasted
                 broadcastOne(resultGson, conn);
 
                 updateGameStatus(returnDestdata.getGameID(), returnDestdata.getUsername(), "drew " +
@@ -163,7 +164,7 @@ public class ServerCommunicator extends WebSocketServer {
                 //Check if last turn
                 gameModel game = serverModel.getInstance().getGameByID(returnDestdata.getGameID());
                 game.checkIfLastTurn();
-                if (game.isLastTurn()) {
+                if(game.isLastTurn()){
                     broadcastEndGame(game);
                 }
                 break;
@@ -172,6 +173,7 @@ public class ServerCommunicator extends WebSocketServer {
                 gameModel currentGame = serverModel.getInstance().getGameByID(fData.getGameID());
                 currentGame.updateGameHistory(new chatMessageModel(fData.getUsername(), fData.getUsername().getValue() + " drew a " + fData.getHand().get(fData.getHand().size() - 1).getColor().name() + "card"));
                 broadcastOne(resultGson, conn);
+                this.sendCommandToDatabase(command, currentGame.getGameID());
                 break;
             case DRAW_SECOND_TRAIN_CARD:
                 DrawTrainCardData data = (DrawTrainCardData) result.getData(DrawTrainCardData.class);
@@ -179,10 +181,12 @@ public class ServerCommunicator extends WebSocketServer {
                 updateGameStatus(data.getGameID(), data.getUsername(), data.getUsername().getValue() + " drew a " + data.getHand().get(data.getHand().size() - 1).getColor().name() + "card");
                 broadcastGameStats(serverModel.getInstance().getGameByID(data.getGameID()));
 
+                this.sendCommandToDatabase(command, data.getGameID());
+
                 //Check if last turn
                 gameModel Game = serverModel.getInstance().getGameByID(data.getGameID());
                 Game.checkIfLastTurn();
-                if (Game.isLastTurn()) {
+                if(Game.isLastTurn()){
                     broadcastEndGame(Game);
                 }
                 break;
@@ -198,16 +202,20 @@ public class ServerCommunicator extends WebSocketServer {
         }
     }
 
-    private void sendCommandToDatabase(GenericCommand command) {
-        gameModel curGame = serverModel.getInstance().getGameByID(((IGameRequest) command.getRequest()).getGameID());
-        curGame.addCommand(command);
+    private void sendGameToDatabase(gameModel game) {
+        //TODO: Send game blob to database
+    }
 
-        if (curGame.numCommands() > serverModel.getInstance().getDeltas()) {
-            //TODO: Send game blob to database
+    private void sendCommandToDatabase(GenericCommand command, gameIDModel gameID) {
+        gameModel curGame = serverModel.getInstance().getGameByID(gameID);
+        if(curGame.numCommands() >= 5){
             curGame.clearCommands();
             //TODO: Clear this games' list of commands in the database
-        } else {
-            //TODO: Send commands linked list blob to database, save by gameID
+            this.sendGameToDatabase(curGame);
+        }
+        else{
+            curGame.addCommand(command);
+            //TODO: Send games' commands linked list blob to database, save by gameID, curGame.getCommands();
         }
     }
 
@@ -276,8 +284,7 @@ public class ServerCommunicator extends WebSocketServer {
         this.broadcastGame(Serializer.getInstance().serializeObject(result), curGame);
     }
 
-    // What is this method supposed to be doing? Please add explanatory comments
-    // as it is not apparent what this method is supposed to be sending
+    //Sends game statistics (num of cards in hand, deck sizes, points etc.)
     private void broadcastGameStats(gameModel game) {
         List<WebSocket> temp = new ArrayList<>();
         List<int[]> gameStats = game.getStats(game.getPlayers().get(0).getUserName());

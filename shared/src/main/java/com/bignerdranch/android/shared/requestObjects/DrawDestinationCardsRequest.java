@@ -1,10 +1,9 @@
 package com.bignerdranch.android.shared.requestObjects;
 
-import com.bignerdranch.android.shared.interfaces.IGameRequest;
 import com.bignerdranch.android.shared.models.gameIDModel;
 import com.bignerdranch.android.shared.models.playerIDModel;
 
-public class DrawDestinationCardsRequest implements IGameRequest {
+public class DrawDestinationCardsRequest {
 
     private gameIDModel id;
     private playerIDModel playerID;

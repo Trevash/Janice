@@ -61,13 +61,4 @@ public class GenericCommand {
             return new Results("ERROR", false, e.getMessage());
         }
     }
-
-    public Object getRequest() {
-        try {
-            return Class.forName(_className);
-        } catch (ClassNotFoundException e) {
-            e.printStackTrace();
-        }
-        return null;
-    }
 }

@@ -13,7 +13,6 @@ public class ReturnDestinationCardData {
     private List<DestinationCardModel> selectedCards;
 
     public ReturnDestinationCardData(gameIDModel gameID, usernameModel username, List<DestinationCardModel> cards){
-
         this.gameID = gameID;
         this.username = username;
         this.selectedCards = cards;

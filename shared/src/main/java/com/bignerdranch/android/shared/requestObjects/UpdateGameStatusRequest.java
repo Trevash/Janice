@@ -1,9 +1,8 @@
 package com.bignerdranch.android.shared.requestObjects;
 
-import com.bignerdranch.android.shared.interfaces.IGameRequest;
 import com.bignerdranch.android.shared.models.gameIDModel;
 
-public class UpdateGameStatusRequest implements IGameRequest {
+public class UpdateGameStatusRequest {
     private gameIDModel gameID;
     private String historyString;
 

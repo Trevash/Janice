@@ -1,13 +1,10 @@
 package com.bignerdranch.android.shared.requestObjects;
 
-import com.bignerdranch.android.shared.interfaces.IGameRequest;
 import com.bignerdranch.android.shared.models.authTokenModel;
 import com.bignerdranch.android.shared.models.chatMessageModel;
-import com.bignerdranch.android.shared.models.chatboxModel;
 import com.bignerdranch.android.shared.models.gameIDModel;
-import com.bignerdranch.android.shared.models.gameModel;
 
-public class UpdateChatboxRequest implements IGameRequest {
+public class UpdateChatboxRequest {
 	private gameIDModel gameID;
 	private authTokenModel auth;
 	private chatMessageModel message;
