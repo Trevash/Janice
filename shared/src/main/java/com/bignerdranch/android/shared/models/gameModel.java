@@ -553,4 +553,6 @@ public class gameModel {
     public void clearCommands() {
         this.commands.clear();
     }
+
+    public LinkedList getCommands() { return this.commands; }
 }

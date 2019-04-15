@@ -1,11 +1,9 @@
 package com.bignerdranch.android.shared.requestObjects;
 
-import com.bignerdranch.android.shared.interfaces.IGameRequest;
 import com.bignerdranch.android.shared.models.gameIDModel;
-import com.bignerdranch.android.shared.models.gameModel;
 import com.bignerdranch.android.shared.models.authTokenModel;
 
-public class JoinGameRequest implements IGameRequest {
+public class JoinGameRequest {
     private gameIDModel gameID;
     private authTokenModel auth;
 

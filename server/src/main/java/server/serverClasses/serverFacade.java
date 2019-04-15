@@ -146,7 +146,7 @@ public class serverFacade implements IServer {
         // call drawDestinationCards on the game: which should call it on the state: which will draw
         // from the actual deck stored in it.
         return new Results("DrawDestinationCards", true,
-                new DestinationCardListModel(game.drawDestinationCards(request.getPlayerID())));
+                new DestinationCardListModel(game.drawDestinationCards(request.getPlayerID()), request.getGameID()));
     }
 
     @Override
