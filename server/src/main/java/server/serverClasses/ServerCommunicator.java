@@ -66,7 +66,9 @@ public class ServerCommunicator extends WebSocketServer {
         Results result = command.execute();
         String resultGson = Serializer.getInstance().serializeObject(result);
 
-        this.sendCommandsToDatabase(command, command.getRequest());
+        if(command.getRequest() instanceof IGameRequest) {
+            this.sendCommandToDatabase(command);
+        }
 
         switch (result.getType()) {
             case LOGIN:
@@ -176,19 +178,17 @@ public class ServerCommunicator extends WebSocketServer {
         }
     }
 
-    private void sendCommandsToDatabase(GenericCommand command, Object request) {
-        if(request instanceof IGameRequest){
-            gameModel curGame = serverModel.getInstance().getGameByID(((IGameRequest) request).getGameID());
-            curGame.addCommand(command);
+    private void sendCommandToDatabase(GenericCommand command) {
+        gameModel curGame = serverModel.getInstance().getGameByID(((IGameRequest) command.getRequest()).getGameID());
+        curGame.addCommand(command);
 
-            if(curGame.numCommands() > 5){
-                curGame.clearCommands();
-                //TODO: Send game blob to database
-                //TODO: Clear this games list of commands in the database
-            }
-            else{
-                //TODO: Send commands linked list blob to database, save by gameID
-            }
+        if(curGame.numCommands() > 5){
+            curGame.clearCommands();
+            //TODO: Send game blob to database
+            //TODO: Clear this games list of commands in the database
+        }
+        else{
+            //TODO: Send commands linked list blob to database, save by gameID
         }
     }
 
@@ -211,6 +211,8 @@ public class ServerCommunicator extends WebSocketServer {
     public void onStart() {
         System.out.println("Server started!");
         //TODO: Retrieve all game blobs from database
+        //TODO: Retrieve all commands from database
+        //TODO: Execute all commands in order for all games
     }
 
     private void updateAllUserGameList() {
