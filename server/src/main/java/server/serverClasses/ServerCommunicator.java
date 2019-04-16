@@ -51,6 +51,8 @@ public class ServerCommunicator extends WebSocketServer {
 
         // set the plugIns for the serverModel
         if (args.length > 0) {
+            // MongoDaoFactory
+            // SQLiteDaoFactory
             serverModel.getInstance().setPlugIn(args[0]);
         } else {
             serverModel.getInstance().setPlugIn("Dummy");
