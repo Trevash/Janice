@@ -32,7 +32,7 @@ public class gameModel {
     private List<abstractRoute> routes = new ArrayList<>();
 
     //For Database Connections:
-    private LinkedList deltas = new LinkedList();
+    private List<GenericCommand> deltas = new LinkedList<>();
 
     public gameModel(String newGameName, playerModel hostPlayer) {
         gameID = new gameIDModel();
@@ -554,5 +554,9 @@ public class gameModel {
         this.deltas.clear();
     }
 
-    public LinkedList getDeltas() { return this.deltas; }
+    public List<GenericCommand> getDeltas() { return this.deltas; }
+
+    public void refresh() {
+        state.refresh(this);
+    }
 }

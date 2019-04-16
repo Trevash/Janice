@@ -85,4 +85,6 @@ public interface IGameState {
 
     int minKeepDestCards();
 
+    void refresh(gameModel game);
+
 }
