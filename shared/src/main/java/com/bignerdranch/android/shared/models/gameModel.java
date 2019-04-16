@@ -25,14 +25,14 @@ public class gameModel {
     private chatboxModel chatbox;
     private int turnCounter;
     private chatboxModel gameHistory;
-    private List<int[]> stats = new ArrayList<int[]>();
+    private List<int[]> stats = new ArrayList<>();
 
     private IGameState state;
 
     private List<abstractRoute> routes = new ArrayList<>();
 
     //For Database Connections:
-    private LinkedList commands = new LinkedList();
+    private LinkedList deltas = new LinkedList();
 
     public gameModel(String newGameName, playerModel hostPlayer) {
         gameID = new gameIDModel();
@@ -543,16 +543,16 @@ public class gameModel {
     }
 
     public void addCommand(GenericCommand command) {
-        this.commands.add(command);
+        this.deltas.add(command);
     }
 
     public int numCommands(){
-        return this.commands.size();
+        return this.deltas.size();
     }
 
     public void clearCommands() {
-        this.commands.clear();
+        this.deltas.clear();
     }
 
-    public LinkedList getCommands() { return this.commands; }
+    public LinkedList getDeltas() { return this.deltas; }
 }

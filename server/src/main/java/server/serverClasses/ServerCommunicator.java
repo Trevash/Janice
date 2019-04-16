@@ -91,6 +91,8 @@ public class ServerCommunicator extends WebSocketServer {
                     updateAllUserGameList();
                     userModel user = (userModel) result.getData(userModel.class);
                     usernameWSMap.put(user.getUserName().getValue(), conn);
+
+                    this.addUserToDatabase(user);
                 }
                 break;
             case REGISTER:
@@ -99,6 +101,8 @@ public class ServerCommunicator extends WebSocketServer {
                     updateAllUserGameList();
                     userModel user = (userModel) result.getData(userModel.class);
                     usernameWSMap.put(user.getUserName().getValue(), conn);
+
+                    this.addUserToDatabase(user);
                 }
                 break;
             case CREATE:
@@ -125,14 +129,18 @@ public class ServerCommunicator extends WebSocketServer {
             case UPDATE_CHAT:
                 ChatboxData chatboxData = (ChatboxData) result.getData(ChatboxData.class);
                 gameIDModel gameID = chatboxData.getGameID();
+
                 this.sendCommandToDatabase(command, gameID);
+
                 gameModel gameChat = serverModel.getInstance().getGameByID(gameID);
                 broadcastGame(resultGson, gameChat);
                 break;
             case CLAIM_ROUTE:
                 ClaimRouteData claimRouteData = (ClaimRouteData) result.getData(ClaimRouteData.class);
                 gameModel curGame = serverModel.getInstance().getGameByID(claimRouteData.getGameID());
+
                 this.sendCommandToDatabase(command, curGame.getGameID());
+
                 broadcastGame(resultGson, curGame);
                 updateGameStatus(claimRouteData.getGameID(), claimRouteData.getUsername(),
                         "Route from " + claimRouteData.getCurRoute().getCity1().getName() +
@@ -152,11 +160,13 @@ public class ServerCommunicator extends WebSocketServer {
                 break;
             case DRAW_DESTINATION_CARDS:
                 this.sendCommandToDatabase(command, ((DestinationCardListModel) result.getData(DestinationCardListModel.class)).getGameID());
+
                 broadcastOne(resultGson, conn);
                 break;
             case RETURN_DESTINATION_CARDS:
                 ReturnDestinationCardData returnDestdata = (ReturnDestinationCardData)
                         result.getData(ReturnDestinationCardData.class);
+
                 this.sendCommandToDatabase(command, returnDestdata.getGameID());
 
                 broadcastOne(resultGson, conn);
@@ -177,7 +187,9 @@ public class ServerCommunicator extends WebSocketServer {
                 gameModel currentGame = serverModel.getInstance().getGameByID(fData.getGameID());
                 currentGame.updateGameHistory(new chatMessageModel(fData.getUsername(), fData.getUsername().getValue() + " drew a " + fData.getHand().get(fData.getHand().size() - 1).getColor().name() + "card"));
                 broadcastOne(resultGson, conn);
+
                 this.sendCommandToDatabase(command, currentGame.getGameID());
+
                 break;
             case DRAW_SECOND_TRAIN_CARD:
                 DrawTrainCardData data = (DrawTrainCardData) result.getData(DrawTrainCardData.class);
@@ -204,6 +216,10 @@ public class ServerCommunicator extends WebSocketServer {
             default:
                 System.out.println("Invalid type passed to onMessage from Result: " + result.getType());
         }
+    }
+
+    private void addUserToDatabase(userModel user) {
+        serverModel.getInstance().getUserDao().addUser(user.getUserID().getValue(), Serializer.getInstance().serializeObject(user));
     }
 
     private void addGameInDatabase(gameModel game) {
@@ -241,13 +257,31 @@ public class ServerCommunicator extends WebSocketServer {
     public void onStart() {
         System.out.println("Server started!");
 
+        //Retrieve users
+        List<String> userStrings = serverModel.getInstance().getUserDao().getUsers();
+        serverModel.getInstance().setUsers(buildUserModels(userStrings));
+
         //Retrieve and build game objects
         List<String> gameStrings = serverModel.getInstance().getGameDao().retrieveGames();
         serverModel.getInstance().setGames(buildGameModels(gameStrings));
 
-        //TODO: Retrieve and build command objects
+        //TODO: See if commands are returned as list of strings or List<List<String>>
+        for(gameModel game : serverModel.getInstance().getGames()){
+            List<String> deltaStrings = serverModel.getInstance().getGameDao().retrieveDeltas(game.getGameID().getValue());
+            for(String deltaString : deltaStrings){
+                GenericCommand command = Serializer.getInstance().deserializeCommand(deltaString);
+                command.execute();
+            }
+        }
+    }
 
-        //TODO: Exectute all commands in all game objects
+    private List<userModel> buildUserModels(List<String> userStrings) {
+        List<userModel> users = new ArrayList<>();
+        for (String userString :
+             userStrings){
+            users.add((userModel) Serializer.getInstance().deserializeObject(userString, userModel.class));
+        }
+        return users;
     }
 
     private List<gameModel> buildGameModels(List<String> gameStrings) {

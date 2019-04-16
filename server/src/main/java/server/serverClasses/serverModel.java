@@ -146,6 +146,8 @@ public class serverModel {
         throw new UserNotFoundException("User not found!");
     }
 
+    public void setUsers(List<userModel> users){this.users = users;}
+
     public boolean authTokenExists(authTokenModel auth) {
         for (userModel curUser : this.users) {
             if (curUser.getAuthToken().getValue().equals(auth.getValue()))
