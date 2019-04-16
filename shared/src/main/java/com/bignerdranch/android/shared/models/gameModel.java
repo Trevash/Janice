@@ -41,11 +41,8 @@ public class gameModel {
         //this.setDecks(); decks are set in the game state
         this.state = new ServerGameNotStartedState(this);
 
-        try {
-            addPlayer(hostPlayer);
-        } catch (DuplicateException e) {
-            e.printStackTrace();
-        }
+        addPlayer(hostPlayer);
+
         chatbox = new chatboxModel();
         gameHistory = new chatboxModel();
         setTurnCounter(-1);
@@ -161,25 +158,29 @@ public class gameModel {
         return gameID;
     }
 
-    public void addPlayer(playerModel newPlayer) throws DuplicateException {
+    public void addPlayer(playerModel newPlayer) {
         if (gameStarted) {
             throw new IllegalStateException("Game has already been started");
-        }
-        for (playerModel curPlayer : this.players) {
-            if (curPlayer.getUserName().getValue().equals(newPlayer.getUserName().getValue())) {
-                throw new DuplicateException("User is already a player in this game");
-            }
         }
         if (players.size() >= 5) {
             throw new IllegalStateException("Max number of players reached!");
         }
-        //assigns player color
-        newPlayer.setPlayerColor(playerColorEnum.values()[players.size()]);
-        //draws new player's starting hand
-        for (int i = 0; i < 4; i++) {
-            newPlayer.addTrainCardToHand(drawTrainCardFromDeck());
+
+        boolean alreadyInGame = false;
+        for (playerModel curPlayer : this.players) {
+            if (curPlayer.getUserName().getValue().equals(newPlayer.getUserName().getValue())) {
+                alreadyInGame = true;
+            }
         }
-        players.add(newPlayer);
+        if(!alreadyInGame) {
+            //assigns player color
+            newPlayer.setPlayerColor(playerColorEnum.values()[players.size()]);
+            //draws new player's starting hand
+            for (int i = 0; i < 4; i++) {
+                newPlayer.addTrainCardToHand(drawTrainCardFromDeck());
+            }
+            players.add(newPlayer);
+        }
     }
 
     public int numPlayers() {

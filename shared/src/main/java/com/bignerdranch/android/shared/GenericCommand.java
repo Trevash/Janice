@@ -46,7 +46,7 @@ public class GenericCommand {
             Class<?>[] paramTypes = getClasses();
             for (int i = 0; i < _paramValues.length; i++) {
                 if (paramTypes != null) {
-                    _paramValues[i] = getData(paramTypes[i], (String) _paramValues[i]);
+                    _paramValues[i] = getData(paramTypes[i], _paramValues[i].toString());
                 }
             }
             Method method = receiver.getMethod(_methodName, paramTypes);

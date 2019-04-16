@@ -116,19 +116,19 @@ public class ServerCommunicator extends WebSocketServer {
                 break;
             case CREATE:
                 //Send new game to database
-                this.addGameInDatabase((gameModel) result.getData(gameModel.class));
+                this.addGameToDatabase((gameModel) result.getData(gameModel.class));
 
                 broadcastOne(resultGson, conn);
                 updateAllUserGameList();
                 break;
             case JOIN:
-                this.sendCommandToDatabase(command, ((gameModel) result.getData(gameModel.class)).getGameID());
+                this.updateGame((gameModel) result.getData(gameModel.class));
 
                 broadcast(resultGson);
                 updateAllUserGameList();
                 break;
             case START:
-                this.sendCommandToDatabase(command, ((gameModel) result.getData(gameModel.class)).getGameID());
+                this.updateGame((gameModel) result.getData(gameModel.class));
 
                 gameModel gameStart = (gameModel) result.getData(gameModel.class);
                 broadcastGame(resultGson, gameStart);
@@ -231,7 +231,7 @@ public class ServerCommunicator extends WebSocketServer {
         serverModel.getInstance().getUserDao().addUser(user.getUserID().getValue(), Serializer.getInstance().serializeObject(user));
     }
 
-    private void addGameInDatabase(gameModel game) {
+    private void addGameToDatabase(gameModel game) {
         serverModel.getInstance().getGameDao().addGame(game.getGameID().getValue(), Serializer.getInstance().serializeObject(game));
     }
 
@@ -239,11 +239,15 @@ public class ServerCommunicator extends WebSocketServer {
         gameModel curGame = serverModel.getInstance().getGameByID(gameID);
         if (curGame.numCommands() >= serverModel.getInstance().getDeltas()) {
             curGame.clearCommands();
-            serverModel.getInstance().getGameDao().updateGame(curGame.getGameID().getValue(), Serializer.getInstance().serializeObject(curGame));
+            this.updateGame(curGame);
         } else {
             curGame.addCommand(command);
             serverModel.getInstance().getGameDao().addDelta(curGame.getGameID().getValue(), Serializer.getInstance().serializeObject(command));
         }
+    }
+
+    private void updateGame(gameModel curGame) {
+        serverModel.getInstance().getGameDao().updateGame(curGame.getGameID().getValue(), Serializer.getInstance().serializeObject(curGame));
     }
 
     private void broadcastEndGame(gameModel curGame) {
