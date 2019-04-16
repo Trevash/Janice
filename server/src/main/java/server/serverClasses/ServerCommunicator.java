@@ -104,9 +104,7 @@ public class ServerCommunicator extends WebSocketServer {
                     userModel user = (userModel) result.getData(userModel.class);
                     usernameWSMap.put(user.getUserName().getValue(), conn);
 
-                    if(!serverModel.getInstance().userExists(user.getUserName().getValue())) {
-                        this.addUserToDatabase(user);
-                    }
+                    this.addUserToDatabase(user);
                 }
                 break;
             case CREATE:
