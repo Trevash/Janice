@@ -158,6 +158,8 @@ public class serverModel {
         return games;
     }
 
+    public void setGames(List<gameModel> games){this.games = games;}
+
     public gameModel getGameByID(gameIDModel id) {
         for (gameModel game : this.games) {
             if (id.equals(game.getGameID())) {

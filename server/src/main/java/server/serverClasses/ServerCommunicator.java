@@ -25,6 +25,10 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
+import server.plugIn.FactoryCreator;
+import server.plugIn.IDaoFactory;
+import server.plugIn.IGameDao;
+
 import static com.bignerdranch.android.shared.Constants.Commands.*;
 
 public class ServerCommunicator extends WebSocketServer {
@@ -99,7 +103,7 @@ public class ServerCommunicator extends WebSocketServer {
                 break;
             case CREATE:
                 //Send new game to database
-                this.sendGameToDatabase((gameModel) result.getData(gameModel.class));
+                this.addGameInDatabase((gameModel) result.getData(gameModel.class));
 
                 broadcastOne(resultGson, conn);
                 updateAllUserGameList();
@@ -138,11 +142,11 @@ public class ServerCommunicator extends WebSocketServer {
 
                 //Check if last turn
                 curGame.checkIfLastTurn();
-                if(curGame.isLastTurn()){
+                if (curGame.isLastTurn()) {
                     broadcastEndGame(curGame);
                 }
                 //Check if last round
-                else if(curGame.isLastRound()){
+                else if (curGame.isLastRound()) {
                     broadcastLastRound(curGame);
                 }
                 break;
@@ -164,7 +168,7 @@ public class ServerCommunicator extends WebSocketServer {
                 //Check if last turn
                 gameModel game = serverModel.getInstance().getGameByID(returnDestdata.getGameID());
                 game.checkIfLastTurn();
-                if(game.isLastTurn()){
+                if (game.isLastTurn()) {
                     broadcastEndGame(game);
                 }
                 break;
@@ -186,7 +190,7 @@ public class ServerCommunicator extends WebSocketServer {
                 //Check if last turn
                 gameModel Game = serverModel.getInstance().getGameByID(data.getGameID());
                 Game.checkIfLastTurn();
-                if(Game.isLastTurn()){
+                if (Game.isLastTurn()) {
                     broadcastEndGame(Game);
                 }
                 break;
@@ -202,20 +206,19 @@ public class ServerCommunicator extends WebSocketServer {
         }
     }
 
-    private void sendGameToDatabase(gameModel game) {
-        //TODO: Send game blob to database
+    private void addGameInDatabase(gameModel game) {
+        serverModel.getInstance().getGameDao().addGame(game.getGameID().getValue(), Serializer.getInstance().serializeObject(game));
     }
 
     private void sendCommandToDatabase(GenericCommand command, gameIDModel gameID) {
         gameModel curGame = serverModel.getInstance().getGameByID(gameID);
-        if(curGame.numCommands() >= 5){
+        if(curGame.numCommands() >= serverModel.getInstance().getDeltas()){
             curGame.clearCommands();
-            //TODO: Clear this games' list of commands in the database
-            this.sendGameToDatabase(curGame);
+            serverModel.getInstance().getGameDao().updateGame(curGame.getGameID().getValue(), Serializer.getInstance().serializeObject(curGame));
         }
         else{
             curGame.addCommand(command);
-            //TODO: Send games' commands linked list blob to database, save by gameID, curGame.getCommands();
+            serverModel.getInstance().getGameDao().addDelta(curGame.getGameID().getValue(), Serializer.getInstance().serializeObject(command));
         }
     }
 
@@ -237,9 +240,23 @@ public class ServerCommunicator extends WebSocketServer {
     @Override
     public void onStart() {
         System.out.println("Server started!");
-        //TODO: Retrieve all game blobs from database
-        //TODO: Retrieve all commands from database
-        //TODO: Execute all commands in order for all games
+
+        //Retrieve and build game objects
+        List<String> gameStrings = serverModel.getInstance().getGameDao().retrieveGames();
+        serverModel.getInstance().setGames(buildGameModels(gameStrings));
+
+        //TODO: Retrieve and build command objects
+
+        //TODO: Exectute all commands in all game objects
+    }
+
+    private List<gameModel> buildGameModels(List<String> gameStrings) {
+        List<gameModel> games = new ArrayList<>();
+        for (String gameString :
+             gameStrings) {
+            games.add((gameModel) Serializer.getInstance().deserializeObject(gameString, gameModel.class));
+        }
+        return games;
     }
 
     private void updateAllUserGameList() {
@@ -276,7 +293,6 @@ public class ServerCommunicator extends WebSocketServer {
         // will necessarily require incrementing the turn counter. ex: drawing first train card
         curGame.updateGameHistory(new chatMessageModel(username, historyUpdate));
 
-        // TODO add in a list containing the number of dest. cards each player has
         GameStatusData data = new GameStatusData(curGame.getTurnCounter(), curGame.getGameHistory(),
                 curGame.getNumTrainCards(), curGame.getFaceUpCards(), curGame.getTrainCardDiscards(),
                 curGame.getNumDestinationCards());
