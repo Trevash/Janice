@@ -92,7 +92,9 @@ public class ServerCommunicator extends WebSocketServer {
                     userModel user = (userModel) result.getData(userModel.class);
                     usernameWSMap.put(user.getUserName().getValue(), conn);
 
-                    this.addUserToDatabase(user);
+                    if(!serverModel.getInstance().authTokenExists(user.getAuthToken())) {
+                        this.addUserToDatabase(user);
+                    }
                 }
                 break;
             case REGISTER:
@@ -102,7 +104,9 @@ public class ServerCommunicator extends WebSocketServer {
                     userModel user = (userModel) result.getData(userModel.class);
                     usernameWSMap.put(user.getUserName().getValue(), conn);
 
-                    this.addUserToDatabase(user);
+                    if(!serverModel.getInstance().authTokenExists(user.getAuthToken())) {
+                        this.addUserToDatabase(user);
+                    }
                 }
                 break;
             case CREATE:
