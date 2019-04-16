@@ -8,6 +8,8 @@ dependencies {
     implementation files('libs/Dummy.jar')
     implementation files('libs/mongoplugin.jar')
     implementation 'org.mongodb:mongo-java-driver:3.10.2'
+    implementation files('libs/SQLplugIn.jar')
+    implementation files('libs/sqlite-jdbc-3.23.1.jar')
 }
 
 sourceCompatibility = "1.7"
