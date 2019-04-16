@@ -23,4 +23,8 @@ public class GameResultsPresenter {
     public List<Integer> getFinalStats() {
         return facade.getFinalStats();
     }
+
+    public List<int[]> getStats() {
+        return facade.getStats();
+    }
 }

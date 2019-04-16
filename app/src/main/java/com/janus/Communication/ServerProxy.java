@@ -79,14 +79,23 @@ public class ServerProxy implements IServer {
     }
 
     public void reconnectClient(usernameModel name) {
-    	try {
-			while(!client.reconnectBlocking()) {
-              Thread.sleep(100);
-			}
-		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+       try{
+        while(!client.isOpen()){
+            client.reconnect();
+
+            Thread.sleep(1000);
+        }
+       } catch(InterruptedException e){
+           e.printStackTrace();
+       }
+        //try {
+		//	while(!client.reconnectBlocking()) {
+        //      Thread.sleep(100);
+		//	}
+		//} catch (InterruptedException e) {
+		//	// TODO Auto-generated catch block
+		//	e.printStackTrace();
+		//}
 //    	while (!this.isClientConnected()) {
 //            try {
 //                Thread.sleep(100);
