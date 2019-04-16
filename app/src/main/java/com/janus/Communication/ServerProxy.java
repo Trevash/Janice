@@ -20,6 +20,7 @@ import com.bignerdranch.android.shared.Serializer;
 
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.util.concurrent.TimeUnit;
 
 import org.java_websocket.exceptions.WebsocketNotConnectedException;
 
@@ -59,16 +60,12 @@ public class ServerProxy implements IServer {
         return scp;
     }
     
-    public boolean isClientConnectedProxy() {
-    	if (!client.isClientReallyConnected()) {
-    		try {
-				this.connectClient();
-				//client.setConnectionBoolean(true);
-			} catch (InterruptedException e) {
-				return false;
-			} catch (URISyntaxException e) {
-				return false;
-			}
+    public boolean isClientConnected() {
+    	if (!client.isOpen()) {
+    		client.reconnect();
+    		if(!client.isOpen()) {
+    			return false;
+    		}
     		try {
 				this.reRegister(new RegisterRequest(client.getUsername().getValue(),"password"));
 			} catch (Exception e) {
@@ -82,13 +79,21 @@ public class ServerProxy implements IServer {
     }
 
     public void reconnectClient(usernameModel name) {
-    	while (!this.isClientConnectedProxy()) {
-            try {
-                Thread.sleep(100);
-            } catch (InterruptedException e) {
-                throw new RuntimeException(e);
-            }
-        }   	
+    	try {
+			while(!client.reconnectBlocking()) {
+              Thread.sleep(100);
+			}
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+//    	while (!this.isClientConnected()) {
+//            try {
+//                Thread.sleep(100);
+//            } catch (InterruptedException e) {
+//                throw new RuntimeException(e);
+//            }
+//        }   	
     }
     
     //private String className = "server.handlers";
@@ -96,7 +101,7 @@ public class ServerProxy implements IServer {
     public void connectClient() throws InterruptedException, URISyntaxException {
         String webSocketAddress = "ws://" + Constants.IP_ADDRESS + ":" + Constants.PORT;
         client = new TtRClient(new URI(webSocketAddress));
-        client.connectBlocking();
+        client.connectBlocking(10, TimeUnit.SECONDS);
     }
 
     public void disconnectClient() throws InterruptedException {

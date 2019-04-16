@@ -175,8 +175,21 @@ public class TtRClient extends WebSocketClient{
     @Override
     public void onClose(int code, String reason, boolean remote) {
         System.out.println("Connection Closed!");
-    	isReallyConnected = false;
-    	proxy.reconnectClient(this.getUsername());
+        Thread one = new Thread() {
+        	public void run() {
+        		proxy.reconnectClient(getUsername());
+        	}
+        };
+        one.start();
+//        try {
+//        	//https://github.com/TooTallNate/Java-WebSocket/issues/690
+//			this.reconnectBlocking();
+//		} catch (InterruptedException e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		}
+        //isReallyConnected = false;
+    	//proxy.reconnectClient(this.getUsername());
     }
 
     @Override
