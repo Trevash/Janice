@@ -41,11 +41,8 @@ public class gameModel {
         //this.setDecks(); decks are set in the game state
         this.state = new ServerGameNotStartedState(this);
 
-        try {
-            addPlayer(hostPlayer);
-        } catch (DuplicateException e) {
-            e.printStackTrace();
-        }
+        addPlayer(hostPlayer);
+
         chatbox = new chatboxModel();
         gameHistory = new chatboxModel();
         setTurnCounter(-1);
