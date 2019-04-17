@@ -55,5 +55,10 @@ public abstract class AbstractGameState implements IGameState {
         return 1;
     }
 
+    @Override
+    public void refresh(gameModel game) {
+        this.game = game;
+    }
+
     //protected void updateGame()
 }

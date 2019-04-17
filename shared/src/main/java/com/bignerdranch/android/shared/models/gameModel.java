@@ -32,7 +32,7 @@ public class gameModel {
     private List<abstractRoute> routes = new ArrayList<>();
 
     //For Database Connections:
-    private LinkedList deltas = new LinkedList();
+    private List<GenericCommand> deltas = new LinkedList<>();
 
     public gameModel(String newGameName, playerModel hostPlayer) {
         gameID = new gameIDModel();
@@ -159,13 +159,6 @@ public class gameModel {
     }
 
     public void addPlayer(playerModel newPlayer) {
-        if (gameStarted) {
-            throw new IllegalStateException("Game has already been started");
-        }
-        if (players.size() >= 5) {
-            throw new IllegalStateException("Max number of players reached!");
-        }
-
         boolean alreadyInGame = false;
         for (playerModel curPlayer : this.players) {
             if (curPlayer.getUserName().getValue().equals(newPlayer.getUserName().getValue())) {
@@ -173,6 +166,12 @@ public class gameModel {
             }
         }
         if(!alreadyInGame) {
+            if (gameStarted) {
+                throw new IllegalStateException("Game has already been started");
+            }
+            if (players.size() >= 5) {
+                throw new IllegalStateException("Max number of players reached!");
+            }
             //assigns player color
             newPlayer.setPlayerColor(playerColorEnum.values()[players.size()]);
             //draws new player's starting hand
@@ -555,5 +554,9 @@ public class gameModel {
         this.deltas.clear();
     }
 
-    public LinkedList getDeltas() { return this.deltas; }
+    public List<GenericCommand> getDeltas() { return this.deltas; }
+
+    public void refresh() {
+        state.refresh(this);
+    }
 }

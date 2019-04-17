@@ -51,7 +51,14 @@ public class ServerCommunicator extends WebSocketServer {
 
         // set the plugIns for the serverModel
         if (args.length > 0) {
+            // MongoDaoFactory
+            // SQLiteDaoFactory
             serverModel.getInstance().setPlugIn(args[0]);
+            // if statement?
+            if (args.length > 2 && args[2].equals("reset")) {
+                serverModel.getInstance().getGameDao().clearDB();
+                serverModel.getInstance().getUserDao().clearDB();
+            }
         } else {
             serverModel.getInstance().setPlugIn("Dummy");
         }
@@ -92,7 +99,7 @@ public class ServerCommunicator extends WebSocketServer {
                     userModel user = (userModel) result.getData(userModel.class);
                     usernameWSMap.put(user.getUserName().getValue(), conn);
 
-                    if(!serverModel.getInstance().userExists(user.getUserName().getValue())) {
+                    if (!serverModel.getInstance().userExists(user.getUserName().getValue())) {
                         this.addUserToDatabase(user);
                     }
                 }
@@ -209,9 +216,9 @@ public class ServerCommunicator extends WebSocketServer {
                 }
                 break;
             case "reRegister":
-            	usernameModel username = (usernameModel) result.getData(usernameModel.class);
+                usernameModel username = (usernameModel) result.getData(usernameModel.class);
                 usernameWSMap.put(username.getValue(), conn);
-            	break;
+                break;
             case "ERROR":
                 broadcastOne(resultGson, conn);
                 break;
@@ -230,11 +237,10 @@ public class ServerCommunicator extends WebSocketServer {
 
     private void sendCommandToDatabase(GenericCommand command, gameIDModel gameID) {
         gameModel curGame = serverModel.getInstance().getGameByID(gameID);
-        if(curGame.numCommands() >= serverModel.getInstance().getDeltas()){
+        if (curGame.numCommands() >= serverModel.getInstance().getDeltas()) {
             curGame.clearCommands();
             this.updateGame(curGame);
-        }
-        else{
+        } else {
             curGame.addCommand(command);
             serverModel.getInstance().getGameDao().addDelta(curGame.getGameID().getValue(), Serializer.getInstance().serializeObject(command));
         }
@@ -272,9 +278,9 @@ public class ServerCommunicator extends WebSocketServer {
         serverModel.getInstance().setGames(buildGameModels(gameStrings));
 
         //TODO: See if commands are returned as list of strings or List<List<String>>
-        for(gameModel game : serverModel.getInstance().getGames()){
+        for (gameModel game : serverModel.getInstance().getGames()) {
             List<String> deltaStrings = serverModel.getInstance().getGameDao().retrieveDeltas(game.getGameID().getValue());
-            for(String deltaString : deltaStrings){
+            for (String deltaString : deltaStrings) {
                 GenericCommand command = Serializer.getInstance().deserializeCommand(deltaString);
                 command.execute();
             }
@@ -283,8 +289,7 @@ public class ServerCommunicator extends WebSocketServer {
 
     private List<userModel> buildUserModels(List<String> userStrings) {
         List<userModel> users = new ArrayList<>();
-        for (String userString :
-             userStrings){
+        for (String userString : userStrings) {
             users.add((userModel) Serializer.getInstance().deserializeObject(userString, userModel.class));
         }
         return users;
@@ -292,9 +297,10 @@ public class ServerCommunicator extends WebSocketServer {
 
     private List<gameModel> buildGameModels(List<String> gameStrings) {
         List<gameModel> games = new ArrayList<>();
-        for (String gameString :
-             gameStrings) {
-            games.add((gameModel) Serializer.getInstance().deserializeObject(gameString, gameModel.class));
+        for (String gameString : gameStrings) {
+            gameModel game = (gameModel) Serializer.getInstance().deserializeObject(gameString, gameModel.class);
+            game.refresh(); // method that readds any transient variables, which do exist in the states
+            games.add(game);
         }
         return games;
     }
