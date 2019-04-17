@@ -159,13 +159,6 @@ public class gameModel {
     }
 
     public void addPlayer(playerModel newPlayer) {
-        if (gameStarted) {
-            throw new IllegalStateException("Game has already been started");
-        }
-        if (players.size() >= 5) {
-            throw new IllegalStateException("Max number of players reached!");
-        }
-
         boolean alreadyInGame = false;
         for (playerModel curPlayer : this.players) {
             if (curPlayer.getUserName().getValue().equals(newPlayer.getUserName().getValue())) {
@@ -173,6 +166,12 @@ public class gameModel {
             }
         }
         if(!alreadyInGame) {
+            if (gameStarted) {
+                throw new IllegalStateException("Game has already been started");
+            }
+            if (players.size() >= 5) {
+                throw new IllegalStateException("Max number of players reached!");
+            }
             //assigns player color
             newPlayer.setPlayerColor(playerColorEnum.values()[players.size()]);
             //draws new player's starting hand
