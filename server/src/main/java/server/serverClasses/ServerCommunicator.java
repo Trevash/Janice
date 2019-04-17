@@ -88,6 +88,7 @@ public class ServerCommunicator extends WebSocketServer {
     @Override
     public void onMessage(WebSocket conn, String message) {
         GenericCommand command = Serializer.getInstance().deserializeCommand(message);
+        GenericCommand dupCommand = Serializer.getInstance().deserializeCommand(message);
         Results result = command.execute();
         String resultGson = Serializer.getInstance().serializeObject(result);
 
@@ -139,7 +140,7 @@ public class ServerCommunicator extends WebSocketServer {
                 ChatboxData chatboxData = (ChatboxData) result.getData(ChatboxData.class);
                 gameIDModel gameID = chatboxData.getGameID();
 
-                this.sendCommandToDatabase(command, gameID);
+                this.sendCommandToDatabase(dupCommand, gameID);
 
                 gameModel gameChat = serverModel.getInstance().getGameByID(gameID);
                 broadcastGame(resultGson, gameChat);
@@ -148,7 +149,7 @@ public class ServerCommunicator extends WebSocketServer {
                 ClaimRouteData claimRouteData = (ClaimRouteData) result.getData(ClaimRouteData.class);
                 gameModel curGame = serverModel.getInstance().getGameByID(claimRouteData.getGameID());
 
-                this.sendCommandToDatabase(command, curGame.getGameID());
+                this.sendCommandToDatabase(dupCommand, curGame.getGameID());
 
                 broadcastGame(resultGson, curGame);
                 updateGameStatus(claimRouteData.getGameID(), claimRouteData.getUsername(),
@@ -168,7 +169,7 @@ public class ServerCommunicator extends WebSocketServer {
                 }
                 break;
             case DRAW_DESTINATION_CARDS:
-                this.sendCommandToDatabase(command, ((DestinationCardListModel) result.getData(DestinationCardListModel.class)).getGameID());
+                this.sendCommandToDatabase(dupCommand, ((DestinationCardListModel) result.getData(DestinationCardListModel.class)).getGameID());
 
                 broadcastOne(resultGson, conn);
                 break;
@@ -176,7 +177,7 @@ public class ServerCommunicator extends WebSocketServer {
                 ReturnDestinationCardData returnDestdata = (ReturnDestinationCardData)
                         result.getData(ReturnDestinationCardData.class);
 
-                this.sendCommandToDatabase(command, returnDestdata.getGameID());
+                this.sendCommandToDatabase(dupCommand, returnDestdata.getGameID());
 
                 broadcastOne(resultGson, conn);
 
@@ -197,7 +198,7 @@ public class ServerCommunicator extends WebSocketServer {
                 currentGame.updateGameHistory(new chatMessageModel(fData.getUsername(), fData.getUsername().getValue() + " drew a " + fData.getHand().get(fData.getHand().size() - 1).getColor().name() + "card"));
                 broadcastOne(resultGson, conn);
 
-                this.sendCommandToDatabase(command, currentGame.getGameID());
+                this.sendCommandToDatabase(dupCommand, currentGame.getGameID());
 
                 break;
             case DRAW_SECOND_TRAIN_CARD:
@@ -206,7 +207,7 @@ public class ServerCommunicator extends WebSocketServer {
                 updateGameStatus(data.getGameID(), data.getUsername(), data.getUsername().getValue() + " drew a " + data.getHand().get(data.getHand().size() - 1).getColor().name() + "card");
                 broadcastGameStats(serverModel.getInstance().getGameByID(data.getGameID()));
 
-                this.sendCommandToDatabase(command, data.getGameID());
+                this.sendCommandToDatabase(dupCommand, data.getGameID());
 
                 //Check if last turn
                 gameModel Game = serverModel.getInstance().getGameByID(data.getGameID());
@@ -245,6 +246,7 @@ public class ServerCommunicator extends WebSocketServer {
             this.updateGame(curGame);
         } else {
             curGame.addCommand(command);
+            command.setGameID(curGame.getGameID());
             serverModel.getInstance().getGameDao().addDelta(curGame.getGameID().getValue(), Serializer.getInstance().serializeObject(command));
         }
     }

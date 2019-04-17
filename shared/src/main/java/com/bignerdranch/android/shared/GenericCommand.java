@@ -1,10 +1,12 @@
 package com.bignerdranch.android.shared;
 import java.lang.reflect.*;
 
+import com.bignerdranch.android.shared.models.gameIDModel;
 import com.bignerdranch.android.shared.resultobjects.Results;
 import com.google.gson.Gson;
 
 public class GenericCommand {
+    private gameIDModel gameID;
     private String _className;
     private String _methodName;
     private String[] _paramTypes;
@@ -16,6 +18,14 @@ public class GenericCommand {
         _methodName = methodName;
         _paramValues = paramValues;
         _paramTypes = paramTypes;
+    }
+
+    public gameIDModel getGameID() {
+        return gameID;
+    }
+
+    public void setGameID(gameIDModel gameID) {
+        this.gameID = gameID;
     }
 
     public String getMethod(){
