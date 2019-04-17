@@ -267,7 +267,6 @@ public class ServerCommunicator extends WebSocketServer {
 
     @Override
     public void onStart() {
-        System.out.println("Server started!");
 
         //Retrieve users
         List<String> userStrings = serverModel.getInstance().getUserDao().getUsers();
@@ -285,6 +284,7 @@ public class ServerCommunicator extends WebSocketServer {
                 command.execute();
             }
         }
+        System.out.println("Server started!");
     }
 
     private List<userModel> buildUserModels(List<String> userStrings) {
