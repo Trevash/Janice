@@ -55,7 +55,7 @@ public class ServerCommunicator extends WebSocketServer {
             // SQLiteDaoFactory
             serverModel.getInstance().setPlugIn(args[0]);
             // if statement?
-            if (args.length > 2 && args[2].equals("reset")) {
+            if (args.length > 2 && args[2].equalsIgnoreCase("reset")) {
                 serverModel.getInstance().getGameDao().clearDB();
                 serverModel.getInstance().getUserDao().clearDB();
             }
