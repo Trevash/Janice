@@ -32,6 +32,8 @@ public class GenericCommand {
         return _methodName;
     }
 
+    public void setParamValues(Object[] paramValues){ this._paramValues = paramValues;}
+
     private Class<?>[] getClasses() {
         try {
             Class<?>[] paramTypes = new Class<?>[_paramTypes.length];
