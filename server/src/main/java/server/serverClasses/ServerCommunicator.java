@@ -237,7 +237,7 @@ public class ServerCommunicator extends WebSocketServer {
 
     private void sendCommandToDatabase(GenericCommand command, gameIDModel gameID) {
         gameModel curGame = serverModel.getInstance().getGameByID(gameID);
-        if (curGame.numCommands() >= serverModel.getInstance().getDeltas()) {
+        if (curGame.numCommands() > serverModel.getInstance().getDeltas()) {
             curGame.clearCommands();
             this.updateGame(curGame);
         } else {
