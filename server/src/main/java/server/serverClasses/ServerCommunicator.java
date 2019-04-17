@@ -139,7 +139,7 @@ public class ServerCommunicator extends WebSocketServer {
                 ChatboxData chatboxData = (ChatboxData) result.getData(ChatboxData.class);
                 gameIDModel gameID = chatboxData.getGameID();
 
-                this.sendCommandToDatabase(command, gameID);
+                this.sendCommandToDatabase(message, gameID);
 
                 gameModel gameChat = serverModel.getInstance().getGameByID(gameID);
                 broadcastGame(resultGson, gameChat);
@@ -148,7 +148,7 @@ public class ServerCommunicator extends WebSocketServer {
                 ClaimRouteData claimRouteData = (ClaimRouteData) result.getData(ClaimRouteData.class);
                 gameModel curGame = serverModel.getInstance().getGameByID(claimRouteData.getGameID());
 
-                this.sendCommandToDatabase(command, curGame.getGameID());
+                this.sendCommandToDatabase(message, curGame.getGameID());
 
                 broadcastGame(resultGson, curGame);
                 updateGameStatus(claimRouteData.getGameID(), claimRouteData.getUsername(),
@@ -168,7 +168,7 @@ public class ServerCommunicator extends WebSocketServer {
                 }
                 break;
             case DRAW_DESTINATION_CARDS:
-                this.sendCommandToDatabase(command, ((DestinationCardListModel) result.getData(DestinationCardListModel.class)).getGameID());
+                this.sendCommandToDatabase(message, ((DestinationCardListModel) result.getData(DestinationCardListModel.class)).getGameID());
 
                 broadcastOne(resultGson, conn);
                 break;
@@ -176,7 +176,7 @@ public class ServerCommunicator extends WebSocketServer {
                 ReturnDestinationCardData returnDestdata = (ReturnDestinationCardData)
                         result.getData(ReturnDestinationCardData.class);
 
-                this.sendCommandToDatabase(command, returnDestdata.getGameID());
+                this.sendCommandToDatabase(message, returnDestdata.getGameID());
 
                 broadcastOne(resultGson, conn);
 
@@ -197,7 +197,7 @@ public class ServerCommunicator extends WebSocketServer {
                 currentGame.updateGameHistory(new chatMessageModel(fData.getUsername(), fData.getUsername().getValue() + " drew a " + fData.getHand().get(fData.getHand().size() - 1).getColor().name() + "card"));
                 broadcastOne(resultGson, conn);
 
-                this.sendCommandToDatabase(command, currentGame.getGameID());
+                this.sendCommandToDatabase(message, currentGame.getGameID());
 
                 break;
             case DRAW_SECOND_TRAIN_CARD:
@@ -206,7 +206,7 @@ public class ServerCommunicator extends WebSocketServer {
                 updateGameStatus(data.getGameID(), data.getUsername(), data.getUsername().getValue() + " drew a " + data.getHand().get(data.getHand().size() - 1).getColor().name() + "card");
                 broadcastGameStats(serverModel.getInstance().getGameByID(data.getGameID()));
 
-                this.sendCommandToDatabase(command, data.getGameID());
+                this.sendCommandToDatabase(message, data.getGameID());
 
                 //Check if last turn
                 gameModel Game = serverModel.getInstance().getGameByID(data.getGameID());
@@ -235,7 +235,7 @@ public class ServerCommunicator extends WebSocketServer {
         serverModel.getInstance().getGameDao().addGame(game.getGameID().getValue(), Serializer.getInstance().serializeObject(game));
     }
 
-    private void sendCommandToDatabase(GenericCommand command, gameIDModel gameID) {
+    private void sendCommandToDatabase(String commandJson, gameIDModel gameID) {
         gameModel curGame = serverModel.getInstance().getGameByID(gameID);
         // +1 accounts for the current command, > means that the getDeltas returns the max number
         // of commands that can be stored for a single game
@@ -244,8 +244,8 @@ public class ServerCommunicator extends WebSocketServer {
             curGame.clearCommands();
             this.updateGame(curGame);
         } else {
-            curGame.addCommand(command);
-            serverModel.getInstance().getGameDao().addDelta(curGame.getGameID().getValue(), Serializer.getInstance().serializeObject(command));
+            curGame.addCommand(commandJson);
+            serverModel.getInstance().getGameDao().addDelta(curGame.getGameID().getValue(), commandJson);
         }
     }
 
