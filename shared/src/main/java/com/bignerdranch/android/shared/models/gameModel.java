@@ -543,7 +543,7 @@ public class gameModel {
         }
     }
 
-    public void addCommand(String command) {
+    public void addCommand(GenericCommand command) {
         this.deltas.add(command);
     }
 
