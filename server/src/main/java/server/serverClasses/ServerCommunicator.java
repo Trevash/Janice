@@ -290,12 +290,6 @@ public class ServerCommunicator extends WebSocketServer {
             }
         }
 
-        updateAllUserGameList();
-        for(gameModel game : serverModel.getInstance().getGames()) {
-            broadcastGameStats(game);
-        }
-
-
         System.out.println("Server started!");
     }
 
