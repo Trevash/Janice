@@ -84,7 +84,7 @@ public class serverModel {
         return userDao;
     }
 
-    public int getDeltas() {
+    public int getMaxDeltas() {
         return deltas;
     }
 

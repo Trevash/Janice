@@ -237,7 +237,10 @@ public class ServerCommunicator extends WebSocketServer {
 
     private void sendCommandToDatabase(GenericCommand command, gameIDModel gameID) {
         gameModel curGame = serverModel.getInstance().getGameByID(gameID);
-        if (curGame.numCommands() > serverModel.getInstance().getDeltas()) {
+        // +1 accounts for the current command, > means that the getDeltas returns the max number
+        // of commands that can be stored for a single game
+        // >= would indicate that we reset upon receiving the xth delta, where x = getDeltas()
+        if (curGame.numCommands() + 1 > serverModel.getInstance().getMaxDeltas()) {
             curGame.clearCommands();
             this.updateGame(curGame);
         } else {
